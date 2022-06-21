@@ -14,19 +14,20 @@ struct MeasurementsView: View {
         List {
             Section(header: Spacer()) {
                 VStack(alignment: .leading) {
-                    Text("Rotation:")
-                        .font(.headline)
+                    Text("Acceleration")
+                        .font(.title2)
                         .padding()
-                    DiagramView(axes: $measurer.rotation)
+                    DiagramView(axes: $measurer.acceleration)
                         .padding([.bottom])
                 }
             }
             Section {
                 VStack(alignment: .leading) {
-                    Text("Acceleration:")
-                        .font(.headline)
+                    Text("Rotation")
+                        .font(.title2)
                         .padding()
-                    DiagramView(axes: $measurer.acceleration)
+                    DiagramView(axes: $measurer.rotation)
+                        .padding([.bottom])
                 }
             }
         }
