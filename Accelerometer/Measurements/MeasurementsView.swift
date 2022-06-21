@@ -16,9 +16,12 @@ struct MeasurementsView: View {
             VStack {
                 Spacer()
                 Text("Rotation:")
+                    .font(.headline)
                     .padding()
                 DiagramView(axes: $measurer.rotation)
+                    .padding([.bottom])
                 Text("Acceleration:")
+                    .font(.headline)
                     .padding()
                 DiagramView(axes: $measurer.acceleration)
                 Spacer()

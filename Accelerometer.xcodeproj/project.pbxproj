@@ -24,6 +24,7 @@
 		0B24EC43286240C200AD3EF1 /* HexagonParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */; };
 		0B24EC45286247AD00AD3EF1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC44286247AD00AD3EF1 /* String.swift */; };
 		0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC462862496C00AD3EF1 /* LevelView.swift */; };
+		0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4B2862690800AD3EF1 /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonParameters.swift; sourceTree = "<group>"; };
 		0B24EC44286247AD00AD3EF1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0B24EC462862496C00AD3EF1 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
+		0B24EC4B2862690800AD3EF1 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */,
 				0B24EC35286227A100AD3EF1 /* DiagramView.swift */,
 				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
+				0B24EC4B2862690800AD3EF1 /* HeaderView.swift */,
 			);
 			path = Measurements;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
+				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -463,7 +467,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -493,7 +497,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -522,7 +526,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
