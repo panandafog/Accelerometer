@@ -39,7 +39,7 @@ struct RefreshRateView: View {
             )
             
             Text(String(format: "%.\(Measurer.updateIntervalRoundPlaces)f", value))
-                    .foregroundColor(isEditing ? .red : .blue)
+                    .foregroundColor(isEditing ? .blue : .accentColor)
         }
     }
 }

@@ -12,9 +12,95 @@ struct DiagramView: View {
     
     var body: some View {
         VStack {
-            Text(String(axes?.x ?? 0.0))
-            Text(String(axes?.y ?? 0.0))
-            Text(String(axes?.z ?? 0.0))
+            LevelView(
+                value: .init(get: {
+                    axes?.x
+                }, set: { value in
+                }),
+                max: .init(
+                    get: {
+                        axes?.maxX
+                    },
+                    set: { value in
+                        
+                    }
+                ),
+                min: .init(
+                    get: {
+                        axes?.minX
+                    },
+                    set: { value in
+                        
+                    }
+                )
+            )
+            LevelView(
+                value: .init(get: {
+                    axes?.y
+                }, set: { value in
+                }),
+                max: .init(
+                    get: {
+                        axes?.maxY
+                    },
+                    set: { value in
+                        
+                    }
+                ),
+                min: .init(
+                    get: {
+                        axes?.minY
+                    },
+                    set: { value in
+                        
+                    }
+                )
+            )
+            LevelView(
+                value: .init(get: {
+                    axes?.z
+                }, set: { value in
+                }),
+                max: .init(
+                    get: {
+                        axes?.maxZ
+                    },
+                    set: { value in
+                        
+                    }
+                ),
+                min: .init(
+                    get: {
+                        axes?.minZ
+                    },
+                    set: { value in
+                        
+                    }
+                )
+            )
+            LevelView(
+                value: .init(get: {
+                    axes?.vector
+                }, set: { value in
+
+                }),
+                max: .init(
+                    get: {
+                        axes?.maxV
+                    },
+                    set: { value in
+                        
+                    }
+                ),
+                min: .init(
+                    get: {
+                        axes?.minV
+                    },
+                    set: { value in
+                        
+                    }
+                )
+            )
         }
         .padding()
     }

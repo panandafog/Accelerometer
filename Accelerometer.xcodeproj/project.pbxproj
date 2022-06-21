@@ -21,6 +21,9 @@
 		0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3928622B7100AD3EF1 /* SettingsView.swift */; };
 		0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */; };
 		0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4028623C1B00AD3EF1 /* Double.swift */; };
+		0B24EC43286240C200AD3EF1 /* HexagonParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */; };
+		0B24EC45286247AD00AD3EF1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC44286247AD00AD3EF1 /* String.swift */; };
+		0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC462862496C00AD3EF1 /* LevelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +61,9 @@
 		0B24EC3928622B7100AD3EF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRateView.swift; sourceTree = "<group>"; };
 		0B24EC4028623C1B00AD3EF1 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonParameters.swift; sourceTree = "<group>"; };
+		0B24EC44286247AD00AD3EF1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		0B24EC462862496C00AD3EF1 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +122,7 @@
 				0B24EC3F28623C0E00AD3EF1 /* Extensions */,
 				0B24EC0B28621BC200AD3EF1 /* Assets.xcassets */,
 				0B24EC0D28621BC200AD3EF1 /* Preview Content */,
+				0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */,
 			);
 			path = Accelerometer;
 			sourceTree = "<group>";
@@ -149,8 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				0B24EC3128621BE000AD3EF1 /* Measurer.swift */,
-				0B24EC35286227A100AD3EF1 /* DiagramView.swift */,
 				0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */,
+				0B24EC35286227A100AD3EF1 /* DiagramView.swift */,
+				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
 			);
 			path = Measurements;
 			sourceTree = "<group>";
@@ -168,6 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				0B24EC4028623C1B00AD3EF1 /* Double.swift */,
+				0B24EC44286247AD00AD3EF1 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,6 +311,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B24EC43286240C200AD3EF1 /* HexagonParameters.swift in Sources */,
+				0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */,
+				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
@@ -481,7 +493,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -510,7 +522,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
