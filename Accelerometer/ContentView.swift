@@ -12,14 +12,21 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            MeasurementsView()
-                .tabItem {
-                    Label("Measurements", systemImage: "list.bullet")
-                }
-            SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
+            NavigationView {
+                MeasurementsView()
+                    .navigationTitle(Text("Measurements"))
+            }
+            .tabItem {
+                Label("Measurements", systemImage: "list.bullet")
+            }
+            
+            NavigationView {
+                SettingsView()
+                    .navigationTitle(Text("Settings"))
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
         }
     }
 }

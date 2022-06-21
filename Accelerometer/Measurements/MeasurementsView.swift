@@ -11,22 +11,24 @@ struct MeasurementsView: View {
     @ObservedObject var measurer = Measurer.shared
     
     var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                Spacer()
-                Text("Rotation:")
-                    .font(.headline)
-                    .padding()
-                DiagramView(axes: $measurer.rotation)
-                    .padding([.bottom])
-                Text("Acceleration:")
-                    .font(.headline)
-                    .padding()
-                DiagramView(axes: $measurer.acceleration)
-                Spacer()
+        List {
+            Section(header: Spacer()) {
+                VStack(alignment: .leading) {
+                    Text("Rotation:")
+                        .font(.headline)
+                        .padding()
+                    DiagramView(axes: $measurer.rotation)
+                        .padding([.bottom])
+                }
             }
-            Spacer()
+            Section {
+                VStack(alignment: .leading) {
+                    Text("Acceleration:")
+                        .font(.headline)
+                        .padding()
+                    DiagramView(axes: $measurer.acceleration)
+                }
+            }
         }
     }
 }
