@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct AccelerometerApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

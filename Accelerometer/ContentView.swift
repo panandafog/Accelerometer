@@ -8,9 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var measurer = Measurer.shared
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            MeasurementsView()
+                .tabItem {
+                    Label("Measurements", systemImage: "perspective")
+                }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "list.bullet")
+                }
+        }
     }
 }
 
