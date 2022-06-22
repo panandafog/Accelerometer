@@ -1,5 +1,5 @@
 //
-//  DiagramView.swift
+//  MeasurementsAxesView.swift
 //  Accelerometer
 //
 //  Created by Andrey on 21.06.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DiagramView: View {
+struct MeasurementsAxesView: View {
     @Binding var axes: Measurer.Axes?
     
     var body: some View {
@@ -124,9 +124,9 @@ struct DiagramView: View {
     }
 }
 
-struct DiagramView_Previews: PreviewProvider {
+struct MeasurementsAxesView_Previews: PreviewProvider {
     static var previews: some View {
-        DiagramView(axes: .init(get: {
+        MeasurementsAxesView(axes: .init(get: {
             Measurer.Axes(x: 1, y: 2, z: 3)
         }, set: { _ in
             

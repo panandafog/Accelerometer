@@ -17,16 +17,16 @@ struct MeasurementsView: View {
                     Text("Device motion")
                         .font(.title2)
                         .padding()
-                    DiagramView(axes: $measurer.deviceMotion)
+                    MeasurementsAxesView(axes: $measurer.deviceMotion)
                         .padding([.bottom])
                 }
             }
-            Section(header: Spacer()) {
+            Section {
                 VStack(alignment: .leading) {
                     Text("Acceleration")
                         .font(.title2)
                         .padding()
-                    DiagramView(axes: $measurer.acceleration)
+                    MeasurementsAxesView(axes: $measurer.acceleration)
                         .padding([.bottom])
                 }
             }
@@ -35,7 +35,7 @@ struct MeasurementsView: View {
                     Text("Rotation")
                         .font(.title2)
                         .padding()
-                    DiagramView(axes: $measurer.rotation)
+                    MeasurementsAxesView(axes: $measurer.rotation)
                         .padding([.bottom])
                 }
             }
@@ -44,7 +44,7 @@ struct MeasurementsView: View {
                     Text("Magnetic field")
                         .font(.title2)
                         .padding()
-                    DiagramView(axes: $measurer.magneticField)
+                    MeasurementsAxesView(axes: $measurer.magneticField)
                         .padding([.bottom])
                 }
             }

@@ -246,6 +246,25 @@ class Measurer: ObservableObject {
         motion.stopMagnetometerUpdates()
     }
     
+    func resetAll() {
+        MeasurementType.allCases.forEach {
+            reset($0)
+        }
+    }
+    
+    func reset(_ type: MeasurementType) {
+        switch type {
+        case .acceleration:
+            acceleration?.reset()
+        case .rotation:
+            rotation?.reset()
+        case .deviceMotion:
+            deviceMotion?.reset()
+        case .magneticField:
+            magneticField?.reset()
+        }
+    }
+    
     private func prepareMotion() {
         motion.setUpdateInterval(updateInterval)
     }
@@ -304,9 +323,21 @@ extension Measurer {
             maxV = max(vector, maxV)
             minV = min(vector, minV)
         }
+        
+        func reset() {
+            minX = 0
+            minY = 0
+            minZ = 0
+            minV = 0
+            
+            maxX = 0
+            maxY = 0
+            maxZ = 0
+            maxV = 0
+        }
     }
     
-    enum MeasurementType {
+    enum MeasurementType: CaseIterable {
         case acceleration
         case rotation
         case deviceMotion

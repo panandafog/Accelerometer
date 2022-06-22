@@ -16,7 +16,7 @@
 		0B24EC2528621BC200AD3EF1 /* AccelerometerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC2428621BC200AD3EF1 /* AccelerometerUITestsLaunchTests.swift */; };
 		0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3128621BE000AD3EF1 /* Measurer.swift */; };
 		0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3328621E1C00AD3EF1 /* AppDelegate.swift */; };
-		0B24EC36286227A100AD3EF1 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC35286227A100AD3EF1 /* DiagramView.swift */; };
+		0B24EC36286227A100AD3EF1 /* MeasurementsAxesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */; };
 		0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */; };
 		0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3928622B7100AD3EF1 /* SettingsView.swift */; };
 		0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */; };
@@ -59,7 +59,7 @@
 		0B24EC2428621BC200AD3EF1 /* AccelerometerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0B24EC3128621BE000AD3EF1 /* Measurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurer.swift; sourceTree = "<group>"; };
 		0B24EC3328621E1C00AD3EF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0B24EC35286227A100AD3EF1 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
+		0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsAxesView.swift; sourceTree = "<group>"; };
 		0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementsView.swift; sourceTree = "<group>"; };
 		0B24EC3928622B7100AD3EF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRateView.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 			children = (
 				0B24EC3128621BE000AD3EF1 /* Measurer.swift */,
 				0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */,
-				0B24EC35286227A100AD3EF1 /* DiagramView.swift */,
+				0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */,
 				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
 				0B24EC4B2862690800AD3EF1 /* HeaderView.swift */,
 			);
@@ -327,7 +327,7 @@
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
 				0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */,
-				0B24EC36286227A100AD3EF1 /* DiagramView.swift in Sources */,
+				0B24EC36286227A100AD3EF1 /* MeasurementsAxesView.swift in Sources */,
 				0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */,
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
@@ -506,7 +506,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.3;
+				MARKETING_VERSION = 0.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -536,7 +536,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.3;
+				MARKETING_VERSION = 0.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;

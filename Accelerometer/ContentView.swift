@@ -15,6 +15,11 @@ struct ContentView: View {
             NavigationView {
                 MeasurementsView()
                     .navigationTitle(Text("Measurements"))
+                    .toolbar {
+                        Button("Reset limits") {
+                            measurer.resetAll()
+                        }
+                    }
             }
             .tabItem {
                 Label("Measurements", systemImage: "list.bullet")
