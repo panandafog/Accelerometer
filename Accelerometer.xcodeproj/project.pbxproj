@@ -27,6 +27,8 @@
 		0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4B2862690800AD3EF1 /* HeaderView.swift */; };
 		0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4D2862898F00AD3EF1 /* View.swift */; };
 		0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4F28628B9900AD3EF1 /* Color.swift */; };
+		0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */; };
+		0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC572863527800AD3EF1 /* DiagramView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		0B24EC4B2862690800AD3EF1 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		0B24EC4D2862898F00AD3EF1 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		0B24EC4F28628B9900AD3EF1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSummaryView.swift; sourceTree = "<group>"; };
+		0B24EC572863527800AD3EF1 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,9 +167,8 @@
 			children = (
 				0B24EC3128621BE000AD3EF1 /* Measurer.swift */,
 				0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */,
-				0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */,
-				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
-				0B24EC4B2862690800AD3EF1 /* HeaderView.swift */,
+				0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */,
+				0B24EC532863457100AD3EF1 /* Axes */,
 			);
 			path = Measurements;
 			sourceTree = "<group>";
@@ -188,6 +191,17 @@
 				0B24EC4F28628B9900AD3EF1 /* Color.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0B24EC532863457100AD3EF1 /* Axes */ = {
+			isa = PBXGroup;
+			children = (
+				0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */,
+				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
+				0B24EC4B2862690800AD3EF1 /* HeaderView.swift */,
+				0B24EC572863527800AD3EF1 /* DiagramView.swift */,
+			);
+			path = Axes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,8 +339,10 @@
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
+				0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
 				0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */,
+				0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */,
 				0B24EC36286227A100AD3EF1 /* MeasurementsAxesView.swift in Sources */,
 				0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */,
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,

@@ -342,6 +342,19 @@ extension Measurer {
         case rotation
         case deviceMotion
         case magneticField
+        
+        var name: String {
+            switch self {
+            case .acceleration:
+                return "Acceleration"
+            case .rotation:
+                return "Rotation"
+            case .deviceMotion:
+                return "Device motion"
+            case .magneticField:
+                return "Magnetic field"
+            }
+        }
     }
 }
 

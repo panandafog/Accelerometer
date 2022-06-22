@@ -13,39 +13,55 @@ struct MeasurementsView: View {
     var body: some View {
         List {
             Section(header: Spacer()) {
-                VStack(alignment: .leading) {
-                    Text("Device motion")
-                        .font(.title2)
-                        .padding()
-                    MeasurementsAxesView(axes: $measurer.deviceMotion)
-                        .padding([.bottom])
+                NavigationLink {
+                    MeasurementSummaryView(type: .deviceMotion)
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text("Device motion")
+                            .font(.title2)
+                            .padding()
+                        MeasurementsAxesView(axes: $measurer.deviceMotion)
+                            .padding([.bottom])
+                    }
                 }
             }
             Section {
-                VStack(alignment: .leading) {
-                    Text("Acceleration")
-                        .font(.title2)
-                        .padding()
-                    MeasurementsAxesView(axes: $measurer.acceleration)
-                        .padding([.bottom])
+                NavigationLink {
+                    MeasurementSummaryView(type: .acceleration)
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text("Acceleration")
+                            .font(.title2)
+                            .padding()
+                        MeasurementsAxesView(axes: $measurer.acceleration)
+                            .padding([.bottom])
+                    }
                 }
             }
             Section {
-                VStack(alignment: .leading) {
-                    Text("Rotation")
-                        .font(.title2)
-                        .padding()
-                    MeasurementsAxesView(axes: $measurer.rotation)
-                        .padding([.bottom])
+                NavigationLink {
+                    MeasurementSummaryView(type: .rotation)
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text("Rotation")
+                            .font(.title2)
+                            .padding()
+                        MeasurementsAxesView(axes: $measurer.rotation)
+                            .padding([.bottom])
+                    }
                 }
             }
             Section {
-                VStack(alignment: .leading) {
-                    Text("Magnetic field")
-                        .font(.title2)
-                        .padding()
-                    MeasurementsAxesView(axes: $measurer.magneticField)
-                        .padding([.bottom])
+                NavigationLink {
+                    MeasurementSummaryView(type: .magneticField)
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text("Magnetic field")
+                            .font(.title2)
+                            .padding()
+                        MeasurementsAxesView(axes: $measurer.magneticField)
+                            .padding([.bottom])
+                    }
                 }
             }
         }
