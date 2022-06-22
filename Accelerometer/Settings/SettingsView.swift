@@ -12,10 +12,13 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section(header: Text("General")) {
+            Section(header: Text("Measurements update interval"), footer: Text("Interval between measurements in seconds")) {
                 RefreshRateView()
                     .padding()
             }
+//            Section(header: Text("Accelerometer"), footer: Text("")) {
+//                Toggle("Remove gravity", isOn: .init(get: { measurer.removeGravity }, set: { measurer.removeGravity = $0 }))
+//            }
         }
     }
 }

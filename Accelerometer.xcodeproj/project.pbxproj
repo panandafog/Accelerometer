@@ -47,7 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B24EC0428621BBE00AD3EF1 /* Acc.Elerometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acc.Elerometer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acc.elerometer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B24EC0728621BBE00AD3EF1 /* AccelerometerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerApp.swift; sourceTree = "<group>"; };
 		0B24EC0928621BBE00AD3EF1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0B24EC0B28621BC200AD3EF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 		0B24EC0528621BBE00AD3EF1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0B24EC0428621BBE00AD3EF1 /* Acc.Elerometer.app */,
+				0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */,
 				0B24EC1428621BC200AD3EF1 /* AccelerometerTests.xctest */,
 				0B24EC1E28621BC200AD3EF1 /* AccelerometerUITests.xctest */,
 			);
@@ -207,7 +207,7 @@
 			);
 			name = Accelerometer;
 			productName = Accelerometer;
-			productReference = 0B24EC0428621BBE00AD3EF1 /* Acc.Elerometer.app */;
+			productReference = 0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0B24EC1328621BC200AD3EF1 /* AccelerometerTests */ = {
@@ -508,7 +508,7 @@
 				);
 				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
-				PRODUCT_NAME = Acc.Elerometer;
+				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -538,7 +538,7 @@
 				);
 				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
-				PRODUCT_NAME = Acc.Elerometer;
+				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

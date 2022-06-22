@@ -15,15 +15,17 @@ struct DiagramView: View {
             HStack(alignment: .bottom) {
                 VStack(alignment: .leading) {
                     Text("x")
+                        .foregroundColor(.secondary)
                     Text("y")
+                        .foregroundColor(.secondary)
                     Text("z")
+                        .foregroundColor(.secondary)
                     Text("vector")
+                        .foregroundColor(.secondary)
                 }.padding([.trailing])
                 VStack {
                     HeaderView()
                         .padding([.bottom])
-                    //                        Rectangle()
-                    //                            .fill(Color.accentColor)
                     VStack {
                         LevelView(
                             value: .init(get: {
@@ -119,8 +121,6 @@ struct DiagramView: View {
             }
         }
         .padding()
-        .background(Color.background)
-        .cornerRadius(5)
     }
 }
 

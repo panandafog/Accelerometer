@@ -14,6 +14,15 @@ struct MeasurementsView: View {
         List {
             Section(header: Spacer()) {
                 VStack(alignment: .leading) {
+                    Text("Device motion")
+                        .font(.title2)
+                        .padding()
+                    DiagramView(axes: $measurer.deviceMotion)
+                        .padding([.bottom])
+                }
+            }
+            Section(header: Spacer()) {
+                VStack(alignment: .leading) {
                     Text("Acceleration")
                         .font(.title2)
                         .padding()
@@ -27,6 +36,15 @@ struct MeasurementsView: View {
                         .font(.title2)
                         .padding()
                     DiagramView(axes: $measurer.rotation)
+                        .padding([.bottom])
+                }
+            }
+            Section {
+                VStack(alignment: .leading) {
+                    Text("Magnetic field")
+                        .font(.title2)
+                        .padding()
+                    DiagramView(axes: $measurer.magneticField)
                         .padding([.bottom])
                 }
             }

@@ -23,38 +23,58 @@ class Measurer: ObservableObject {
     
     private static let initialUpdateInterval = 0.5
     
-    @Published var rotation: Axes?
+    @Published var deviceMotion: Axes?
     @Published var acceleration: Axes?
+    @Published var rotation: Axes?
+    @Published var magneticField: Axes?
     
-    var rotationSubscription: AnyCancellable?
+    var deviceMotionSubscription: AnyCancellable?
     var accelerationSubscription: AnyCancellable?
+    var rotationSubscription: AnyCancellable?
+    var magneticFieldSubscription: AnyCancellable?
     
     var updateInterval: Double {
         get {
-            return motion.accelerometerUpdateInterval
+            let defaultValue = UserDefaults.standard.double(forKey: "MeasurementsUpdateInterval")
+            if defaultValue == 0.0 || defaultValue < Self.minUpdateInterval || defaultValue > Self.maxUpdateInterval {
+                return Self.initialUpdateInterval
+            } else {
+                return defaultValue
+            }
         }
         set {
             let roundedValue = newValue.rounded(toPlaces: Self.updateIntervalRoundPlaces)
             objectWillChange.send()
-            return motion.setUpdateInterval(roundedValue)
+            motion.setUpdateInterval(roundedValue)
+            UserDefaults.standard.set(roundedValue, forKey: "MeasurementsUpdateInterval")
         }
     }
     
-    private let motion: CMMotionManager = {
-        let motion = CMMotionManager()
-        motion.setUpdateInterval(initialUpdateInterval)
-        return motion
-    }()
+    var removeGravity: Bool {
+        get {
+            UserDefaults.standard.bool(forKey: "RemoveGravity")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "RemoveGravity")
+        }
+    }
     
-    func startGyro() {
-        //        guard motion.isGyroAvailable else {
-        //            fatalError("gyro unavailable")
-        //        }
-        guard !motion.isGyroActive else {
+    private let motion = CMMotionManager()
+    
+    func startAll() {
+        startDeviceMotion()
+        startAccelerometer()
+        startGyro()
+        startMagnetometer()
+    }
+    
+    func startDeviceMotion() {
+        guard !motion.isDeviceMotionActive else {
             return
         }
+        prepareMotion()
         
-        motion.startGyroUpdates(to: .main) { [ self ] data, error in
+        motion.startDeviceMotionUpdates(to: .main) { [ self ] data, error in
             if let error = error {
                 fatalError("\(error.localizedDescription)")
             }
@@ -62,16 +82,12 @@ class Measurer: ObservableObject {
                 fatalError("no data")
             }
             
-            let rotationRate = data.rotationRate
-            
-            if rotation == nil {
-                rotation = Axes()
-                rotationSubscription = rotation?.objectWillChange.sink { [weak self] _ in
-                    self?.objectWillChange.send()
-                }
-            }
-            
-            rotation?.setValues(x: rotationRate.x, y: rotationRate.y, z: rotationRate.z)
+            saveData(
+                x: data.userAcceleration.x,
+                y: data.userAcceleration.y,
+                z: data.userAcceleration.z,
+                type: .deviceMotion
+            )
         }
     }
     
@@ -82,6 +98,7 @@ class Measurer: ObservableObject {
         guard !motion.isAccelerometerActive else {
             return
         }
+        prepareMotion()
         
         motion.startAccelerometerUpdates(to: .main) { [ self ] data, error in
             if let error = error {
@@ -91,8 +108,67 @@ class Measurer: ObservableObject {
                 fatalError("no data")
             }
             
-            let accelerometerData = data.acceleration
+            saveData(
+                x: data.acceleration.x,
+                y: data.acceleration.y,
+                z: data.acceleration.z,
+                type: .acceleration
+            )
+        }
+    }
+    
+    func startGyro() {
+        //        guard motion.isGyroAvailable else {
+        //            fatalError("gyro unavailable")
+        //        }
+        guard !motion.isGyroActive else {
+            return
+        }
+        prepareMotion()
+        
+        motion.startGyroUpdates(to: .main) { [ self ] data, error in
+            if let error = error {
+                fatalError("\(error.localizedDescription)")
+            }
+            guard let data = data else {
+                fatalError("no data")
+            }
             
+            saveData(
+                x: data.rotationRate.x,
+                y: data.rotationRate.y,
+                z: data.rotationRate.z,
+                type: .rotation
+            )
+        }
+    }
+    
+    func startMagnetometer() {
+        guard !motion.isMagnetometerActive else {
+            return
+        }
+        prepareMotion()
+        
+        motion.startMagnetometerUpdates(to: .main) { [ self ] data, error in
+            if let error = error {
+                fatalError("\(error.localizedDescription)")
+            }
+            guard let data = data else {
+                fatalError("no data")
+            }
+            
+            saveData(
+                x: data.magneticField.x,
+                y: data.magneticField.y,
+                z: data.magneticField.z,
+                type: .magneticField
+            )
+        }
+    }
+    
+    func saveData(x: Double, y: Double, z: Double, type: MeasurementType) {
+        switch type {
+        case .acceleration:
             if acceleration == nil {
                 acceleration = Axes()
                 accelerationSubscription = acceleration?.objectWillChange.sink { [weak self] _ in
@@ -100,8 +176,62 @@ class Measurer: ObservableObject {
                 }
             }
             
-            acceleration?.setValues(x: accelerometerData.x, y: accelerometerData.y, z: accelerometerData.z)
+            acceleration?.setValues(
+                x: x,
+                y: y,
+                z: z// + (removeGravity ? 1.0 : 0.0)
+            )
+        case .rotation:
+            if rotation == nil {
+                rotation = Axes()
+                rotationSubscription = rotation?.objectWillChange.sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
+            }
+            
+            rotation?.setValues(
+                x: x,
+                y: y,
+                z: z
+            )
+        case .deviceMotion:
+            if deviceMotion == nil {
+                deviceMotion = Axes()
+                deviceMotionSubscription = deviceMotion?.objectWillChange.sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
+            }
+            
+            deviceMotion?.setValues(
+                x: x,
+                y: y,
+                z: z
+            )
+        case .magneticField:
+            if magneticField == nil {
+                magneticField = Axes()
+                magneticFieldSubscription = magneticField?.objectWillChange.sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
+            }
+            
+            magneticField?.setValues(
+                x: x,
+                y: y,
+                z: z
+            )
         }
+    }
+    
+    func stopAll() {
+        stopDeviceMotion()
+        stopAccelerometer()
+        stopGyro()
+        stopMagnetometer()
+    }
+    
+    func stopDeviceMotion() {
+        motion.stopDeviceMotionUpdates()
     }
     
     func stopAccelerometer() {
@@ -110,6 +240,14 @@ class Measurer: ObservableObject {
     
     func stopGyro() {
         motion.stopGyroUpdates()
+    }
+    
+    func stopMagnetometer() {
+        motion.stopMagnetometerUpdates()
+    }
+    
+    private func prepareMotion() {
+        motion.setUpdateInterval(updateInterval)
     }
 }
 
@@ -166,6 +304,13 @@ extension Measurer {
             maxV = max(vector, maxV)
             minV = min(vector, minV)
         }
+    }
+    
+    enum MeasurementType {
+        case acceleration
+        case rotation
+        case deviceMotion
+        case magneticField
     }
 }
 

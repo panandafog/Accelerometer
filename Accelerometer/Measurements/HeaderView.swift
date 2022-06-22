@@ -12,10 +12,13 @@ struct HeaderView: View {
     var body: some View {
         HStack {
             Text("min")
+                .foregroundColor(.secondary)
             Spacer()
             Text("current")
+                .foregroundColor(.secondary)
             Spacer()
             Text("max")
+                .foregroundColor(.secondary)
         }
     }
 }

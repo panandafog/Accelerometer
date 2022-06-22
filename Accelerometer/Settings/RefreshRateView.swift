@@ -15,11 +15,9 @@ struct RefreshRateView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("Measurements update interval")
-                Spacer()
-//                Text(String(measurer.updateInterval))
-            }
+//            Text("Measurements update interval")
+            Text(String(value, roundPlaces: Measurer.updateIntervalRoundPlaces))
+                    .foregroundColor(isEditing ? .blue : .accentColor)
             Slider(
                 value: $value,
                 in: .init(uncheckedBounds: (
@@ -37,9 +35,6 @@ struct RefreshRateView: View {
                     Text("Refresh rate")
                 }
             )
-            
-            Text(String(format: "%.\(Measurer.updateIntervalRoundPlaces)f", value))
-                    .foregroundColor(isEditing ? .blue : .accentColor)
         }
     }
 }
