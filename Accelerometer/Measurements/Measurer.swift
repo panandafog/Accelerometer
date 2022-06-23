@@ -33,6 +33,11 @@ class Measurer: ObservableObject {
     var rotationSubscription: AnyCancellable?
     var magneticFieldSubscription: AnyCancellable?
     
+    private let deviceMotionDisplayableAbsMax = 2.0
+    private let accelerationDisplayableAbsMax = 2.0
+    private let rotationDisplayableAbsMax = 20.0
+    private let magneticFieldDisplayableAbsMax = 400.0
+    
     var updateInterval: Double {
         get {
             let defaultValue = UserDefaults.standard.double(forKey: "MeasurementsUpdateInterval")
@@ -170,7 +175,7 @@ class Measurer: ObservableObject {
         switch type {
         case .acceleration:
             if acceleration == nil {
-                acceleration = Axes()
+                acceleration = Axes(displayableAbsMax: accelerationDisplayableAbsMax)
                 accelerationSubscription = acceleration?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -183,7 +188,7 @@ class Measurer: ObservableObject {
             )
         case .rotation:
             if rotation == nil {
-                rotation = Axes()
+                rotation = Axes(displayableAbsMax: rotationDisplayableAbsMax)
                 rotationSubscription = rotation?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -196,7 +201,7 @@ class Measurer: ObservableObject {
             )
         case .deviceMotion:
             if deviceMotion == nil {
-                deviceMotion = Axes()
+                deviceMotion = Axes(displayableAbsMax: deviceMotionDisplayableAbsMax)
                 deviceMotionSubscription = deviceMotion?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -209,7 +214,7 @@ class Measurer: ObservableObject {
             )
         case .magneticField:
             if magneticField == nil {
-                magneticField = Axes()
+                magneticField = Axes(displayableAbsMax: magneticFieldDisplayableAbsMax)
                 magneticFieldSubscription = magneticField?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -307,12 +312,18 @@ extension Measurer {
         @Published var maxV = 0.0
         @Published var minV = 0.0
         
-        init() {  }
+        let displayableAbsMax: Double
         
-        init(x: Double, y: Double, z: Double) {
+        init(displayableAbsMax: Double) {
+            self.displayableAbsMax = displayableAbsMax
+        }
+        
+        init(x: Double, y: Double, z: Double, displayableAbsMax: Double) {
             self.x = x
             self.y = y
             self.z = z
+            
+            self.displayableAbsMax = displayableAbsMax
         }
         
         func setValues(x: Double, y: Double, z: Double) {

@@ -12,6 +12,13 @@ extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
+    
+    @inlinable
+    func modify<T: View>(
+        @ViewBuilder modifier: (Self) -> T
+    ) -> T {
+        modifier(self)
+    }
 }
 
 struct RoundedCorner: Shape {

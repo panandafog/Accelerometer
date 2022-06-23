@@ -127,7 +127,7 @@ struct MeasurementsAxesView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     static var previews: some View {
         MeasurementsAxesView(axes: .init(get: {
-            Measurer.Axes(x: 1, y: 2, z: 3)
+            Measurer.Axes(x: 1, y: 2, z: 3, displayableAbsMax: 5.0)
         }, set: { _ in
             
         }))
