@@ -206,14 +206,30 @@
 		0B24EC532863457100AD3EF1 /* Axes */ = {
 			isa = PBXGroup;
 			children = (
-				0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */,
-				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
-				0B24EC4B2862690800AD3EF1 /* HeaderView.swift */,
-				0B24EC572863527800AD3EF1 /* DiagramView.swift */,
-				0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */,
 				0BFBA1E728737CC300529B50 /* Axes.swift */,
+				0B548E172876E7AE00EDCDA8 /* Diagram */,
+				0B548E182876E7D800EDCDA8 /* Table */,
 			);
 			path = Axes;
+			sourceTree = "<group>";
+		};
+		0B548E172876E7AE00EDCDA8 /* Diagram */ = {
+			isa = PBXGroup;
+			children = (
+				0B24EC572863527800AD3EF1 /* DiagramView.swift */,
+				0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */,
+			);
+			path = Diagram;
+			sourceTree = "<group>";
+		};
+		0B548E182876E7D800EDCDA8 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				0B24EC462862496C00AD3EF1 /* LevelView.swift */,
+				0B24EC4B2862690800AD3EF1 /* HeaderView.swift */,
+				0B24EC35286227A100AD3EF1 /* MeasurementsAxesView.swift */,
+			);
+			path = Table;
 			sourceTree = "<group>";
 		};
 		0B801284286DA9A000F4AA85 /* Other */ = {
