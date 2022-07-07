@@ -21,23 +21,28 @@ struct MeasurementSummaryView: View {
     }
     
     var body: some View {
+        GeometryReader { geometryVStack in
         VStack {
             Spacer()
-            GeometryReader { geometry in
-                let size = geometry.size.width * 0.5
-                HStack {
-                    DiagramView(axes: axesBinding)
-                        .frame(width: size, height: size)
-                    Spacer()
-                }
-                .padding([.horizontal])
-                .padding()
-            }
+//            HStack(alignment: .center) {
+//                GeometryReader { geometryHStack in
+//                    let size = geometryHStack.size.width * 0.5
+//                    DiagramView(axes: axesBinding)
+//                        .frame(width: size, height: size)
+//                }
+//            }
+            DiagramView(axes: axesBinding)
+            .frame(height: geometryVStack.size.width * 0.5)
+            .padding([.horizontal])
+            .padding()
+            Spacer()
+                .frame(height: geometryVStack.size.height * 0.05)
             MeasurementsAxesView(axes: axesBinding)
-                .padding([.bottom])
+                .padding()
             Spacer()
         }
         .navigationTitle(type.name)
+        }
     }
 }
 
