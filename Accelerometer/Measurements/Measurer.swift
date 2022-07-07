@@ -181,7 +181,7 @@ class Measurer: ObservableObject {
                 }
             }
             
-            acceleration?.setValues(
+            acceleration?.properties.setValues(
                 x: x,
                 y: y,
                 z: z// + (removeGravity ? 1.0 : 0.0)
@@ -194,7 +194,7 @@ class Measurer: ObservableObject {
                 }
             }
             
-            rotation?.setValues(
+            rotation?.properties.setValues(
                 x: x,
                 y: y,
                 z: z
@@ -207,7 +207,7 @@ class Measurer: ObservableObject {
                 }
             }
             
-            deviceMotion?.setValues(
+            deviceMotion?.properties.setValues(
                 x: x,
                 y: y,
                 z: z
@@ -220,7 +220,7 @@ class Measurer: ObservableObject {
                 }
             }
             
-            magneticField?.setValues(
+            magneticField?.properties.setValues(
                 x: x,
                 y: y,
                 z: z
@@ -276,77 +276,6 @@ class Measurer: ObservableObject {
 }
 
 extension Measurer {
-    
-    class Axes: ObservableObject {
-        @Published private (set) var x = 0.0 {
-            didSet {
-                minX = min(x, minX)
-                maxX = max(x, maxX)
-            }
-        }
-        @Published private (set) var y = 0.0 {
-            didSet {
-                minY = min(y, minY)
-                maxY = max(y, maxY)
-            }
-        }
-        @Published private (set) var z = 0.0 {
-            didSet {
-                minZ = min(z, minZ)
-                maxZ = max(z, maxZ)
-            }
-        }
-        
-        @Published var minX = 0.0
-        @Published var minY = 0.0
-        @Published var minZ = 0.0
-        
-        @Published var maxX = 0.0
-        @Published var maxY = 0.0
-        @Published var maxZ = 0.0
-        
-        var vector: Double {
-            sqrt(pow(x, 2.0) + pow(y, 2.0) + pow(z, 2.0))
-        }
-        
-        @Published var maxV = 0.0
-        @Published var minV = 0.0
-        
-        let displayableAbsMax: Double
-        
-        init(displayableAbsMax: Double) {
-            self.displayableAbsMax = displayableAbsMax
-        }
-        
-        init(x: Double, y: Double, z: Double, displayableAbsMax: Double) {
-            self.x = x
-            self.y = y
-            self.z = z
-            
-            self.displayableAbsMax = displayableAbsMax
-        }
-        
-        func setValues(x: Double, y: Double, z: Double) {
-            self.x = x
-            self.y = y
-            self.z = z
-            
-            maxV = max(vector, maxV)
-            minV = min(vector, minV)
-        }
-        
-        func reset() {
-            minX = 0
-            minY = 0
-            minZ = 0
-            minV = 0
-            
-            maxX = 0
-            maxY = 0
-            maxZ = 0
-            maxV = 0
-        }
-    }
     
     enum MeasurementType: CaseIterable {
         case acceleration

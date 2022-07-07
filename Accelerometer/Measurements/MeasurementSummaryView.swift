@@ -11,31 +11,31 @@ struct MeasurementSummaryView: View {
     @ObservedObject var measurer = Measurer.shared
     let type: Measurer.MeasurementType
     
-    var axesBinding: Binding<Measurer.Axes?> {
+    var axesBinding: Binding<Axes?> {
         switch type {
         case .deviceMotion:
-            return Binding<Measurer.Axes?>.init(
+            return Binding<Axes?>.init(
                 get: {
                     measurer.deviceMotion
                 },
                 set: { _ in }
             )
         case .acceleration:
-            return Binding<Measurer.Axes?>.init(
+            return Binding<Axes?>.init(
                 get: {
                     measurer.acceleration
                 },
                 set: { _ in }
             )
         case .rotation:
-            return Binding<Measurer.Axes?>.init(
+            return Binding<Axes?>.init(
                 get: {
                     measurer.rotation
                 },
                 set: { _ in }
             )
         case .magneticField:
-            return Binding<Measurer.Axes?>.init(
+            return Binding<Axes?>.init(
                 get: {
                     measurer.magneticField
                 },
@@ -49,7 +49,7 @@ struct MeasurementSummaryView: View {
             Spacer()
             DiagramView(axes: axesBinding)
             Spacer()
-            MeasurementsAxesView(axes: $measurer.deviceMotion)
+            MeasurementsAxesView(axes: axesBinding)
                 .padding([.bottom])
             Spacer()
         }

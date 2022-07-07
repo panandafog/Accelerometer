@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MeasurementsAxesView: View {
-    @Binding var axes: Measurer.Axes?
+    @Binding var axes: Axes?
     
     var body: some View {
         VStack {
@@ -29,12 +29,12 @@ struct MeasurementsAxesView: View {
                     VStack {
                         LevelView(
                             value: .init(get: {
-                                axes?.x
+                                axes?.properties.x
                             }, set: { value in
                             }),
                             max: .init(
                                 get: {
-                                    axes?.maxX
+                                    axes?.properties.maxX
                                 },
                                 set: { value in
                                     
@@ -42,7 +42,7 @@ struct MeasurementsAxesView: View {
                             ),
                             min: .init(
                                 get: {
-                                    axes?.minX
+                                    axes?.properties.minX
                                 },
                                 set: { value in
                                     
@@ -51,12 +51,12 @@ struct MeasurementsAxesView: View {
                         )
                         LevelView(
                             value: .init(get: {
-                                axes?.y
+                                axes?.properties.y
                             }, set: { value in
                             }),
                             max: .init(
                                 get: {
-                                    axes?.maxY
+                                    axes?.properties.maxY
                                 },
                                 set: { value in
                                     
@@ -64,7 +64,7 @@ struct MeasurementsAxesView: View {
                             ),
                             min: .init(
                                 get: {
-                                    axes?.minY
+                                    axes?.properties.minY
                                 },
                                 set: { value in
                                     
@@ -73,12 +73,12 @@ struct MeasurementsAxesView: View {
                         )
                         LevelView(
                             value: .init(get: {
-                                axes?.z
+                                axes?.properties.z
                             }, set: { value in
                             }),
                             max: .init(
                                 get: {
-                                    axes?.maxZ
+                                    axes?.properties.maxZ
                                 },
                                 set: { value in
                                     
@@ -86,7 +86,7 @@ struct MeasurementsAxesView: View {
                             ),
                             min: .init(
                                 get: {
-                                    axes?.minZ
+                                    axes?.properties.minZ
                                 },
                                 set: { value in
                                     
@@ -95,13 +95,13 @@ struct MeasurementsAxesView: View {
                         )
                         LevelView(
                             value: .init(get: {
-                                axes?.vector
+                                axes?.properties.vector
                             }, set: { value in
                                 
                             }),
                             max: .init(
                                 get: {
-                                    axes?.maxV
+                                    axes?.properties.maxV
                                 },
                                 set: { value in
                                     
@@ -109,7 +109,7 @@ struct MeasurementsAxesView: View {
                             ),
                             min: .init(
                                 get: {
-                                    axes?.minV
+                                    axes?.properties.minV
                                 },
                                 set: { value in
                                     
@@ -127,7 +127,7 @@ struct MeasurementsAxesView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     static var previews: some View {
         MeasurementsAxesView(axes: .init(get: {
-            Measurer.Axes(x: 1, y: 2, z: 3, displayableAbsMax: 5.0)
+            Axes(displayableAbsMax: 1.0)
         }, set: { _ in
             
         }))
