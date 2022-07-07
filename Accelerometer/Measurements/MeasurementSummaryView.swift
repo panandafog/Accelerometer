@@ -24,15 +24,15 @@ struct MeasurementSummaryView: View {
         VStack {
             Spacer()
             GeometryReader { geometry in
-                let size = geometry.size.width * 0.33
+                let size = geometry.size.width * 0.5
                 HStack {
-                    Spacer()
                     DiagramView(axes: axesBinding)
                         .frame(width: size, height: size)
+                    Spacer()
                 }
                 .padding([.horizontal])
+                .padding()
             }
-            Spacer()
             MeasurementsAxesView(axes: axesBinding)
                 .padding([.bottom])
             Spacer()
@@ -43,6 +43,10 @@ struct MeasurementSummaryView: View {
 
 struct MeasurementSummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        MeasurementSummaryView(type: .deviceMotion)
+        let measurer = Measurer.shared
+        let view = MeasurementSummaryView(measurer: measurer, type: .deviceMotion)
+        view.measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+        view.measurer.deviceMotion?.properties.setValues(x: 0.5, y: 1, z: 0.2)
+        return view
     }
 }
