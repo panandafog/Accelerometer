@@ -33,9 +33,9 @@ class Measurer: ObservableObject {
     var rotationSubscription: AnyCancellable?
     var magneticFieldSubscription: AnyCancellable?
     
-    private let deviceMotionDisplayableAbsMax = 2.0
-    private let accelerationDisplayableAbsMax = 2.0
-    private let rotationDisplayableAbsMax = 20.0
+    private let deviceMotionDisplayableAbsMax = 0.1
+    private let accelerationDisplayableAbsMax = 1.0
+    private let rotationDisplayableAbsMax = 2.0
     private let magneticFieldDisplayableAbsMax = 400.0
     
     var updateInterval: Double {
@@ -97,9 +97,6 @@ class Measurer: ObservableObject {
     }
     
     func startAccelerometer() {
-        //        guard motion.isAccelerometerActive else {
-        //            fatalError("accelerometer unavailable")
-        //        }
         guard !motion.isAccelerometerActive else {
             return
         }
@@ -123,9 +120,6 @@ class Measurer: ObservableObject {
     }
     
     func startGyro() {
-        //        guard motion.isGyroAvailable else {
-        //            fatalError("gyro unavailable")
-        //        }
         guard !motion.isGyroActive else {
             return
         }
@@ -270,6 +264,19 @@ class Measurer: ObservableObject {
         }
     }
     
+    func axes(of type: MeasurementType) -> Axes? {
+        switch type {
+        case .acceleration:
+            return acceleration
+        case .rotation:
+            return rotation
+        case .deviceMotion:
+            return deviceMotion
+        case .magneticField:
+            return magneticField
+        }
+    }
+    
     private func prepareMotion() {
         motion.setUpdateInterval(updateInterval)
     }
@@ -293,6 +300,19 @@ extension Measurer {
                 return "Device motion"
             case .magneticField:
                 return "Magnetic field"
+            }
+        }
+        
+        var unit: String {
+            switch self {
+            case .acceleration:
+                return "G"
+            case .rotation:
+                return "rad / s"
+            case .deviceMotion:
+                return "G"
+            case .magneticField:
+                return "μT"
             }
         }
     }

@@ -18,7 +18,20 @@ final class Axes: ObservableObject {
     }
     
     func reset() {
-        properties = .zero
+        properties = AnimatableProperties(
+            x: 0,
+            y: 0,
+            z: 0,
+            minX: 0,
+            minY: 0,
+            minZ: 0,
+            maxX: 0,
+            maxY: 0,
+            maxZ: 0,
+            maxV: 0,
+            minV: 0,
+            displayableAbsMax: properties.displayableAbsMax
+        )
     }
 }
 

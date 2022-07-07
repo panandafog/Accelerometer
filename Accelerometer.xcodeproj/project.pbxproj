@@ -30,6 +30,7 @@
 		0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4F28628B9900AD3EF1 /* Color.swift */; };
 		0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */; };
 		0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC572863527800AD3EF1 /* DiagramView.swift */; };
+		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
 		0BFBA1E828737CC300529B50 /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFBA1E728737CC300529B50 /* Axes.swift */; };
@@ -79,6 +80,7 @@
 		0B24EC4F28628B9900AD3EF1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSummaryView.swift; sourceTree = "<group>"; };
 		0B24EC572863527800AD3EF1 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
+		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
 		0BFBA1E728737CC300529B50 /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				0B24EC3128621BE000AD3EF1 /* Measurer.swift */,
 				0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */,
+				0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */,
 				0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */,
 				0B24EC532863457100AD3EF1 /* Axes */,
 			);
@@ -375,6 +378,7 @@
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
+				0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */,
 				0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */,
 				0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,

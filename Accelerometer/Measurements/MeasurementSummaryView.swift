@@ -12,42 +12,26 @@ struct MeasurementSummaryView: View {
     let type: Measurer.MeasurementType
     
     var axesBinding: Binding<Axes?> {
-        switch type {
-        case .deviceMotion:
-            return Binding<Axes?>.init(
-                get: {
-                    measurer.deviceMotion
-                },
-                set: { _ in }
-            )
-        case .acceleration:
-            return Binding<Axes?>.init(
-                get: {
-                    measurer.acceleration
-                },
-                set: { _ in }
-            )
-        case .rotation:
-            return Binding<Axes?>.init(
-                get: {
-                    measurer.rotation
-                },
-                set: { _ in }
-            )
-        case .magneticField:
-            return Binding<Axes?>.init(
-                get: {
-                    measurer.magneticField
-                },
-                set: { _ in }
-            )
-        }
+        Binding<Axes?>.init(
+            get: {
+                measurer.axes(of: type)
+            },
+            set: { _ in }
+        )
     }
     
     var body: some View {
         VStack {
             Spacer()
-            DiagramView(axes: axesBinding)
+            GeometryReader { geometry in
+                let size = geometry.size.width * 0.33
+                HStack {
+                    Spacer()
+                    DiagramView(axes: axesBinding)
+                        .frame(width: size, height: size)
+                }
+                .padding([.horizontal])
+            }
             Spacer()
             MeasurementsAxesView(axes: axesBinding)
                 .padding([.bottom])

@@ -21,16 +21,16 @@ struct TriangleDiagramShape: Shape {
         }
     }
     
-    func pointX(viewWidth: Double, viewHeight: Double) -> CGPoint {
-        let zeroX = viewWidth / 2.0
-        let zeroY = viewHeight / 2.0
+    func pointX(width: Double, height: Double) -> CGPoint {
+        let zeroX = width / 2.0
+        let zeroY = height / 2.0
         
         guard let axes = axes else {
             return CGPoint(x: zeroX, y: zeroY)
         }
         
-        let maxX = viewWidth / 2.0
-        let hypotenuse = maxXValue(maxX: maxX) * (showMax ? 1.0 : (abs(axes.x) / axes.displayableAbsMax))
+        let maxX = width / 2.0
+        let hypotenuse = maxXValue(maxX: maxX) * (showMax ? 1.0 : (min(abs(axes.x), axes.displayableAbsMax) / axes.displayableAbsMax))
         
         return CGPoint(
             x: zeroX - (hypotenuse * sin(60.0 * Double.pi / 180)),
@@ -38,32 +38,32 @@ struct TriangleDiagramShape: Shape {
         )
     }
     
-    func pointY(viewWidth: Double, viewHeight: Double) -> CGPoint {
-        let zeroX = viewWidth / 2.0
-        let zeroY = viewHeight / 2.0
+    func pointY(width: Double, height: Double) -> CGPoint {
+        let zeroX = width / 2.0
+        let zeroY = height / 2.0
         
         guard let axes = axes else {
             return CGPoint(x: zeroX, y: zeroY)
         }
         
-        let maxY = viewHeight / 2.0
+        let maxY = height / 2.0
         
         return CGPoint(
             x: zeroX,
-            y: zeroY - (showMax ? 1.0 : (abs(axes.y) / axes.displayableAbsMax)) * maxY
+            y: zeroY - (showMax ? 1.0 : (min(abs(axes.y), axes.displayableAbsMax) / axes.displayableAbsMax)) * maxY
         )
     }
     
-    func pointZ(viewWidth: Double, viewHeight: Double) -> CGPoint {
-        let zeroX = viewWidth / 2.0
-        let zeroY = viewHeight / 2.0
+    func pointZ(width: Double, height: Double) -> CGPoint {
+        let zeroX = width / 2.0
+        let zeroY = height / 2.0
         
         guard let axes = axes else {
             return CGPoint(x: zeroX, y: zeroY)
         }
         
-        let maxX = viewWidth / 2.0
-        let hypotenuse = maxXValue(maxX: maxX) * (showMax ? 1.0 : (abs(axes.z) / axes.displayableAbsMax))
+        let maxX = width / 2.0
+        let hypotenuse = maxXValue(maxX: maxX) * (showMax ? 1.0 : (min(abs(axes.z), axes.displayableAbsMax) / axes.displayableAbsMax))
         
         return CGPoint(
             x: zeroX + (hypotenuse * sin(60.0 * Double.pi / 180)),
@@ -78,12 +78,14 @@ struct TriangleDiagramShape: Shape {
     
     func path(in rect: CGRect) -> Path {
         Path { path in
-//            let width: CGFloat = min(rect.width, rect.height)
-//            let height = width
+            let width: CGFloat = min(rect.width, rect.height)
+            //            let width: CGFloat = rect.width
+            let height = width
+            //            let height = rect.height
             
-            let xPoint = pointX(viewWidth: rect.width, viewHeight: rect.height)
-            let yPoint = pointY(viewWidth: rect.width, viewHeight: rect.height)
-            let zPoint = pointZ(viewWidth: rect.width, viewHeight: rect.height)
+            let xPoint = pointX(width: width, height: height)
+            let yPoint = pointY(width: width, height: height)
+            let zPoint = pointZ(width: width, height: height)
             
             path.move(to: xPoint)
             path.addLine(to: yPoint)

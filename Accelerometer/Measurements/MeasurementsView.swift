@@ -16,52 +16,28 @@ struct MeasurementsView: View {
                 NavigationLink {
                     MeasurementSummaryView(type: .deviceMotion)
                 } label: {
-                    VStack(alignment: .leading) {
-                        Text("Device motion")
-                            .font(.title2)
-                            .padding()
-                        MeasurementsAxesView(axes: $measurer.deviceMotion)
-                            .padding([.bottom])
-                    }
+                    MeasurementPreview(type: .deviceMotion)
                 }
             }
             Section {
                 NavigationLink {
                     MeasurementSummaryView(type: .acceleration)
                 } label: {
-                    VStack(alignment: .leading) {
-                        Text("Acceleration")
-                            .font(.title2)
-                            .padding()
-                        MeasurementsAxesView(axes: $measurer.acceleration)
-                            .padding([.bottom])
-                    }
+                    MeasurementPreview(type: .acceleration)
                 }
             }
             Section {
                 NavigationLink {
                     MeasurementSummaryView(type: .rotation)
                 } label: {
-                    VStack(alignment: .leading) {
-                        Text("Rotation")
-                            .font(.title2)
-                            .padding()
-                        MeasurementsAxesView(axes: $measurer.rotation)
-                            .padding([.bottom])
-                    }
+                    MeasurementPreview(type: .rotation)
                 }
             }
             Section {
                 NavigationLink {
                     MeasurementSummaryView(type: .magneticField)
                 } label: {
-                    VStack(alignment: .leading) {
-                        Text("Magnetic field")
-                            .font(.title2)
-                            .padding()
-                        MeasurementsAxesView(axes: $measurer.magneticField)
-                            .padding([.bottom])
-                    }
+                    MeasurementPreview(type: .magneticField)
                 }
             }
         }
