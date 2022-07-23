@@ -26,7 +26,7 @@ struct TriangleDiagramShape: Shape {
             radians: atan(width / height)
         )
     }
-    
+     
     func pointX(width: Double, height: Double) -> CGPoint {
         let zeroX = width / 2.0
         let zeroY = height / 2.0
