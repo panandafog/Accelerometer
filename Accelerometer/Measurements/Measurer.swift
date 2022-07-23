@@ -277,6 +277,13 @@ class Measurer: ObservableObject {
         }
     }
     
+    func valueLabel(of type: MeasurementType) -> String? {
+        String(
+            axes(of: type)?.properties.vector ?? 0.0,
+            roundPlaces: Measurer.measurementsDisplayRoundPlaces
+        ) + " \(type.unit)"
+    }
+    
     private func prepareMotion() {
         motion.setUpdateInterval(updateInterval)
     }
@@ -297,7 +304,7 @@ extension Measurer {
             case .rotation:
                 return "Rotation"
             case .deviceMotion:
-                return "Device motion"
+                return "User acceleration"
             case .magneticField:
                 return "Magnetic field"
             }
@@ -313,6 +320,31 @@ extension Measurer {
                 return "G"
             case .magneticField:
                 return "μT"
+            }
+        }
+        
+        var description: String {
+            switch self {
+            case .acceleration:
+                return """
+The acceleration measured by the accelerometer in G's (gravitational force).
+A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
+"""
+            case .rotation:
+                return """
+The rotation rate as measured by the device’s gyroscope in radinans per second (rad / s).
+"""
+            case .deviceMotion:
+                return """
+The acceleration that the user is giving to the device.
+The acceleration measured by the accelerometer in G's (gravitational force).
+A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
+"""
+            case .magneticField:
+                return """
+The total magnetic field which is equal to the Earth’s geomagnetic field plus bias introduced from the device itself and its surroundings.
+The magnetic field is measured in microteslas (μT), equal to 10^−6 teslas.
+"""
             }
         }
     }

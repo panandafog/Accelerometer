@@ -30,7 +30,7 @@ struct MeasurementPreview: View {
                 Text(type.name)
                     .font(.title2)
                     .padding()
-                Text(String(axes?.properties.vector ?? 0.0, roundPlaces: Measurer.measurementsDisplayRoundPlaces) + " \(type.unit)")
+                Text(measurer.valueLabel(of: type) ?? "0.0")
                     .padding()
             }.layoutPriority(1)
             Spacer()
@@ -39,6 +39,7 @@ struct MeasurementPreview: View {
                 DiagramView(axes: axesBinding)
                     .frame(width: 70, height: 70)
             }
+            .frame(minWidth: 70, minHeight: 70)
             .padding()
         }
     }
