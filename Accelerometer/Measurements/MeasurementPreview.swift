@@ -32,18 +32,22 @@ struct MeasurementPreview: View {
                     .padding()
                 Text(String(axes?.properties.vector ?? 0.0, roundPlaces: Measurer.measurementsDisplayRoundPlaces) + " \(type.unit)")
                     .padding()
-            }
+            }.layoutPriority(1)
             Spacer()
-            DiagramView(axes: axesBinding)
-                .frame(width: 100, height: 100, alignment: .trailing)
-                .padding()
-                .padding([.top])
+            ZStack(alignment: .trailing) {
+                Color.clear
+                DiagramView(axes: axesBinding)
+                    .frame(width: 70, height: 70)
+            }
+            .padding()
         }
     }
 }
 
 struct MeasurementPreview_Previews: PreviewProvider {
     static var previews: some View {
-        MeasurementSummaryView(type: .deviceMotion)
+        let measurer = Measurer.shared
+        measurer.saveData(x: 0.03, y: 0.03, z: 0.03, type: .deviceMotion)
+        return MeasurementPreview(measurer: measurer, type: .deviceMotion)
     }
 }

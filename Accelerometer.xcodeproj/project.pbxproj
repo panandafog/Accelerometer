@@ -30,8 +30,11 @@
 		0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4F28628B9900AD3EF1 /* Color.swift */; };
 		0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */; };
 		0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC572863527800AD3EF1 /* DiagramView.swift */; };
+		0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
+		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
+		0BBDC4E0288C188400CE6061 /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* Axe.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
 		0BFBA1E828737CC300529B50 /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFBA1E728737CC300529B50 /* Axes.swift */; };
 /* End PBXBuildFile section */
@@ -80,8 +83,11 @@
 		0B24EC4F28628B9900AD3EF1 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSummaryView.swift; sourceTree = "<group>"; };
 		0B24EC572863527800AD3EF1 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
+		0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramAxesNamesStyle.swift; sourceTree = "<group>"; };
+		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
+		0BBDC4DF288C188400CE6061 /* Axe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
 		0BFBA1E728737CC300529B50 /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -212,6 +218,7 @@
 				0BFBA1E728737CC300529B50 /* Axes.swift */,
 				0B548E172876E7AE00EDCDA8 /* Diagram */,
 				0B548E182876E7D800EDCDA8 /* Table */,
+				0BBDC4DF288C188400CE6061 /* Axe.swift */,
 			);
 			path = Axes;
 			sourceTree = "<group>";
@@ -221,6 +228,8 @@
 			children = (
 				0B24EC572863527800AD3EF1 /* DiagramView.swift */,
 				0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */,
+				0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */,
+				0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */,
 			);
 			path = Diagram;
 			sourceTree = "<group>";
@@ -390,7 +399,10 @@
 				0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */,
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
+				0BBDC4E0288C188400CE6061 /* Axe.swift in Sources */,
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
+				0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */,
+				0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */,
 				0BFBA1E828737CC300529B50 /* Axes.swift in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
