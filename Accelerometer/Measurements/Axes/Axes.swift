@@ -165,6 +165,6 @@ extension Axes {
     
     var intensityColor: Color {
         let intensity = abs(properties.vector) / properties.displayableAbsMax
-        return Color.intensity(intensity, opacity: 1.0)
+        return Color.intensity(intensity)
     }
 }
