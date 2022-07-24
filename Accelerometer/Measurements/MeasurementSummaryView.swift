@@ -42,6 +42,11 @@ struct MeasurementSummaryView: View {
             }
             .navigationTitle(type.name)
         }
+        .toolbar {
+            Button("Reset min / max") {
+                measurer.reset(type)
+            }
+        }
     }
 }
 
