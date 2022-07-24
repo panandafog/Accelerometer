@@ -42,5 +42,6 @@ struct RefreshRateView: View {
 struct RefreshRateView_Previews: PreviewProvider {
     static var previews: some View {
         RefreshRateView()
+            .previewLayout(.sizeThatFits)
     }
 }

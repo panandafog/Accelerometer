@@ -39,5 +39,6 @@ struct LevelView_Previews: PreviewProvider {
                 set: { _ in }
             )
         )
+        .previewLayout(.sizeThatFits)
     }
 }

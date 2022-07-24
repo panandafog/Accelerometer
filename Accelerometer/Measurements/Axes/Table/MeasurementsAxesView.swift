@@ -131,5 +131,6 @@ struct MeasurementsAxesView_Previews: PreviewProvider {
         }, set: { _ in
             
         }))
+        .previewLayout(.sizeThatFits)
     }
 }

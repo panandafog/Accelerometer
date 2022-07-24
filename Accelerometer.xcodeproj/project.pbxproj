@@ -217,11 +217,11 @@
 		0B24EC532863457100AD3EF1 /* Axes */ = {
 			isa = PBXGroup;
 			children = (
+				0BBDC4DF288C188400CE6061 /* Axe.swift */,
 				0BFBA1E728737CC300529B50 /* Axes.swift */,
+				0B34710C288C5491004E87FA /* AxesSummaryView.swift */,
 				0B548E172876E7AE00EDCDA8 /* Diagram */,
 				0B548E182876E7D800EDCDA8 /* Table */,
-				0BBDC4DF288C188400CE6061 /* Axe.swift */,
-				0B34710C288C5491004E87FA /* AxesSummaryView.swift */,
 			);
 			path = Axes;
 			sourceTree = "<group>";

@@ -14,30 +14,30 @@ struct MeasurementsView: View {
         List {
             Section(header: Spacer()) {
                 NavigationLink {
-                    MeasurementSummaryView(type: .deviceMotion)
+                    MeasurementSummaryView(measurer: measurer, type: .deviceMotion)
                 } label: {
-                    MeasurementPreview(type: .deviceMotion)
+                    MeasurementPreview(measurer: measurer, type: .deviceMotion)
                 }
             }
             Section {
                 NavigationLink {
-                    MeasurementSummaryView(type: .acceleration)
+                    MeasurementSummaryView(measurer: measurer, type: .acceleration)
                 } label: {
-                    MeasurementPreview(type: .acceleration)
+                    MeasurementPreview(measurer: measurer, type: .acceleration)
                 }
             }
             Section {
                 NavigationLink {
-                    MeasurementSummaryView(type: .rotation)
+                    MeasurementSummaryView(measurer: measurer, type: .rotation)
                 } label: {
-                    MeasurementPreview(type: .rotation)
+                    MeasurementPreview(measurer: measurer, type: .rotation)
                 }
             }
             Section {
                 NavigationLink {
-                    MeasurementSummaryView(type: .magneticField)
+                    MeasurementSummaryView(measurer: measurer, type: .magneticField)
                 } label: {
-                    MeasurementPreview(type: .magneticField)
+                    MeasurementPreview(measurer: measurer, type: .magneticField)
                 }
             }
         }
@@ -45,7 +45,16 @@ struct MeasurementsView: View {
 }
 
 struct MeasurementsView_Previews: PreviewProvider {
+    
+    static let measurer: Measurer = {
+        let measurer = Measurer()
+        Measurer.MeasurementType.allCases.forEach { type in
+            measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: type)
+        }
+        return measurer
+    }()
+    
     static var previews: some View {
-        MeasurementsView()
+        MeasurementsView(measurer: measurer)
     }
 }

@@ -23,13 +23,13 @@ struct TriangleDiagramShape: Shape {
     
     func angle(width: Double, height: Double) -> Double {
         .degrees(
-            radians: atan(width / height)
+            radians: atan((width * 0.5) / (height * (1.0 / 3.0)))
         )
     }
      
     func pointX(width: Double, height: Double) -> CGPoint {
         let zeroX = width / 2.0
-        let zeroY = height / 2.0
+        let zeroY = height / 1.5
         
         guard let axes = axes else {
             return CGPoint(x: zeroX, y: zeroY)
@@ -47,13 +47,13 @@ struct TriangleDiagramShape: Shape {
     
     func pointY(width: Double, height: Double) -> CGPoint {
         let zeroX = width / 2.0
-        let zeroY = height / 2.0
+        let zeroY = height / 1.5
         
         guard let axes = axes else {
             return CGPoint(x: zeroX, y: zeroY)
         }
         
-        let maxY = height / 2.0
+        let maxY = zeroY
         
         return CGPoint(
             x: zeroX,
@@ -63,7 +63,7 @@ struct TriangleDiagramShape: Shape {
     
     func pointZ(width: Double, height: Double) -> CGPoint {
         let zeroX = width / 2.0
-        let zeroY = height / 2.0
+        let zeroY = height / 1.5
         
         guard let axes = axes else {
             return CGPoint(x: zeroX, y: zeroY)

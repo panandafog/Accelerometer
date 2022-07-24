@@ -30,7 +30,7 @@ struct MeasurementPreview: View {
                 Text(type.name)
                     .font(.title2)
                     .padding()
-                Text(measurer.valueLabel(of: type) ?? "0.0")
+                AxesSummaryView(type: type)
                     .padding()
             }.layoutPriority(1)
             Spacer()
@@ -46,9 +46,15 @@ struct MeasurementPreview: View {
 }
 
 struct MeasurementPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        let measurer = Measurer.shared
+    
+    static let measurer: Measurer = {
+        let measurer = Measurer()
         measurer.saveData(x: 0.03, y: 0.03, z: 0.03, type: .deviceMotion)
-        return MeasurementPreview(measurer: measurer, type: .deviceMotion)
+        return measurer
+    }()
+    
+    static var previews: some View {
+        MeasurementPreview(measurer: measurer, type: .deviceMotion)
+            .previewLayout(.sizeThatFits)
     }
 }

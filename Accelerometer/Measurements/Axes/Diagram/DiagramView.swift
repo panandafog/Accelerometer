@@ -73,28 +73,14 @@ struct DiagramView: View {
     }
 }
 
-struct DiagramView_Previews: PreviewProvider {
-    static var previews: some View {
-        DiagramView(
-            axes: .init(get: {
-                let axes = Axes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
-                return axes
-            }, set: { _ in
-                
-            })
-        ).frame(width: 120, height: 120)
-    }
-}
-
 private extension Axe {
     
     var alignment: Alignment {
         switch self {
         case .x:
-            return .top
-        case .y:
             return .bottomLeading
+        case .y:
+            return .top
         case .z:
             return .bottomTrailing
         }
@@ -104,17 +90,53 @@ private extension Axe {
         
         switch self {
         case .x:
-            return (0, size.height * multiplier)
-        case .y:
             return (
                 size.width * multiplier,
                 -1 * (size.height * multiplier * 0.5)
             )
+        case .y:
+            return (0, size.height * multiplier)
         case .z:
             return (
                 -1 * (size.width * multiplier),
-                -1 * (size.height * multiplier * 0.5)
+                 -1 * (size.height * multiplier * 0.5)
             )
+        }
+    }
+}
+
+struct DiagramView_Previews: PreviewProvider {
+    
+    static let axesBinding1: Binding<Axes?> = {
+        .init(
+            get: {
+                let axes = Axes(displayableAbsMax: 1.0)
+                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
+                return axes
+            },
+            set: { _ in }
+        )
+    }()
+    
+    static let axesBinding2: Binding<Axes?> = {
+        .init(
+            get: {
+                let axes = Axes(displayableAbsMax: 1.0)
+                axes.properties.setValues(x: 0.2, y: 0.5, z: 0.7)
+                return axes
+            },
+            set: { _ in }
+        )
+    }()
+    
+    static var previews: some View {
+        Group {
+            DiagramView(axes: axesBinding1)
+                .previewLayout(.fixed(width: 120, height: 120))
+            DiagramView(axes: axesBinding2)
+                .previewLayout(.fixed(width: 120, height: 120))
+            DiagramView(axes: axesBinding1)
+                .previewLayout(.fixed(width: 80, height: 80))
         }
     }
 }

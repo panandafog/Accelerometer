@@ -12,7 +12,7 @@ import SwiftUI
 
 class Measurer: ObservableObject {
     static let shared = Measurer()
-    private init() { }
+//    private init() { }
     
     static let measurementsDisplayRoundPlaces = 3
     
