@@ -8,37 +8,59 @@
 import SwiftUI
 
 struct LevelView: View {
-    @Binding var value: Double?
-    @Binding var max: Double?
-    @Binding var min: Double?
+    
+    var name: String
+    var value: Double?
+    var max: Double?
+    var min: Double?
+    
+    var showTitles = false
     
     var body: some View {
         HStack {
-            Text(String(min ?? 0.0, roundPlaces: Measurer.measurementsDisplayRoundPlaces))
+            if showTitles {
+                Text(name)
+                    .foregroundColor(.secondary)
+                Spacer()
+            }
+            Text((min ?? 0.0).displayableString)
             Spacer()
-            Text(String(value ?? 0.0, roundPlaces: Measurer.measurementsDisplayRoundPlaces))
+            Text((value ?? 0.0).displayableString)
             Spacer()
-            Text(String(max ?? 0.0, roundPlaces: Measurer.measurementsDisplayRoundPlaces))
+            Text((max ?? 0.0).displayableString)
         }
     }
 }
 
+private extension Double {
+    
+    var displayableString: String {
+        var roundedValueString = String(self, roundPlaces: Measurer.measurementsDisplayRoundPlaces)
+        if self > 0.0 {
+            roundedValueString = " " + roundedValueString
+        }
+        return roundedValueString
+    }
+}
+
 struct LevelView_Previews: PreviewProvider {
-    static var previews: some View {
+    
+    static func levelView(name: String, _ min: Double, _ value: Double, _ max: Double) -> some View {
         LevelView(
-            value: .init(
-                get: { 0.5 },
-                set: { _ in }
-            ),
-            max: .init(
-                get: { 1.0 },
-                set: { _ in }
-            ),
-            min: .init(
-                get: { 0.0 },
-                set: { _ in }
-            )
+            name: name,
+            value: min,
+            max: value,
+            min: max
         )
+        .previewLayout(.sizeThatFits)
+    }
+    
+    static var previews: some View {
+        VStack {
+            levelView(name: "x", 0.687, 0.5, 1.0329)
+            levelView(name: "y", 0.79, -0.5789, 1.686)
+            levelView(name: "z", 321.0, 0.5, -1.0)
+        }
         .previewLayout(.sizeThatFits)
     }
 }

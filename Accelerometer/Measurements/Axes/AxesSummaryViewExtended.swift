@@ -1,13 +1,13 @@
 //
-//  AxesSummaryView.swift
+//  AxesSummaryViewExtended.swift
 //  Accelerometer
 //
-//  Created by Andrey on 23.07.2022.
+//  Created by Andrey on 24.07.2022.
 //
 
 import SwiftUI
 
-struct AxesSummaryView: View {
+struct AxesSummaryViewExtended: View {
     @ObservedObject var measurer = Measurer.shared
     let type: Measurer.MeasurementType
     
@@ -16,17 +16,27 @@ struct AxesSummaryView: View {
     }
     
     var body: some View {
-        Text((measurer.valueLabel(of: type) ?? "0.0"))
-            .padding(8)
-            .background(
-                (axes?.intensityColor ?? .clear)
-                    .animation(.linear)
-            )
-            .cornerRadius(10)
+        HStack {
+            VStack {
+                Text(
+                    String(
+                        axes?.properties.maxV ?? 0.0,
+                        roundPlaces: Measurer.measurementsDisplayRoundPlaces
+                    )
+                )
+                AxesSummaryView(measurer: measurer, type: type)
+                Text(
+                    String(
+                        axes?.properties.minV ?? 0.0,
+                        roundPlaces: Measurer.measurementsDisplayRoundPlaces
+                    )
+                )
+            }
+        }
     }
 }
 
-struct AxesSummaryView_Previews: PreviewProvider {
+struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
     static let measurer1: Measurer = {
         let measurer = Measurer()
@@ -51,27 +61,15 @@ struct AxesSummaryView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
+            AxesSummaryViewExtended(measurer: measurer1, type: .deviceMotion)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
+            AxesSummaryViewExtended(measurer: measurer2, type: .deviceMotion)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
+            AxesSummaryViewExtended(measurer: measurer3, type: .deviceMotion)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
-            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
-            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
         }
     }
 }

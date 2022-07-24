@@ -11,6 +11,8 @@ struct HeaderView: View {
     
     var body: some View {
         HStack {
+//            Text(" ")
+//            Spacer()
             Text("min")
                 .foregroundColor(.secondary)
             Spacer()

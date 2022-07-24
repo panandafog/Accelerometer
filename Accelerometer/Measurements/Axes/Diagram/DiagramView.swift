@@ -44,7 +44,7 @@ struct DiagramView: View {
                 let offsetSize = axe.offset(size: geometry.size, multiplier: axesNamesOffsetMultiplier)
                 Text(axe.rawValue)
                     .offset(x: offsetSize.x, y: offsetSize.y)
-                    .foregroundColor(.background)
+                    .foregroundColor(.white)
             }
         }
     }
@@ -134,6 +134,9 @@ struct DiagramView_Previews: PreviewProvider {
             DiagramView(axes: axesBinding1)
                 .previewLayout(.fixed(width: 120, height: 120))
             DiagramView(axes: axesBinding2)
+                .previewLayout(.fixed(width: 120, height: 120))
+            DiagramView(axes: axesBinding2)
+                .preferredColorScheme(.dark)
                 .previewLayout(.fixed(width: 120, height: 120))
             DiagramView(axes: axesBinding1)
                 .previewLayout(.fixed(width: 80, height: 80))

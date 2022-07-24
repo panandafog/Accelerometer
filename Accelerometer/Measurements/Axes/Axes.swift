@@ -143,25 +143,28 @@ extension Axes {
             maxV *= rhs
         }
         
-        mutating func setValues(x newX: Double, y newY: Double, z newZ: Double) {
-            let oldX = x
-            let oldY = y
-            let oldZ = z
-            let oldV = vector
+        mutating func setValues(x: Double, y: Double, z: Double) {
+            self.x = x
+            self.y = y
+            self.z = z
             
-            x = newX
-            y = newY
-            z = newZ
+            maxX = max(x, maxX)
+            maxY = max(y, maxY)
+            maxZ = max(z, maxZ)
+            maxV = max(vector, maxV)
             
-            maxX = max(x, oldX)
-            maxY = max(y, oldY)
-            maxZ = max(z, oldZ)
-            maxV = max(vector, oldV)
-            
-            minX = min(x, oldX)
-            minY = min(y, oldY)
-            minZ = min(z, oldZ)
-            minV = min(vector, oldV)
+            minX = min(x, minX)
+            minY = min(y, minY)
+            minZ = min(z, minZ)
+            minV = min(vector, minV)
         }
+    }
+}
+
+extension Axes {
+    
+    var intensityColor: Color {
+        let intensity = abs(properties.vector) / properties.displayableAbsMax
+        return Color.intensity(intensity, opacity: 1.0)
     }
 }

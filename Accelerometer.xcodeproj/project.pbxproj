@@ -31,6 +31,7 @@
 		0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */; };
 		0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC572863527800AD3EF1 /* DiagramView.swift */; };
 		0B34710D288C5491004E87FA /* AxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B34710C288C5491004E87FA /* AxesSummaryView.swift */; };
+		0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */; };
 		0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
 		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
@@ -85,6 +86,7 @@
 		0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementSummaryView.swift; sourceTree = "<group>"; };
 		0B24EC572863527800AD3EF1 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
 		0B34710C288C5491004E87FA /* AxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryView.swift; sourceTree = "<group>"; };
+		0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryViewExtended.swift; sourceTree = "<group>"; };
 		0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramAxesNamesStyle.swift; sourceTree = "<group>"; };
 		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				0BBDC4DF288C188400CE6061 /* Axe.swift */,
 				0BFBA1E728737CC300529B50 /* Axes.swift */,
 				0B34710C288C5491004E87FA /* AxesSummaryView.swift */,
+				0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */,
 				0B548E172876E7AE00EDCDA8 /* Diagram */,
 				0B548E182876E7D800EDCDA8 /* Table */,
 			);
@@ -407,6 +410,7 @@
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
 				0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */,
 				0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */,
+				0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */,
 				0BFBA1E828737CC300529B50 /* Axes.swift in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,

@@ -31,7 +31,8 @@ struct MeasurementPreview: View {
                     .font(.title2)
                     .padding()
                 AxesSummaryView(type: type)
-                    .padding()
+                    .padding([.horizontal, .leading, .bottom])
+                    .padding([.leading])
             }.layoutPriority(1)
             Spacer()
             ZStack(alignment: .trailing) {

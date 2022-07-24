@@ -23,22 +23,26 @@ struct MeasurementSummaryView: View {
     var body: some View {
         GeometryReader { geometryVStack in
             VStack {
-                HStack {
-                    Text(type.description)
-                        .padding()
-                        .padding([.horizontal])
-                    
-                    ZStack(alignment: .topTrailing) {
-                        let diagramSize = geometryVStack.size.width * 0.3
-                        DiagramView(axes: axesBinding)
-                            .frame(width: diagramSize, height: diagramSize)
-                            .padding()
-                    }
-                }
-                Spacer()
-                MeasurementsAxesView(axes: axesBinding)
+                Text(type.description)
                     .padding()
-                Spacer()
+                    .padding([.horizontal])
+                
+                HStack (spacing: geometryVStack.size.width * 0.1) {
+//                    Spacer()
+                    let diagramSize = geometryVStack.size.width * 0.3
+                    AxesSummaryViewExtended(measurer: measurer, type: type)
+                        .frame(width: diagramSize, height: diagramSize)
+//                    Spacer()
+                    DiagramView(axes: axesBinding)
+                        .frame(width: diagramSize, height: diagramSize)
+                        .padding()
+//                    .frame(maxWidth: .infinity)
+//                    Spacer()
+                }
+                
+                MeasurementsAxesView(axes: axesBinding, showSummary: false)
+                    .padding()
+//                Spacer()
             }
             .navigationTitle(type.name)
         }
@@ -51,11 +55,14 @@ struct MeasurementSummaryView: View {
 }
 
 struct MeasurementSummaryView_Previews: PreviewProvider {
+    
+    static let measurer: Measurer = {
+        let measurer = Measurer()
+        measurer.saveData(x: 0.5, y: 1, z: 0.2, type: .acceleration)
+        return measurer
+    }()
+    
     static var previews: some View {
-        let measurer = Measurer.shared
-        let view = MeasurementSummaryView(measurer: measurer, type: .deviceMotion)
-        view.measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        view.measurer.deviceMotion?.properties.setValues(x: 0.5, y: 1, z: 0.2)
-        return view
+        MeasurementSummaryView(measurer: measurer, type: .acceleration)
     }
 }

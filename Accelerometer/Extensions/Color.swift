@@ -25,15 +25,27 @@ extension Color {
     ///     - intensity: should be in 0.0 ... 1.0
     static func intensity(_ intensity: Double, opacity: Double = 1.0) -> Color {
         let intensity = min(1.0, abs(intensity))
-        let hue = 11.0 / 360.0
-        let saturation = 0.61
-        let brightness = 0.9
+        let hue = 10.0 / 360.0
+        let saturation = 0.57
+        let brightness = 0.97
         
         return Color(hue: hue, saturation: saturation * intensity, brightness: brightness, opacity: opacity)
     }
 }
 
 struct Color_Previews: PreviewProvider {
+    
+    static let axesBinding1: Binding<Axes?> = {
+        .init(
+            get: {
+                let axes = Axes(displayableAbsMax: 1.0)
+                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
+                return axes
+            },
+            set: { _ in }
+        )
+    }()
+    
     static var previews: some View {
         Group {
             Color.intensity(0.0)
@@ -44,6 +56,8 @@ struct Color_Previews: PreviewProvider {
                 .previewLayout(.fixed(width: 100, height: 100))
             Color.intensity(1.5)
                 .previewLayout(.fixed(width: 100, height: 100))
+            DiagramView(axes: axesBinding1)
+                .previewLayout(.fixed(width: 120, height: 120))
         }
     }
 }

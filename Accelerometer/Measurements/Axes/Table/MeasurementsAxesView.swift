@@ -10,111 +10,68 @@ import SwiftUI
 struct MeasurementsAxesView: View {
     @Binding var axes: Axes?
     
+    var showSummary = true
+    
+    var rows: [RowData] {
+        var rows = [
+            RowData(
+                name: "x",
+                min: axes?.properties.minX,
+                value: axes?.properties.x,
+                max: axes?.properties.maxX
+            ),
+            RowData(
+                name: "y",
+                min: axes?.properties.minY,
+                value: axes?.properties.y,
+                max: axes?.properties.maxY
+            ),
+            RowData(
+                name: "z",
+                min: axes?.properties.minZ,
+                value: axes?.properties.z,
+                max: axes?.properties.maxZ
+            )
+        ]
+        if showSummary {
+            rows.append(
+                RowData(
+                    name: "summary",
+                    min: axes?.properties.minV,
+                    value: axes?.properties.vector,
+                    max: axes?.properties.maxV
+                )
+            )
+        }
+        return rows
+    }
+    
     var body: some View {
-        VStack {
-            HStack(alignment: .bottom) {
-                VStack(alignment: .leading) {
-                    Text("x")
+        HStack(alignment: .bottom) {
+            VStack(alignment: .leading) {
+                Text("x")
+                    .foregroundColor(.secondary)
+                Text("y")
+                    .foregroundColor(.secondary)
+                Text("z")
+                    .foregroundColor(.secondary)
+                if showSummary {
+                    Text("summary")
                         .foregroundColor(.secondary)
-                    Text("y")
-                        .foregroundColor(.secondary)
-                    Text("z")
-                        .foregroundColor(.secondary)
-                    Text("vector")
-                        .foregroundColor(.secondary)
-                }.padding([.trailing])
+                }
+            }.padding([.trailing])
+            
+            VStack {
+                HeaderView()
+                    .padding([.bottom])
                 VStack {
-                    HeaderView()
-                        .padding([.bottom])
-                    VStack {
+                    ForEach(rows, id: \.self) { row in
                         LevelView(
-                            value: .init(get: {
-                                axes?.properties.x
-                            }, set: { value in
-                            }),
-                            max: .init(
-                                get: {
-                                    axes?.properties.maxX
-                                },
-                                set: { value in
-                                    
-                                }
-                            ),
-                            min: .init(
-                                get: {
-                                    axes?.properties.minX
-                                },
-                                set: { value in
-                                    
-                                }
-                            )
-                        )
-                        LevelView(
-                            value: .init(get: {
-                                axes?.properties.y
-                            }, set: { value in
-                            }),
-                            max: .init(
-                                get: {
-                                    axes?.properties.maxY
-                                },
-                                set: { value in
-                                    
-                                }
-                            ),
-                            min: .init(
-                                get: {
-                                    axes?.properties.minY
-                                },
-                                set: { value in
-                                    
-                                }
-                            )
-                        )
-                        LevelView(
-                            value: .init(get: {
-                                axes?.properties.z
-                            }, set: { value in
-                            }),
-                            max: .init(
-                                get: {
-                                    axes?.properties.maxZ
-                                },
-                                set: { value in
-                                    
-                                }
-                            ),
-                            min: .init(
-                                get: {
-                                    axes?.properties.minZ
-                                },
-                                set: { value in
-                                    
-                                }
-                            )
-                        )
-                        LevelView(
-                            value: .init(get: {
-                                axes?.properties.vector
-                            }, set: { value in
-                                
-                            }),
-                            max: .init(
-                                get: {
-                                    axes?.properties.maxV
-                                },
-                                set: { value in
-                                    
-                                }
-                            ),
-                            min: .init(
-                                get: {
-                                    axes?.properties.minV
-                                },
-                                set: { value in
-                                    
-                                }
-                            )
+                            name: row.name,
+                            value: row.value,
+                            max: row.max,
+                            min: row.min,
+                            showTitles: false
                         )
                     }
                 }
@@ -127,10 +84,23 @@ struct MeasurementsAxesView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     static var previews: some View {
         MeasurementsAxesView(axes: .init(get: {
-            Axes(displayableAbsMax: 1.0)
+            let axes = Axes(displayableAbsMax: 1.0)
+            axes.properties.setValues(x: 0.5, y: 0.6, z: 0.7)
+            axes.properties.setValues(x: 0.2, y: 0.3, z: 0.4)
+            return axes
         }, set: { _ in
             
         }))
         .previewLayout(.sizeThatFits)
+    }
+}
+
+extension MeasurementsAxesView {
+    
+    struct RowData: Hashable {
+        let name: String
+        let min: Double?
+        let value: Double?
+        let max: Double?
     }
 }
