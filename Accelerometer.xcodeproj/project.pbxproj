@@ -38,6 +38,11 @@
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0BBDC4E0288C188400CE6061 /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* Axe.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
+		0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138ED2893FFA10026D0DC /* RecordingsView.swift */; };
+		0BE138F0289400A00026D0DC /* RecordingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138EF289400A00026D0DC /* RecordingsRepository.swift */; };
+		0BE138F2289400E70026D0DC /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F1289400E70026D0DC /* Recording.swift */; };
+		0BE138F4289401210026D0DC /* MeasurementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F3289401210026D0DC /* MeasurementType.swift */; };
+		0BE138F6289409820026D0DC /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F5289409820026D0DC /* Recorder.swift */; };
 		0BFBA1E828737CC300529B50 /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFBA1E728737CC300529B50 /* Axes.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +98,11 @@
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* Axe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
+		0BE138ED2893FFA10026D0DC /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
+		0BE138EF289400A00026D0DC /* RecordingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsRepository.swift; sourceTree = "<group>"; };
+		0BE138F1289400E70026D0DC /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		0BE138F3289401210026D0DC /* MeasurementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementType.swift; sourceTree = "<group>"; };
+		0BE138F5289409820026D0DC /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		0BFBA1E728737CC300529B50 /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +158,7 @@
 				0B24EC3328621E1C00AD3EF1 /* AppDelegate.swift */,
 				0B24EC0928621BBE00AD3EF1 /* ContentView.swift */,
 				0B24EC3B28622B7900AD3EF1 /* Measurements */,
+				0BE138EC2893FF8A0026D0DC /* Recordings */,
 				0B24EC3C2862327E00AD3EF1 /* Settings */,
 				0B24EC3F28623C0E00AD3EF1 /* Extensions */,
 				0B801284286DA9A000F4AA85 /* Other */,
@@ -187,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				0B24EC3128621BE000AD3EF1 /* Measurer.swift */,
+				0BE138F3289401210026D0DC /* MeasurementType.swift */,
 				0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */,
 				0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */,
 				0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */,
@@ -256,6 +268,17 @@
 				0B801285286DA9C000F4AA85 /* AnimatableArray.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		0BE138EC2893FF8A0026D0DC /* Recordings */ = {
+			isa = PBXGroup;
+			children = (
+				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
+				0BE138EF289400A00026D0DC /* RecordingsRepository.swift */,
+				0BE138F1289400E70026D0DC /* Recording.swift */,
+				0BE138F5289409820026D0DC /* Recorder.swift */,
+			);
+			path = Recordings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,11 +416,13 @@
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
+				0BE138F0289400A00026D0DC /* RecordingsRepository.swift in Sources */,
 				0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */,
 				0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */,
 				0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
 				0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */,
+				0BE138F4289401210026D0DC /* MeasurementType.swift in Sources */,
 				0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */,
 				0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */,
 				0B1E6D2328724B2B003B8C5B /* Collection.swift in Sources */,
@@ -406,6 +431,7 @@
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
 				0BBDC4E0288C188400CE6061 /* Axe.swift in Sources */,
+				0BE138F2289400E70026D0DC /* Recording.swift in Sources */,
 				0B34710D288C5491004E87FA /* AxesSummaryView.swift in Sources */,
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
 				0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */,
@@ -414,7 +440,9 @@
 				0BFBA1E828737CC300529B50 /* Axes.swift in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
+				0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */,
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
+				0BE138F6289409820026D0DC /* Recorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

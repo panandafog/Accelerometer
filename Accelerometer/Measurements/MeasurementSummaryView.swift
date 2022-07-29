@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MeasurementSummaryView: View {
     @ObservedObject var measurer = Measurer.shared
-    let type: Measurer.MeasurementType
+    let type: MeasurementType
     
     var axesBinding: Binding<Axes?> {
         Binding<Axes?>.init(

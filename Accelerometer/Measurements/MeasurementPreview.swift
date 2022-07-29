@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MeasurementPreview: View {
     @ObservedObject var measurer = Measurer.shared
-    let type: Measurer.MeasurementType
+    let type: MeasurementType
     
     var axes: Axes? {
         measurer.axes(of: type)

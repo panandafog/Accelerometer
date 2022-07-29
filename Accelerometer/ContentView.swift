@@ -26,6 +26,14 @@ struct ContentView: View {
             }
             
             NavigationView {
+                RecordingsView()
+                    .navigationTitle(Text("Recordings"))
+            }
+            .tabItem {
+                Label("Recordings", systemImage: "play")
+            }
+            
+            NavigationView {
                 SettingsView()
                     .navigationTitle(Text("Settings"))
             }
