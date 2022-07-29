@@ -20,6 +20,10 @@ class Recorder: ObservableObject {
         activeRecording != nil
     }
     
+    var recordings: [Recording] {
+        repository.recordings
+    }
+    
     private var subscriptions: [AnyCancellable?] = []
     
     func record(measurements measurementTypes: [MeasurementType]) {
