@@ -24,13 +24,17 @@ struct AxesSummaryViewExtended: View {
                         roundPlaces: Measurer.measurementsDisplayRoundPlaces
                     )
                 )
+                
                 AxesSummaryView(measurer: measurer, type: type)
-                Text(
-                    String(
-                        axes?.properties.minV ?? 0.0,
-                        roundPlaces: Measurer.measurementsDisplayRoundPlaces
+                
+                if type.hasMinimum {
+                    Text(
+                        String(
+                            axes?.properties.minV ?? 0.0,
+                            roundPlaces: Measurer.measurementsDisplayRoundPlaces
+                        )
                     )
-                )
+                }
             }
         }
     }
@@ -42,6 +46,7 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
         let measurer = Measurer()
         measurer.deviceMotion = .init(displayableAbsMax: 1.0)
         measurer.saveData(x: 0, y: 0, z: 0, type: .deviceMotion)
+        measurer.saveData(x: 0, y: 0, z: 0, type: .magneticField)
         return measurer
     }()
     
@@ -49,6 +54,7 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
         let measurer = Measurer()
         measurer.deviceMotion = .init(displayableAbsMax: 1.0)
         measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: .deviceMotion)
+        measurer.saveData(x: 100, y: 100, z: 100, type: .magneticField)
         return measurer
     }()
     
@@ -56,6 +62,7 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
         let measurer = Measurer()
         measurer.deviceMotion = .init(displayableAbsMax: 1.0)
         measurer.saveData(x: 1, y: 1, z: 1, type: .deviceMotion)
+        measurer.saveData(x: 200, y: 200, z: 200, type: .magneticField)
         return measurer
     }()
     
@@ -68,6 +75,15 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
                 .padding()
                 .previewLayout(.sizeThatFits)
             AxesSummaryViewExtended(measurer: measurer3, type: .deviceMotion)
+                .padding()
+                .previewLayout(.sizeThatFits)
+            AxesSummaryViewExtended(measurer: measurer1, type: .magneticField)
+                .padding()
+                .previewLayout(.sizeThatFits)
+            AxesSummaryViewExtended(measurer: measurer2, type: .magneticField)
+                .padding()
+                .previewLayout(.sizeThatFits)
+            AxesSummaryViewExtended(measurer: measurer3, type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
         }

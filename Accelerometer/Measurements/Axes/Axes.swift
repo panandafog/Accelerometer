@@ -22,14 +22,12 @@ final class Axes: ObservableObject {
             x: 0,
             y: 0,
             z: 0,
-            minX: 0,
-            minY: 0,
-            minZ: 0,
-            maxX: 0,
-            maxY: 0,
-            maxZ: 0,
-            maxV: 0,
-            minV: 0,
+            minX: nil,
+            minY: nil,
+            minZ: nil,
+            maxX: nil,
+            maxY: nil,
+            maxZ: nil,
             displayableAbsMax: properties.displayableAbsMax
         )
     }
@@ -43,20 +41,20 @@ extension Axes {
         var y: Double
         var z: Double
         
-        var minX: Double
-        var minY: Double
-        var minZ: Double
+        var minX: Double?
+        var minY: Double?
+        var minZ: Double?
         
-        var maxX: Double
-        var maxY: Double
-        var maxZ: Double
+        var maxX: Double?
+        var maxY: Double?
+        var maxZ: Double?
         
         var vector: Double {
             sqrt(pow(x, 2.0) + pow(y, 2.0) + pow(z, 2.0))
         }
         
-        var maxV: Double
-        var minV: Double
+        var maxV: Double?
+        var minV: Double?
         
         var magnitudeSquared: Double {
             let values = [x, y, z]
@@ -69,14 +67,14 @@ extension Axes {
             x: 0.0,
             y: 0.0,
             z: 0.0,
-            minX: 0.0,
-            minY: 0.0,
-            minZ: 0.0,
-            maxX: 0.0,
-            maxY: 0.0,
-            maxZ: 0.0,
-            maxV: 0.0,
-            minV: 0.0,
+            minX: nil,
+            minY: nil,
+            minZ: nil,
+            maxX: nil,
+            maxY: nil,
+            maxZ: nil,
+            maxV: nil,
+            minV: nil,
             displayableAbsMax: 0.0
         )
         
@@ -85,14 +83,14 @@ extension Axes {
                 x: lhs.x + rhs.x,
                 y: lhs.y + rhs.y,
                 z: lhs.z + rhs.z,
-                minX: lhs.minX + rhs.minX,
-                minY: lhs.minY + rhs.minY,
-                minZ: lhs.minZ + rhs.minZ,
-                maxX: lhs.minV + rhs.minV,
-                maxY: lhs.maxX + rhs.maxX,
-                maxZ: lhs.maxY + rhs.maxY,
-                maxV: lhs.maxZ + rhs.maxZ,
-                minV: lhs.maxV + rhs.maxV,
+                minX: (lhs.minX ?? 0) + (rhs.minX ?? 0.0),
+                minY: (lhs.minY ?? 0) + (rhs.minY ?? 0.0),
+                minZ: (lhs.minZ ?? 0) + (rhs.minZ ?? 0.0),
+                maxX: (lhs.maxX ?? 0) + (rhs.maxX ?? 0.0),
+                maxY: (lhs.maxY ?? 0) + (rhs.maxY ?? 0.0),
+                maxZ: (lhs.maxZ ?? 0) + (rhs.maxZ ?? 0.0),
+                maxV: (lhs.maxV ?? 0) + (rhs.maxV ?? 0.0),
+                minV: (lhs.minV ?? 0) + (rhs.minV ?? 0.0),
                 displayableAbsMax: lhs.displayableAbsMax + rhs.displayableAbsMax
             )
         }
@@ -102,14 +100,14 @@ extension Axes {
                 x: lhs.x - rhs.x,
                 y: lhs.y - rhs.y,
                 z: lhs.z - rhs.z,
-                minX: lhs.minX - rhs.minX,
-                minY: lhs.minY - rhs.minY,
-                minZ: lhs.minZ - rhs.minZ,
-                maxX: lhs.minV - rhs.minV,
-                maxY: lhs.maxX - rhs.maxX,
-                maxZ: lhs.maxY - rhs.maxY,
-                maxV: lhs.maxZ - rhs.maxZ,
-                minV: lhs.maxV - rhs.maxV,
+                minX: (lhs.minX ?? 0.0) - (rhs.minX ?? 0.0),
+                minY: (lhs.minY ?? 0.0) - (rhs.minY ?? 0.0),
+                minZ: (lhs.minZ ?? 0.0) - (rhs.minZ ?? 0.0),
+                maxX: (lhs.maxX ?? 0.0) - (rhs.maxX ?? 0.0),
+                maxY: (lhs.maxY ?? 0.0) - (rhs.maxY ?? 0.0),
+                maxZ: (lhs.maxZ ?? 0.0) - (rhs.maxZ ?? 0.0),
+                maxV: (lhs.maxV ?? 0.0) - (rhs.maxV ?? 0.0),
+                minV: (lhs.minV ?? 0.0) - (rhs.minV ?? 0.0),
                 displayableAbsMax: lhs.displayableAbsMax - rhs.displayableAbsMax
             )
         }
@@ -133,14 +131,17 @@ extension Axes {
             x *= rhs
             y *= rhs
             z *= rhs
-            minX *= rhs
-            minY *= rhs
-            minZ *= rhs
-            maxX *= rhs
-            maxY *= rhs
-            maxZ *= rhs
-            minV *= rhs
-            maxV *= rhs
+            
+            minX = rhs * (minX ?? 0.0)
+            minY = rhs * (minY ?? 0.0)
+            minZ = rhs * (minZ ?? 0.0)
+            
+            maxX = rhs * (maxX ?? 0.0)
+            maxY = rhs * (maxY ?? 0.0)
+            maxZ = rhs * (maxZ ?? 0.0)
+            
+            maxV = rhs * (maxV ?? 0.0)
+            minV = rhs * (minV ?? 0.0)
         }
         
         mutating func setValues(x: Double, y: Double, z: Double) {
@@ -148,15 +149,15 @@ extension Axes {
             self.y = y
             self.z = z
             
-            maxX = max(x, maxX)
-            maxY = max(y, maxY)
-            maxZ = max(z, maxZ)
-            maxV = max(vector, maxV)
+            maxX = max(x, maxX ?? x - 1)
+            maxY = max(y, maxY ?? y - 1)
+            maxZ = max(z, maxZ ?? z - 1)
+            maxV = max(vector, maxV ?? vector - 1)
             
-            minX = min(x, minX)
-            minY = min(y, minY)
-            minZ = min(z, minZ)
-            minV = min(vector, minV)
+            minX = min(x, minX ?? x + 1)
+            minY = min(y, minY ?? y + 1)
+            minZ = min(z, minZ ?? z + 1)
+            minV = min(vector, minV ?? vector + 1)
         }
     }
 }

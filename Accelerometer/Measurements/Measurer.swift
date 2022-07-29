@@ -347,6 +347,19 @@ The magnetic field is measured in microteslas (μT), equal to 10^−6 teslas.
 """
             }
         }
+        
+        var hasMinimum: Bool {
+            switch self {
+            case .acceleration:
+                return false
+            case .rotation:
+                return false
+            case .deviceMotion:
+                return false
+            case .magneticField:
+                return true
+            }
+        }
     }
 }
 
