@@ -21,6 +21,9 @@ extension Color {
     static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
     #endif
     
+    static let enabledButton = Color.accentColor
+    static let disabledButton = Color.intensity(0.0)
+    
     /// - Parameters:
     ///     - intensity: should be in 0.0 ... 1.0
     static func intensity(_ intensity: Double) -> Color {

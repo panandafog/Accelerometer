@@ -11,6 +11,8 @@ struct RecordingsView: View {
     
     @ObservedObject var recorder = Recorder.shared
     
+    @State var presentingNewRecordingSheet = false
+    
     var recordingTitle: String {
         if recorder.recordingInProgress {
             return "Recording in progress"
@@ -33,7 +35,7 @@ struct RecordingsView: View {
                 if recorder.recordingInProgress {
                     recorder.stopRecording()
                 } else {
-                    recorder.record(measurements: [.deviceMotion])
+                    presentingNewRecordingSheet = true
                 }
             },
             label: {
@@ -88,6 +90,9 @@ struct RecordingsView: View {
                     recordingView(recording: recording)
                 }
             }
+        }
+        .sheet(isPresented: $presentingNewRecordingSheet) {
+            NewRecordingView()
         }
     }
 }
