@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MeasurementSummaryView: View {
     @ObservedObject var measurer = Measurer.shared
+    @ObservedObject var recorder = Recorder.shared
+    
     let type: MeasurementType
     
     var axesBinding: Binding<Axes?> {
@@ -20,6 +22,25 @@ struct MeasurementSummaryView: View {
         )
     }
     
+    var recordButton: some View {
+        let enabled = !recorder.recordingInProgress
+        let text = enabled ? "Start recording this value" : "Recording is already enabled"
+        let backgroundColor: Color = enabled ? .accentColor : .intensity(0.0)
+        
+        return Button(
+            action: {
+                recorder.record(measurements: [type])
+            }, label: {
+                Text(text)
+                    .foregroundColor(.background)
+            }
+        )
+        .disabled(!enabled)
+        .padding(.defaultPadding)
+        .background(backgroundColor)
+        .cornerRadius(.defaultCornerRadius)
+    }
+    
     var body: some View {
         GeometryReader { geometryVStack in
             VStack {
@@ -28,21 +49,24 @@ struct MeasurementSummaryView: View {
                     .padding([.horizontal])
                 
                 HStack (spacing: geometryVStack.size.width * 0.1) {
-//                    Spacer()
+                    //                    Spacer()
                     let diagramSize = geometryVStack.size.width * 0.3
                     AxesSummaryViewExtended(measurer: measurer, type: type)
                         .frame(width: diagramSize, height: diagramSize)
-//                    Spacer()
+                    //                    Spacer()
                     DiagramView(axes: axesBinding)
                         .frame(width: diagramSize, height: diagramSize)
                         .padding()
-//                    .frame(maxWidth: .infinity)
-//                    Spacer()
+                    //                    .frame(maxWidth: .infinity)
+                    //                    Spacer()
                 }
                 
                 MeasurementsAxesView(axes: axesBinding, showSummary: false)
                     .padding()
-//                Spacer()
+                Spacer()
+                recordButton
+                    .padding()
+                    .padding(.vertical)
             }
             .navigationTitle(type.name)
         }
@@ -62,7 +86,19 @@ struct MeasurementSummaryView_Previews: PreviewProvider {
         return measurer
     }()
     
+    static let recorder1: Recorder = {
+        let recorder = Recorder()
+        return recorder
+    }()
+    
+    static let recorder2: Recorder = {
+        let recorder = Recorder()
+        recorder.record(measurements: [.acceleration])
+        return recorder
+    }()
+    
     static var previews: some View {
-        MeasurementSummaryView(measurer: measurer, type: .acceleration)
+        MeasurementSummaryView(measurer: measurer, recorder: recorder1, type: .acceleration)
+        MeasurementSummaryView(measurer: measurer, recorder: recorder2, type: .acceleration)
     }
 }

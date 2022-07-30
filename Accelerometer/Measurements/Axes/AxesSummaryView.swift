@@ -17,12 +17,12 @@ struct AxesSummaryView: View {
     
     var body: some View {
         Text((measurer.valueLabel(of: type) ?? "0.0"))
-            .padding(8)
+            .padding(.defaultPadding)
             .background(
                 (axes?.intensityColor ?? .clear)
                     .animation(.linear)
             )
-            .cornerRadius(10)
+            .cornerRadius(.defaultCornerRadius)
     }
 }
 
