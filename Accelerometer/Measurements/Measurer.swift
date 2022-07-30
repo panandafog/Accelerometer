@@ -22,10 +22,10 @@ class Measurer: ObservableObject {
     
     private static let initialUpdateInterval = 0.5
     
-    @Published var deviceMotion: Axes?
-    @Published var acceleration: Axes?
-    @Published var rotation: Axes?
-    @Published var magneticField: Axes?
+    @Published var deviceMotion: ObservableAxes?
+    @Published var acceleration: ObservableAxes?
+    @Published var rotation: ObservableAxes?
+    @Published var magneticField: ObservableAxes?
     
     var deviceMotionSubscription: AnyCancellable?
     var accelerationSubscription: AnyCancellable?
@@ -168,7 +168,7 @@ class Measurer: ObservableObject {
         switch type {
         case .acceleration:
             if acceleration == nil {
-                acceleration = Axes(displayableAbsMax: accelerationDisplayableAbsMax)
+                acceleration = ObservableAxes(displayableAbsMax: accelerationDisplayableAbsMax)
                 accelerationSubscription = acceleration?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -181,7 +181,7 @@ class Measurer: ObservableObject {
             )
         case .rotation:
             if rotation == nil {
-                rotation = Axes(displayableAbsMax: rotationDisplayableAbsMax)
+                rotation = ObservableAxes(displayableAbsMax: rotationDisplayableAbsMax)
                 rotationSubscription = rotation?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -194,7 +194,7 @@ class Measurer: ObservableObject {
             )
         case .deviceMotion:
             if deviceMotion == nil {
-                deviceMotion = Axes(displayableAbsMax: deviceMotionDisplayableAbsMax)
+                deviceMotion = ObservableAxes(displayableAbsMax: deviceMotionDisplayableAbsMax)
                 deviceMotionSubscription = deviceMotion?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -207,7 +207,7 @@ class Measurer: ObservableObject {
             )
         case .magneticField:
             if magneticField == nil {
-                magneticField = Axes(displayableAbsMax: magneticFieldDisplayableAbsMax)
+                magneticField = ObservableAxes(displayableAbsMax: magneticFieldDisplayableAbsMax)
                 magneticFieldSubscription = magneticField?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
@@ -263,7 +263,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    func axes(of type: MeasurementType) -> Axes? {
+    func axes(of type: MeasurementType) -> ObservableAxes? {
         switch type {
         case .acceleration:
             return acceleration

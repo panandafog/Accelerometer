@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MeasurementsAxesView: View {
-    @Binding var axes: Axes?
+    @Binding var axes: ObservableAxes?
     
     var showSummary = true
     
@@ -84,7 +84,7 @@ struct MeasurementsAxesView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     static var previews: some View {
         MeasurementsAxesView(axes: .init(get: {
-            let axes = Axes(displayableAbsMax: 1.0)
+            let axes = ObservableAxes(displayableAbsMax: 1.0)
             axes.properties.setValues(x: 0.5, y: 0.6, z: 0.7)
             axes.properties.setValues(x: 0.2, y: 0.3, z: 0.4)
             return axes

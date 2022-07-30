@@ -11,12 +11,12 @@ struct MeasurementPreview: View {
     @ObservedObject var measurer = Measurer.shared
     let type: MeasurementType
     
-    var axes: Axes? {
+    var axes: ObservableAxes? {
         measurer.axes(of: type)
     }
     
-    var axesBinding: Binding<Axes?> {
-        Binding<Axes?>.init(
+    var axesBinding: Binding<ObservableAxes?> {
+        Binding<ObservableAxes?>.init(
             get: {
                 axes
             },

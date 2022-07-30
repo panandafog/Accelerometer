@@ -33,7 +33,7 @@ struct RecordingsView: View {
                 if recorder.recordingInProgress {
                     recorder.stopRecording()
                 } else {
-                    recorder.record(measurements: [.acceleration])
+                    recorder.record(measurements: [.deviceMotion])
                 }
             },
             label: {
@@ -62,7 +62,7 @@ struct RecordingsView: View {
     
     func completedRecordingView(recording: Recording) -> some View {
         NavigationLink {
-            RecordingView(recording: recording, recorder: recorder)
+            RecordingView(recording: recording)
         } label: {
             Text(recording.id)
         }

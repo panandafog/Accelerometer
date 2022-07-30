@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiagramView: View {
     
-    var axes: Binding<Axes?>
+    var axes: Binding<ObservableAxes?>
     var style: DiagramViewStyle = .default
     
     private let axesNamesSizeLimit: CGFloat = 120
@@ -107,10 +107,10 @@ private extension Axe {
 
 struct DiagramView_Previews: PreviewProvider {
     
-    static let axesBinding1: Binding<Axes?> = {
+    static let axesBinding1: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = Axes(displayableAbsMax: 1.0)
+                let axes = ObservableAxes(displayableAbsMax: 1.0)
                 axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
                 return axes
             },
@@ -118,10 +118,10 @@ struct DiagramView_Previews: PreviewProvider {
         )
     }()
     
-    static let axesBinding2: Binding<Axes?> = {
+    static let axesBinding2: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = Axes(displayableAbsMax: 1.0)
+                let axes = ObservableAxes(displayableAbsMax: 1.0)
                 axes.properties.setValues(x: 0.2, y: 0.5, z: 0.7)
                 return axes
             },

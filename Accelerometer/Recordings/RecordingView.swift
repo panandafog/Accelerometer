@@ -10,7 +10,7 @@ import SwiftUI
 struct RecordingView: View {
     
     let recording: Recording
-    let recorder: Recorder
+    @ObservedObject var recorder: Recorder = .shared
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var isPresentingDeleteConfirmation: Bool = false
@@ -43,14 +43,14 @@ struct RecordingView: View {
                             .padding(.top)
                             .font(.title2)
                         if let axes = entry.value {
-                            Text(String(axes.properties.vector))
+                            Text(String(axes.vector))
                                 .padding(.top)
                                 .font(.title2)
-                            Text(String(axes.properties.x))
+                            Text(String(axes.x))
                                 .padding(.top)
-                            Text(String(axes.properties.y))
+                            Text(String(axes.y))
                                 .padding(.top)
-                            Text(String(axes.properties.z))
+                            Text(String(axes.z))
                                 .padding(.top)
                         }
                         Text(string(from: entry.date) ?? "???")
@@ -115,7 +115,7 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes(displayableAbsMax: 1.0)
+                        value: Axes.getZero(displayableAbsMax: 1.0)
                     )
                 ],
                 state: .completed,

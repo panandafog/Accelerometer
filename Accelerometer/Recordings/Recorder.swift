@@ -54,36 +54,39 @@ class Recorder: ObservableObject {
     
     func delete(recordingID: String) {
         repository.delete(recordingID: recordingID)
+        objectWillChange.send()
     }
     
     private func subscribeForChanges(of measurementType: MeasurementType) {
         switch measurementType {
         case .acceleration:
             subscriptions.append(measurer.acceleration?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.acceleration, of: .acceleration)
+                self?.save(value: self?.measurer.acceleration?.properties, of: .acceleration)
             })
         case .rotation:
             subscriptions.append(measurer.rotation?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.rotation, of: .rotation)
+                self?.save(value: self?.measurer.rotation?.properties, of: .rotation)
             })
         case .deviceMotion:
             subscriptions.append(measurer.deviceMotion?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.deviceMotion, of: .deviceMotion)
+                self?.save(value: self?.measurer.deviceMotion?.properties, of: .deviceMotion)
             })
         case .magneticField:
             subscriptions.append(measurer.magneticField?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.magneticField, of: .magneticField)
+                self?.save(value: self?.measurer.magneticField?.properties, of: .magneticField)
             })
         }
     }
     
     private func save(value: Axes?, of type: MeasurementType) {
         let newEntry = Recording.Entry(measurementType: type, date: Date(), value: value)
+        
         activeRecording?.entries.append(newEntry)
         
         guard let activeRecording = activeRecording else {
             return
         }
+        
         repository.save(recording: activeRecording)
     }
     

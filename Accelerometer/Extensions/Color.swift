@@ -46,10 +46,10 @@ extension Color {
 
 struct Color_Previews: PreviewProvider {
     
-    static let axesBinding1: Binding<Axes?> = {
+    static let axesBinding1: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = Axes(displayableAbsMax: 1.0)
+                let axes = ObservableAxes(displayableAbsMax: 1.0)
                 axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
                 return axes
             },

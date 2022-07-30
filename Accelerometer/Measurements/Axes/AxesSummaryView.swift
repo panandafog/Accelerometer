@@ -11,7 +11,7 @@ struct AxesSummaryView: View {
     @ObservedObject var measurer = Measurer.shared
     let type: MeasurementType
     
-    var axes: Axes? {
+    var axes: ObservableAxes? {
         measurer.axes(of: type)
     }
     
