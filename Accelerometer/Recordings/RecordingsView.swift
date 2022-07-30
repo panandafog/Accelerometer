@@ -8,30 +8,84 @@
 import SwiftUI
 
 struct RecordingsView: View {
+    
     @ObservedObject var recorder = Recorder.shared
+    
+    var recordingTitle: String {
+        if recorder.recordingInProgress {
+            return "Recording in progress"
+        } else {
+            return "Start new recording"
+        }
+    }
+    
+    var startStopButtonImage: some View {
+        if recorder.recordingInProgress {
+            return Image(systemName: "stop.fill")
+        } else {
+            return Image(systemName: "play.fill")
+        }
+    }
+    
+    var startStopButton: some View {
+        Button(
+            action: {
+                if recorder.recordingInProgress {
+                    recorder.stopRecording()
+                } else {
+                    recorder.record(measurements: [.acceleration])
+                }
+            },
+            label: {
+                startStopButtonImage
+                    .padding(13)
+                    .foregroundColor(Color.background)
+                    .background(Color.accentColor)
+                    .clipShape(Circle())
+                    .font(.title2)
+            }
+        )
+    }
+    
+    func recordingView(recording: Recording) -> some View {
+        switch recording.state {
+        case .completed:
+            return AnyView(completedRecordingView(recording: recording))
+        case .inProgress:
+            return AnyView(activeRecordingView(recording: recording))
+        }
+    }
+    
+    func activeRecordingView(recording: Recording) -> some View {
+        Text("in progress")
+    }
+    
+    func completedRecordingView(recording: Recording) -> some View {
+        NavigationLink {
+            RecordingView(recording: recording, recorder: recorder)
+        } label: {
+            Text(recording.id)
+        }
+    }
     
     var body: some View {
         List {
             Section(header: Spacer()) {
-                VStack {
-                    Text("Recording now: \(String(recorder.recordingInProgress))")
-                    Button.init(
-                        "start / stop",
-                        action: {
-                            if recorder.recordingInProgress {
-                                recorder.stopRecording()
-                            } else {
-                                recorder.record(measurements: [.acceleration])
-                            }
-                        }
-                    )
-                    .padding()
+                HStack {
+                    ZStack(alignment: .topLeading) {
+                        Text(recordingTitle)
+                            .font(.title2)
+                        Color.clear
+                    }
+                    .padding(.vertical)
+                    Spacer()
+                    startStopButton
+                        .padding(.vertical)
                 }
-                .padding()
             }
             Section(header: Text("Last recordings")) {
                 ForEach(recorder.recordings) { recording in
-                    Text(recording.id)
+                    recordingView(recording: recording)
                 }
             }
         }

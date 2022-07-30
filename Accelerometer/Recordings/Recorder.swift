@@ -45,10 +45,15 @@ class Recorder: ObservableObject {
         
         if var activeRecording = activeRecording {
             activeRecording.state = .completed
-            repository.saveRecording(activeRecording)
+            repository.save(recording: activeRecording)
         }
         
         activeRecording = nil
+        cancelSubscriptions()
+    }
+    
+    func delete(recordingID: String) {
+        repository.delete(recordingID: recordingID)
     }
     
     private func subscribeForChanges(of measurementType: MeasurementType) {
@@ -79,7 +84,7 @@ class Recorder: ObservableObject {
         guard let activeRecording = activeRecording else {
             return
         }
-        repository.saveRecording(activeRecording)
+        repository.save(recording: activeRecording)
     }
     
     private func cancelSubscriptions() {

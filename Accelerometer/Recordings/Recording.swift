@@ -38,7 +38,10 @@ extension Recording {
         case completed
     }
     
-    struct Entry {
+    struct Entry: Identifiable {
+        
+        let id = UUID().uuidString
+        
         let measurementType: MeasurementType
         let date: Date
         let value: Axes?
