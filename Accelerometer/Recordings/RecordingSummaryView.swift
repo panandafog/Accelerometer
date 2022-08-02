@@ -83,6 +83,37 @@ struct RecordingSummaryView: View {
         }
     }
     
+    var toolbarMenu: some View {
+        AnyView(
+            Menu {
+                Section {
+                    Button(action: {
+                        
+                    }) {
+                        Label("Export to .csv", systemImage: "folder")
+                    }
+                }
+                Section {
+                    if #available(iOS 15.0, *) {
+                        Button(role: .destructive, action: {
+                            isPresentingDeleteConfirmation = true
+                        }) {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } else {
+                        Button(action: {
+                            isPresentingDeleteConfirmation = true
+                        }) {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
+                }
+            } label: {
+                Label("Options", systemImage: "square.and.arrow.up")
+            }
+        )
+    }
+    
     var body: some View {
         VStack {
             entriesView
@@ -90,32 +121,7 @@ struct RecordingSummaryView: View {
         .navigationTitle("Recording")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Menu {
-                    Section {
-                        Button(action: {
-                            
-                        }) {
-                            Label("Export to .csv", systemImage: "folder")
-                        }
-                    }
-                    Section {
-                        if #available(iOS 15.0, *) {
-                            Button(role: .destructive, action: {
-                                isPresentingDeleteConfirmation = true
-                            }) {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        } else {
-                            Button(action: {
-                                isPresentingDeleteConfirmation = true
-                            }) {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
-                    }
-                } label: {
-                    Label("Options", systemImage: "square.and.arrow.up")
-                }
+                toolbarMenu
             }
         }
         .modify {
