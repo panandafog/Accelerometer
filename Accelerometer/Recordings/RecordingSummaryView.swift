@@ -53,7 +53,10 @@ struct RecordingSummaryView: View {
                                 Spacer()
                                 ScrollView {
                                     MultiLineChartView(
-                                        data: [(values(of: measurementType), GradientColor(start: .red, end: .orange))],
+                                        data: [(values(of: measurementType), GradientColor(
+                                            start: .intensity(0.0),
+                                            end: .intensity(1.0)
+                                        ))],
                                         title: measurementType.name.capitalized,
                                         legend: nil,
                                         style: .recordingEntry,
