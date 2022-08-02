@@ -39,6 +39,15 @@ struct RecordingSummaryView: View {
         }
     }
     
+    func rateValue(of type: MeasurementType) -> Int {
+        let allValues = values(of: type)
+        guard let first = allValues.first,
+              let last = allValues.last else {
+            return 0
+        }
+        return Int((((last - first) / first) * 100.0).rounded())
+    }
+    
     var entriesView: some View {
         VStack {
             GeometryReader { geometry in
@@ -61,7 +70,7 @@ struct RecordingSummaryView: View {
                                         legend: nil,
                                         style: .recordingEntry,
                                         form: chartForm(generalSize: geometry.size),
-                                        rateValue: 5,
+                                        rateValue: rateValue(of: measurementType),
                                         dropShadow: false
                                     )
                                 }.disabled(true)
@@ -80,8 +89,33 @@ struct RecordingSummaryView: View {
         }
         .navigationTitle("Recording")
         .toolbar {
-            Button("Delete") {
-                isPresentingDeleteConfirmation = true
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Section {
+                        Button(action: {
+                            
+                        }) {
+                            Label("Export to .csv", systemImage: "folder")
+                        }
+                    }
+                    Section {
+                        if #available(iOS 15.0, *) {
+                            Button(role: .destructive, action: {
+                                isPresentingDeleteConfirmation = true
+                            }) {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        } else {
+                            Button(action: {
+                                isPresentingDeleteConfirmation = true
+                            }) {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
+                    }
+                } label: {
+                    Label("Options", systemImage: "square.and.arrow.up")
+                }
             }
         }
         .modify {
