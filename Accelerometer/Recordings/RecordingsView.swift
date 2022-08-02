@@ -49,6 +49,25 @@ struct RecordingsView: View {
         )
     }
     
+    var activeRecording: Recording? {
+        guard let firstRecording = recorder.recordings.first else {
+            return nil
+        }
+        if firstRecording.state == .inProgress {
+            return firstRecording
+        } else {
+            return nil
+        }
+    }
+    
+    var lastRecordings: [Recording] {
+        var recordings = recorder.recordings
+        if activeRecording != nil {
+            recordings.removeFirst()
+        }
+        return recordings
+    }
+    
     func recordingView(recording: Recording) -> some View {
         switch recording.state {
         case .completed:
@@ -59,14 +78,15 @@ struct RecordingsView: View {
     }
     
     func activeRecordingView(recording: Recording) -> some View {
-        Text("in progress")
+        RecordingPreview(recording: recording)
+            .padding(.vertical)
     }
     
     func completedRecordingView(recording: Recording) -> some View {
         NavigationLink {
-            RecordingView(recording: recording)
-        } label: {
             RecordingSummaryView(recording: recording)
+        } label: {
+            RecordingPreview(recording: recording)
                 .padding(.vertical)
         }
     }
@@ -86,9 +106,16 @@ struct RecordingsView: View {
                         .padding(.vertical)
                 }
             }
-            Section(header: Text("Last recordings")) {
-                ForEach(recorder.recordings) { recording in
-                    recordingView(recording: recording)
+            if let activeRecording = activeRecording {
+                Section(header: Text("Recording in progress")) {
+                    recordingView(recording: activeRecording)
+                }
+            }
+            if !lastRecordings.isEmpty {
+                Section(header: Text("Last recordings")) {
+                    ForEach(lastRecordings) { recording in
+                        recordingView(recording: recording)
+                    }
                 }
             }
         }
@@ -101,7 +128,7 @@ struct RecordingsView: View {
 struct RecordingsView_Previews: PreviewProvider {
     
     static let recorder1: Recorder = {
-       let recorder = Recorder()
+        let recorder = Recorder()
         recorder.record(measurements: [.acceleration, .deviceMotion])
         recorder.stopRecording()
         recorder.record(measurements: [.magneticField])

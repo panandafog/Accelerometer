@@ -40,8 +40,8 @@
 		0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6B289598B40040B63D /* NewRecordingView.swift */; };
 		0BA63B6E2897EDD80040B63D /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6D2897EDD80040B63D /* DateFormatter.swift */; };
 		0BA63B702897EFED0040B63D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6F2897EFED0040B63D /* Date.swift */; };
-		0BA63B722897FBCE0040B63D /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B712897FBCE0040B63D /* RecordingSummaryView.swift */; };
-		0BBAD4AD2895564C00251262 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingView.swift */; };
+		0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B712897FBCE0040B63D /* RecordingPreview.swift */; };
+		0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */; };
 		0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
 		0BBDC4E0288C188400CE6061 /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* Axe.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
@@ -108,8 +108,8 @@
 		0BA63B6B289598B40040B63D /* NewRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordingView.swift; sourceTree = "<group>"; };
 		0BA63B6D2897EDD80040B63D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		0BA63B6F2897EFED0040B63D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		0BA63B712897FBCE0040B63D /* RecordingSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSummaryView.swift; sourceTree = "<group>"; };
-		0BBAD4AC2895564C00251262 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		0BA63B712897FBCE0040B63D /* RecordingPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPreview.swift; sourceTree = "<group>"; };
+		0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSummaryView.swift; sourceTree = "<group>"; };
 		0BBAD4AE2895715400251262 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* Axe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
@@ -295,8 +295,8 @@
 			isa = PBXGroup;
 			children = (
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
-				0BA63B712897FBCE0040B63D /* RecordingSummaryView.swift */,
-				0BBAD4AC2895564C00251262 /* RecordingView.swift */,
+				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
+				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138EF289400A00026D0DC /* RecordingsRepository.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
@@ -469,11 +469,11 @@
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
 				0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */,
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
-				0BBAD4AD2895564C00251262 /* RecordingView.swift in Sources */,
+				0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */,
 				0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */,
 				0BA63B702897EFED0040B63D /* Date.swift in Sources */,
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
-				0BA63B722897FBCE0040B63D /* RecordingSummaryView.swift in Sources */,
+				0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */,
 				0BE138F6289409820026D0DC /* Recorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

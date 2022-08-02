@@ -2,7 +2,7 @@
 //  RecordingSummaryView.swift
 //  Accelerometer
 //
-//  Created by Andrey on 01.08.2022.
+//  Created by Andrey on 30.07.2022.
 //
 
 import SwiftUI
@@ -10,171 +10,116 @@ import SwiftUI
 struct RecordingSummaryView: View {
     
     let recording: Recording
+    @ObservedObject var recorder: Recorder = .shared
     
-    var startString: String {
-        let startString: String
-        if let start = recording.start {
-            startString = DateFormatter.Recordings.string(from: start)
-        } else {
-            startString = "???"
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State private var isPresentingDeleteConfirmation: Bool = false
+    
+    let deleteAlertTitleText = "Are you sure?"
+    
+    func string(from date: Date?) -> String? {
+        guard let date = date else {
+            return nil
         }
-        return startString
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd yyyy, HH:mm:ss.SSS"
+        
+        return dateFormatter.string(from: date)
     }
     
-    var durationString: String {
-        let durationString: String
-        if let duration = recording.duration {
-            durationString = duration.durationString
-        } else {
-            durationString = "???"
-        }
-        return durationString
-    }
-    
-    var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Started: " + startString)
-                Text("Duration: " + durationString)
-                    .padding([.bottom], 5)
-                Text("Measurements:")
-                ForEach(Array(recording.measurementTypes), id: \.self) { measurementType in
-                    Text(measurementType.name)
-                        .padding(.leading)
-                        .foregroundColor(.accentColor)
+    var entriesView: some View {
+        List {
+            Section(header: Text("Info")) {
+                RecordingPreview(recording: recording)
+                    .padding(.vertical)
+            }
+            Section(header: Text("Records")) {
+                ForEach(recording.entries) { entry in
+                    VStack(alignment: .leading) {
+                        Text(entry.measurementType.name)
+                            .padding(.top)
+                            .font(.title2)
+                        if let axes = entry.value {
+                            Text(String(axes.vector))
+                                .padding(.top)
+                                .font(.title2)
+                            Text(String(axes.x))
+                                .padding(.top)
+                            Text(String(axes.y))
+                                .padding(.top)
+                            Text(String(axes.z))
+                                .padding(.top)
+                        }
+                        Text(string(from: entry.date) ?? "???")
+                            .padding(.vertical)
+                    }
                 }
             }
         }
     }
+    
+    var body: some View {
+        VStack {
+            entriesView
+        }
+        .navigationTitle("Recording")
+        .toolbar {
+            Button("Delete") {
+                isPresentingDeleteConfirmation = true
+            }
+        }
+        .modify {
+            if #available(iOS 15.0, *) {
+                $0.confirmationDialog(
+                    deleteAlertTitleText,
+                    isPresented: $isPresentingDeleteConfirmation
+                ) {
+                    Button("Delete", role: .destructive) {
+                        deleteRecording()
+                    }
+                }
+            } else {
+                $0.alert(isPresented: $isPresentingDeleteConfirmation) {
+                    Alert(
+                        title: Text(deleteAlertTitleText),
+                        primaryButton: .destructive(
+                            Text("Delete"),
+                            action: {
+                                deleteRecording()
+                            }
+                        ),
+                        secondaryButton: .cancel(
+                            Text("Cancel"),
+                            action: { }
+                        )
+                    )
+                }
+            }
+        }
+    }
+    
+    func deleteRecording() {
+        recorder.delete(recordingID: recording.id)
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
-struct RecordingListRowView_Previews: PreviewProvider {
+struct RecordingView_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [
-                .acceleration,
-                .deviceMotion,
-                .rotation
-            ]
-        ))
-        .previewLayout(.sizeThatFits)
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date() - 5 - 5 * 60 - 60 * 60,
-                    value: nil
-                ),
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [
-                .acceleration,
-                .deviceMotion,
-                .rotation
-            ]
-        ))
-        .previewLayout(.sizeThatFits)
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date() - 5 - 5 * 60 - 10 * 360,
-                    value: nil
-                ),
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [
-                .acceleration,
-                .deviceMotion,
-                .rotation
-            ]
-        ))
-        .previewLayout(.sizeThatFits)
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date() - 5,
-                    value: nil
-                ),
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [.acceleration]
-        ))
-        .previewLayout(.sizeThatFits)
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date() - 5 * 60 - 5,
-                    value: nil
-                ),
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [.acceleration]
-        ))
-        .previewLayout(.sizeThatFits)
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date() - 5 * 60 * 60 - 5 * 60 - 5,
-                    value: nil
-                ),
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [.acceleration]
-        ))
-        .previewLayout(.sizeThatFits)
-        RecordingSummaryView(recording: Recording(
-            entries: [
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date() - 50000 * 60 * 60 - 5 * 60 - 5,
-                    value: nil
-                ),
-                Recording.Entry(
-                    measurementType: .acceleration,
-                    date: Date(),
-                    value: nil
-                )
-            ],
-            state: .completed,
-            measurementTypes: [.acceleration]
-        ))
-        .previewLayout(.sizeThatFits)
+        RecordingSummaryView(
+            recording: Recording(
+                entries: [
+                    .init(
+                        measurementType: .acceleration,
+                        date: .init(),
+                        value: Axes.getZero(displayableAbsMax: 1.0)
+                    )
+                ],
+                state: .completed,
+                measurementTypes: [.acceleration]
+            ),
+            recorder: .shared
+        )
     }
 }
