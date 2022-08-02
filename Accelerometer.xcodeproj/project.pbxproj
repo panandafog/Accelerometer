@@ -37,6 +37,8 @@
 		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
+		0B9BDC11289973CC00842161 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 0B9BDC10289973CC00842161 /* SwiftUICharts */; };
+		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
 		0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6B289598B40040B63D /* NewRecordingView.swift */; };
 		0BA63B6E2897EDD80040B63D /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6D2897EDD80040B63D /* DateFormatter.swift */; };
 		0BA63B702897EFED0040B63D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6F2897EFED0040B63D /* Date.swift */; };
@@ -105,6 +107,7 @@
 		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
+		0B9BDC122899A6F900842161 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0BA63B6B289598B40040B63D /* NewRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordingView.swift; sourceTree = "<group>"; };
 		0BA63B6D2897EDD80040B63D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		0BA63B6F2897EFED0040B63D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -127,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B9BDC11289973CC00842161 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +248,7 @@
 				0BA63B6D2897EDD80040B63D /* DateFormatter.swift */,
 				0BA63B6F2897EFED0040B63D /* Date.swift */,
 				0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */,
+				0B9BDC122899A6F900842161 /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -321,6 +326,9 @@
 			dependencies = (
 			);
 			name = Accelerometer;
+			packageProductDependencies = (
+				0B9BDC10289973CC00842161 /* SwiftUICharts */,
+			);
 			productName = Accelerometer;
 			productReference = 0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */;
 			productType = "com.apple.product-type.application";
@@ -393,6 +401,9 @@
 				Base,
 			);
 			mainGroup = 0B24EBFB28621BBE00AD3EF1;
+			packageReferences = (
+				0B9BDC0F289973CC00842161 /* XCRemoteSwiftPackageReference "ChartView" */,
+			);
 			productRefGroup = 0B24EC0528621BBE00AD3EF1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -450,6 +461,7 @@
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
 				0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */,
 				0BE138F4289401210026D0DC /* MeasurementType.swift in Sources */,
+				0B9BDC132899A6F900842161 /* Array.swift in Sources */,
 				0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */,
 				0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */,
 				0B1E6D2328724B2B003B8C5B /* Collection.swift in Sources */,
@@ -801,6 +813,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0B9BDC0F289973CC00842161 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = exactVersion;
+				version = 1.5.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0B9BDC10289973CC00842161 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B9BDC0F289973CC00842161 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
 }

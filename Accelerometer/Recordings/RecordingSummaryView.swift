@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUICharts
 
 struct RecordingSummaryView: View {
     
@@ -17,49 +18,56 @@ struct RecordingSummaryView: View {
     
     let deleteAlertTitleText = "Are you sure?"
     
-    func string(from date: Date?) -> String? {
-        guard let date = date else {
-            return nil
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd yyyy, HH:mm:ss.SSS"
-        
-        return dateFormatter.string(from: date)
+    func chartForm(generalSize: CGSize) -> CGSize {
+        CGSize(width: generalSize.width * 0.75, height: 240)
     }
     
-    var debugRecordsSection: some View {
-        Section(header: Text("Records")) {
-            ForEach(recording.entries) { entry in
-                VStack(alignment: .leading) {
-                    Text(entry.measurementType.name)
-                        .padding(.top)
-                        .font(.title2)
-                    if let axes = entry.value {
-                        Text(String(axes.vector))
-                            .padding(.top)
-                            .font(.title2)
-                        Text(String(axes.x))
-                            .padding(.top)
-                        Text(String(axes.y))
-                            .padding(.top)
-                        Text(String(axes.z))
-                            .padding(.top)
-                    }
-                    Text(string(from: entry.date) ?? "???")
-                        .padding(.vertical)
-                }
-            }
+    func values(of type: MeasurementType) -> [Double] {
+        let entries = recording.entries
+            .filter({ $0.measurementType == type })
+            .map({ $0.value?.vector ?? 0.0 })
+        let limit = 100
+        if entries.count > limit {
+            return entries
+                .chunked(into: Int((Double(entries.count) / 100.0).rounded()))
+                .map({ chunk -> Double in
+                    let sumArray = chunk.reduce(0, +)
+                    return sumArray / Double(chunk.count)
+                })
+        } else {
+            return entries
         }
     }
     
     var entriesView: some View {
-        List {
-            Section(header: Text("Info")) {
-                RecordingPreview(recording: recording)
-                    .padding(.vertical)
+        VStack {
+            GeometryReader { geometry in
+                List {
+                    Section(header: Text("Info")) {
+                        RecordingPreview(recording: recording)
+                            .padding(.vertical)
+                    }
+                    Section(header: Text("Measurements")) {
+                        ForEach(Array(recording.measurementTypes), id: \.self) { measurementType in
+                            HStack {
+                                Spacer()
+                                ScrollView {
+                                    MultiLineChartView(
+                                        data: [(values(of: measurementType), GradientColor(start: .red, end: .orange))],
+                                        title: measurementType.name.capitalized,
+                                        legend: nil,
+                                        style: .recordingEntry,
+                                        form: chartForm(generalSize: geometry.size),
+                                        rateValue: 5,
+                                        dropShadow: false
+                                    )
+                                }.disabled(true)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
             }
-            debugRecordsSection
         }
     }
     
@@ -109,7 +117,39 @@ struct RecordingSummaryView: View {
     }
 }
 
+private extension ChartStyle {
+    
+    static var recordingEntry: ChartStyle {
+        ChartStyle(
+            backgroundColor: Color.secondaryBackground,
+            accentColor: Color.accentColor,
+            gradientColor: .init(
+                start: Color.accentColor,
+                end: Color.accentColor
+            ),
+            textColor: Color.primary,
+            legendTextColor: Color.primary,
+            dropShadowColor: Color.clear
+        )
+    }
+    
+    static var recordingEntryDarkMode: ChartStyle {
+        ChartStyle(
+            backgroundColor: Color.accentColor,
+            accentColor: Color.accentColor,
+            gradientColor: .init(
+                start: Color.accentColor,
+                end: Color.accentColor
+            ),
+            textColor: Color.primary,
+            legendTextColor: Color.primary,
+            dropShadowColor: Color.clear
+        )
+    }
+}
+
 struct RecordingView_Previews: PreviewProvider {
+    
     static var previews: some View {
         RecordingSummaryView(
             recording: Recording(
@@ -125,5 +165,22 @@ struct RecordingView_Previews: PreviewProvider {
             ),
             recorder: .shared
         )
+        .preferredColorScheme(.light)
+        
+        RecordingSummaryView(
+            recording: Recording(
+                entries: [
+                    .init(
+                        measurementType: .acceleration,
+                        date: .init(),
+                        value: Axes.getZero(displayableAbsMax: 1.0)
+                    )
+                ],
+                state: .completed,
+                measurementTypes: [.acceleration]
+            ),
+            recorder: .shared
+        )
+        .preferredColorScheme(.dark)
     }
 }
