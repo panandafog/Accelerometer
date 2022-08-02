@@ -16,13 +16,13 @@ enum MeasurementType: CaseIterable {
     var name: String {
         switch self {
         case .acceleration:
-            return "Acceleration"
+            return "acceleration"
         case .rotation:
-            return "Rotation"
+            return "rotation"
         case .deviceMotion:
-            return "User acceleration"
+            return "user acceleration"
         case .magneticField:
-            return "Magnetic field"
+            return "magnetic field"
         }
     }
     

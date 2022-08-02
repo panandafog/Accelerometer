@@ -31,10 +31,8 @@ struct RecordingView: View {
     var entriesView: some View {
         List {
             Section(header: Text("Info")) {
-                VStack(alignment: .leading) {
-                    Text("Start: " + (string(from: recording.start) ?? "???"))
-                    Text("End: " + (string(from: recording.end) ?? "???"))
-                }
+                RecordingSummaryView(recording: recording)
+                    .padding(.vertical)
             }
             Section(header: Text("Records")) {
                 ForEach(recording.entries) { entry in
@@ -119,7 +117,7 @@ struct RecordingView_Previews: PreviewProvider {
                     )
                 ],
                 state: .completed,
-                measuremntTypes: [.acceleration]
+                measurementTypes: [.acceleration]
             ),
             recorder: .shared
         )

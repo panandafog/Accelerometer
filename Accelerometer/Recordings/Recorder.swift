@@ -26,12 +26,14 @@ class Recorder: ObservableObject {
     
     private var subscriptions: [AnyCancellable?] = []
     
-    func record(measurements measurementTypes: [MeasurementType]) {
+    func record(measurements measurementTypes: Set<MeasurementType>) {
         guard !recordingInProgress, !measurementTypes.isEmpty else {
             return
         }
         
-        activeRecording = Recording(entries: [], state: .inProgress, measuremntTypes: measurementTypes)
+        let newRecording = Recording(entries: [], state: .inProgress, measurementTypes: measurementTypes)
+        activeRecording = newRecording
+        repository.save(recording: newRecording)
         
         for type in measurementTypes {
             subscribeForChanges(of: type)

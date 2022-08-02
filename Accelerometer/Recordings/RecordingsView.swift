@@ -66,7 +66,8 @@ struct RecordingsView: View {
         NavigationLink {
             RecordingView(recording: recording)
         } label: {
-            Text(recording.id)
+            RecordingSummaryView(recording: recording)
+                .padding(.vertical)
         }
     }
     
@@ -98,7 +99,16 @@ struct RecordingsView: View {
 }
 
 struct RecordingsView_Previews: PreviewProvider {
+    
+    static let recorder1: Recorder = {
+       let recorder = Recorder()
+        recorder.record(measurements: [.acceleration, .deviceMotion])
+        recorder.stopRecording()
+        recorder.record(measurements: [.magneticField])
+        return recorder
+    }()
+    
     static var previews: some View {
-        RecordingsView()
+        RecordingsView(recorder: recorder1)
     }
 }

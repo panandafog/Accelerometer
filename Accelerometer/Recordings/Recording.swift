@@ -10,20 +10,29 @@ import Foundation
 struct Recording: Identifiable {
     
     let id = UUID().uuidString
+    let created = Date()
     
     var entries: [Entry]
     var state: State
-    let measuremntTypes: [MeasurementType]
+    let measurementTypes: Set<MeasurementType>
     
     var start: Date? {
-        entries.first?.date
+        entries.first?.date ?? created
     }
     
     var end: Date? {
         entries.last?.date
     }
     
-    //    var measuremntTypes: [MeasurementType] {
+    var duration: DateComponents? {
+        guard let start = start, let end = end else {
+            return nil
+        }
+
+        return Calendar.current.dateComponents([.hour, .minute, .second], from: start, to: end)
+    }
+    
+    //    var measurementTypes: [MeasurementType] {
     //        guard let keys = entries.first?.measurements.keys else {
     //            return []
     //        }

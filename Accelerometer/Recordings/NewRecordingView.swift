@@ -42,9 +42,9 @@ struct NewRecordingView: View {
     }
     
     func startRecording() {
-        let enabledMeasurementTypes: [MeasurementType] = measurementTypes.compactMap {
+        let enabledMeasurementTypes: Set<MeasurementType> = Set(measurementTypes.compactMap {
             $0.value ? $0.key : nil
-        }
+        })
         recorder.record(measurements: enabledMeasurementTypes)
         presentationMode.wrappedValue.dismiss()
     }

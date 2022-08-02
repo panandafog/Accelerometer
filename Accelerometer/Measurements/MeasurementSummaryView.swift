@@ -68,7 +68,7 @@ struct MeasurementSummaryView: View {
                     .padding()
                     .padding(.vertical)
             }
-            .navigationTitle(type.name)
+            .navigationTitle(type.name.capitalizingFirstLetter())
         }
         .toolbar {
             Button("Reset min / max") {

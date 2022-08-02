@@ -38,10 +38,14 @@
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6B289598B40040B63D /* NewRecordingView.swift */; };
+		0BA63B6E2897EDD80040B63D /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6D2897EDD80040B63D /* DateFormatter.swift */; };
+		0BA63B702897EFED0040B63D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6F2897EFED0040B63D /* Date.swift */; };
+		0BA63B722897FBCE0040B63D /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B712897FBCE0040B63D /* RecordingSummaryView.swift */; };
 		0BBAD4AD2895564C00251262 /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingView.swift */; };
 		0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
 		0BBDC4E0288C188400CE6061 /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* Axe.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
+		0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */; };
 		0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138ED2893FFA10026D0DC /* RecordingsView.swift */; };
 		0BE138F0289400A00026D0DC /* RecordingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138EF289400A00026D0DC /* RecordingsRepository.swift */; };
 		0BE138F2289400E70026D0DC /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F1289400E70026D0DC /* Recording.swift */; };
@@ -102,10 +106,14 @@
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0BA63B6B289598B40040B63D /* NewRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordingView.swift; sourceTree = "<group>"; };
+		0BA63B6D2897EDD80040B63D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		0BA63B6F2897EFED0040B63D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		0BA63B712897FBCE0040B63D /* RecordingSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSummaryView.swift; sourceTree = "<group>"; };
 		0BBAD4AC2895564C00251262 /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		0BBAD4AE2895715400251262 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* Axe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
+		0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateComponents.swift; sourceTree = "<group>"; };
 		0BE138ED2893FFA10026D0DC /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
 		0BE138EF289400A00026D0DC /* RecordingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsRepository.swift; sourceTree = "<group>"; };
 		0BE138F1289400E70026D0DC /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
@@ -233,6 +241,9 @@
 				0B24EC4F28628B9900AD3EF1 /* Color.swift */,
 				0B1E6D2228724B2B003B8C5B /* Collection.swift */,
 				0BBAD4AE2895715400251262 /* CGFloat.swift */,
+				0BA63B6D2897EDD80040B63D /* DateFormatter.swift */,
+				0BA63B6F2897EFED0040B63D /* Date.swift */,
+				0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -284,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
+				0BA63B712897FBCE0040B63D /* RecordingSummaryView.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138EF289400A00026D0DC /* RecordingsRepository.swift */,
@@ -426,6 +438,7 @@
 				0B24EC43286240C200AD3EF1 /* HexagonParameters.swift in Sources */,
 				0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */,
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
+				0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
 				0BE138F0289400A00026D0DC /* RecordingsRepository.swift in Sources */,
@@ -433,6 +446,7 @@
 				0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */,
 				0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */,
 				0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */,
+				0BA63B6E2897EDD80040B63D /* DateFormatter.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
 				0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */,
 				0BE138F4289401210026D0DC /* MeasurementType.swift in Sources */,
@@ -457,7 +471,9 @@
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
 				0BBAD4AD2895564C00251262 /* RecordingView.swift in Sources */,
 				0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */,
+				0BA63B702897EFED0040B63D /* Date.swift in Sources */,
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
+				0BA63B722897FBCE0040B63D /* RecordingSummaryView.swift in Sources */,
 				0BE138F6289409820026D0DC /* Recorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

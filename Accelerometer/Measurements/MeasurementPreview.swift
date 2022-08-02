@@ -27,7 +27,7 @@ struct MeasurementPreview: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(type.name)
+                Text(type.name.capitalizingFirstLetter())
                     .font(.title2)
                     .padding()
                 AxesSummaryView(type: type)

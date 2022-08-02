@@ -12,4 +12,12 @@ extension String {
     init(_ value: Double, roundPlaces: Int) {
         self.init(format: "%.\(roundPlaces)f", value)
     }
+    
+    func capitalizingFirstLetter() -> String {
+        prefix(1).capitalized + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }
