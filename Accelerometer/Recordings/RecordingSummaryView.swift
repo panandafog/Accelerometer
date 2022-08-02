@@ -28,34 +28,38 @@ struct RecordingSummaryView: View {
         return dateFormatter.string(from: date)
     }
     
+    var debugRecordsSection: some View {
+        Section(header: Text("Records")) {
+            ForEach(recording.entries) { entry in
+                VStack(alignment: .leading) {
+                    Text(entry.measurementType.name)
+                        .padding(.top)
+                        .font(.title2)
+                    if let axes = entry.value {
+                        Text(String(axes.vector))
+                            .padding(.top)
+                            .font(.title2)
+                        Text(String(axes.x))
+                            .padding(.top)
+                        Text(String(axes.y))
+                            .padding(.top)
+                        Text(String(axes.z))
+                            .padding(.top)
+                    }
+                    Text(string(from: entry.date) ?? "???")
+                        .padding(.vertical)
+                }
+            }
+        }
+    }
+    
     var entriesView: some View {
         List {
             Section(header: Text("Info")) {
                 RecordingPreview(recording: recording)
                     .padding(.vertical)
             }
-            Section(header: Text("Records")) {
-                ForEach(recording.entries) { entry in
-                    VStack(alignment: .leading) {
-                        Text(entry.measurementType.name)
-                            .padding(.top)
-                            .font(.title2)
-                        if let axes = entry.value {
-                            Text(String(axes.vector))
-                                .padding(.top)
-                                .font(.title2)
-                            Text(String(axes.x))
-                                .padding(.top)
-                            Text(String(axes.y))
-                                .padding(.top)
-                            Text(String(axes.z))
-                                .padding(.top)
-                        }
-                        Text(string(from: entry.date) ?? "???")
-                            .padding(.vertical)
-                    }
-                }
-            }
+            debugRecordsSection
         }
     }
     
