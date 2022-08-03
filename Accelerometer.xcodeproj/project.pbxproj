@@ -22,7 +22,6 @@
 		0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3928622B7100AD3EF1 /* SettingsView.swift */; };
 		0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */; };
 		0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4028623C1B00AD3EF1 /* Double.swift */; };
-		0B24EC43286240C200AD3EF1 /* HexagonParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */; };
 		0B24EC45286247AD00AD3EF1 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC44286247AD00AD3EF1 /* String.swift */; };
 		0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC462862496C00AD3EF1 /* LevelView.swift */; };
 		0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4B2862690800AD3EF1 /* HeaderView.swift */; };
@@ -94,7 +93,6 @@
 		0B24EC3928622B7100AD3EF1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRateView.swift; sourceTree = "<group>"; };
 		0B24EC4028623C1B00AD3EF1 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonParameters.swift; sourceTree = "<group>"; };
 		0B24EC44286247AD00AD3EF1 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0B24EC462862496C00AD3EF1 /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
 		0B24EC4B2862690800AD3EF1 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
@@ -188,7 +186,7 @@
 				0B801284286DA9A000F4AA85 /* Other */,
 				0B24EC0B28621BC200AD3EF1 /* Assets.xcassets */,
 				0B24EC0D28621BC200AD3EF1 /* Preview Content */,
-				0B24EC42286240C200AD3EF1 /* HexagonParameters.swift */,
+				0BADCA5C2899ED5C00238A25 /* TextFile.swift */,
 			);
 			path = Accelerometer;
 			sourceTree = "<group>";
@@ -300,6 +298,14 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
+		0BCC7F90289A8AC300AD3535 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				0BE138EF289400A00026D0DC /* RecordingsRepository.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 		0BE138EC2893FF8A0026D0DC /* Recordings */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,10 +314,9 @@
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
 				0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
-				0BE138EF289400A00026D0DC /* RecordingsRepository.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
 				0BE138F5289409820026D0DC /* Recorder.swift */,
-				0BADCA5C2899ED5C00238A25 /* TextFile.swift */,
+				0BCC7F90289A8AC300AD3535 /* Storage */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";
@@ -452,7 +457,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B24EC43286240C200AD3EF1 /* HexagonParameters.swift in Sources */,
 				0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */,
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */,
