@@ -13,7 +13,7 @@ extension DateFormatter {
         
         static func csvString(from date: Date) -> String {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
             return dateFormatter.string(from: date)
         }
         

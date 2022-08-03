@@ -67,7 +67,7 @@ struct RecordingMeasurementView: View {
                         start: .intensity(0.0),
                         end: .intensity(1.0)
                     ))],
-                    title: measurementType.name.capitalized,
+                    title: measurementType.name.capitalizingFirstLetter(),
                     legend: nil,
                     style: .recordingEntry,
                     form: chartForm(generalSize: screenSize),

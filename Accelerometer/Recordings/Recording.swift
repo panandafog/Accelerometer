@@ -36,9 +36,14 @@ struct Recording: Identifiable {
         guard measurementTypes.contains(type) else {
             return nil
         }
-        let filteredEntries = entries.filter({ $0.measurementType == type })
-        let csvString = filteredEntries.map({ $0.csvString }).joined(separator: "\n")
-        return TextFile(initialText: csvString)
+        let filteredEntries = entries
+            .filter({ $0.measurementType == type })
+        
+        var csvStrings = filteredEntries
+            .map({ $0.csvString })
+        csvStrings.insert(Entry.firstCsvString, at: 0)
+        
+        return TextFile(initialText: csvStrings.joined(separator: "\n"))
     }
 }
 
@@ -57,6 +62,16 @@ extension Recording {
         let date: Date
         let value: Axes?
         
+        static var firstCsvString: String = {
+            [
+                "Datetime",
+                "x",
+                "y",
+                "z",
+                "sum"
+            ].joined(separator: ",")
+        }()
+        
         var csvString: String {
             let dateString = DateFormatter.Recordings.csvString(from: date)
             guard let axes = value else {
@@ -66,8 +81,9 @@ extension Recording {
                 dateString,
                 String(axes.x),
                 String(axes.y),
-                String(axes.z)
-            ].joined(separator: ", ")
+                String(axes.z),
+                String(axes.vector)
+            ].joined(separator: ",")
         }
     }
 }

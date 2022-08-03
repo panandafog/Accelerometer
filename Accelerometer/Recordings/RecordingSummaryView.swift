@@ -49,6 +49,8 @@ struct RecordingSummaryView: View {
     var body: some View {
         entriesView
             .navigationTitle("Recording")
+        
+        // MARK: Toolbar
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     if #available(iOS 15.0, *) {
@@ -66,6 +68,8 @@ struct RecordingSummaryView: View {
                     }
                 }
             }
+        
+        // MARK: Delete confirmation
             .modify {
                 if #available(iOS 15.0, *) {
                     $0.confirmationDialog(
@@ -94,6 +98,8 @@ struct RecordingSummaryView: View {
                     }
                 }
             }
+        
+        // MARK: Exporter
             .fileExporter(
                 isPresented: $isPresentingExporter,
                 document: recording.csv(of: exportMeasurementType),

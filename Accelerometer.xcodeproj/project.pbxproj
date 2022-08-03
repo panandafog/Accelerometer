@@ -306,12 +306,12 @@
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
+				0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138EF289400A00026D0DC /* RecordingsRepository.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
 				0BE138F5289409820026D0DC /* Recorder.swift */,
 				0BADCA5C2899ED5C00238A25 /* TextFile.swift */,
-				0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";
