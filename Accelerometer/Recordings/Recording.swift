@@ -32,12 +32,14 @@ struct Recording: Identifiable {
         return Calendar.current.dateComponents([.hour, .minute, .second], from: start, to: end)
     }
     
-    //    var measurementTypes: [MeasurementType] {
-    //        guard let keys = entries.first?.measurements.keys else {
-    //            return []
-    //        }
-    //        return Array(keys)
-    //    }
+    func csv(of type: MeasurementType) -> TextFile? {
+        guard measurementTypes.contains(type) else {
+            return nil
+        }
+        let filteredEntries = entries.filter({ $0.measurementType == type })
+        let csvString = filteredEntries.map({ $0.csvString }).joined(separator: "\n")
+        return TextFile(initialText: csvString)
+    }
 }
 
 extension Recording {
@@ -54,10 +56,18 @@ extension Recording {
         let measurementType: MeasurementType
         let date: Date
         let value: Axes?
+        
+        var csvString: String {
+            let dateString = DateFormatter.Recordings.csvString(from: date)
+            guard let axes = value else {
+                return dateString
+            }
+            return [
+                dateString,
+                String(axes.x),
+                String(axes.y),
+                String(axes.z)
+            ].joined(separator: ", ")
+        }
     }
-    
-//    struct Entry {
-//        let measurements: [MeasurementType: Axes]
-//        let date: Date
-//    }
 }
