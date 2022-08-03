@@ -16,6 +16,9 @@ struct SettingsView: View {
                 RefreshRateView()
                     .padding()
             }
+            Section(header: Spacer(), footer: Text("Format of dates in recording file")) {
+                ExportDateFormatView()
+            }
 //            Section(header: Text("Accelerometer"), footer: Text("")) {
 //                Toggle("Remove gravity", isOn: .init(get: { measurer.removeGravity }, set: { measurer.removeGravity = $0 }))
 //            }

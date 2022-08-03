@@ -11,9 +11,11 @@ extension DateFormatter {
     
     enum Recordings {
         
+        static let csvStringFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        
         static func csvString(from date: Date) -> String {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+            dateFormatter.dateFormat = csvStringFormat
             return dateFormatter.string(from: date)
         }
         

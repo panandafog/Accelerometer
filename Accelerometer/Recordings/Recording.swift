@@ -73,7 +73,16 @@ extension Recording {
         }()
         
         var csvString: String {
-            let dateString = DateFormatter.Recordings.csvString(from: date)
+            let dateString: String
+            switch Settings.shared.exportDateFormat {
+            case .dateFormat:
+                dateString = DateFormatter.Recordings.csvString(from: date)
+            case .unix:
+                dateString = String(date.timeIntervalSince1970)
+            case .excel:
+                dateString = String(Double(date.timeIntervalSince1970) / 86400.0 + 25569.0)
+            }
+            
             guard let axes = value else {
                 return dateString
             }

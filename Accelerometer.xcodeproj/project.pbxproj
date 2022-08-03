@@ -31,6 +31,8 @@
 		0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC572863527800AD3EF1 /* DiagramView.swift */; };
 		0B34710D288C5491004E87FA /* AxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B34710C288C5491004E87FA /* AxesSummaryView.swift */; };
 		0B364DE328958204001B6233 /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B364DE228958204001B6233 /* Axes.swift */; };
+		0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFC9289A9E85007130D9 /* Settings.swift */; };
+		0B36DFCC289AA096007130D9 /* ExportDateFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */; };
 		0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */; };
 		0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
 		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
@@ -102,6 +104,8 @@
 		0B24EC572863527800AD3EF1 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
 		0B34710C288C5491004E87FA /* AxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryView.swift; sourceTree = "<group>"; };
 		0B364DE228958204001B6233 /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
+		0B36DFC9289A9E85007130D9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDateFormatView.swift; sourceTree = "<group>"; };
 		0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryViewExtended.swift; sourceTree = "<group>"; };
 		0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramAxesNamesStyle.swift; sourceTree = "<group>"; };
 		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 			children = (
 				0B24EC3928622B7100AD3EF1 /* SettingsView.swift */,
 				0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */,
+				0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */,
+				0B36DFC9289A9E85007130D9 /* Settings.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
+				0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
 				0BE138F0289400A00026D0DC /* RecordingsRepository.swift in Sources */,
 				0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */,
@@ -477,6 +484,7 @@
 				0B1E6D2328724B2B003B8C5B /* Collection.swift in Sources */,
 				0B24EC36286227A100AD3EF1 /* MeasurementsAxesView.swift in Sources */,
 				0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */,
+				0B36DFCC289AA096007130D9 /* ExportDateFormatView.swift in Sources */,
 				0BADCA5D2899ED5C00238A25 /* TextFile.swift in Sources */,
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
