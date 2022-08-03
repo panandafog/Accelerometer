@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RefreshRateView: View {
     @ObservedObject var measurer = Measurer.shared
+    @ObservedObject var recorder = Recorder.shared
     
     @State private var value: Double = Measurer.shared.updateInterval
     @State private var isEditing = false
@@ -31,17 +32,37 @@ struct RefreshRateView: View {
                 },
                 minimumValueLabel: Text(String(Measurer.minUpdateInterval)),
                 maximumValueLabel: Text(String(Measurer.maxUpdateInterval)),
-                label: {
-                    Text("Refresh rate")
-                }
+                label: { }
             )
+            .disabled(recorder.recordingInProgress)
+            
+            if recorder.recordingInProgress {
+                Text("This setting is not available while recording is enabled")
+                    .padding(.vertical)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }
 
 struct RefreshRateView_Previews: PreviewProvider {
+    
+    static let recorder1: Recorder = {
+        let recorder = Recorder()
+        return recorder
+    }()
+    
+    static let recorder2: Recorder = {
+        let recorder = Recorder()
+        recorder.record(measurements: [.acceleration])
+        return recorder
+    }()
+    
     static var previews: some View {
-        RefreshRateView()
+        RefreshRateView(measurer: .shared, recorder: recorder1)
+            .previewLayout(.sizeThatFits)
+        RefreshRateView(measurer: .shared, recorder: recorder2)
             .previewLayout(.sizeThatFits)
     }
 }

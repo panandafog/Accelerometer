@@ -21,6 +21,9 @@ extension Color {
     static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
     #endif
     
+    static let enabledButton = Color.accentColor
+    static let disabledButton = Color.intensity(0.0)
+    
     /// - Parameters:
     ///     - intensity: should be in 0.0 ... 1.0
     static func intensity(_ intensity: Double) -> Color {
@@ -46,10 +49,10 @@ extension Color {
 
 struct Color_Previews: PreviewProvider {
     
-    static let axesBinding1: Binding<Axes?> = {
+    static let axesBinding1: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = Axes(displayableAbsMax: 1.0)
+                let axes = ObservableAxes(displayableAbsMax: 1.0)
                 axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
                 return axes
             },

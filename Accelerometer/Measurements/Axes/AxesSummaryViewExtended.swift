@@ -9,9 +9,9 @@ import SwiftUI
 
 struct AxesSummaryViewExtended: View {
     @ObservedObject var measurer = Measurer.shared
-    let type: Measurer.MeasurementType
+    let type: MeasurementType
     
-    var axes: Axes? {
+    var axes: ObservableAxes? {
         measurer.axes(of: type)
     }
     

@@ -48,7 +48,7 @@ struct MeasurementsView_Previews: PreviewProvider {
     
     static let measurer: Measurer = {
         let measurer = Measurer()
-        Measurer.MeasurementType.allCases.forEach { type in
+        MeasurementType.allCases.forEach { type in
             measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: type)
         }
         return measurer

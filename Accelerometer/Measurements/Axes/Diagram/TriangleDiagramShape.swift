@@ -9,10 +9,10 @@ import SwiftUI
 
 struct TriangleDiagramShape: Shape {
     
-    var axes: Axes.AnimatableProperties?
+    var axes: Axes?
     let showMax: Bool
     
-    var animatableData: Axes.AnimatableProperties {
+    var animatableData: Axes {
         get {
             axes ?? .zero
         }

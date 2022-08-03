@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MeasurementPreview: View {
     @ObservedObject var measurer = Measurer.shared
-    let type: Measurer.MeasurementType
+    let type: MeasurementType
     
-    var axes: Axes? {
+    var axes: ObservableAxes? {
         measurer.axes(of: type)
     }
     
-    var axesBinding: Binding<Axes?> {
-        Binding<Axes?>.init(
+    var axesBinding: Binding<ObservableAxes?> {
+        Binding<ObservableAxes?>.init(
             get: {
                 axes
             },
@@ -27,7 +27,7 @@ struct MeasurementPreview: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(type.name)
+                Text(type.name.capitalizingFirstLetter())
                     .font(.title2)
                     .padding()
                 AxesSummaryView(type: type)
