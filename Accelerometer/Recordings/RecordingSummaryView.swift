@@ -29,7 +29,7 @@ struct RecordingSummaryView: View {
                         .padding(.vertical)
                 }
                 Section(header: Text("Measurements")) {
-                    ForEach(Array(recording.measurementTypes), id: \.self) { measurementType in
+                    ForEach(Array(recording.sortedMeasurementTypes), id: \.self) { measurementType in
                         HStack {
                             RecordingMeasurementView(
                                 recording: recording,

@@ -32,6 +32,13 @@ struct Recording: Identifiable {
         return Calendar.current.dateComponents([.hour, .minute, .second], from: start, to: end)
     }
     
+    var sortedMeasurementTypes: [MeasurementType] {
+        Array(measurementTypes)
+            .sorted { lhs, rhs in
+                lhs.name < rhs.name
+            }
+    }
+    
     func csv(of type: MeasurementType) -> TextFile? {
         guard measurementTypes.contains(type) else {
             return nil

@@ -38,7 +38,7 @@ struct RecordingPreview: View {
                 Text("Duration: " + durationString)
                     .padding([.bottom], 5)
                 Text("Measurements:")
-                ForEach(Array(recording.measurementTypes).sorted(by: { lhs, rhs in
+                ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in
                     lhs.name < rhs.name
                 }), id: \.self) { measurementType in
                     Text(measurementType.name)
