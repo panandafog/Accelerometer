@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import CoreData
 
 struct Recording: Identifiable {
     
-    let id = UUID().uuidString
-    let created = Date()
+    let id: String
+    let created: Date
     
     var entries: [Entry]
     var state: State
@@ -39,6 +40,14 @@ struct Recording: Identifiable {
             }
     }
     
+    init(id: String = UUID().uuidString, created: Date = Date(), entries: [Entry], state: State, measurementTypes: Set<MeasurementType>) {
+        self.id = id
+        self.created = created
+        self.entries = entries
+        self.state = state
+        self.measurementTypes = measurementTypes
+    }
+    
     func csv(of type: MeasurementType) -> TextFile? {
         guard measurementTypes.contains(type) else {
             return nil
@@ -56,14 +65,14 @@ struct Recording: Identifiable {
 
 extension Recording {
     
-    enum State {
+    enum State: String {
         case inProgress
         case completed
     }
     
     struct Entry: Identifiable {
         
-        let id = UUID().uuidString
+        let id: String
         
         let measurementType: MeasurementType
         let date: Date
@@ -101,5 +110,28 @@ extension Recording {
                 String(axes.vector)
             ].joined(separator: ",")
         }
+        
+        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, value: Axes?) {
+            self.id = id
+            self.measurementType = measurementType
+            self.date = date
+            self.value = value
+        }
     }
 }
+
+//extension Recording {
+//
+//    var entity: RecordingEntity {
+////        let newEntity = RecordingEntity()
+//        let newEntity = NSEntityDescription.insertNewObjectForEntityForName("RecordingEntity", inManagedObjectContext: self.managedObjectContext) as! RecordingEntity
+//        newEntity.id = id
+//        newEntity.created = created
+//        newEntity.state = state.rawValue
+//        return newEntity
+//    }
+//
+//    init(from entity: RecordingEntity) {
+//        self.init(id: entity.id!, created: entity.created!, entries: [], state: .init(rawValue: entity.state!)!, measurementTypes: [])
+//    }
+//}

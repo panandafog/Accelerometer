@@ -12,23 +12,6 @@ class Settings: ObservableObject {
     static let shared = Settings()
     private init() { }
     
-    //    var measurementsUpdateInterval: Double {
-    //        get {
-    //            let defaultValue = UserDefaults.standard.double(forKey: "MeasurementsUpdateInterval")
-    //            if defaultValue == 0.0 || defaultValue < Measurer.minUpdateInterval || defaultValue > Measurer.maxUpdateInterval {
-    //                return Measurer.initialUpdateInterval
-    //            } else {
-    //                return defaultValue
-    //            }
-    //        }
-    //        set {
-    //            let roundedValue = newValue.rounded(toPlaces: Measurer.updateIntervalRoundPlaces)
-    //            objectWillChange.send()
-    //            motion.setUpdateInterval(roundedValue)
-    //            UserDefaults.standard.set(roundedValue, forKey: "MeasurementsUpdateInterval")
-    //        }
-    //    }
-    
     var exportDateFormat: ExportDateFormat {
         get {
             let stringValue = UserDefaults.standard.string(forKey: "ExportDateFormat")
@@ -53,7 +36,7 @@ extension Settings {
         case unix
         
         static var byDefault: ExportDateFormat {
-            return .unix
+            .dateFormat
         }
         
         var displayableName: String {
