@@ -29,10 +29,9 @@ struct MeasurementPreview: View {
             VStack(alignment: .leading) {
                 Text(type.name.capitalizingFirstLetter())
                     .font(.title2)
-                    .padding()
+                    .padding([.vertical])
                 AxesSummaryView(type: type)
-                    .padding([.horizontal, .leading, .bottom])
-                    .padding([.leading])
+                    .padding([.horizontal, .bottom])
             }.layoutPriority(1)
             Spacer()
             ZStack(alignment: .trailing) {

@@ -21,6 +21,7 @@ struct ContentView: View {
 //                        }
 //                    }
             }
+            .phoneOnlyStackNavigationView()
             .tabItem {
                 Label("Measurements", systemImage: "list.bullet")
             }
@@ -29,6 +30,7 @@ struct ContentView: View {
                 RecordingsView()
                     .navigationTitle(Text("Recordings"))
             }
+            .phoneOnlyStackNavigationView()
             .tabItem {
                 Label("Recordings", systemImage: "play")
             }
@@ -37,6 +39,7 @@ struct ContentView: View {
                 SettingsView()
                     .navigationTitle(Text("Settings"))
             }
+            .navigationViewStyle(.stack)
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
