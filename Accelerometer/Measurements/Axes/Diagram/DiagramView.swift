@@ -17,10 +17,14 @@ struct DiagramView: View {
     
     var body: some View {
         GeometryReader { geometry in
+//            ZStack {
             ZStack {
                 triangle(max: true)
                 triangle(showAxesNames: shouldShowAxesNames(shapeSize: geometry.size))
             }
+//            .frame(width: 300, height: 300)
+//                Color.clear
+//            }
         }
     }
     
