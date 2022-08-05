@@ -21,7 +21,11 @@ class Recorder: ObservableObject {
     }
     
     var recordings: [Recording] {
-        repository.recordings
+        var savedRecordings = repository.recordings
+        if let activeRecording = activeRecording {
+            savedRecordings.insert(activeRecording, at: 0)
+        }
+        return savedRecordings
     }
     
     private var subscriptions: [AnyCancellable?] = []
@@ -33,7 +37,7 @@ class Recorder: ObservableObject {
         
         let newRecording = Recording(entries: [], state: .inProgress, measurementTypes: measurementTypes)
         activeRecording = newRecording
-        repository.save([newRecording])
+//        repository.save([newRecording])
         
         for type in measurementTypes {
             subscribeForChanges(of: type)
@@ -89,7 +93,7 @@ class Recorder: ObservableObject {
             return
         }
         
-        repository.save([activeRecording])
+//        repository.save([activeRecording])
     }
     
     private func cancelSubscriptions() {

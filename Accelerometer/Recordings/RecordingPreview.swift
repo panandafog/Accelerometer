@@ -36,8 +36,6 @@ struct RecordingPreview: View {
             VStack(alignment: .leading, spacing: 5) {
                 Text("Started: " + startString)
                 Text("Duration: " + durationString)
-                // TODO: remove it
-                Text("Entries: " + String(recording.entries.count))
                     .padding([.bottom], 5)
                 Text("Measurements:")
                 ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in

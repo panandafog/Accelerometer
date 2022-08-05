@@ -91,8 +91,6 @@ struct RecordingMeasurementView: View {
                 .padding([.vertical, .leading])
                 .buttonStyle(BorderlessButtonStyle())
                 Spacer()
-                // TODO: remove it
-                Text(String(values.count))
             }
         }
     }
