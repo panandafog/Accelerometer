@@ -31,9 +31,7 @@ struct TriangleDiagramShape: Shape {
         let zeroX = width / 2.0
         let zeroY = height / 1.5
         
-        guard let axes = axes else {
-            return CGPoint(x: zeroX, y: zeroY)
-        }
+        let axes = axes ?? .init(x: 0, y: 0, z: 0, displayableAbsMax: 1)
         
         let maxX = width / 2.0
         let angle = angle(width: width, height: height)
@@ -49,9 +47,7 @@ struct TriangleDiagramShape: Shape {
         let zeroX = width / 2.0
         let zeroY = height / 1.5
         
-        guard let axes = axes else {
-            return CGPoint(x: zeroX, y: zeroY)
-        }
+        let axes = axes ?? .init(x: 0, y: 0, z: 0, displayableAbsMax: 1)
         
         let maxY = zeroY
         
@@ -65,9 +61,7 @@ struct TriangleDiagramShape: Shape {
         let zeroX = width / 2.0
         let zeroY = height / 1.5
         
-        guard let axes = axes else {
-            return CGPoint(x: zeroX, y: zeroY)
-        }
+        let axes = axes ?? .init(x: 0, y: 0, z: 0, displayableAbsMax: 1)
         
         let maxX = width / 2.0
         let angle = angle(width: width, height: height)
