@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MeasurementType: CaseIterable {
+enum MeasurementType: String, CaseIterable {
     case acceleration
     case rotation
     case deviceMotion
