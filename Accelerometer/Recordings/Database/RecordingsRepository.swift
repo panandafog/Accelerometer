@@ -11,13 +11,9 @@ class RecordingsRepository: ObservableObject {
     
     private let databaseManager = DatabaseManagerImpl(configuration: .defaultConfiguration)
     
-    var recordings: [Recording] {
-        let realmRecordings: Results<RecordingRealm> = databaseManager.read()
-        return Array(realmRecordings).map { $0.recording }
-    }
+    var recordings: [Recording] = []
     
     func save(_ recordings: [Recording]) {
-        print("save \(String(recordings[0].entries.count))")
         databaseManager.write(
             recordings.map { RecordingRealm(recording: $0) }
         )
@@ -33,5 +29,12 @@ class RecordingsRepository: ObservableObject {
             return
         }
         databaseManager.delete([recording])
+    }
+    
+    func update() {
+        let realmRecordings: Results<RecordingRealm> = databaseManager.read()
+        recordings = Array(realmRecordings)
+            .map { $0.recording }
+            .reversed()
     }
 }

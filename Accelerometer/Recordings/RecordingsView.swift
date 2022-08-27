@@ -21,6 +21,14 @@ struct RecordingsView: View {
         }
     }
     
+    var secondaryRecordingTitle: String? {
+        if recorder.recordingInProgress {
+            return "Do not close the app"
+        } else {
+            return nil
+        }
+    }
+    
     var startStopButtonImage: some View {
         if recorder.recordingInProgress {
             return Image(systemName: "stop.fill")
@@ -96,8 +104,16 @@ struct RecordingsView: View {
             Section(header: Spacer()) {
                 HStack {
                     ZStack(alignment: .topLeading) {
-                        Text(recordingTitle)
-                            .font(.title2)
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(recordingTitle)
+                                .font(.title2)
+                            if let secondaryRecordingTitle = secondaryRecordingTitle {
+                                Text(secondaryRecordingTitle)
+                                    .font(.footnote)
+                                    .padding([.leading])
+                                    .foregroundColor(Color.secondary)
+                            }
+                        }
                         Color.clear
                     }
                     .padding(.vertical)

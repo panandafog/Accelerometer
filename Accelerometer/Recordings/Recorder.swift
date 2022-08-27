@@ -13,9 +13,15 @@ class Recorder: ObservableObject {
     // private init() { }
     
     @ObservedObject private var measurer = Measurer.shared
-    private let repository = RecordingsRepository()
+    private let repository: RecordingsRepository = {
+        let repository = RecordingsRepository()
+        repository.update()
+        return repository
+    }()
     
-    @Published private (set) var activeRecording: Recording? = nil
+    private let disableIdleTimer = true
+    
+    private (set) var activeRecording: Recording? = nil
     var recordingInProgress: Bool {
         activeRecording != nil
     }
@@ -31,6 +37,10 @@ class Recorder: ObservableObject {
     private var subscriptions: [AnyCancellable?] = []
     
     func record(measurements measurementTypes: Set<MeasurementType>) {
+        if disableIdleTimer {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
+        
         guard !recordingInProgress, !measurementTypes.isEmpty else {
             return
         }
@@ -45,6 +55,10 @@ class Recorder: ObservableObject {
     }
     
     func stopRecording() {
+        if disableIdleTimer {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+        
         guard recordingInProgress else {
             return
         }
@@ -52,10 +66,12 @@ class Recorder: ObservableObject {
         if var activeRecording = activeRecording {
             activeRecording.state = .completed
             repository.save([activeRecording])
+            repository.update()
         }
         
         activeRecording = nil
         cancelSubscriptions()
+        objectWillChange.send()
     }
     
     func delete(recordingID: String) {
@@ -93,7 +109,7 @@ class Recorder: ObservableObject {
             return
         }
         
-//        repository.save([activeRecording])
+        objectWillChange.send()
     }
     
     private func cancelSubscriptions() {
