@@ -13,10 +13,15 @@ class Recorder: ObservableObject {
     // private init() { }
     
     @ObservedObject private var measurer = Measurer.shared
-    private let repository = RecordingsRepository()
+    private let repository: RecordingsRepository = {
+        let repository = RecordingsRepository()
+        repository.update()
+        return repository
+    }()
+    
     private let disableIdleTimer = true
     
-    @Published private (set) var activeRecording: Recording? = nil
+    private (set) var activeRecording: Recording? = nil
     var recordingInProgress: Bool {
         activeRecording != nil
     }
@@ -61,10 +66,12 @@ class Recorder: ObservableObject {
         if var activeRecording = activeRecording {
             activeRecording.state = .completed
             repository.save([activeRecording])
+            repository.update()
         }
         
         activeRecording = nil
         cancelSubscriptions()
+        objectWillChange.send()
     }
     
     func delete(recordingID: String) {
@@ -102,7 +109,7 @@ class Recorder: ObservableObject {
             return
         }
         
-//        repository.save([activeRecording])
+        objectWillChange.send()
     }
     
     private func cancelSubscriptions() {
