@@ -14,6 +14,7 @@ class Recorder: ObservableObject {
     
     @ObservedObject private var measurer = Measurer.shared
     private let repository = RecordingsRepository()
+    private let disableIdleTimer = true
     
     @Published private (set) var activeRecording: Recording? = nil
     var recordingInProgress: Bool {
@@ -31,6 +32,10 @@ class Recorder: ObservableObject {
     private var subscriptions: [AnyCancellable?] = []
     
     func record(measurements measurementTypes: Set<MeasurementType>) {
+        if disableIdleTimer {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
+        
         guard !recordingInProgress, !measurementTypes.isEmpty else {
             return
         }
@@ -45,6 +50,10 @@ class Recorder: ObservableObject {
     }
     
     func stopRecording() {
+        if disableIdleTimer {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+        
         guard recordingInProgress else {
             return
         }
