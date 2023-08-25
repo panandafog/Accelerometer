@@ -10,22 +10,24 @@ import SwiftUI
 
 class Recorder: ObservableObject {
     static let shared = Recorder()
-    // private init() { }
+//     private init() { }
     
     @ObservedObject private var measurer = Measurer.shared
+    
     private let repository: RecordingsRepository = {
         let repository = RecordingsRepository()
         repository.update()
         return repository
     }()
-    
+    private let liveActivitiesService = LiveActivitiesService()
     private let disableIdleTimer = true
     
     private (set) var activeRecording: Recording? = nil
+    private var subscriptions: [AnyCancellable?] = []
+    
     var recordingInProgress: Bool {
         activeRecording != nil
     }
-    
     var recordings: [Recording] {
         var savedRecordings = repository.recordings
         if let activeRecording = activeRecording {
@@ -33,8 +35,6 @@ class Recorder: ObservableObject {
         }
         return savedRecordings
     }
-    
-    private var subscriptions: [AnyCancellable?] = []
     
     func record(measurements measurementTypes: Set<MeasurementType>) {
         if disableIdleTimer {
@@ -52,6 +52,8 @@ class Recorder: ObservableObject {
         for type in measurementTypes {
             subscribeForChanges(of: type)
         }
+        
+        liveActivitiesService.startRecordingActivity(recording: newRecording)
     }
     
     func stopRecording() {
@@ -68,9 +70,9 @@ class Recorder: ObservableObject {
             repository.save([activeRecording])
             repository.update()
         }
-        
         activeRecording = nil
         cancelSubscriptions()
+        liveActivitiesService.stopRecordingActivity()
         objectWillChange.send()
     }
     
