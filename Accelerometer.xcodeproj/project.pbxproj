@@ -43,6 +43,27 @@
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
+		0B7AA3DA2A884492007FA1D3 /* Accelerometer_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3D92A884492007FA1D3 /* Accelerometer_WatchApp.swift */; };
+		0B7AA3DC2A884492007FA1D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3DB2A884492007FA1D3 /* ContentView.swift */; };
+		0B7AA3DE2A884496007FA1D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B7AA3DD2A884496007FA1D3 /* Assets.xcassets */; };
+		0B7AA3E12A884496007FA1D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B7AA3E02A884496007FA1D3 /* Preview Assets.xcassets */; };
+		0B7AA3EB2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3EA2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift */; };
+		0B7AA3F52A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3F42A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift */; };
+		0B7AA3F72A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3F62A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift */; };
+		0B7AA3FA2A884497007FA1D3 /* Accelerometer Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
+		0B876BE029EC618800DEFA69 /* MeasurementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F3289401210026D0DC /* MeasurementType.swift */; };
+		0B9653CB29EC48ED0071A6C7 /* LiveActivitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653CA29EC48ED0071A6C7 /* LiveActivitiesService.swift */; };
+		0B9653D229EC52460071A6C7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9653D129EC52460071A6C7 /* WidgetKit.framework */; };
+		0B9653D429EC52460071A6C7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9653D329EC52460071A6C7 /* SwiftUI.framework */; };
+		0B9653D729EC52460071A6C7 /* RecordingWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653D629EC52460071A6C7 /* RecordingWidgetBundle.swift */; };
+		0B9653D929EC52460071A6C7 /* RecordingWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653D829EC52460071A6C7 /* RecordingWidgetLiveActivity.swift */; };
+		0B9653DB29EC52460071A6C7 /* RecordingWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653DA29EC52460071A6C7 /* RecordingWidget.swift */; };
+		0B9653DE29EC52470071A6C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B9653DD29EC52470071A6C7 /* Assets.xcassets */; };
+		0B9653E029EC52470071A6C7 /* RecordingWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653DC29EC52460071A6C7 /* RecordingWidget.intentdefinition */; };
+		0B9653E129EC52470071A6C7 /* RecordingWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653DC29EC52460071A6C7 /* RecordingWidget.intentdefinition */; };
+		0B9653E429EC52470071A6C7 /* RecordingWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0B9653D029EC52460071A6C7 /* RecordingWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0B9653E929EC5BE30071A6C7 /* RecordingWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653D829EC52460071A6C7 /* RecordingWidgetLiveActivity.swift */; };
 		0B9BDC11289973CC00842161 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 0B9BDC10289973CC00842161 /* SwiftUICharts */; };
 		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
 		0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */; };
@@ -53,6 +74,8 @@
 		0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B712897FBCE0040B63D /* RecordingPreview.swift */; };
 		0BADCA5D2899ED5C00238A25 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BADCA5C2899ED5C00238A25 /* TextFile.swift */; };
 		0BADCA5F289A720600238A25 /* RecordingMeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */; };
+		0BAF38152A88DE25000C532E /* NewRecordingWatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF38142A88DE25000C532E /* NewRecordingWatchView.swift */; };
+		0BB5ACCC2A8949850087563E /* MeasurementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F3289401210026D0DC /* MeasurementType.swift */; };
 		0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */; };
 		0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
 		0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* AxeType.swift */; };
@@ -91,7 +114,60 @@
 			remoteGlobalIDString = 0B24EC0328621BBE00AD3EF1;
 			remoteInfo = Accelerometer;
 		};
+		0B7AA3E72A884496007FA1D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B7AA3D62A884492007FA1D3;
+			remoteInfo = "Accelerometer Watch Watch App";
+		};
+		0B7AA3F12A884497007FA1D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B7AA3D62A884492007FA1D3;
+			remoteInfo = "Accelerometer Watch Watch App";
+		};
+		0B7AA3F82A884497007FA1D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B7AA3D62A884492007FA1D3;
+			remoteInfo = "Accelerometer Watch Watch App";
+		};
+		0B9653E229EC52470071A6C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B9653CF29EC52460071A6C7;
+			remoteInfo = RecordingWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0B7AA3FB2A884497007FA1D3 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				0B7AA3FA2A884497007FA1D3 /* Accelerometer Watch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B9653E829EC52470071A6C7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0B9653E429EC52470071A6C7 /* RecordingWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAxes.swift; sourceTree = "<group>"; };
@@ -132,6 +208,28 @@
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0B8C3B292A99F9FF00488B1E /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		0B8C3B2B2A99FC9600488B1E /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
+		0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Accelerometer Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7AA3D92A884492007FA1D3 /* Accelerometer_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_WatchApp.swift; sourceTree = "<group>"; };
+		0B7AA3DB2A884492007FA1D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0B7AA3DD2A884496007FA1D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0B7AA3E02A884496007FA1D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0B7AA3E62A884496007FA1D3 /* Accelerometer Watch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Accelerometer Watch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7AA3EA2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_Watch_Watch_AppTests.swift; sourceTree = "<group>"; };
+		0B7AA3F02A884497007FA1D3 /* Accelerometer Watch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Accelerometer Watch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7AA3F42A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_Watch_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		0B7AA3F62A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
+		0B87D5592A10FEB900D9BDC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0B9653CA29EC48ED0071A6C7 /* LiveActivitiesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitiesService.swift; sourceTree = "<group>"; };
+		0B9653D029EC52460071A6C7 /* RecordingWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RecordingWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B9653D129EC52460071A6C7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		0B9653D329EC52460071A6C7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		0B9653D629EC52460071A6C7 /* RecordingWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWidgetBundle.swift; sourceTree = "<group>"; };
+		0B9653D829EC52460071A6C7 /* RecordingWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		0B9653DA29EC52460071A6C7 /* RecordingWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWidget.swift; sourceTree = "<group>"; };
+		0B9653DC29EC52460071A6C7 /* RecordingWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = RecordingWidget.intentdefinition; sourceTree = "<group>"; };
+		0B9653DD29EC52470071A6C7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0B9653DF29EC52470071A6C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B9BDC122899A6F900842161 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableAxesTests.swift; sourceTree = "<group>"; };
@@ -141,6 +239,7 @@
 		0BA63B712897FBCE0040B63D /* RecordingPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPreview.swift; sourceTree = "<group>"; };
 		0BADCA5C2899ED5C00238A25 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
 		0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingMeasurementView.swift; sourceTree = "<group>"; };
+		0BAF38142A88DE25000C532E /* NewRecordingWatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecordingWatchView.swift; sourceTree = "<group>"; };
 		0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSummaryView.swift; sourceTree = "<group>"; };
 		0BBAD4AE2895715400251262 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* AxeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxeType.swift; sourceTree = "<group>"; };
@@ -197,14 +296,50 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0B7AA3D42A884492007FA1D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3E32A884496007FA1D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3ED2A884497007FA1D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B9653CD29EC52460071A6C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B9653D429EC52460071A6C7 /* SwiftUI.framework in Frameworks */,
+				0B9653D229EC52460071A6C7 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0B24EBFB28621BBE00AD3EF1 = {
 			isa = PBXGroup;
 			children = (
+				0BAF38162A88DE5F000C532E /* Common */,
 				0B24EC0628621BBE00AD3EF1 /* Accelerometer */,
 				0B24EC1728621BC200AD3EF1 /* AccelerometerTests */,
+				0B24EC2128621BC200AD3EF1 /* AccelerometerUITests */,
+				0B9653D529EC52460071A6C7 /* RecordingWidget */,
+				0B7AA3D82A884492007FA1D3 /* Accelerometer Watch Watch App */,
+				0B7AA3E92A884497007FA1D3 /* Accelerometer Watch Watch AppTests */,
+				0B7AA3F32A884497007FA1D3 /* Accelerometer Watch Watch AppUITests */,
 				0B24EC0528621BBE00AD3EF1 /* Products */,
 				6B8F26DDC621B9F11656F8E6 /* Pods */,
 				58BB923964926E2A11838DD2 /* Frameworks */,
@@ -217,6 +352,10 @@
 				0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */,
 				0B24EC1428621BC200AD3EF1 /* AccelerometerTests.xctest */,
 				0B24EC1E28621BC200AD3EF1 /* AccelerometerUITests.xctest */,
+				0B9653D029EC52460071A6C7 /* RecordingWidgetExtension.appex */,
+				0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */,
+				0B7AA3E62A884496007FA1D3 /* Accelerometer Watch Watch AppTests.xctest */,
+				0B7AA3F02A884497007FA1D3 /* Accelerometer Watch Watch AppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -224,6 +363,7 @@
 		0B24EC0628621BBE00AD3EF1 /* Accelerometer */ = {
 			isa = PBXGroup;
 			children = (
+				0B87D5592A10FEB900D9BDC4 /* Info.plist */,
 				0B24EC0728621BBE00AD3EF1 /* AccelerometerApp.swift */,
 				0B24EC3328621E1C00AD3EF1 /* AppDelegate.swift */,
 				0B24EC0928621BBE00AD3EF1 /* ContentView.swift */,
@@ -362,6 +502,41 @@
 				0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */,
 			);
 			path = Protocols;
+		0B7AA3D82A884492007FA1D3 /* Accelerometer Watch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				0BAF38142A88DE25000C532E /* NewRecordingWatchView.swift */,
+				0B7AA3D92A884492007FA1D3 /* Accelerometer_WatchApp.swift */,
+				0B7AA3DB2A884492007FA1D3 /* ContentView.swift */,
+				0B7AA3DD2A884496007FA1D3 /* Assets.xcassets */,
+				0B7AA3DF2A884496007FA1D3 /* Preview Content */,
+			);
+			path = "Accelerometer Watch Watch App";
+			sourceTree = "<group>";
+		};
+		0B7AA3DF2A884496007FA1D3 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0B7AA3E02A884496007FA1D3 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0B7AA3E92A884497007FA1D3 /* Accelerometer Watch Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				0B7AA3EA2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift */,
+			);
+			path = "Accelerometer Watch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		0B7AA3F32A884497007FA1D3 /* Accelerometer Watch Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				0B7AA3F42A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift */,
+				0B7AA3F62A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "Accelerometer Watch Watch AppUITests";
 			sourceTree = "<group>";
 		};
 		0B801284286DA9A000F4AA85 /* Other */ = {
@@ -384,11 +559,38 @@
 				0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */,
 			);
 			path = Values;
+		0B9653C729EC478D0071A6C7 /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				0B9653CA29EC48ED0071A6C7 /* LiveActivitiesService.swift */,
+			);
+			path = LiveActivity;
+			sourceTree = "<group>";
+		};
+		0B9653D529EC52460071A6C7 /* RecordingWidget */ = {
+			isa = PBXGroup;
+			children = (
+				0B9653D629EC52460071A6C7 /* RecordingWidgetBundle.swift */,
+				0B9653D829EC52460071A6C7 /* RecordingWidgetLiveActivity.swift */,
+				0B9653DA29EC52460071A6C7 /* RecordingWidget.swift */,
+				0B9653DC29EC52460071A6C7 /* RecordingWidget.intentdefinition */,
+				0B9653DD29EC52470071A6C7 /* Assets.xcassets */,
+				0B9653DF29EC52470071A6C7 /* Info.plist */,
+			);
+			path = RecordingWidget;
+			sourceTree = "<group>";
+		};
+		0BAF38162A88DE5F000C532E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		0BE138EC2893FF8A0026D0DC /* Recordings */ = {
 			isa = PBXGroup;
 			children = (
+				0B9653C729EC478D0071A6C7 /* LiveActivity */,
 				0B508CD9289C7EEB00326C6E /* Database */,
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
@@ -408,6 +610,8 @@
 				8CB40BA633249887FD78581D /* Pods_Accelerometer.framework */,
 				8F438B6FD5FC69485F45338B /* Pods_Accelerometer_AccelerometerUITests.framework */,
 				58D1941BEB77F79AC9EA829F /* Pods_AccelerometerTests.framework */,
+				0B9653D129EC52460071A6C7 /* WidgetKit.framework */,
+				0B9653D329EC52460071A6C7 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -437,10 +641,14 @@
 				0B24EC0128621BBE00AD3EF1 /* Frameworks */,
 				0B24EC0228621BBE00AD3EF1 /* Resources */,
 				E0C84390A7AFCABAF144D8E5 /* [CP] Embed Pods Frameworks */,
+				0B9653E829EC52470071A6C7 /* Embed Foundation Extensions */,
+				0B7AA3FB2A884497007FA1D3 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0B9653E329EC52470071A6C7 /* PBXTargetDependency */,
+				0B7AA3F92A884497007FA1D3 /* PBXTargetDependency */,
 			);
 			name = Accelerometer;
 			packageProductDependencies = (
@@ -489,6 +697,76 @@
 			productReference = 0B24EC1E28621BC200AD3EF1 /* AccelerometerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		0B7AA3D62A884492007FA1D3 /* Accelerometer Watch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B7AA4022A884497007FA1D3 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch App" */;
+			buildPhases = (
+				0B7AA3D32A884492007FA1D3 /* Sources */,
+				0B7AA3D42A884492007FA1D3 /* Frameworks */,
+				0B7AA3D52A884492007FA1D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Accelerometer Watch Watch App";
+			productName = "Accelerometer Watch Watch App";
+			productReference = 0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0B7AA3E52A884496007FA1D3 /* Accelerometer Watch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B7AA4032A884497007FA1D3 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch AppTests" */;
+			buildPhases = (
+				0B7AA3E22A884496007FA1D3 /* Sources */,
+				0B7AA3E32A884496007FA1D3 /* Frameworks */,
+				0B7AA3E42A884496007FA1D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B7AA3E82A884496007FA1D3 /* PBXTargetDependency */,
+			);
+			name = "Accelerometer Watch Watch AppTests";
+			productName = "Accelerometer Watch Watch AppTests";
+			productReference = 0B7AA3E62A884496007FA1D3 /* Accelerometer Watch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0B7AA3EF2A884497007FA1D3 /* Accelerometer Watch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B7AA4042A884497007FA1D3 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch AppUITests" */;
+			buildPhases = (
+				0B7AA3EC2A884497007FA1D3 /* Sources */,
+				0B7AA3ED2A884497007FA1D3 /* Frameworks */,
+				0B7AA3EE2A884497007FA1D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B7AA3F22A884497007FA1D3 /* PBXTargetDependency */,
+			);
+			name = "Accelerometer Watch Watch AppUITests";
+			productName = "Accelerometer Watch Watch AppUITests";
+			productReference = 0B7AA3F02A884497007FA1D3 /* Accelerometer Watch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		0B9653CF29EC52460071A6C7 /* RecordingWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B9653E529EC52470071A6C7 /* Build configuration list for PBXNativeTarget "RecordingWidgetExtension" */;
+			buildPhases = (
+				0B9653CC29EC52460071A6C7 /* Sources */,
+				0B9653CD29EC52460071A6C7 /* Frameworks */,
+				0B9653CE29EC52460071A6C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RecordingWidgetExtension;
+			productName = RecordingWidgetExtension;
+			productReference = 0B9653D029EC52460071A6C7 /* RecordingWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -496,7 +774,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1330;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					0B24EC0328621BBE00AD3EF1 = {
@@ -509,6 +787,20 @@
 					0B24EC1D28621BC200AD3EF1 = {
 						CreatedOnToolsVersion = 13.3.1;
 						TestTargetID = 0B24EC0328621BBE00AD3EF1;
+					};
+					0B7AA3D62A884492007FA1D3 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					0B7AA3E52A884496007FA1D3 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 0B7AA3D62A884492007FA1D3;
+					};
+					0B7AA3EF2A884497007FA1D3 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 0B7AA3D62A884492007FA1D3;
+					};
+					0B9653CF29EC52460071A6C7 = {
+						CreatedOnToolsVersion = 14.3;
 					};
 				};
 			};
@@ -531,6 +823,10 @@
 				0B24EC0328621BBE00AD3EF1 /* Accelerometer */,
 				0B24EC1328621BC200AD3EF1 /* AccelerometerTests */,
 				0B24EC1D28621BC200AD3EF1 /* AccelerometerUITests */,
+				0B9653CF29EC52460071A6C7 /* RecordingWidgetExtension */,
+				0B7AA3D62A884492007FA1D3 /* Accelerometer Watch Watch App */,
+				0B7AA3E52A884496007FA1D3 /* Accelerometer Watch Watch AppTests */,
+				0B7AA3EF2A884497007FA1D3 /* Accelerometer Watch Watch AppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -556,6 +852,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3D52A884492007FA1D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7AA3E12A884496007FA1D3 /* Preview Assets.xcassets in Resources */,
+				0B7AA3DE2A884496007FA1D3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3E42A884496007FA1D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3EE2A884497007FA1D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B9653CE29EC52460071A6C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B9653DE29EC52470071A6C7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +1019,7 @@
 				0BDBDAEC2B825F910045A008 /* Bool.swift in Sources */,
 				0B9BDC132899A6F900842161 /* Array.swift in Sources */,
 				0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */,
+				0B9653CB29EC48ED0071A6C7 /* LiveActivitiesService.swift in Sources */,
 				0B508CDB289C7F0200326C6E /* RecordingsRepository.swift in Sources */,
 				0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */,
 				0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */,
@@ -719,6 +1047,7 @@
 				0BBF0918289D163300B42740 /* RecordingEntryRealm.swift in Sources */,
 				0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */,
 				0BFBA1E828737CC300529B50 /* ObservableAxes.swift in Sources */,
+				0B9653E129EC52470071A6C7 /* RecordingWidget.intentdefinition in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
 				0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */,
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
@@ -727,6 +1056,7 @@
 				0BA63B702897EFED0040B63D /* Date.swift in Sources */,
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
 				0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */,
+				0B9653E929EC5BE30071A6C7 /* RecordingWidgetLiveActivity.swift in Sources */,
 				0BE138F6289409820026D0DC /* Recorder.swift in Sources */,
 				0B05EB5E2A9A1523005497F6 /* VectorAxes.swift in Sources */,
 			);
@@ -747,6 +1077,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0B7AA3D32A884492007FA1D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BB5ACCC2A8949850087563E /* MeasurementType.swift in Sources */,
+				0B7AA3DC2A884492007FA1D3 /* ContentView.swift in Sources */,
+				0BAF38152A88DE25000C532E /* NewRecordingWatchView.swift in Sources */,
+				0B7AA3DA2A884492007FA1D3 /* Accelerometer_WatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3E22A884496007FA1D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7AA3EB2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3EC2A884497007FA1D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7AA3F72A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift in Sources */,
+				0B7AA3F52A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B9653CC29EC52460071A6C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B9653E029EC52470071A6C7 /* RecordingWidget.intentdefinition in Sources */,
+				0B9653D929EC52460071A6C7 /* RecordingWidgetLiveActivity.swift in Sources */,
+				0B876BE029EC618800DEFA69 /* MeasurementType.swift in Sources */,
+				0B9653D729EC52460071A6C7 /* RecordingWidgetBundle.swift in Sources */,
+				0B9653DB29EC52460071A6C7 /* RecordingWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -759,6 +1129,26 @@
 			isa = PBXTargetDependency;
 			target = 0B24EC0328621BBE00AD3EF1 /* Accelerometer */;
 			targetProxy = 0B24EC1F28621BC200AD3EF1 /* PBXContainerItemProxy */;
+		};
+		0B7AA3E82A884496007FA1D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B7AA3D62A884492007FA1D3 /* Accelerometer Watch Watch App */;
+			targetProxy = 0B7AA3E72A884496007FA1D3 /* PBXContainerItemProxy */;
+		};
+		0B7AA3F22A884497007FA1D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B7AA3D62A884492007FA1D3 /* Accelerometer Watch Watch App */;
+			targetProxy = 0B7AA3F12A884497007FA1D3 /* PBXContainerItemProxy */;
+		};
+		0B7AA3F92A884497007FA1D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B7AA3D62A884492007FA1D3 /* Accelerometer Watch Watch App */;
+			targetProxy = 0B7AA3F82A884497007FA1D3 /* PBXContainerItemProxy */;
+		};
+		0B9653E329EC52470071A6C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B9653CF29EC52460071A6C7 /* RecordingWidgetExtension */;
+			targetProxy = 0B9653E229EC52470071A6C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -881,6 +1271,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2DC3CA045DE222EC16645242 /* Pods-Accelerometer.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -889,12 +1280,16 @@
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Accelerometer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -912,6 +1307,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA128F40F3D3C26694904DE5 /* Pods-Accelerometer.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -920,12 +1316,16 @@
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Accelerometer/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1019,6 +1419,239 @@
 			};
 			name = Release;
 		};
+		0B7AA3FC2A884497007FA1D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer Watch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Accelerometer Watch";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.panandafog.Accelerometer;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		0B7AA3FD2A884497007FA1D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer Watch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Accelerometer Watch";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.panandafog.Accelerometer;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		0B7AA3FE2A884497007FA1D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.panandafog.Accelerometer-Watch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Accelerometer Watch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Accelerometer Watch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		0B7AA3FF2A884497007FA1D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.panandafog.Accelerometer-Watch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Accelerometer Watch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Accelerometer Watch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		0B7AA4002A884497007FA1D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.panandafog.Accelerometer-Watch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "Accelerometer Watch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		0B7AA4012A884497007FA1D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.panandafog.Accelerometer-Watch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "Accelerometer Watch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		0B9653E629EC52470071A6C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecordingWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecordingWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer.RecordingWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0B9653E729EC52470071A6C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecordingWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecordingWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer.RecordingWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1054,6 +1687,42 @@
 			buildConfigurations = (
 				0B24EC2F28621BC200AD3EF1 /* Debug */,
 				0B24EC3028621BC200AD3EF1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0B7AA4022A884497007FA1D3 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7AA3FC2A884497007FA1D3 /* Debug */,
+				0B7AA3FD2A884497007FA1D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0B7AA4032A884497007FA1D3 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7AA3FE2A884497007FA1D3 /* Debug */,
+				0B7AA3FF2A884497007FA1D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0B7AA4042A884497007FA1D3 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B7AA4002A884497007FA1D3 /* Debug */,
+				0B7AA4012A884497007FA1D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0B9653E529EC52470071A6C7 /* Build configuration list for PBXNativeTarget "RecordingWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B9653E629EC52470071A6C7 /* Debug */,
+				0B9653E729EC52470071A6C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -46,29 +46,39 @@ struct RecordingSummaryView: View {
         }
     }
     
+    var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Button(action: {
+                isPresentingDeleteConfirmation = true
+            }) {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+    }
+    
     var body: some View {
         entriesView
             .navigationTitle("Recording")
         
         // MARK: Toolbar
-        // FIXME: This does not compile in XCode 15
-//            .toolbar {
-//                ToolbarItem(placement: .primaryAction) {
-//                    if #available(iOS 15.0, *) {
-//                        Button(role: .destructive, action: {
-//                            isPresentingDeleteConfirmation = true
-//                        }) {
-//                            Label("Delete", systemImage: "trash")
-//                        }
-//                    } else {
-//                        Button(action: {
-//                            isPresentingDeleteConfirmation = true
-//                        }) {
-//                            Label("Delete", systemImage: "trash")
-//                        }
-//                    }
-//                }
-//            }
+        // FIXME: Toolbar doesnt work in xcode beta
+        //            .toolbar {
+        //                ToolbarItem(placement: .primaryAction) {
+        //                    if #available(iOS 15.0, *) {
+        //                        Button(role: .destructive, action: {
+        //                            isPresentingDeleteConfirmation = true
+        //                        }) {
+        //                            Label("Delete", systemImage: "trash")
+        //                        }
+        //                    } else {
+        //                        Button(action: {
+        //                            isPresentingDeleteConfirmation = true
+        //                        }) {
+        //                            Label("Delete", systemImage: "trash")
+        //                        }
+        //                    }
+        //                }
+        //            }
         
         // MARK: Delete confirmation
             .modify {
