@@ -14,9 +14,9 @@ class RecordingEntryRealm: Object {
     @objc dynamic var date: NSDate = .init()
     @objc dynamic var measurementType: String = .init()
     
-    @objc dynamic var value: AxesRealm?
+    @objc dynamic var value: TriangleAxesRealm?
     
-    convenience init(id: String, date: NSDate, measurementType: String, value: AxesRealm?) {
+    convenience init(id: String, date: NSDate, measurementType: String, value: TriangleAxesRealm?) {
         self.init()
         self.id = id
         self.date = date
@@ -41,9 +41,9 @@ extension RecordingEntryRealm {
     }
     
     convenience init(entry: Recording.Entry) {
-        var axesRealm: AxesRealm?
+        var axesRealm: TriangleAxesRealm?
         if let value = entry.value {
-            axesRealm = AxesRealm(axes: value)
+            axesRealm = TriangleAxesRealm(axes: value)
         }
         
         self.init(

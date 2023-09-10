@@ -100,7 +100,7 @@ class Recorder: ObservableObject {
         }
     }
     
-    private func save(value: Axes?, of type: MeasurementType) {
+    private func save(value: TriangleAxes?, of type: MeasurementType) {
         let newEntry = Recording.Entry(measurementType: type, date: Date(), value: value)
         
         activeRecording?.entries.append(newEntry)

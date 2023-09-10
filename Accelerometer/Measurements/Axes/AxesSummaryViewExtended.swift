@@ -11,7 +11,7 @@ struct AxesSummaryViewExtended: View {
     @ObservedObject var measurer = Measurer.shared
     let type: MeasurementType
     
-    var axes: ObservableAxes? {
+    var axes: ObservableAxes<TriangleAxes>? {
         measurer.axes(of: type)
     }
     
@@ -20,7 +20,7 @@ struct AxesSummaryViewExtended: View {
             VStack {
                 Text(
                     String(
-                        axes?.properties.maxV ?? 0.0,
+                        axes?.properties.vector.max ?? 0.0,
                         roundPlaces: Measurer.measurementsDisplayRoundPlaces
                     )
                 )
@@ -30,7 +30,7 @@ struct AxesSummaryViewExtended: View {
                 if type.hasMinimum {
                     Text(
                         String(
-                            axes?.properties.minV ?? 0.0,
+                            axes?.properties.vector.max ?? 0.0,
                             roundPlaces: Measurer.measurementsDisplayRoundPlaces
                         )
                     )
@@ -44,7 +44,9 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
     static let measurer1: Measurer = {
         let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        measurer.deviceMotion = ObservableAxes(axes: axes)
         measurer.saveData(x: 0, y: 0, z: 0, type: .deviceMotion)
         measurer.saveData(x: 0, y: 0, z: 0, type: .magneticField)
         return measurer
@@ -52,7 +54,9 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
     static let measurer2: Measurer = {
         let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        measurer.deviceMotion = ObservableAxes(axes: axes)
         measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: .deviceMotion)
         measurer.saveData(x: 100, y: 100, z: 100, type: .magneticField)
         return measurer
@@ -60,7 +64,9 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
     static let measurer3: Measurer = {
         let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        measurer.deviceMotion = ObservableAxes(axes: axes)
         measurer.saveData(x: 1, y: 1, z: 1, type: .deviceMotion)
         measurer.saveData(x: 200, y: 200, z: 200, type: .magneticField)
         return measurer

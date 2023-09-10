@@ -1,5 +1,5 @@
 //
-//  Gyros.swift
+//  Measurer.swift
 //  Accelerometer
 //
 //  Created by Andrey on 21.06.2022.
@@ -22,10 +22,10 @@ class Measurer: ObservableObject {
     
     private static let initialUpdateInterval = 0.5
     
-    @Published var deviceMotion: ObservableAxes?
-    @Published var acceleration: ObservableAxes?
-    @Published var rotation: ObservableAxes?
-    @Published var magneticField: ObservableAxes?
+    @Published var deviceMotion: ObservableAxes<TriangleAxes>?
+    @Published var acceleration: ObservableAxes<TriangleAxes>?
+    @Published var rotation: ObservableAxes<TriangleAxes>?
+    @Published var magneticField: ObservableAxes<TriangleAxes>?
     
     var deviceMotionSubscription: AnyCancellable?
     var accelerationSubscription: AnyCancellable?
@@ -168,56 +168,62 @@ class Measurer: ObservableObject {
         switch type {
         case .acceleration:
             if acceleration == nil {
-                acceleration = ObservableAxes(displayableAbsMax: accelerationDisplayableAbsMax)
+                var axes = TriangleAxes.zero
+                axes.displayableAbsMax = accelerationDisplayableAbsMax
+                acceleration = ObservableAxes(axes: axes)
+                
                 accelerationSubscription = acceleration?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
             }
             
-            acceleration?.properties.setValues(
-                x: x,
-                y: y,
-                z: z// + (removeGravity ? 1.0 : 0.0)
-            )
+            acceleration?.properties.set(values: [
+                .x: x, .y: y, .z: z
+            ])
+            
         case .rotation:
             if rotation == nil {
-                rotation = ObservableAxes(displayableAbsMax: rotationDisplayableAbsMax)
+                var axes = TriangleAxes.zero
+                axes.displayableAbsMax = rotationDisplayableAbsMax
+                rotation = ObservableAxes(axes: axes)
+                
                 rotationSubscription = rotation?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
             }
             
-            rotation?.properties.setValues(
-                x: x,
-                y: y,
-                z: z
-            )
+            rotation?.properties.set(values: [
+                .x: x, .y: y, .z: z
+            ])
+            
         case .deviceMotion:
             if deviceMotion == nil {
-                deviceMotion = ObservableAxes(displayableAbsMax: deviceMotionDisplayableAbsMax)
+                var axes = TriangleAxes.zero
+                axes.displayableAbsMax = deviceMotionDisplayableAbsMax
+                deviceMotion = ObservableAxes(axes: axes)
+                
                 deviceMotionSubscription = deviceMotion?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
             }
             
-            deviceMotion?.properties.setValues(
-                x: x,
-                y: y,
-                z: z
-            )
+            deviceMotion?.properties.set(values: [
+                .x: x, .y: y, .z: z
+            ])
         case .magneticField:
             if magneticField == nil {
-                magneticField = ObservableAxes(displayableAbsMax: magneticFieldDisplayableAbsMax)
+                var axes = TriangleAxes.zero
+                axes.displayableAbsMax = magneticFieldDisplayableAbsMax
+                magneticField = ObservableAxes(axes: axes)
+                
                 magneticFieldSubscription = magneticField?.objectWillChange.sink { [weak self] _ in
                     self?.objectWillChange.send()
                 }
             }
             
-            magneticField?.properties.setValues(
-                x: x,
-                y: y,
-                z: z
-            )
+            magneticField?.properties.set(values: [
+                .x: x, .y: y, .z: z
+            ])
         }
     }
     
@@ -263,7 +269,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    func axes(of type: MeasurementType) -> ObservableAxes? {
+    func axes(of type: MeasurementType) -> ObservableAxes<TriangleAxes>? {
         switch type {
         case .acceleration:
             return acceleration
@@ -278,7 +284,7 @@ class Measurer: ObservableObject {
     
     func valueLabel(of type: MeasurementType) -> String? {
         String(
-            axes(of: type)?.properties.vector ?? 0.0,
+            axes(of: type)?.properties.vector.value ?? 0.0,
             roundPlaces: Measurer.measurementsDisplayRoundPlaces
         ) + " \(type.unit)"
     }

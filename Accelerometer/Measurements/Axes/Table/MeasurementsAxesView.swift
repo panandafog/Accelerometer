@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MeasurementsAxesView: View {
-    @Binding var axes: ObservableAxes?
+    @Binding var axes: ObservableAxes<TriangleAxes>?
     
     var showSummary = true
     
@@ -16,30 +16,30 @@ struct MeasurementsAxesView: View {
         var rows = [
             RowData(
                 name: "x",
-                min: axes?.properties.minX,
-                value: axes?.properties.x,
-                max: axes?.properties.maxX
+                min: axes?.properties.axes[.x]?.min,
+                value: axes?.properties.axes[.x]?.value,
+                max: axes?.properties.axes[.x]?.max
             ),
             RowData(
                 name: "y",
-                min: axes?.properties.minY,
-                value: axes?.properties.y,
-                max: axes?.properties.maxY
+                min: axes?.properties.axes[.y]?.min,
+                value: axes?.properties.axes[.y]?.value,
+                max: axes?.properties.axes[.y]?.max
             ),
             RowData(
                 name: "z",
-                min: axes?.properties.minZ,
-                value: axes?.properties.z,
-                max: axes?.properties.maxZ
+                min: axes?.properties.axes[.z]?.min,
+                value: axes?.properties.axes[.z]?.value,
+                max: axes?.properties.axes[.z]?.max
             )
         ]
         if showSummary {
             rows.append(
                 RowData(
                     name: "summary",
-                    min: axes?.properties.minV,
-                    value: axes?.properties.vector,
-                    max: axes?.properties.maxV
+                    min: axes?.properties.vector.min,
+                    value: axes?.properties.vector.value,
+                    max: axes?.properties.vector.max
                 )
             )
         }
@@ -84,9 +84,14 @@ struct MeasurementsAxesView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     static var previews: some View {
         MeasurementsAxesView(axes: .init(get: {
-            let axes = ObservableAxes(displayableAbsMax: 1.0)
-            axes.properties.setValues(x: 0.5, y: 0.6, z: 0.7)
-            axes.properties.setValues(x: 0.2, y: 0.3, z: 0.4)
+            let axes = ObservableAxes<TriangleAxes>()
+            axes.properties.displayableAbsMax = 1.0
+            axes.properties.set(values: [
+                .x: 0.5, .y: 0.6, .z: 0.7
+            ])
+            axes.properties.set(values: [
+                .x: 0.2, .y: 0.3, .z: 0.4
+            ])
             return axes
         }, set: { _ in
             

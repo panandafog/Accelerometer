@@ -47,69 +47,71 @@ extension Color {
     }
 }
 
-struct Color_Previews: PreviewProvider {
-    
-    static let axesBinding1: Binding<ObservableAxes?> = {
-        .init(
-            get: {
-                let axes = ObservableAxes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
-                return axes
-            },
-            set: { _ in }
-        )
-    }()
-    
-    static let measurer1: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 0, y: 0, z: 0, type: .deviceMotion)
-        return measurer
-    }()
-    
-    static let measurer2: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: .deviceMotion)
-        return measurer
-    }()
-    
-    static let measurer3: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 1, y: 1, z: 1, type: .deviceMotion)
-        return measurer
-    }()
-    
-    static var previews: some View {
-        Group {
-            Color.intensity(0.0)
-                .previewLayout(.fixed(width: 100, height: 100))
-            Color.intensity(0.5)
-                .previewLayout(.fixed(width: 100, height: 100))
-            Color.intensity(1.0)
-                .previewLayout(.fixed(width: 100, height: 100))
-            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
-            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
-            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
-        }
-    }
-}
+// FIXME: Fix previews
+
+//struct Color_Previews: PreviewProvider {
+//
+//    static let axesBinding1: Binding<ObservableAxes?> = {
+//        .init(
+//            get: {
+//                let axes = ObservableAxes(displayableAbsMax: 1.0)
+//                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
+//                return axes
+//            },
+//            set: { _ in }
+//        )
+//    }()
+//    
+//    static let measurer1: Measurer = {
+//        let measurer = Measurer()
+//        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+//        measurer.saveData(x: 0, y: 0, z: 0, type: .deviceMotion)
+//        return measurer
+//    }()
+//    
+//    static let measurer2: Measurer = {
+//        let measurer = Measurer()
+//        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+//        measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: .deviceMotion)
+//        return measurer
+//    }()
+//    
+//    static let measurer3: Measurer = {
+//        let measurer = Measurer()
+//        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
+//        measurer.saveData(x: 1, y: 1, z: 1, type: .deviceMotion)
+//        return measurer
+//    }()
+//    
+//    static var previews: some View {
+//        Group {
+//            Color.intensity(0.0)
+//                .previewLayout(.fixed(width: 100, height: 100))
+//            Color.intensity(0.5)
+//                .previewLayout(.fixed(width: 100, height: 100))
+//            Color.intensity(1.0)
+//                .previewLayout(.fixed(width: 100, height: 100))
+//            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//                .preferredColorScheme(.dark)
+//            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//                .preferredColorScheme(.dark)
+//            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//                .preferredColorScheme(.dark)
+//        }
+//    }
+//}

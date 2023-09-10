@@ -76,9 +76,10 @@ extension Recording {
         
         let measurementType: MeasurementType
         let date: Date
-        let value: Axes?
+        let value: TriangleAxes?
         
         static var firstCsvString: String = {
+            // FIXME: any axes support
             [
                 "Datetime",
                 "x",
@@ -99,19 +100,19 @@ extension Recording {
                 dateString = String(Double(date.timeIntervalSince1970) / 86400.0 + 25569.0)
             }
             
+            var outputArray = [dateString]
             guard let axes = value else {
                 return dateString
             }
-            return [
-                dateString,
-                String(axes.x),
-                String(axes.y),
-                String(axes.z),
-                String(axes.vector)
-            ].joined(separator: ",")
+            
+            type(of: axes).axesTypes.forEach { axeType in
+                outputArray.append(String(axes.axes[axeType]!.value))
+            }
+            
+            return outputArray.joined(separator: ",")
         }
         
-        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, value: Axes?) {
+        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, value: TriangleAxes?) {
             self.id = id
             self.measurementType = measurementType
             self.date = date

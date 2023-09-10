@@ -26,7 +26,7 @@ struct RecordingMeasurementView: View {
     var values: [Double] {
         let entries = recording.entries
             .filter({ $0.measurementType == measurementType })
-            .map({ $0.value?.vector ?? 0.0 })
+            .map({ $0.value?.vector.value ?? 0.0 })
         let limit = 100
         if entries.count > limit {
             return entries
@@ -129,6 +129,12 @@ private extension ChartStyle {
 
 struct RecordingMeasurementView_Previews: PreviewProvider {
     
+    static let axes: TriangleAxes = {
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        return axes
+    }()
+    
     static var previews: some View {
         RecordingMeasurementView(
             recording: Recording(
@@ -136,7 +142,7 @@ struct RecordingMeasurementView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes.getZero(displayableAbsMax: 1.0)
+                        value: axes
                     )
                 ],
                 state: .completed,

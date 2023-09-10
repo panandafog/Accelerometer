@@ -7,35 +7,15 @@
 
 import SwiftUI
 
-final class ObservableAxes: ObservableObject {
+final class ObservableAxes<T: Axes>: ObservableObject {
+    // TODO: rename properties -> axes
+    @Published var properties: T
     
-    @Published var properties: Axes
-    
-    init(displayableAbsMax: Double) {
-        properties = .zero
-        properties.displayableAbsMax = displayableAbsMax
+    init(axes: T = .zero) {
+        properties = axes
     }
     
     func reset() {
-        properties = Axes(
-            x: 0,
-            y: 0,
-            z: 0,
-            minX: nil,
-            minY: nil,
-            minZ: nil,
-            maxX: nil,
-            maxY: nil,
-            maxZ: nil,
-            displayableAbsMax: properties.displayableAbsMax
-        )
-    }
-}
-
-extension ObservableAxes {
-    
-    var intensityColor: Color {
-        let intensity = abs(properties.vector) / properties.displayableAbsMax
-        return Color.intensity(intensity)
+        properties = T.zero
     }
 }

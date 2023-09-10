@@ -51,23 +51,24 @@ struct RecordingSummaryView: View {
             .navigationTitle("Recording")
         
         // MARK: Toolbar
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    if #available(iOS 15.0, *) {
-                        Button(role: .destructive, action: {
-                            isPresentingDeleteConfirmation = true
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    } else {
-                        Button(action: {
-                            isPresentingDeleteConfirmation = true
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
-                }
-            }
+        // FIXME: This does not compile in XCode 15
+//            .toolbar {
+//                ToolbarItem(placement: .primaryAction) {
+//                    if #available(iOS 15.0, *) {
+//                        Button(role: .destructive, action: {
+//                            isPresentingDeleteConfirmation = true
+//                        }) {
+//                            Label("Delete", systemImage: "trash")
+//                        }
+//                    } else {
+//                        Button(action: {
+//                            isPresentingDeleteConfirmation = true
+//                        }) {
+//                            Label("Delete", systemImage: "trash")
+//                        }
+//                    }
+//                }
+//            }
         
         // MARK: Delete confirmation
             .modify {
@@ -154,6 +155,12 @@ private extension ChartStyle {
 
 struct RecordingView_Previews: PreviewProvider {
     
+    static let axes: TriangleAxes = {
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        return axes
+    }()
+    
     static var previews: some View {
         RecordingSummaryView(
             recording: Recording(
@@ -161,7 +168,7 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes.getZero(displayableAbsMax: 1.0)
+                        value: axes
                     )
                 ],
                 state: .completed,
@@ -177,7 +184,7 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes.getZero(displayableAbsMax: 1.0)
+                        value: axes
                     )
                 ],
                 state: .completed,

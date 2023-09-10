@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiagramView: View {
     
-    var axes: Binding<ObservableAxes?>
+    var axes: Binding<ObservableAxes<TriangleAxes>?>
     var style: DiagramViewStyle = .default
     
     private let axesNamesSizeLimit: CGFloat = 120
@@ -17,14 +17,10 @@ struct DiagramView: View {
     
     var body: some View {
         GeometryReader { geometry in
-//            ZStack {
             ZStack {
                 triangle(max: true)
                 triangle(showAxesNames: shouldShowAxesNames(shapeSize: geometry.size))
             }
-//            .frame(width: 300, height: 300)
-//                Color.clear
-//            }
         }
     }
     
@@ -41,11 +37,14 @@ struct DiagramView: View {
         })
     }
     
-    func axeName(axe: Axe) -> some View {
+    func axeName(axe: AxeType) -> some View {
         GeometryReader { geometry in
-            ZStack(alignment: axe.alignment) {
+            ZStack(alignment: axe.alignment ?? .center) {
                 Color.clear
-                let offsetSize = axe.offset(size: geometry.size, multiplier: axesNamesOffsetMultiplier)
+                let offsetSize = axe.offset(
+                    size: geometry.size,
+                    multiplier: axesNamesOffsetMultiplier
+                ) ?? (x: 0.0, y: 0.0)
                 Text(axe.rawValue)
                     .offset(x: offsetSize.x, y: offsetSize.y)
                     .foregroundColor(.white)
@@ -77,9 +76,9 @@ struct DiagramView: View {
     }
 }
 
-private extension Axe {
+private extension AxeType {
     
-    var alignment: Alignment {
+    var alignment: Alignment? {
         switch self {
         case .x:
             return .bottomLeading
@@ -87,10 +86,14 @@ private extension Axe {
             return .top
         case .z:
             return .bottomTrailing
+        case .vector:
+            return nil
+        case .unnamed:
+            return nil
         }
     }
     
-    func offset(size: CGSize, multiplier: CGFloat) -> (x: CGFloat, y: CGFloat) {
+    func offset(size: CGSize, multiplier: CGFloat) -> (x: CGFloat, y: CGFloat)? {
         
         switch self {
         case .x:
@@ -105,17 +108,26 @@ private extension Axe {
                 -1 * (size.width * multiplier),
                  -1 * (size.height * multiplier * 0.5)
             )
+        case .vector:
+            return nil
+        case .unnamed:
+            return nil
         }
     }
 }
 
 struct DiagramView_Previews: PreviewProvider {
     
-    static let axesBinding1: Binding<ObservableAxes?> = {
+    static let axesBinding1: Binding<ObservableAxes<TriangleAxes>?> = {
         .init(
             get: {
-                let axes = ObservableAxes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
+                let axes = ObservableAxes<TriangleAxes>()
+                axes.properties.displayableAbsMax = 1.0
+                axes.properties.set(values: [
+                    .x: 0.4,
+                    .y: 0.4,
+                    .z: 0.4
+                ])
                 return axes
             },
             set: { _ in }
@@ -125,8 +137,13 @@ struct DiagramView_Previews: PreviewProvider {
     static let axesBinding2: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = ObservableAxes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.2, y: 0.5, z: 0.7)
+                let axes = ObservableAxes<TriangleAxes>()
+                axes.properties.displayableAbsMax = 1.0
+                axes.properties.set(values: [
+                    .x: 0.2,
+                    .y: 0.5,
+                    .z: 0.7
+                ])
                 return axes
             },
             set: { _ in }

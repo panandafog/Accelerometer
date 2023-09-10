@@ -13,7 +13,7 @@ struct MeasurementSummaryView: View {
     
     let type: MeasurementType
     
-    var axesBinding: Binding<ObservableAxes?> {
+    var axesBinding: Binding<ObservableAxes<TriangleAxes>?> {
         Binding<ObservableAxes?>.init(
             get: {
                 measurer.axes(of: type)
