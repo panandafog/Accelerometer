@@ -1,5 +1,5 @@
 //
-//  Axe.swift
+//  Axis.swift
 //  Accelerometer
 //
 //  Created by Andrey on 26.08.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Axe<T> where T: Comparable, T: LosslessStringConvertible {
+struct Axis<T> where T: Comparable, T: LosslessStringConvertible {
     let type_: AxeType
     var value: T
     var min: T?
@@ -30,8 +30,8 @@ struct Axe<T> where T: Comparable, T: LosslessStringConvertible {
     }
 }
 
-extension Axe: Equatable where T: Equatable {
-    static func == (lhs: Axe<T>, rhs: Axe<T>) -> Bool {
+extension Axis: Equatable where T: Equatable {
+    static func == (lhs: Axis<T>, rhs: Axis<T>) -> Bool {
         lhs.type_ == rhs.type_ &&
         lhs.value == rhs.value &&
         lhs.min == rhs.min &&
@@ -39,9 +39,9 @@ extension Axe: Equatable where T: Equatable {
     }
 }
 
-extension Axe: AdditiveArithmetic where T: AdditiveArithmetic {
-    static func - (lhs: Axe<T>, rhs: Axe<T>) -> Axe<T> {
-        Axe<T>(
+extension Axis: AdditiveArithmetic where T: AdditiveArithmetic {
+    static func - (lhs: Axis<T>, rhs: Axis<T>) -> Axis<T> {
+        Axis<T>(
             type_: lhs.type_,
             value: lhs.value - rhs.value,
             min: (lhs.min ?? T.zero) - (rhs.min ?? T.zero),
@@ -49,8 +49,8 @@ extension Axe: AdditiveArithmetic where T: AdditiveArithmetic {
         )
     }
     
-    static func + (lhs: Axe<T>, rhs: Axe<T>) -> Axe<T> {
-        Axe<T>(
+    static func + (lhs: Axis<T>, rhs: Axis<T>) -> Axis<T> {
+        Axis<T>(
             type_: lhs.type_,
             value: lhs.value + rhs.value,
             min: (lhs.min ?? T.zero) + (rhs.min ?? T.zero),
@@ -58,8 +58,8 @@ extension Axe: AdditiveArithmetic where T: AdditiveArithmetic {
         )
     }
     
-    static var zero: Axe<T> {
-        Axe<T>(
+    static var zero: Axis<T> {
+        Axis<T>(
             type_: .unnamed,
             value: T.zero
         )
@@ -67,7 +67,7 @@ extension Axe: AdditiveArithmetic where T: AdditiveArithmetic {
 }
 
 // For VectorArithmetic
-extension Axe where T == Double {
+extension Axis where T == Double {
     mutating func scale(by rhs: Double) {
         value *= rhs
         min = (min ?? T.zero) * rhs
