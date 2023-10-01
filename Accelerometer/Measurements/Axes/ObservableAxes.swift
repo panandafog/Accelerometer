@@ -7,15 +7,14 @@
 
 import SwiftUI
 
-final class ObservableAxes<T: Axes>: ObservableObject {
-    // TODO: rename properties -> axes
-    @Published var properties: T
+final class ObservableAxes: ObservableObject {
+    @Published var axes: any Axes
     
-    init(axes: T = .zero) {
-        properties = axes
+    init(axes newAxes: any Axes) {
+        axes = newAxes
     }
     
     func reset() {
-        properties = T.zero
+        axes = type(of: axes).zero
     }
 }

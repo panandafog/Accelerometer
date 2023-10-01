@@ -63,8 +63,8 @@ struct RecordingListRowView_Previews: PreviewProvider {
             state: .completed,
             measurementTypes: [
                 .acceleration,
-                .deviceMotion,
-                .rotation
+                .userAcceleration,
+                .rotationRate
             ]
         ))
         .previewLayout(.sizeThatFits)
@@ -84,8 +84,8 @@ struct RecordingListRowView_Previews: PreviewProvider {
             state: .completed,
             measurementTypes: [
                 .acceleration,
-                .deviceMotion,
-                .rotation
+                .userAcceleration,
+                .rotationRate
             ]
         ))
         .previewLayout(.sizeThatFits)
@@ -105,8 +105,8 @@ struct RecordingListRowView_Previews: PreviewProvider {
             state: .completed,
             measurementTypes: [
                 .acceleration,
-                .deviceMotion,
-                .rotation
+                .userAcceleration,
+                .rotationRate
             ]
         ))
         .previewLayout(.sizeThatFits)

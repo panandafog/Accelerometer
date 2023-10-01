@@ -9,20 +9,26 @@ import Foundation
 
 enum MeasurementType: String, CaseIterable {
     case acceleration
-    case rotation
-    case deviceMotion
+    case rotationRate = "rotation"
+    case userAcceleration = "deviceMotion"
     case magneticField
+    case attitude
+    case gravity
     
     var name: String {
         switch self {
         case .acceleration:
             return "acceleration"
-        case .rotation:
-            return "rotation"
-        case .deviceMotion:
+        case .rotationRate:
+            return "rotation rate"
+        case .userAcceleration:
             return "user acceleration"
         case .magneticField:
             return "magnetic field"
+        case .attitude:
+            return "attitude"
+        case .gravity:
+            return "gravity"
         }
     }
     
@@ -30,12 +36,16 @@ enum MeasurementType: String, CaseIterable {
         switch self {
         case .acceleration:
             return "G"
-        case .rotation:
+        case .rotationRate:
             return "rad / s"
-        case .deviceMotion:
+        case .userAcceleration:
             return "G"
         case .magneticField:
             return "μT"
+        case .attitude:
+            return "rad"
+        case .gravity:
+            return "G"
         }
     }
     
@@ -46,11 +56,11 @@ enum MeasurementType: String, CaseIterable {
 The acceleration measured by the accelerometer in G's (gravitational force).
 A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
 """
-        case .rotation:
+        case .rotationRate:
             return """
 The rotation rate as measured by the device’s gyroscope in radinans per second (rad / s).
 """
-        case .deviceMotion:
+        case .userAcceleration:
             return """
 The acceleration that the user is giving to the device.
 The acceleration measured by the accelerometer in G's (gravitational force).
@@ -61,6 +71,15 @@ A G is a unit of gravitation force equal to that exerted by the earth’s gravit
 The total magnetic field which is equal to the Earth’s geomagnetic field plus bias introduced from the device itself and its surroundings.
 The magnetic field is measured in microteslas (μT), equal to 10^−6 teslas.
 """
+        case .attitude:
+            return """
+The device’s orientation relative to a known frame of reference at a point in time.
+"""
+        case .gravity:
+            return """
+The gravity acceleration vector expressed in the device's reference frame.
+A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
+"""
         }
     }
     
@@ -68,11 +87,15 @@ The magnetic field is measured in microteslas (μT), equal to 10^−6 teslas.
         switch self {
         case .acceleration:
             return false
-        case .rotation:
+        case .rotationRate:
             return false
-        case .deviceMotion:
+        case .userAcceleration:
             return false
         case .magneticField:
+            return true
+        case .attitude:
+            return true
+        case .gravity:
             return true
         }
     }

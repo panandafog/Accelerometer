@@ -82,17 +82,17 @@ extension TriangleAxesRealm {
     
     convenience init(axes: TriangleAxes) {
         self.init(
-            x: axes.axes[.x]?.value ?? .zero,
-            y: axes.axes[.y]?.value ?? .zero,
-            z: axes.axes[.z]?.value ?? .zero,
+            x: axes.values[.x]?.value ?? .zero,
+            y: axes.values[.y]?.value ?? .zero,
+            z: axes.values[.z]?.value ?? .zero,
             v: axes.vector.value,
-            minX: axes.axes[.x]?.min ?? .zero,
-            minY: axes.axes[.y]?.min ?? .zero,
-            minZ: axes.axes[.z]?.min ?? .zero,
+            minX: axes.values[.x]?.min ?? .zero,
+            minY: axes.values[.y]?.min ?? .zero,
+            minZ: axes.values[.z]?.min ?? .zero,
             minV: axes.vector.min,
-            maxX: axes.axes[.x]?.max ?? .zero,
-            maxY: axes.axes[.y]?.max ?? .zero,
-            maxZ: axes.axes[.z]?.max ?? .zero,
+            maxX: axes.values[.x]?.max ?? .zero,
+            maxY: axes.values[.y]?.max ?? .zero,
+            maxZ: axes.values[.z]?.max ?? .zero,
             maxV: axes.vector.max,
             displayableAbsMax: axes.displayableAbsMax
         )

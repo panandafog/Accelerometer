@@ -11,11 +11,11 @@ struct MeasurementPreview: View {
     @ObservedObject var measurer = Measurer.shared
     let type: MeasurementType
     
-    var axes: ObservableAxes<TriangleAxes>? {
-        measurer.axes(of: type)
+    var axes: ObservableAxes? {
+        measurer.observableAxes[type]
     }
     
-    var axesBinding: Binding<ObservableAxes<TriangleAxes>?> {
+    var axesBinding: Binding<ObservableAxes?> {
         Binding<ObservableAxes?>.init(
             get: {
                 axes
@@ -49,12 +49,20 @@ struct MeasurementPreview_Previews: PreviewProvider {
     
     static let measurer: Measurer = {
         let measurer = Measurer()
-        measurer.saveData(x: 0.03, y: 0.03, z: 0.03, type: .deviceMotion)
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .userAcceleration,
+            values: [
+                .x: 0.5,
+                .y: 0.5,
+                .z: 0.5
+            ]
+        )
         return measurer
     }()
     
     static var previews: some View {
-        MeasurementPreview(measurer: measurer, type: .deviceMotion)
+        MeasurementPreview(measurer: measurer, type: .userAcceleration)
             .previewLayout(.sizeThatFits)
     }
 }

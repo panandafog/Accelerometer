@@ -41,7 +41,7 @@
 		0B508CDB289C7F0200326C6E /* RecordingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CDA289C7F0200326C6E /* RecordingsRepository.swift */; };
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
-		0B8C3B2A2A99F9FF00488B1E /* Axe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axe.swift */; };
+		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
 		0B9BDC11289973CC00842161 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 0B9BDC10289973CC00842161 /* SwiftUICharts */; };
 		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
@@ -57,6 +57,7 @@
 		0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* AxeType.swift */; };
 		0BBF0916289D11F100B42740 /* TriangleAxesRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF0915289D11F100B42740 /* TriangleAxesRealm.swift */; };
 		0BBF0918289D163300B42740 /* RecordingEntryRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */; };
+		0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
 		0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */; };
 		0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138ED2893FFA10026D0DC /* RecordingsView.swift */; };
@@ -122,7 +123,7 @@
 		0B508CDA289C7F0200326C6E /* RecordingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsRepository.swift; sourceTree = "<group>"; };
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
-		0B8C3B292A99F9FF00488B1E /* Axe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axe.swift; sourceTree = "<group>"; };
+		0B8C3B292A99F9FF00488B1E /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		0B8C3B2B2A99FC9600488B1E /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
 		0B9BDC122899A6F900842161 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableAxesTests.swift; sourceTree = "<group>"; };
@@ -137,6 +138,7 @@
 		0BBDC4DF288C188400CE6061 /* AxeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxeType.swift; sourceTree = "<group>"; };
 		0BBF0915289D11F100B42740 /* TriangleAxesRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleAxesRealm.swift; sourceTree = "<group>"; };
 		0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEntryRealm.swift; sourceTree = "<group>"; };
+		0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxes.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
 		0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateComponents.swift; sourceTree = "<group>"; };
 		0BE138ED2893FFA10026D0DC /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
@@ -345,10 +347,11 @@
 		0B8C3B282A99F99800488B1E /* Values */ = {
 			isa = PBXGroup;
 			children = (
-				0B8C3B292A99F9FF00488B1E /* Axe.swift */,
+				0B8C3B292A99F9FF00488B1E /* Axis.swift */,
 				0B8C3B2B2A99FC9600488B1E /* Axes.swift */,
 				0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */,
 				0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */,
+				0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */,
 				0BBDC4DF288C188400CE6061 /* AxeType.swift */,
 				0B05EB5B2A9A0D87005497F6 /* Vector.swift */,
 			);
@@ -653,7 +656,7 @@
 				0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */,
 				0BE138F4289401210026D0DC /* MeasurementType.swift in Sources */,
 				0B9BDC132899A6F900842161 /* Array.swift in Sources */,
-				0B8C3B2A2A99F9FF00488B1E /* Axe.swift in Sources */,
+				0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */,
 				0B508CDB289C7F0200326C6E /* RecordingsRepository.swift in Sources */,
 				0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */,
 				0B24EC562863464900AD3EF1 /* MeasurementSummaryView.swift in Sources */,
@@ -670,6 +673,7 @@
 				0BE138F2289400E70026D0DC /* Recording.swift in Sources */,
 				0B34710D288C5491004E87FA /* AxesSummaryView.swift in Sources */,
 				0B508CD8289C413700326C6E /* RecordingRealm.swift in Sources */,
+				0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */,
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
 				0B508CD6289C3E4A00326C6E /* DatabaseManager.swift in Sources */,
 				0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */,

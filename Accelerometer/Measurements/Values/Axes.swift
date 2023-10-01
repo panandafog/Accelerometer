@@ -14,15 +14,16 @@ protocol Axes: Equatable {
     
     static var zero: Self { get }
     
-    var axes: [AxeType: Axe<ValueType>] { get set }
+    var values: [AxeType: Axis<ValueType>] { get set }
+    var measurementType: MeasurementType? { get set }
     /// Maximum displayed value
-    var displayableAbsMax: ValueType { get }
+    var displayableAbsMax: ValueType { get set }
     
     mutating func set(values: [AxeType: ValueType])
 }
 
 extension Axes {
     static func == (lhs: Self, rhs: Self) -> Bool {
-        NSDictionary(dictionary: lhs.axes).isEqual(to: rhs.axes)
+        NSDictionary(dictionary: lhs.values).isEqual(to: rhs.values)
     }
 }

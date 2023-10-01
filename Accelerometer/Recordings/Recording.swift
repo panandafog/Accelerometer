@@ -106,7 +106,7 @@ extension Recording {
             }
             
             type(of: axes).axesTypes.forEach { axeType in
-                outputArray.append(String(axes.axes[axeType]!.value))
+                outputArray.append(String(axes.values[axeType]!.value))
             }
             
             return outputArray.joined(separator: ",")

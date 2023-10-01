@@ -11,7 +11,6 @@ import SwiftUI
 
 class Measurer: ObservableObject {
     static let shared = Measurer()
-//    private init() { }
     
     static let measurementsDisplayRoundPlaces = 3
     
@@ -22,20 +21,17 @@ class Measurer: ObservableObject {
     
     private static let initialUpdateInterval = 0.5
     
-    @Published var deviceMotion: ObservableAxes<TriangleAxes>?
-    @Published var acceleration: ObservableAxes<TriangleAxes>?
-    @Published var rotation: ObservableAxes<TriangleAxes>?
-    @Published var magneticField: ObservableAxes<TriangleAxes>?
+    @Published var observableAxes: [MeasurementType: ObservableAxes] = [:]
+    var subscriptions: [MeasurementType: AnyCancellable] = [:]
     
-    var deviceMotionSubscription: AnyCancellable?
-    var accelerationSubscription: AnyCancellable?
-    var rotationSubscription: AnyCancellable?
-    var magneticFieldSubscription: AnyCancellable?
-    
-    private let deviceMotionDisplayableAbsMax = 0.1
-    private let accelerationDisplayableAbsMax = 1.0
-    private let rotationDisplayableAbsMax = 2.0
-    private let magneticFieldDisplayableAbsMax = 400.0
+    private let displayableAbsMax: [MeasurementType: Double] = [
+        .userAcceleration: 0.1,
+        .acceleration: 1.0,
+        .rotationRate: 2.0,
+        .magneticField: 400.0,
+        .attitude: 1.0,
+        .gravity: 1.0
+    ]
     
     var updateInterval: Double {
         get {
@@ -51,15 +47,6 @@ class Measurer: ObservableObject {
             objectWillChange.send()
             motion.setUpdateInterval(roundedValue)
             UserDefaults.standard.set(roundedValue, forKey: "MeasurementsUpdateInterval")
-        }
-    }
-    
-    var removeGravity: Bool {
-        get {
-            UserDefaults.standard.bool(forKey: "RemoveGravity")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "RemoveGravity")
         }
     }
     
@@ -87,10 +74,21 @@ class Measurer: ObservableObject {
             }
             
             saveData(
-                x: data.userAcceleration.x,
-                y: data.userAcceleration.y,
-                z: data.userAcceleration.z,
-                type: .deviceMotion
+                axesType: TriangleAxes.self,
+                measurementType: .userAcceleration,
+                values: [.x: data.userAcceleration.x, .y: data.userAcceleration.y, .z: data.userAcceleration.z]
+            )
+            
+            saveData(
+                axesType: AttitudeAxes.self,
+                measurementType: .attitude,
+                values: [.roll: data.attitude.roll, .pitch: data.attitude.pitch, .yaw: data.attitude.yaw]
+            )
+            
+            saveData(
+                axesType: TriangleAxes.self,
+                measurementType: .gravity,
+                values: [.x: data.gravity.x, .y: data.gravity.y, .z: data.gravity.z]
             )
         }
     }
@@ -108,12 +106,11 @@ class Measurer: ObservableObject {
             guard let data = data else {
                 fatalError("no data")
             }
-            
+
             saveData(
-                x: data.acceleration.x,
-                y: data.acceleration.y,
-                z: data.acceleration.z,
-                type: .acceleration
+                axesType: TriangleAxes.self,
+                measurementType: .acceleration,
+                values: [.x: data.acceleration.x, .y: data.acceleration.y, .z: data.acceleration.z]
             )
         }
     }
@@ -133,10 +130,9 @@ class Measurer: ObservableObject {
             }
             
             saveData(
-                x: data.rotationRate.x,
-                y: data.rotationRate.y,
-                z: data.rotationRate.z,
-                type: .rotation
+                axesType: TriangleAxes.self,
+                measurementType: .rotationRate,
+                values: [.x: data.rotationRate.x, .y: data.rotationRate.y, .z: data.rotationRate.z]
             )
         }
     }
@@ -156,74 +152,10 @@ class Measurer: ObservableObject {
             }
             
             saveData(
-                x: data.magneticField.x,
-                y: data.magneticField.y,
-                z: data.magneticField.z,
-                type: .magneticField
+                axesType: TriangleAxes.self,
+                measurementType: .magneticField,
+                values: [.x: data.magneticField.x, .y: data.magneticField.y, .z: data.magneticField.z]
             )
-        }
-    }
-    
-    func saveData(x: Double, y: Double, z: Double, type: MeasurementType) {
-        switch type {
-        case .acceleration:
-            if acceleration == nil {
-                var axes = TriangleAxes.zero
-                axes.displayableAbsMax = accelerationDisplayableAbsMax
-                acceleration = ObservableAxes(axes: axes)
-                
-                accelerationSubscription = acceleration?.objectWillChange.sink { [weak self] _ in
-                    self?.objectWillChange.send()
-                }
-            }
-            
-            acceleration?.properties.set(values: [
-                .x: x, .y: y, .z: z
-            ])
-            
-        case .rotation:
-            if rotation == nil {
-                var axes = TriangleAxes.zero
-                axes.displayableAbsMax = rotationDisplayableAbsMax
-                rotation = ObservableAxes(axes: axes)
-                
-                rotationSubscription = rotation?.objectWillChange.sink { [weak self] _ in
-                    self?.objectWillChange.send()
-                }
-            }
-            
-            rotation?.properties.set(values: [
-                .x: x, .y: y, .z: z
-            ])
-            
-        case .deviceMotion:
-            if deviceMotion == nil {
-                var axes = TriangleAxes.zero
-                axes.displayableAbsMax = deviceMotionDisplayableAbsMax
-                deviceMotion = ObservableAxes(axes: axes)
-                
-                deviceMotionSubscription = deviceMotion?.objectWillChange.sink { [weak self] _ in
-                    self?.objectWillChange.send()
-                }
-            }
-            
-            deviceMotion?.properties.set(values: [
-                .x: x, .y: y, .z: z
-            ])
-        case .magneticField:
-            if magneticField == nil {
-                var axes = TriangleAxes.zero
-                axes.displayableAbsMax = magneticFieldDisplayableAbsMax
-                magneticField = ObservableAxes(axes: axes)
-                
-                magneticFieldSubscription = magneticField?.objectWillChange.sink { [weak self] _ in
-                    self?.objectWillChange.send()
-                }
-            }
-            
-            magneticField?.properties.set(values: [
-                .x: x, .y: y, .z: z
-            ])
         }
     }
     
@@ -257,40 +189,30 @@ class Measurer: ObservableObject {
     }
     
     func reset(_ type: MeasurementType) {
-        switch type {
-        case .acceleration:
-            acceleration?.reset()
-        case .rotation:
-            rotation?.reset()
-        case .deviceMotion:
-            deviceMotion?.reset()
-        case .magneticField:
-            magneticField?.reset()
-        }
-    }
-    
-    func axes(of type: MeasurementType) -> ObservableAxes<TriangleAxes>? {
-        switch type {
-        case .acceleration:
-            return acceleration
-        case .rotation:
-            return rotation
-        case .deviceMotion:
-            return deviceMotion
-        case .magneticField:
-            return magneticField
-        }
-    }
-    
-    func valueLabel(of type: MeasurementType) -> String? {
-        String(
-            axes(of: type)?.properties.vector.value ?? 0.0,
-            roundPlaces: Measurer.measurementsDisplayRoundPlaces
-        ) + " \(type.unit)"
+        observableAxes[type]?.reset()
     }
     
     private func prepareMotion() {
         motion.setUpdateInterval(updateInterval)
+    }
+    
+    func saveData<AxesType: Axes>(axesType: AxesType.Type, measurementType: MeasurementType, values: [AxeType: AxesType.ValueType]) {
+        if observableAxes[measurementType] == nil {
+            var axes = axesType.zero
+            if let displayableAbsMax = displayableAbsMax[measurementType] as? AxesType.ValueType {
+                axes.displayableAbsMax = displayableAbsMax
+            }
+            axes.measurementType = measurementType
+            observableAxes[measurementType] = ObservableAxes(axes: axes)
+            subscriptions[measurementType] = observableAxes[measurementType]?.objectWillChange.sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+        }
+        
+        if var axes = observableAxes[measurementType]?.axes as? AxesType {
+            axes.set(values: values)
+            observableAxes[measurementType]?.axes = axes
+        }
     }
 }
 

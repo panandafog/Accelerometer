@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct MeasurementsAxesView: View {
-    @Binding var axes: ObservableAxes<TriangleAxes>?
+    @Binding var axes: ObservableAxes?
+    
+    var triangleAxes: TriangleAxes? {
+        axes?.axes as? TriangleAxes
+    }
     
     var showSummary = true
     
@@ -16,30 +20,30 @@ struct MeasurementsAxesView: View {
         var rows = [
             RowData(
                 name: "x",
-                min: axes?.properties.axes[.x]?.min,
-                value: axes?.properties.axes[.x]?.value,
-                max: axes?.properties.axes[.x]?.max
+                min: triangleAxes?.values[.x]?.min,
+                value: triangleAxes?.values[.x]?.value,
+                max: triangleAxes?.values[.x]?.max
             ),
             RowData(
                 name: "y",
-                min: axes?.properties.axes[.y]?.min,
-                value: axes?.properties.axes[.y]?.value,
-                max: axes?.properties.axes[.y]?.max
+                min: triangleAxes?.values[.y]?.min,
+                value: triangleAxes?.values[.y]?.value,
+                max: triangleAxes?.values[.y]?.max
             ),
             RowData(
                 name: "z",
-                min: axes?.properties.axes[.z]?.min,
-                value: axes?.properties.axes[.z]?.value,
-                max: axes?.properties.axes[.z]?.max
+                min: triangleAxes?.values[.z]?.min,
+                value: triangleAxes?.values[.z]?.value,
+                max: triangleAxes?.values[.z]?.max
             )
         ]
         if showSummary {
             rows.append(
                 RowData(
                     name: "summary",
-                    min: axes?.properties.vector.min,
-                    value: axes?.properties.vector.value,
-                    max: axes?.properties.vector.max
+                    min: triangleAxes?.values[.z]?.min,
+                    value: triangleAxes?.values[.z]?.value,
+                    max: triangleAxes?.values[.z]?.max
                 )
             )
         }
@@ -82,17 +86,24 @@ struct MeasurementsAxesView: View {
 }
 
 struct MeasurementsAxesView_Previews: PreviewProvider {
+    
     static var previews: some View {
         MeasurementsAxesView(axes: .init(get: {
-            let axes = ObservableAxes<TriangleAxes>()
-            axes.properties.displayableAbsMax = 1.0
-            axes.properties.set(values: [
-                .x: 0.5, .y: 0.6, .z: 0.7
+            var axes = TriangleAxes(
+                measurementType: .acceleration,
+                displayableAbsMax: 1.0
+            )
+            axes.set(values: [
+                .x: 0.5,
+                .y: 0.6,
+                .z: 0.7
             ])
-            axes.properties.set(values: [
-                .x: 0.2, .y: 0.3, .z: 0.4
+            axes.set(values: [
+                .x: 0.2,
+                .y: 0.3,
+                .z: 0.4
             ])
-            return axes
+            return ObservableAxes(axes: axes)
         }, set: { _ in
             
         }))

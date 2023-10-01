@@ -80,24 +80,30 @@ class Recorder: ObservableObject {
     }
     
     private func subscribeForChanges(of measurementType: MeasurementType) {
-        switch measurementType {
-        case .acceleration:
-            subscriptions.append(measurer.acceleration?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.acceleration?.properties, of: .acceleration)
-            })
-        case .rotation:
-            subscriptions.append(measurer.rotation?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.rotation?.properties, of: .rotation)
-            })
-        case .deviceMotion:
-            subscriptions.append(measurer.deviceMotion?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.deviceMotion?.properties, of: .deviceMotion)
-            })
-        case .magneticField:
-            subscriptions.append(measurer.magneticField?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.magneticField?.properties, of: .magneticField)
-            })
-        }
+//        switch measurementType {
+//        case .acceleration:
+////            subscriptions.append(measurer.acceleration?.objectWillChange.sink { [ weak self ] in
+////                self?.save(value: self?.measurer.acceleration?.properties, of: .acceleration)
+////            })
+//        case .rotationRate:
+////            subscriptions.append(measurer.rotationRate?.objectWillChange.sink { [ weak self ] in
+////                self?.save(value: self?.measurer.rotationRate?.properties, of: .rotationRate)
+////            })
+//        case .userAcceleration:
+////            subscriptions.append(measurer.userAcceleration?.objectWillChange.sink { [ weak self ] in
+////                self?.save(value: self?.measurer.userAcceleration?.properties, of: .userAcceleration)
+////            })
+//        case .magneticField:
+////            subscriptions.append(measurer.magneticField?.objectWillChange.sink { [ weak self ] in
+////                self?.save(value: self?.measurer.magneticField?.properties, of: .magneticField)
+////            })
+//        case .attitude:
+//            // TODO
+//            break
+//        case .gravity:
+//            // TODO
+//            break
+//        }
     }
     
     private func save(value: TriangleAxes?, of type: MeasurementType) {

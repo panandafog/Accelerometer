@@ -13,10 +13,10 @@ struct MeasurementSummaryView: View {
     
     let type: MeasurementType
     
-    var axesBinding: Binding<ObservableAxes<TriangleAxes>?> {
+    var axesBinding: Binding<ObservableAxes?> {
         Binding<ObservableAxes?>.init(
             get: {
-                measurer.axes(of: type)
+                measurer.observableAxes[type]
             },
             set: { _ in }
         )
@@ -82,7 +82,15 @@ struct MeasurementSummaryView_Previews: PreviewProvider {
     
     static let measurer: Measurer = {
         let measurer = Measurer()
-        measurer.saveData(x: 0.5, y: 1, z: 0.2, type: .acceleration)
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .acceleration,
+            values: [
+                .x: 0.5,
+                .y: 0.5,
+                .z: 0.5
+            ]
+        )
         return measurer
     }()
     

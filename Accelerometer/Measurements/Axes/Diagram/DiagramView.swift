@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiagramView: View {
     
-    var axes: Binding<ObservableAxes<TriangleAxes>?>
+    var axes: Binding<ObservableAxes?>
     var style: DiagramViewStyle = .default
     
     private let axesNamesSizeLimit: CGFloat = 120
@@ -54,7 +54,7 @@ struct DiagramView: View {
     
     func triangleShape(max: Bool = false) -> some View {
         TriangleDiagramShape(
-            axes: axes.wrappedValue?.properties,
+            axes: axes.wrappedValue?.axes as? TriangleAxes,
             showMax: max
         )
         .modify {
@@ -90,6 +90,12 @@ private extension AxeType {
             return nil
         case .unnamed:
             return nil
+        case .roll:
+            return nil
+        case .pitch:
+            return nil
+        case .yaw:
+            return nil
         }
     }
     
@@ -112,23 +118,31 @@ private extension AxeType {
             return nil
         case .unnamed:
             return nil
+        case .roll:
+            return nil
+        case .pitch:
+            return nil
+        case .yaw:
+            return nil
         }
     }
 }
 
 struct DiagramView_Previews: PreviewProvider {
     
-    static let axesBinding1: Binding<ObservableAxes<TriangleAxes>?> = {
+    static let axesBinding1: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = ObservableAxes<TriangleAxes>()
-                axes.properties.displayableAbsMax = 1.0
-                axes.properties.set(values: [
+                var axes = TriangleAxes(
+                    measurementType: .acceleration,
+                    displayableAbsMax: 1.0
+                )
+                axes.set(values: [
                     .x: 0.4,
                     .y: 0.4,
                     .z: 0.4
                 ])
-                return axes
+                return ObservableAxes(axes: axes)
             },
             set: { _ in }
         )
@@ -137,14 +151,16 @@ struct DiagramView_Previews: PreviewProvider {
     static let axesBinding2: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = ObservableAxes<TriangleAxes>()
-                axes.properties.displayableAbsMax = 1.0
-                axes.properties.set(values: [
+                var axes = TriangleAxes(
+                    measurementType: .acceleration,
+                    displayableAbsMax: 1.0
+                )
+                axes.set(values: [
                     .x: 0.2,
                     .y: 0.5,
                     .z: 0.7
                 ])
-                return axes
+                return ObservableAxes(axes: axes)
             },
             set: { _ in }
         )

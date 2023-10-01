@@ -12,7 +12,7 @@ struct Vector {
     var max: Double?
     var min: Double?
     
-    mutating func update(newAxes: [Axe<Double>]) {
+    mutating func update(newAxes: [Axis<Double>]) {
         updateCurrent(newAxes: newAxes)
         updateMinMax()
     }
@@ -23,9 +23,9 @@ struct Vector {
         current *= factor
     }
     
-    private mutating func updateCurrent(newAxes: [Axe<Double>]) {
-        let sumSquare = newAxes.reduce(0.0) { result, axe in 
-            result + pow(axe.value, 2.0)
+    private mutating func updateCurrent(newAxes: [Axis<Double>]) {
+        let sumSquare = newAxes.reduce(0.0) { result, axis in
+            result + pow(axis.value, 2.0)
         }
         current = sqrt(sumSquare)
     }

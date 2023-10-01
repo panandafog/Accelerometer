@@ -9,6 +9,7 @@ import SwiftUI
 import enum Accelerate.vDSP
 
 protocol VectorAxes: Axes, VectorArithmetic {
-    var vector: Axe<ValueType> { get }
+    var vector: Axis<ValueType> { get }
+    var valueLabel: String { get }
     var intensityColor: Color { get }
 }

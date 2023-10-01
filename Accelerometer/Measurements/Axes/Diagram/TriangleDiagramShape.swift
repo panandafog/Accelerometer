@@ -40,7 +40,7 @@ struct TriangleDiagramShape: Shape {
         let maxX = width / 2.0
         let angle = angle(width: width, height: height)
         let hypotenuse = maxXValue(maxX: maxX, angle: angle) * 
-        (showMax ? 1.0 : (min(abs(axes!.axes[.x]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax))
+        (showMax ? 1.0 : (min(abs(axes!.values[.x]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax))
         
         return CGPoint(
             x: zeroX - (hypotenuse * sin(Double.radians(degrees: angle))),
@@ -62,7 +62,7 @@ struct TriangleDiagramShape: Shape {
         
         return CGPoint(
             x: zeroX,
-            y: zeroY - (showMax ? 1.0 : (min(abs(axes!.axes[.y]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax)) * maxY
+            y: zeroY - (showMax ? 1.0 : (min(abs(axes!.values[.y]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax)) * maxY
         )
     }
     
@@ -79,7 +79,7 @@ struct TriangleDiagramShape: Shape {
         let maxX = width / 2.0
         let angle = angle(width: width, height: height)
         let hypotenuse = maxXValue(maxX: maxX, angle: angle) * 
-        (showMax ? 1.0 : (min(abs(axes!.axes[.z]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax))
+        (showMax ? 1.0 : (min(abs(axes!.values[.z]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax))
         
         return CGPoint(
             x: zeroX + (hypotenuse * sin(angle * Double.pi / 180)),

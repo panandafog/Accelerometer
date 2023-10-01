@@ -14,52 +14,61 @@ struct TriangleAxes: VectorAxes {
     
     static var axesTypes: Set<AxeType> { [.x, .y, .z] }
     
-    static var zero: TriangleAxes {
-        .init(
-            axes: [
-                .x: Axe(type_: .x, value: .zero),
-                .y: Axe(type_: .y, value: .zero),
-                .z: Axe(type_: .z, value: .zero)
-            ],
-            displayableAbsMax: ValueType.zero,
-            vector: .zero
-        )
-    }
+    static let zero: TriangleAxes = .init()
     
-    var axes: [AxeType: Axe<ValueType>]
+    var values: [AxeType: Axis<ValueType>]
+    var measurementType: MeasurementType?
     var displayableAbsMax: ValueType
-    var vector: Axe<ValueType>
+    var vector: Axis<ValueType>
     
     var intensityColor: Color {
         let intensity = abs(vector.value) / displayableAbsMax
         return Color.intensity(intensity)
     }
     
-    mutating func set(values: [AxeType: ValueType]) {
+    var valueLabel: String {
+        return String(
+            vector.value,
+            roundPlaces: Measurer.measurementsDisplayRoundPlaces
+        ) + " \(measurementType?.unit ?? "")"
+    }
+    
+    init(axes: [AxeType : Axis<ValueType>]? = nil, measurementType: MeasurementType? = nil, displayableAbsMax: ValueType = .zero, vector: Axis<ValueType> = .zero) {
+        self.values = axes ?? [
+            .x: Axis(type_: .x, value: .zero),
+            .y: Axis(type_: .y, value: .zero),
+            .z: Axis(type_: .z, value: .zero)
+        ]
+        self.measurementType = measurementType
+        self.displayableAbsMax = displayableAbsMax
+        self.vector = vector
+    }
+    
+    mutating func set(values newValues: [AxeType: ValueType]) {
         Self.axesTypes.forEach {
-            var axe = axes[$0]
-            if let value = values[$0] {
-                axe?.set(value: value)
+            var axis = values[$0]
+            if let newValue = newValues[$0] {
+                axis?.set(value: newValue)
             }
-            axes[$0] = axe
+            values[$0] = axis
         }
         updateVector()
     }
     
     private mutating func updateVector() {
         vector.set(value: sqrt(
-            pow(axes[.x]?.value ?? 0.0, 2.0) +
-            pow(axes[.y]?.value ?? 0.0, 2.0) +
-            pow(axes[.z]?.value ?? 0.0, 2.0)
+            pow(values[.x]?.value ?? 0.0, 2.0) +
+            pow(values[.y]?.value ?? 0.0, 2.0) +
+            pow(values[.z]?.value ?? 0.0, 2.0)
         ))
     }
 }
 
 extension TriangleAxes: AdditiveArithmetic {
     static func - (lhs: TriangleAxes, rhs: TriangleAxes) -> TriangleAxes {
-        var axes: [AxeType: Axe<ValueType>] = [:]
+        var axes: [AxeType: Axis<ValueType>] = [:]
         axesTypes.forEach { axesType in
-            axes[axesType] = (lhs.axes[axesType] ?? Axe<ValueType>.zero) - (rhs.axes[axesType] ?? Axe<ValueType>.zero)
+            axes[axesType] = (lhs.values[axesType] ?? Axis<ValueType>.zero) - (rhs.values[axesType] ?? Axis<ValueType>.zero)
         }
         return TriangleAxes(
             axes: axes,
@@ -69,9 +78,9 @@ extension TriangleAxes: AdditiveArithmetic {
     }
     
     static func + (lhs: TriangleAxes, rhs: TriangleAxes) -> TriangleAxes {
-        var axes: [AxeType: Axe<ValueType>] = [:]
+        var axes: [AxeType: Axis<ValueType>] = [:]
         axesTypes.forEach { axesType in
-            axes[axesType] = (lhs.axes[axesType] ?? Axe<ValueType>.zero) + (rhs.axes[axesType] ?? Axe<ValueType>.zero)
+            axes[axesType] = (lhs.values[axesType] ?? Axis<ValueType>.zero) + (rhs.values[axesType] ?? Axis<ValueType>.zero)
         }
         return TriangleAxes(
             axes: axes,
@@ -83,15 +92,15 @@ extension TriangleAxes: AdditiveArithmetic {
 
 extension TriangleAxes: VectorArithmetic {
     mutating func scale(by rhs: Double) {
-        axes.keys.forEach {
-            var axe = axes[$0]
+        values.keys.forEach {
+            var axe = values[$0]
             axe?.scale(by: rhs)
-            axes[$0] = axe
+            values[$0] = axe
         }
     }
     
     var magnitudeSquared: Double {
-        let values = Array(axes.values).map { $0.value }
+        let values = Array(values.values).map { $0.value }
         return vDSP.sum(vDSP.multiply(values, values))
     }
 }
