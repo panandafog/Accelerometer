@@ -24,9 +24,7 @@ struct RecordingMeasurementView: View {
     }
     
     var values: [Double] {
-        let entries = recording.entries
-            .filter({ $0.measurementType == measurementType })
-            .map({ $0.value?.vector.value ?? 0.0 })
+        let entries = recording.doubleValues(of: measurementType)
         let limit = 100
         if entries.count > limit {
             return entries
@@ -59,22 +57,29 @@ struct RecordingMeasurementView: View {
         return max(min(rate, Self.maxRate), Self.minRate)
     }
     
+    var title: String { measurementType.name.capitalizingFirstLetter() }
+    
     var body: some View {
         HStack {
-            ScrollView {
-                MultiLineChartView(
-                    data: [(values, GradientColor(
-                        start: .intensity(0.0),
-                        end: .intensity(1.0)
-                    ))],
-                    title: measurementType.name.capitalizingFirstLetter(),
-                    legend: nil,
-                    style: .recordingEntry,
-                    form: chartForm(generalSize: screenSize),
-                    rateValue: rateValue,
-                    dropShadow: false
-                )
-            }.disabled(true)
+            // TODO: common title
+            if measurementType.supportsChartRepresentation {
+                ScrollView {
+                    MultiLineChartView(
+                        data: [(values, GradientColor(
+                            start: .intensity(0.0),
+                            end: .intensity(1.0)
+                        ))],
+                        title: title,
+                        legend: nil,
+                        style: .recordingEntry,
+                        form: chartForm(generalSize: screenSize),
+                        rateValue: rateValue,
+                        dropShadow: false
+                    )
+                }.disabled(true)
+            } else {
+                Text(title)
+            }
             Spacer()
             VStack {
                 Menu {
@@ -142,7 +147,7 @@ struct RecordingMeasurementView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: axes
+                        axes: axes
                     )
                 ],
                 state: .completed,

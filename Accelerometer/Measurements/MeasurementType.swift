@@ -15,6 +15,15 @@ enum MeasurementType: String, CaseIterable {
     case attitude
     case gravity
     
+    var axesType: AxesType {
+        switch self {
+        case .attitude:
+            return .attitude
+        default:
+            return .triangle
+        }
+    }
+    
     var name: String {
         switch self {
         case .acceleration:
@@ -97,6 +106,32 @@ A G is a unit of gravitation force equal to that exerted by the earth’s gravit
             return true
         case .gravity:
             return true
+        }
+    }
+    
+    var supportsChartRepresentation: Bool {
+        switch self {
+        case .attitude:
+            return false
+        default:
+            return true
+        }
+    }
+}
+
+extension MeasurementType {
+    
+    enum AxesType {
+        case triangle
+        case attitude
+        
+        var type: any Axes.Type {
+            switch self {
+            case .triangle:
+                return TriangleAxes.self
+            case .attitude:
+                return AttitudeAxes.self
+            }
         }
     }
 }

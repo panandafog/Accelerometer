@@ -13,15 +13,26 @@ class RecordingEntryRealm: Object {
     @objc dynamic var id: String = .init()
     @objc dynamic var date: NSDate = .init()
     @objc dynamic var measurementType: String = .init()
+    @objc dynamic var displayableAbsMax: String = .init()
     
-    @objc dynamic var value: TriangleAxesRealm?
+    let axesKeys = List<String>()
+    let axesValues = List<String>()
     
-    convenience init(id: String, date: NSDate, measurementType: String, value: TriangleAxesRealm?) {
+    convenience init(
+        id: String,
+        date: NSDate,
+        measurementType: String,
+        displayableAbsMax: String,
+        axesKeys: [String],
+        axesValues: [String]
+    ) {
         self.init()
         self.id = id
         self.date = date
         self.measurementType = measurementType
-        self.value = value
+        self.displayableAbsMax = displayableAbsMax
+        self.axesKeys.append(objectsIn: axesKeys)
+        self.axesValues.append(objectsIn: axesValues)
     }
     
     override class func primaryKey() -> String? {
@@ -31,26 +42,32 @@ class RecordingEntryRealm: Object {
 
 extension RecordingEntryRealm {
     
-    var entry: Recording.Entry {
-        Recording.Entry(
+    var entry: Recording.Entry? {
+        guard let measurementType = MeasurementType(rawValue: measurementType),
+              let axes = RecordingUtils.getEntryAxesFrom(realm: self) else {
+            return nil
+        }
+        
+        return Recording.Entry(
             id: id,
-            measurementType: MeasurementType(rawValue: measurementType)!,
+            measurementType: measurementType,
             date: date as Date,
-            value: value?.axes
+            axes: axes
         )
     }
     
-    convenience init(entry: Recording.Entry) {
-        var axesRealm: TriangleAxesRealm?
-        if let value = entry.value {
-            axesRealm = TriangleAxesRealm(axes: value)
+    convenience init?(entry: Recording.Entry) {
+        guard let axesProps = RecordingUtils.parseEntryAxes(axes: entry.axes) else {
+            return nil
         }
         
         self.init(
             id: entry.id,
             date: entry.date as NSDate,
             measurementType: entry.measurementType.rawValue,
-            value: axesRealm
+            displayableAbsMax: axesProps.displayableAbsMax,
+            axesKeys: axesProps.axesKeys,
+            axesValues: axesProps.axesValues
         )
     }
 }

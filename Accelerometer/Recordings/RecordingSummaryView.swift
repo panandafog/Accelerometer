@@ -168,7 +168,7 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: axes
+                        axes: axes
                     )
                 ],
                 state: .completed,
@@ -184,7 +184,7 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: axes
+                        axes: axes
                     )
                 ],
                 state: .completed,

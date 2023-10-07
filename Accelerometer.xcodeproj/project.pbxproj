@@ -55,10 +55,10 @@
 		0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */; };
 		0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
 		0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* AxeType.swift */; };
-		0BBF0916289D11F100B42740 /* TriangleAxesRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF0915289D11F100B42740 /* TriangleAxesRealm.swift */; };
 		0BBF0918289D163300B42740 /* RecordingEntryRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */; };
 		0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
+		0BDB67DC2AC9AC6200FA5C09 /* RecordingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */; };
 		0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */; };
 		0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138ED2893FFA10026D0DC /* RecordingsView.swift */; };
 		0BE138F2289400E70026D0DC /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F1289400E70026D0DC /* Recording.swift */; };
@@ -136,10 +136,10 @@
 		0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSummaryView.swift; sourceTree = "<group>"; };
 		0BBAD4AE2895715400251262 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* AxeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxeType.swift; sourceTree = "<group>"; };
-		0BBF0915289D11F100B42740 /* TriangleAxesRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleAxesRealm.swift; sourceTree = "<group>"; };
 		0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEntryRealm.swift; sourceTree = "<group>"; };
 		0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxes.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
+		0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUtils.swift; sourceTree = "<group>"; };
 		0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateComponents.swift; sourceTree = "<group>"; };
 		0BE138ED2893FFA10026D0DC /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
 		0BE138F1289400E70026D0DC /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
@@ -310,7 +310,6 @@
 				0B508CDA289C7F0200326C6E /* RecordingsRepository.swift */,
 				0B508CD7289C413700326C6E /* RecordingRealm.swift */,
 				0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */,
-				0BBF0915289D11F100B42740 /* TriangleAxesRealm.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -369,6 +368,7 @@
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
 				0BE138F5289409820026D0DC /* Recorder.swift */,
+				0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";
@@ -641,6 +641,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B24EC472862496C00AD3EF1 /* LevelView.swift in Sources */,
+				0BDB67DC2AC9AC6200FA5C09 /* RecordingUtils.swift in Sources */,
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
@@ -665,7 +666,6 @@
 				0B24EC5028628B9900AD3EF1 /* Color.swift in Sources */,
 				0B36DFCC289AA096007130D9 /* ExportDateFormatView.swift in Sources */,
 				0BADCA5D2899ED5C00238A25 /* TextFile.swift in Sources */,
-				0BBF0916289D11F100B42740 /* TriangleAxesRealm.swift in Sources */,
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
 				0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */,

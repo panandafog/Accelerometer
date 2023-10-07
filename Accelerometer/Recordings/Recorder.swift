@@ -69,6 +69,8 @@ class Recorder: ObservableObject {
             repository.update()
         }
         
+        print(activeRecording?.entries.count)
+        
         activeRecording = nil
         cancelSubscriptions()
         objectWillChange.send()
@@ -80,40 +82,20 @@ class Recorder: ObservableObject {
     }
     
     private func subscribeForChanges(of measurementType: MeasurementType) {
-//        switch measurementType {
-//        case .acceleration:
-////            subscriptions.append(measurer.acceleration?.objectWillChange.sink { [ weak self ] in
-////                self?.save(value: self?.measurer.acceleration?.properties, of: .acceleration)
-////            })
-//        case .rotationRate:
-////            subscriptions.append(measurer.rotationRate?.objectWillChange.sink { [ weak self ] in
-////                self?.save(value: self?.measurer.rotationRate?.properties, of: .rotationRate)
-////            })
-//        case .userAcceleration:
-////            subscriptions.append(measurer.userAcceleration?.objectWillChange.sink { [ weak self ] in
-////                self?.save(value: self?.measurer.userAcceleration?.properties, of: .userAcceleration)
-////            })
-//        case .magneticField:
-////            subscriptions.append(measurer.magneticField?.objectWillChange.sink { [ weak self ] in
-////                self?.save(value: self?.measurer.magneticField?.properties, of: .magneticField)
-////            })
-//        case .attitude:
-//            // TODO
-//            break
-//        case .gravity:
-//            // TODO
-//            break
-//        }
+        let newSubsription = measurer.observableAxes[measurementType]?.objectWillChange.sink { [ weak self ] in
+            self?.save(axes: self?.measurer.observableAxes[measurementType]?.axes, of: measurementType)
+        }
+        subscriptions.append(newSubsription)
     }
     
-    private func save(value: TriangleAxes?, of type: MeasurementType) {
-        let newEntry = Recording.Entry(measurementType: type, date: Date(), value: value)
-        
+    private func save(axes: (any Axes)?, of type: MeasurementType) {
+        guard let axes = axes else { return }
+        save(axes: axes, of: type)
+    }
+    
+    private func save(axes: any Axes, of type: MeasurementType) {
+        let newEntry = Recording.Entry(measurementType: type, date: Date(), axes: axes)
         activeRecording?.entries.append(newEntry)
-        
-        guard let activeRecording = activeRecording else {
-            return
-        }
         
         objectWillChange.send()
     }

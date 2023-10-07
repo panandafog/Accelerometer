@@ -38,7 +38,7 @@ extension RecordingRealm {
             id: id,
             created: created as Date,
             entries: Array(entries)
-                .map { $0.entry },
+                .compactMap { $0.entry },
             state: .init(rawValue: state)!,
             measurementTypes: Set(Array(measurementTypes)
                 .compactMap { MeasurementType(rawValue: $0) })
@@ -51,7 +51,7 @@ extension RecordingRealm {
             created: recording.created as NSDate,
             state: recording.state.rawValue,
             measurementTypes: Array(recording.measurementTypes).map { $0.rawValue },
-            entries: recording.entries.map { RecordingEntryRealm(entry: $0) }
+            entries: recording.entries.compactMap { RecordingEntryRealm(entry: $0) }
         )
     }
 }

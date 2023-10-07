@@ -55,11 +55,25 @@ struct Recording: Identifiable {
         let filteredEntries = entries
             .filter({ $0.measurementType == type })
         
-        var csvStrings = filteredEntries
-            .map({ $0.csvString })
-        csvStrings.insert(Entry.firstCsvString, at: 0)
+        var csvStrings = RecordingUtils.stringsHeader(of: type)
+        csvStrings.append(contentsOf: filteredEntries.map({ $0.csvString }))
         
         return TextFile(initialText: csvStrings.joined(separator: "\n"))
+    }
+    
+    func doubleValues(of measurementType: MeasurementType) -> [Double] {
+        var vectorAxes: [any VectorAxes] = []
+        for entry in entries where entry.measurementType == measurementType {
+            if let axes = entry.axes as? (any VectorAxes) {
+                vectorAxes.append(axes)
+            }
+        }
+        
+        func getVector(_ axes: some VectorAxes) -> Double? {
+            return axes.vector.value as? Double
+        }
+        
+        return vectorAxes.compactMap { getVector($0) }
     }
 }
 
@@ -76,18 +90,7 @@ extension Recording {
         
         let measurementType: MeasurementType
         let date: Date
-        let value: TriangleAxes?
-        
-        static var firstCsvString: String = {
-            // FIXME: any axes support
-            [
-                "Datetime",
-                "x",
-                "y",
-                "z",
-                "sum"
-            ].joined(separator: ",")
-        }()
+        let axes: any Axes
         
         var csvString: String {
             let dateString: String
@@ -101,22 +104,16 @@ extension Recording {
             }
             
             var outputArray = [dateString]
-            guard let axes = value else {
-                return dateString
-            }
-            
-            type(of: axes).axesTypes.forEach { axeType in
-                outputArray.append(String(axes.values[axeType]!.value))
-            }
+            outputArray.append(contentsOf: RecordingUtils.stringRepresentation(of: axes))
             
             return outputArray.joined(separator: ",")
         }
         
-        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, value: TriangleAxes?) {
+        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, axes: any Axes) {
             self.id = id
             self.measurementType = measurementType
             self.date = date
-            self.value = value
+            self.axes = axes
         }
     }
 }
