@@ -19,6 +19,15 @@ struct AxesSummaryViewExtended: View {
         (observableAxes?.axes as? TriangleAxes)?.vector
     }
     
+    var axesBinding: Binding<ObservableAxes?> {
+        Binding<ObservableAxes?>.init(
+            get: {
+                observableAxes
+            },
+            set: { _ in }
+        )
+    }
+    
     private var maxString: String {
         if let vectorAxe = vectorAxe {
             return String(
@@ -46,7 +55,7 @@ struct AxesSummaryViewExtended: View {
             VStack {
                 Text(maxString)
                 
-                AxesSummaryView(measurer: measurer, type: type)
+                AxesSummaryView(axesBinding: axesBinding, type: type)
                 
                 if type.hasMinimum {
                     Text(minString)

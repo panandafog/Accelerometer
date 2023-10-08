@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AxeType: String {
+enum AxeType: String, CaseIterable {
     case x
     case y
     case z
@@ -16,4 +16,8 @@ enum AxeType: String {
     case yaw
     case vector
     case unnamed
+}
+
+extension AxeType: Identifiable {
+  var id: Self { self }
 }

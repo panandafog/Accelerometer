@@ -11,14 +11,14 @@ struct MeasurementPreview: View {
     @ObservedObject var measurer = Measurer.shared
     let type: MeasurementType
     
-    var axes: ObservableAxes? {
+    var observableAxes: ObservableAxes? {
         measurer.observableAxes[type]
     }
     
-    var axesBinding: Binding<ObservableAxes?> {
+    var observableAxesBinding: Binding<ObservableAxes?> {
         Binding<ObservableAxes?>.init(
             get: {
-                axes
+                observableAxes
             },
             set: { _ in }
         )
@@ -30,13 +30,13 @@ struct MeasurementPreview: View {
                 Text(type.name.capitalizingFirstLetter())
                     .font(.title2)
                     .padding([.vertical])
-                AxesSummaryView(type: type)
+                AxesSummaryView(axesBinding: observableAxesBinding, type: type)
                     .padding([.horizontal, .bottom])
             }.layoutPriority(1)
             Spacer()
             ZStack(alignment: .trailing) {
                 Color.clear
-                DiagramView(axes: axesBinding)
+                DiagramView(axes: observableAxesBinding)
                     .frame(width: 70, height: 70)
             }
             .frame(minWidth: 70, minHeight: 70)

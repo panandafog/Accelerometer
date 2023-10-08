@@ -39,4 +39,14 @@ struct AttitudeAxes: Axes {
         self.measurementType = measurementType
         self.displayableAbsMax = displayableAbsMax
     }
+    
+    func valueLabel(of type: AxeType) -> String? {
+        guard let value = values[type]?.value else {
+            return nil
+        }
+        return String(
+            value,
+            roundPlaces: Measurer.measurementsDisplayRoundPlaces
+        ) + " \(measurementType?.unit ?? "")"
+    }
 }
