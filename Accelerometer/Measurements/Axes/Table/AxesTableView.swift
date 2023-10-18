@@ -1,5 +1,5 @@
 //
-//  MeasurementsAxesView.swift
+//  AxesTableView.swift
 //  Accelerometer
 //
 //  Created by Andrey on 21.06.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MeasurementsAxesView: View {
+struct AxesTableView: View {
     @Binding var axes: ObservableAxes?
     
     var triangleAxes: TriangleAxes? {
@@ -88,7 +88,7 @@ struct MeasurementsAxesView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     
     static var previews: some View {
-        MeasurementsAxesView(axes: .init(get: {
+        AxesTableView(axes: .init(get: {
             var axes = TriangleAxes(
                 measurementType: .acceleration,
                 displayableAbsMax: 1.0
@@ -111,7 +111,7 @@ struct MeasurementsAxesView_Previews: PreviewProvider {
     }
 }
 
-extension MeasurementsAxesView {
+extension AxesTableView {
     
     struct RowData: Hashable {
         let name: String

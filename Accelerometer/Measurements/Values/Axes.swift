@@ -26,4 +26,8 @@ extension Axes {
     static func == (lhs: Self, rhs: Self) -> Bool {
         NSDictionary(dictionary: lhs.values).isEqual(to: rhs.values)
     }
+    
+    static var sortedAxesTypes: [AxeType] {
+        Array(axesTypes).sorted { $0.rawValue > $1.rawValue }
+    }
 }

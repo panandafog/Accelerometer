@@ -34,7 +34,7 @@ struct AttitudeAxes: Axes {
         self.values = axes ?? [
             .roll: Axis(type_: .roll, value: .zero),
             .pitch: Axis(type_: .pitch, value: .zero),
-            .z: Axis(type_: .yaw, value: .zero)
+            .yaw: Axis(type_: .yaw, value: .zero)
         ]
         self.measurementType = measurementType
         self.displayableAbsMax = displayableAbsMax

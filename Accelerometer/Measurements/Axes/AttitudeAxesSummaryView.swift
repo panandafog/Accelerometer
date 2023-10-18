@@ -15,13 +15,18 @@ struct AttitudeAxesSummaryView: View {
     
     var body: some View {
         ForEach(
-            Array(AttitudeAxes.axesTypes)
+            Array(AttitudeAxes.sortedAxesTypes)
         ) { axeType in
-            AxesSummaryValueView(
-                value: axes.valueLabel(of: axeType) ?? 
-                    AttitudeAxesSummaryView.noValueLabel,
-                color: .intensity(0.5)
-            )
+            HStack {
+                Text("\(axeType.name): ")
+                    .padding(.trailing)
+                
+                AxesSummaryValueView(
+                    value: axes.valueLabel(of: axeType) ??
+                        Self.noValueLabel,
+                    color: .intensity(0.5)
+                )
+            }
         }
     }
 }

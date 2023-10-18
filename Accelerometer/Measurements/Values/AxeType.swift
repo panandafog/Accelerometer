@@ -16,6 +16,8 @@ enum AxeType: String, CaseIterable {
     case yaw
     case vector
     case unnamed
+    
+    var name: String { rawValue }
 }
 
 extension AxeType: Identifiable {
