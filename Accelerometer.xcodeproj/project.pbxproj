@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0152C57173B5A7117F4F15D8 /* Pods_AccelerometerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D1941BEB77F79AC9EA829F /* Pods_AccelerometerTests.framework */; };
-		0B05EB5C2A9A0D87005497F6 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5B2A9A0D87005497F6 /* Vector.swift */; };
 		0B05EB5E2A9A1523005497F6 /* VectorAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */; };
 		0B05EB602A9A1CFB005497F6 /* TriangleAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */; };
 		0B1E6D2328724B2B003B8C5B /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E6D2228724B2B003B8C5B /* Collection.swift */; };
@@ -91,7 +90,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B05EB5B2A9A0D87005497F6 /* Vector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
 		0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAxes.swift; sourceTree = "<group>"; };
 		0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleAxes.swift; sourceTree = "<group>"; };
 		0B1E6D2228724B2B003B8C5B /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
@@ -364,7 +362,6 @@
 				0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */,
 				0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */,
 				0BBDC4DF288C188400CE6061 /* AxeType.swift */,
-				0B05EB5B2A9A0D87005497F6 /* Vector.swift */,
 			);
 			path = Values;
 			sourceTree = "<group>";
@@ -704,7 +701,6 @@
 				0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */,
 				0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */,
 				0BA63B702897EFED0040B63D /* Date.swift in Sources */,
-				0B05EB5C2A9A0D87005497F6 /* Vector.swift in Sources */,
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
 				0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */,
 				0BE138F6289409820026D0DC /* Recorder.swift in Sources */,
