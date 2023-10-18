@@ -61,7 +61,7 @@ struct MeasurementSummaryView: View {
                     //                    Spacer()
                 }
                 
-                AxesTableView(axes: axesBinding, showSummary: false)
+                AxesTableView(observableAxes: axesBinding)
                     .padding()
                 Spacer()
                 recordButton

@@ -8,57 +8,56 @@
 import SwiftUI
 
 struct AxesTableView: View {
-    @Binding var axes: ObservableAxes?
+    @Binding var observableAxes: ObservableAxes?
     
-    var triangleAxes: TriangleAxes? {
-        axes?.axes as? TriangleAxes
+    var axes: (any Axes)? { observableAxes?.axes }
+    var vectorAxes: (any VectorAxes)? { observableAxes?.axes as? any VectorAxes }
+    
+    var axesTypes: [AxeType] {
+        guard let axes = axes else { return [] }
+        return type(of: axes).sortedAxesTypes
     }
     
-    var showSummary = true
+    var showSummary: Bool { vectorAxes != nil }
     
     var rows: [RowData] {
-        var rows = [
-            RowData(
-                name: "x",
-                min: triangleAxes?.values[.x]?.min,
-                value: triangleAxes?.values[.x]?.value,
-                max: triangleAxes?.values[.x]?.max
-            ),
-            RowData(
-                name: "y",
-                min: triangleAxes?.values[.y]?.min,
-                value: triangleAxes?.values[.y]?.value,
-                max: triangleAxes?.values[.y]?.max
-            ),
-            RowData(
-                name: "z",
-                min: triangleAxes?.values[.z]?.min,
-                value: triangleAxes?.values[.z]?.value,
-                max: triangleAxes?.values[.z]?.max
-            )
-        ]
-        if showSummary {
-            rows.append(
-                RowData(
-                    name: "summary",
-                    min: triangleAxes?.values[.z]?.min,
-                    value: triangleAxes?.values[.z]?.value,
-                    max: triangleAxes?.values[.z]?.max
-                )
-            )
+        guard let axes = axes else { return [] }
+        
+        var rows: [RowData] = axesTypes.map { axeType in
+            rowData(axes: axes, axeType: axeType)
+        }
+        
+        if let vectorAxes = vectorAxes {
+            rows.append(summaryData(axes: vectorAxes))
         }
         return rows
+    }
+    
+    private func rowData<AxesType: Axes>(axes: AxesType, axeType: AxeType) -> RowData {
+        RowData(
+            name: axeType.name,
+            min: axes.values[axeType]?.min as? Double,
+            value: axes.values[axeType]?.value as? Double,
+            max: axes.values[axeType]?.max as? Double
+        )
+    }
+    
+    private func summaryData<AxesType: VectorAxes>(axes: AxesType) -> RowData {
+        RowData(
+            name: AxeType.vector.name,
+            min: axes.vector.min as? Double,
+            value: axes.vector.value as? Double,
+            max: axes.vector.max as? Double
+        )
     }
     
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(alignment: .leading) {
-                Text("x")
-                    .foregroundColor(.secondary)
-                Text("y")
-                    .foregroundColor(.secondary)
-                Text("z")
-                    .foregroundColor(.secondary)
+                ForEach(axesTypes, id: \.self) { axeType in
+                    Text(axeType.name)
+                        .foregroundColor(.secondary)
+                }
                 if showSummary {
                     Text("summary")
                         .foregroundColor(.secondary)
@@ -88,7 +87,7 @@ struct AxesTableView: View {
 struct MeasurementsAxesView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AxesTableView(axes: .init(get: {
+        AxesTableView(observableAxes: .init(get: {
             var axes = TriangleAxes(
                 measurementType: .acceleration,
                 displayableAbsMax: 1.0
