@@ -61,19 +61,18 @@ struct Recording: Identifiable {
         return TextFile(initialText: csvStrings.joined(separator: "\n"))
     }
     
-    func doubleValues(of measurementType: MeasurementType) -> [Double] {
-        var vectorAxes: [any VectorAxes] = []
+    func chartValues(of measurementType: MeasurementType) -> [[Double]] {
+        var chartEntries: [any ChartEntry] = []
+        
         for entry in entries where entry.measurementType == measurementType {
-            if let axes = entry.axes as? (any VectorAxes) {
-                vectorAxes.append(axes)
+            if let axes = entry.axes as? (any ChartEntry) {
+                chartEntries.append(axes)
             }
         }
         
-        func getVector(_ axes: some VectorAxes) -> Double? {
-            return axes.vector.value as? Double
-        }
-        
-        return vectorAxes.compactMap { getVector($0) }
+        return chartEntries
+            .map({ $0.chartValues })
+            .transposed()
     }
 }
 

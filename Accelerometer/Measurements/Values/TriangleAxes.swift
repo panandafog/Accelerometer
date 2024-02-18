@@ -27,10 +27,14 @@ struct TriangleAxes: VectorAxes {
     }
     
     var valueLabel: String {
-        return String(
+        String(
             vector.value,
             roundPlaces: Measurer.measurementsDisplayRoundPlaces
         ) + " \(measurementType?.unit ?? "")"
+    }
+    
+    var chartValues: [Double] {
+        [vector.value as Double]
     }
     
     init(axes: [AxeType : Axis<ValueType>]? = nil, measurementType: MeasurementType? = nil, displayableAbsMax: ValueType = .zero, vector: Axis<ValueType> = .zero) {

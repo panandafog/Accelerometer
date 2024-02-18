@@ -48,17 +48,18 @@ struct MeasurementSummaryView: View {
                     .padding()
                     .padding([.horizontal])
                 
-                HStack (spacing: geometryVStack.size.width * 0.1) {
-                    //                    Spacer()
-                    let diagramSize = geometryVStack.size.width * 0.3
-                    AxesSummaryViewExtended(measurer: measurer, type: type)
-                        .frame(width: diagramSize, height: diagramSize)
-                    //                    Spacer()
-                    DiagramView(axes: axesBinding)
-                        .frame(width: diagramSize, height: diagramSize)
-                        .padding()
-                    //                    .frame(maxWidth: .infinity)
-                    //                    Spacer()
+                if axesBinding.wrappedValue?.axes.measurementType?
+                    .supportsDiagramRepresentation ?? false {
+                    
+                    HStack (spacing: geometryVStack.size.width * 0.1) {
+                        let diagramSize = geometryVStack.size.width * 0.3
+                        
+                        AxesSummaryViewExtended(measurer: measurer, type: type)
+                            .frame(width: diagramSize, height: diagramSize)
+                        DiagramView(axes: axesBinding)
+                            .frame(width: diagramSize, height: diagramSize)
+                            .padding()
+                    }
                 }
                 
                 AxesTableView(observableAxes: axesBinding)

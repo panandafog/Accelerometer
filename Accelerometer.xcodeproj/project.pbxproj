@@ -39,6 +39,7 @@
 		0B508CD8289C413700326C6E /* RecordingRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CD7289C413700326C6E /* RecordingRealm.swift */; };
 		0B508CDB289C7F0200326C6E /* RecordingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CDA289C7F0200326C6E /* RecordingsRepository.swift */; };
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
+		0B6DD8CF2B816BED0076D93A /* ChartEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
@@ -124,6 +125,7 @@
 		0B508CD7289C413700326C6E /* RecordingRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingRealm.swift; sourceTree = "<group>"; };
 		0B508CDA289C7F0200326C6E /* RecordingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsRepository.swift; sourceTree = "<group>"; };
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
+		0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEntry.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0B8C3B292A99F9FF00488B1E /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		0B8C3B2B2A99FC9600488B1E /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				0B24EC3C2862327E00AD3EF1 /* Settings */,
 				0B508CD4289C3D9300326C6E /* Database */,
 				0B24EC3F28623C0E00AD3EF1 /* Extensions */,
+				0B6DD8CD2B816BCB0076D93A /* Protocols */,
 				0B801284286DA9A000F4AA85 /* Other */,
 				0B24EC0B28621BC200AD3EF1 /* Assets.xcassets */,
 				0B24EC0D28621BC200AD3EF1 /* Preview Content */,
@@ -343,6 +346,14 @@
 				0B24EC35286227A100AD3EF1 /* AxesTableView.swift */,
 			);
 			path = Table;
+			sourceTree = "<group>";
+		};
+		0B6DD8CD2B816BCB0076D93A /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		0B801284286DA9A000F4AA85 /* Other */ = {
@@ -679,6 +690,7 @@
 				0BADCA5D2899ED5C00238A25 /* TextFile.swift in Sources */,
 				0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */,
 				0B24EC3E286232A900AD3EF1 /* RefreshRateView.swift in Sources */,
+				0B6DD8CF2B816BED0076D93A /* ChartEntry.swift in Sources */,
 				0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */,
 				0B05EB602A9A1CFB005497F6 /* TriangleAxes.swift in Sources */,
 				0BE138F2289400E70026D0DC /* Recording.swift in Sources */,

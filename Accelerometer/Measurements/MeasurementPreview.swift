@@ -33,14 +33,17 @@ struct MeasurementPreview: View {
                 AxesSummaryView(axesBinding: observableAxesBinding, type: type)
                     .padding([.horizontal, .bottom])
             }.layoutPriority(1)
-            Spacer()
-            ZStack(alignment: .trailing) {
-                Color.clear
-                DiagramView(axes: observableAxesBinding)
-                    .frame(width: 70, height: 70)
+            if observableAxes?.axes.measurementType?
+                .supportsDiagramRepresentation ?? false {
+                Spacer()
+                ZStack(alignment: .trailing) {
+                    Color.clear
+                    DiagramView(axes: observableAxesBinding)
+                        .frame(width: 70, height: 70)
+                }
+                .frame(minWidth: 70, minHeight: 70)
+                .padding()
             }
-            .frame(minWidth: 70, minHeight: 70)
-            .padding()
         }
     }
 }

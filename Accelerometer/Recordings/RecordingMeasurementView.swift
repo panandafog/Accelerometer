@@ -23,25 +23,37 @@ struct RecordingMeasurementView: View {
         CGSize(width: generalSize.width * 0.7, height: 240)
     }
     
-    var values: [Double] {
-        let entries = recording.doubleValues(of: measurementType)
+    var values: [[Double]] {
+        var entries = recording.chartValues(of: measurementType)
         let limit = 100
-        if entries.count > limit {
-            return entries
-                .chunked(into: Int((Double(entries.count) / 100.0).rounded()))
-                .map({ chunk -> Double in
-                    let sumArray = chunk.reduce(0, +)
-                    return sumArray / Double(chunk.count)
-                })
-        } else {
-            return entries
+        
+        for index in 0 ..< entries.count {
+            if entries[index].count > limit {
+                entries[index] = entries[index]
+                    .chunked(into: Int((Double(entries[index].count) / 100.0).rounded()))
+                    .map({ chunk -> Double in
+                        let sumArray = chunk.reduce(0, +)
+                        return sumArray / Double(chunk.count)
+                    })
+            }
+        }
+        
+        return entries
+    }
+    
+    var chartData: [([Double], GradientColor)] {
+        values.map {
+            ($0, GradientColor(
+                start: .intensity(0.0),
+                end: .intensity(1.0)
+            ))
         }
     }
     
     var rateValue: Int {
-        let allValues = values
-        guard let first = allValues.first,
-              let last = allValues.last else {
+        let allValues = values.first
+        guard let first = allValues?.first,
+              let last = allValues?.last else {
             return 0
         }
         guard first != 0.0 else {
@@ -65,10 +77,7 @@ struct RecordingMeasurementView: View {
             if measurementType.supportsChartRepresentation {
                 ScrollView {
                     MultiLineChartView(
-                        data: [(values, GradientColor(
-                            start: .intensity(0.0),
-                            end: .intensity(1.0)
-                        ))],
+                        data: chartData,
                         title: title,
                         legend: nil,
                         style: .recordingEntry,

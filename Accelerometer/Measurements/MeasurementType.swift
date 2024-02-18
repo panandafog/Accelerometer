@@ -109,7 +109,9 @@ A G is a unit of gravitation force equal to that exerted by the earth’s gravit
         }
     }
     
-    var supportsChartRepresentation: Bool {
+    var supportsChartRepresentation: Bool { true }
+    
+    var supportsDiagramRepresentation: Bool {
         switch self {
         case .attitude:
             return false

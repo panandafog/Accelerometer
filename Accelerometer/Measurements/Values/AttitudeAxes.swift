@@ -50,3 +50,10 @@ struct AttitudeAxes: Axes {
         ) + " \(measurementType?.unit ?? "")"
     }
 }
+
+extension AttitudeAxes: ChartEntry {
+    
+    var chartValues: [Double] {
+        Self.axesTypes.compactMap { values[$0]?.value }
+    }
+}
