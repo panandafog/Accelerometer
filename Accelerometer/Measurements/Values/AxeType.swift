@@ -15,6 +15,7 @@ enum AxeType: String, CaseIterable {
     case pitch
     case yaw
     case vector
+    case bool
     case unnamed
     
     var name: String { rawValue }

@@ -57,6 +57,7 @@ class Measurer: ObservableObject {
         startAccelerometer()
         startGyro()
         startMagnetometer()
+        startProximity()
     }
     
     func startDeviceMotion() {
@@ -159,11 +160,25 @@ class Measurer: ObservableObject {
         }
     }
     
+    func startProximity() {
+        UIDevice.current.isProximityMonitoringEnabled = true
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(proximityDidChange),
+            name: Notification.Name(
+                rawValue: "UIDeviceProximityStateDidChangeNotification"
+            ),
+            object: nil
+        )
+    }
+    
     func stopAll() {
         stopDeviceMotion()
         stopAccelerometer()
         stopGyro()
         stopMagnetometer()
+        stopProximity()
     }
     
     func stopDeviceMotion() {
@@ -180,6 +195,10 @@ class Measurer: ObservableObject {
     
     func stopMagnetometer() {
         motion.stopMagnetometerUpdates()
+    }
+    
+    func stopProximity() {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func resetAll() {
@@ -213,6 +232,12 @@ class Measurer: ObservableObject {
             axes.set(values: values)
             observableAxes[measurementType]?.axes = axes
         }
+    }
+    
+    @objc private func proximityDidChange(notification: NSNotification) {
+        guard let device = notification.object as? UIDevice else { return }
+        let currentProximityState = device.proximityState
+        print("currentProximityState: \(currentProximityState ? "near" : "far")")
     }
 }
 
