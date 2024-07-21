@@ -64,6 +64,7 @@
 		0BDB67DC2AC9AC6200FA5C09 /* RecordingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */; };
 		0BDBDAEA2B825CAC0045A008 /* BooleanAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */; };
 		0BDBDAEC2B825F910045A008 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAEB2B825F910045A008 /* Bool.swift */; };
+		0BDBDAEE2B8264880045A008 /* BooleanAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAED2B8264880045A008 /* BooleanAxesSummaryView.swift */; };
 		0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */; };
 		0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138ED2893FFA10026D0DC /* RecordingsView.swift */; };
 		0BE138F2289400E70026D0DC /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F1289400E70026D0DC /* Recording.swift */; };
@@ -151,6 +152,7 @@
 		0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUtils.swift; sourceTree = "<group>"; };
 		0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanAxes.swift; sourceTree = "<group>"; };
 		0BDBDAEB2B825F910045A008 /* Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
+		0BDBDAED2B8264880045A008 /* BooleanAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateComponents.swift; sourceTree = "<group>"; };
 		0BE138ED2893FFA10026D0DC /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
 		0BE138F1289400E70026D0DC /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */,
 				0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */,
 				0BBF54A92AD1F9CF0095B63F /* VectorAxesSummaryView.swift */,
+				0BDBDAED2B8264880045A008 /* BooleanAxesSummaryView.swift */,
 				0BF7A0B12AD29D6F005E75CC /* AxesSummaryValueView.swift */,
 				0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */,
 				0B548E172876E7AE00EDCDA8 /* Diagram */,
@@ -679,6 +682,7 @@
 				0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */,
 				0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */,
 				0BA63B6E2897EDD80040B63D /* DateFormatter.swift in Sources */,
+				0BDBDAEE2B8264880045A008 /* BooleanAxesSummaryView.swift in Sources */,
 				0BDBDAEA2B825CAC0045A008 /* BooleanAxes.swift in Sources */,
 				0BF7A0B22AD29D6F005E75CC /* AxesSummaryValueView.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,

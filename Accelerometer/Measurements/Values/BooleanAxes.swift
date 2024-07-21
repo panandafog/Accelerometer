@@ -32,7 +32,20 @@ final class BooleanAxes: Axes {
         self.displayableAbsMax = displayableAbsMax
     }
     
-    func set(values: [AxeType: ValueType]) {
-        
+    func set(values newValues: [AxeType: ValueType]) {
+        Self.axesTypes.forEach {
+            var axis = values[$0]
+            if let newValue = newValues[$0] {
+                axis?.set(value: newValue)
+            }
+            values[$0] = axis
+        }
+    }
+    
+    func valueLabel(of type: AxeType) -> String? {
+        guard let value = values[type]?.value else {
+            return nil
+        }
+        return value ? "close" : "far"
     }
 }

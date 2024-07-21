@@ -166,10 +166,10 @@ class Measurer: ObservableObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(proximityDidChange),
-            name: Notification.Name(
-                rawValue: "UIDeviceProximityStateDidChangeNotification"
-            ),
-            object: nil
+            name: 
+                UIDevice
+                .proximityStateDidChangeNotification,
+            object: UIDevice.current
         )
     }
     
@@ -234,10 +234,15 @@ class Measurer: ObservableObject {
         }
     }
     
-    @objc private func proximityDidChange(notification: NSNotification) {
+    @objc func proximityDidChange(notification: NSNotification) {
         guard let device = notification.object as? UIDevice else { return }
         let currentProximityState = device.proximityState
-        print("currentProximityState: \(currentProximityState ? "near" : "far")")
+        
+        saveData(
+            axesType: BooleanAxes.self,
+            measurementType: .proximity,
+            values: [.bool: currentProximityState]
+        )
     }
 }
 

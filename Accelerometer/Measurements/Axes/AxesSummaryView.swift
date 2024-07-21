@@ -23,7 +23,12 @@ struct AxesSummaryView: View {
         observableAxes?.axes as? AttitudeAxes
     }
     
+    var booleanAxes: BooleanAxes? {
+        observableAxes?.axes as? BooleanAxes
+    }
+    
     var body: some View {
+        // TODO: use MeasurementType.axesType
         if let vectorAxes = vectorAxes {
             VectorAxesSummaryView(
                 axes: vectorAxes,
@@ -32,6 +37,11 @@ struct AxesSummaryView: View {
         } else if let attitudeAxes = attitudeAxes {
             AttitudeAxesSummaryView(
                 axes: attitudeAxes,
+                type: type
+            )
+        } else if let booleanAxes = booleanAxes {
+            BooleanAxesSummaryView(
+                axes: booleanAxes,
                 type: type
             )
         } else {

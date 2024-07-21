@@ -26,13 +26,6 @@ struct TriangleAxes: VectorAxes {
         return Color.intensity(intensity)
     }
     
-    var valueLabel: String {
-        String(
-            vector.value,
-            roundPlaces: Measurer.measurementsDisplayRoundPlaces
-        ) + " \(measurementType?.unit ?? "")"
-    }
-    
     var chartValues: [Double] {
         [vector.value as Double]
     }

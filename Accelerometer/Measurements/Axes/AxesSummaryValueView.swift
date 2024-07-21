@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct AxesSummaryValueView: View {
-    var value: String
+    private static let noValueLabel = "..."
+    
+    var value: String?
     var color: Color
     
     var body: some View {
-        Text(value)
+        Text(value ?? Self.noValueLabel)
             .padding(.defaultPadding)
             .background(
                 color.animation(.linear)
