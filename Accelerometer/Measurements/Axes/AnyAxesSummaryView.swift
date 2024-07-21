@@ -11,6 +11,6 @@ struct AnyAxesSummaryView: View {
     let type: MeasurementType
     
     var body: some View {
-        Text("unsupported data type: \(type.name)")
+        Text("No data: \(type.name)")
     }
 }

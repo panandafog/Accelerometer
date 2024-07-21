@@ -96,6 +96,8 @@ private extension AxeType {
             return nil
         case .yaw:
             return nil
+        case .bool:
+            return nil
         }
     }
     
@@ -123,6 +125,8 @@ private extension AxeType {
         case .pitch:
             return nil
         case .yaw:
+            return nil
+        case .bool:
             return nil
         }
     }

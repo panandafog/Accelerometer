@@ -13,7 +13,7 @@ struct VectorAxesSummaryView: View {
     
     var body: some View {
         AxesSummaryValueView(
-            value: axes.valueLabel,
+            value: axes.valueLabel(of: .vector),
             color: axes.intensityColor
         )
     }

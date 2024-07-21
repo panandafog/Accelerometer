@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct AttitudeAxesSummaryView: View {
-    private static let noValueLabel = "..."
-    
     var axes: AttitudeAxes
     let type: MeasurementType
     
@@ -22,8 +20,7 @@ struct AttitudeAxesSummaryView: View {
                     .padding(.trailing)
                 
                 AxesSummaryValueView(
-                    value: axes.valueLabel(of: axeType) ??
-                        Self.noValueLabel,
+                    value: axes.valueLabel(of: axeType),
                     color: .intensity(0.5)
                 )
             }

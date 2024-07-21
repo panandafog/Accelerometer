@@ -14,11 +14,18 @@ enum MeasurementType: String, CaseIterable {
     case magneticField
     case attitude
     case gravity
+    case proximity
+    
+    static var allShownCases: [MeasurementType] {
+        Self.allCases.filter { !$0.isHidden }
+    }
     
     var axesType: AxesType {
         switch self {
         case .attitude:
             return .attitude
+        case .proximity:
+            return .bool
         default:
             return .triangle
         }
@@ -38,6 +45,8 @@ enum MeasurementType: String, CaseIterable {
             return "attitude"
         case .gravity:
             return "gravity"
+        case .proximity:
+            return "proximity"
         }
     }
     
@@ -55,6 +64,8 @@ enum MeasurementType: String, CaseIterable {
             return "rad"
         case .gravity:
             return "G"
+        case .proximity:
+            return "<proximity unit>"
         }
     }
     
@@ -89,6 +100,8 @@ The device’s orientation relative to a known frame of reference at a point in 
 The gravity acceleration vector expressed in the device's reference frame.
 A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
 """
+        case .proximity:
+            return "<proximity description>"
         }
     }
     
@@ -106,6 +119,8 @@ A G is a unit of gravitation force equal to that exerted by the earth’s gravit
             return true
         case .gravity:
             return true
+        case .proximity:
+            return false
         }
     }
     
@@ -115,8 +130,19 @@ A G is a unit of gravitation force equal to that exerted by the earth’s gravit
         switch self {
         case .attitude:
             return false
+        case .proximity:
+            return false
         default:
             return true
+        }
+    }
+    
+    var isHidden: Bool {
+        switch self {
+        case .proximity:
+            return true
+        default:
+            return false
         }
     }
 }
@@ -126,6 +152,7 @@ extension MeasurementType {
     enum AxesType {
         case triangle
         case attitude
+        case bool
         
         var type: any Axes.Type {
             switch self {
@@ -133,6 +160,8 @@ extension MeasurementType {
                 return TriangleAxes.self
             case .attitude:
                 return AttitudeAxes.self
+            case .bool:
+                return BooleanAxes.self
             }
         }
     }

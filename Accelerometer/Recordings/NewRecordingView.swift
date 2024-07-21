@@ -15,7 +15,7 @@ struct NewRecordingView: View {
     
     @State var measurementTypes: [MeasurementType: Bool] = {
         var dictionary: [MeasurementType: Bool] = [:]
-        MeasurementType.allCases.forEach {
+        MeasurementType.allShownCases.forEach {
             dictionary[$0] = false
         }
         return dictionary
@@ -86,7 +86,7 @@ struct NewRecordingView: View {
                     })
                 }
                 List {
-                    ForEach(MeasurementType.allCases, id: \.self) { measurementType in
+                    ForEach(MeasurementType.allShownCases, id: \.self) { measurementType in
                         HStack {
                             Toggle(isOn: .init(
                                 get: {

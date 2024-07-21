@@ -57,6 +57,7 @@ class Measurer: ObservableObject {
         startAccelerometer()
         startGyro()
         startMagnetometer()
+        startProximity()
     }
     
     func startDeviceMotion() {
@@ -94,7 +95,8 @@ class Measurer: ObservableObject {
     }
     
     func startAccelerometer() {
-        guard !motion.isAccelerometerActive else {
+        guard !MeasurementType.acceleration.isHidden
+                && !motion.isAccelerometerActive else {
             return
         }
         prepareMotion()
@@ -116,7 +118,8 @@ class Measurer: ObservableObject {
     }
     
     func startGyro() {
-        guard !motion.isGyroActive else {
+        guard !MeasurementType.rotationRate.isHidden
+                && !motion.isGyroActive else {
             return
         }
         prepareMotion()
@@ -138,7 +141,8 @@ class Measurer: ObservableObject {
     }
     
     func startMagnetometer() {
-        guard !motion.isMagnetometerActive else {
+        guard !MeasurementType.magneticField.isHidden 
+                && !motion.isMagnetometerActive else {
             return
         }
         prepareMotion()
@@ -159,11 +163,26 @@ class Measurer: ObservableObject {
         }
     }
     
+    func startProximity() {
+        guard !MeasurementType.proximity.isHidden else { return }
+        UIDevice.current.isProximityMonitoringEnabled = true
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(proximityDidChange),
+            name: 
+                UIDevice
+                .proximityStateDidChangeNotification,
+            object: UIDevice.current
+        )
+    }
+    
     func stopAll() {
         stopDeviceMotion()
         stopAccelerometer()
         stopGyro()
         stopMagnetometer()
+        stopProximity()
     }
     
     func stopDeviceMotion() {
@@ -180,6 +199,10 @@ class Measurer: ObservableObject {
     
     func stopMagnetometer() {
         motion.stopMagnetometerUpdates()
+    }
+    
+    func stopProximity() {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func resetAll() {
@@ -213,6 +236,17 @@ class Measurer: ObservableObject {
             axes.set(values: values)
             observableAxes[measurementType]?.axes = axes
         }
+    }
+    
+    @objc func proximityDidChange(notification: NSNotification) {
+        guard let device = notification.object as? UIDevice else { return }
+        let currentProximityState = device.proximityState
+        
+        saveData(
+            axesType: BooleanAxes.self,
+            measurementType: .proximity,
+            values: [.bool: currentProximityState]
+        )
     }
 }
 

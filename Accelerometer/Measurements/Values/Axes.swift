@@ -20,6 +20,8 @@ protocol Axes: Equatable {
     var displayableAbsMax: ValueType { get set }
     
     mutating func set(values: [AxeType: ValueType])
+    
+    func valueLabel(of type: AxeType) -> String?
 }
 
 extension Axes {
@@ -29,5 +31,21 @@ extension Axes {
     
     static var sortedAxesTypes: [AxeType] {
         Array(axesTypes).sorted { $0.rawValue > $1.rawValue }
+    }
+}
+
+extension Axes where ValueType == Double {
+    func valueLabel(of type: AxeType) -> String? {
+        guard let value = values[type]?.value else {
+            return "???"
+        }
+        return label(for: value)
+    }
+    
+    func label(for value: ValueType) -> String {
+        String(
+            value,
+            roundPlaces: Measurer.measurementsDisplayRoundPlaces
+        ) + " \(measurementType?.unit ?? "")"
     }
 }

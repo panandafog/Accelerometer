@@ -17,8 +17,8 @@ struct MeasurementsView: View {
     
     var body: some View {
         List {
-            ForEach(0 ..< MeasurementType.allCases.count) { id in
-                let measurementType = MeasurementType.allCases[id]
+            ForEach(0 ..< MeasurementType.allShownCases.count) { id in
+                let measurementType = MeasurementType.allShownCases[id]
                 Section(header: sectionHeader(isFirst: id == 0)) {
                     NavigationLink {
                         MeasurementSummaryView(measurer: measurer, type: measurementType)

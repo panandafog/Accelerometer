@@ -134,6 +134,9 @@ enum RecordingUtils {
                 measurementType: measurementType,
                 displayableAbsMax: displayableAbsMax
             )
+        case .bool:
+            // TODO
+            return nil
         }
     }
     
