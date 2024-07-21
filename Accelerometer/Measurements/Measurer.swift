@@ -95,7 +95,8 @@ class Measurer: ObservableObject {
     }
     
     func startAccelerometer() {
-        guard !motion.isAccelerometerActive else {
+        guard !MeasurementType.acceleration.isHidden
+                && !motion.isAccelerometerActive else {
             return
         }
         prepareMotion()
@@ -117,7 +118,8 @@ class Measurer: ObservableObject {
     }
     
     func startGyro() {
-        guard !motion.isGyroActive else {
+        guard !MeasurementType.rotationRate.isHidden
+                && !motion.isGyroActive else {
             return
         }
         prepareMotion()
@@ -139,7 +141,8 @@ class Measurer: ObservableObject {
     }
     
     func startMagnetometer() {
-        guard !motion.isMagnetometerActive else {
+        guard !MeasurementType.magneticField.isHidden 
+                && !motion.isMagnetometerActive else {
             return
         }
         prepareMotion()
@@ -161,6 +164,7 @@ class Measurer: ObservableObject {
     }
     
     func startProximity() {
+        guard !MeasurementType.proximity.isHidden else { return }
         UIDevice.current.isProximityMonitoringEnabled = true
         
         NotificationCenter.default.addObserver(
