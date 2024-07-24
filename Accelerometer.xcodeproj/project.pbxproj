@@ -52,6 +52,15 @@
 		0B7AA3F72A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3F62A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift */; };
 		0B7AA3FA2A884497007FA1D3 /* Accelerometer Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
+		0B7AA3DA2A884492007FA1D3 /* Accelerometer_WatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3D92A884492007FA1D3 /* Accelerometer_WatchApp.swift */; };
+		0B7AA3DC2A884492007FA1D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3DB2A884492007FA1D3 /* ContentView.swift */; };
+		0B7AA3DE2A884496007FA1D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B7AA3DD2A884496007FA1D3 /* Assets.xcassets */; };
+		0B7AA3E12A884496007FA1D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B7AA3E02A884496007FA1D3 /* Preview Assets.xcassets */; };
+		0B7AA3EB2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3EA2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift */; };
+		0B7AA3F52A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3F42A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift */; };
+		0B7AA3F72A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7AA3F62A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift */; };
+		0B7AA3FA2A884497007FA1D3 /* Accelerometer Watch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B876BE029EC618800DEFA69 /* MeasurementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F3289401210026D0DC /* MeasurementType.swift */; };
 		0B9653CB29EC48ED0071A6C7 /* LiveActivitiesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9653CA29EC48ED0071A6C7 /* LiveActivitiesService.swift */; };
 		0B9653D229EC52460071A6C7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9653D129EC52460071A6C7 /* WidgetKit.framework */; };
@@ -208,6 +217,17 @@
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0B8C3B292A99F9FF00488B1E /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		0B8C3B2B2A99FC9600488B1E /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
+		0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Accelerometer Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7AA3D92A884492007FA1D3 /* Accelerometer_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_WatchApp.swift; sourceTree = "<group>"; };
+		0B7AA3DB2A884492007FA1D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0B7AA3DD2A884496007FA1D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0B7AA3E02A884496007FA1D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0B7AA3E62A884496007FA1D3 /* Accelerometer Watch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Accelerometer Watch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7AA3EA2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_Watch_Watch_AppTests.swift; sourceTree = "<group>"; };
+		0B7AA3F02A884497007FA1D3 /* Accelerometer Watch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Accelerometer Watch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7AA3F42A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_Watch_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		0B7AA3F62A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0B7AA3D72A884492007FA1D3 /* Accelerometer Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Accelerometer Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B7AA3D92A884492007FA1D3 /* Accelerometer_WatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accelerometer_WatchApp.swift; sourceTree = "<group>"; };
 		0B7AA3DB2A884492007FA1D3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1074,6 +1094,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3D32A884492007FA1D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BB5ACCC2A8949850087563E /* MeasurementType.swift in Sources */,
+				0B7AA3DC2A884492007FA1D3 /* ContentView.swift in Sources */,
+				0BAF38152A88DE25000C532E /* NewRecordingWatchView.swift in Sources */,
+				0B7AA3DA2A884492007FA1D3 /* Accelerometer_WatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3E22A884496007FA1D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7AA3EB2A884497007FA1D3 /* Accelerometer_Watch_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B7AA3EC2A884497007FA1D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B7AA3F72A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITestsLaunchTests.swift in Sources */,
+				0B7AA3F52A884497007FA1D3 /* Accelerometer_Watch_Watch_AppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B9653CC29EC52460071A6C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B9653E029EC52470071A6C7 /* RecordingWidget.intentdefinition in Sources */,
+				0B9653D929EC52460071A6C7 /* RecordingWidgetLiveActivity.swift in Sources */,
+				0B876BE029EC618800DEFA69 /* MeasurementType.swift in Sources */,
+				0B9653D729EC52460071A6C7 /* RecordingWidgetBundle.swift in Sources */,
+				0B9653DB29EC52460071A6C7 /* RecordingWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

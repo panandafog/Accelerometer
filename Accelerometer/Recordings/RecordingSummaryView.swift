@@ -58,8 +58,9 @@ struct RecordingSummaryView: View {
     
     var body: some View {
         entriesView
+//            .toolbar(content: { toolbarContent })
             .navigationTitle("Recording")
-        
+            
         // MARK: Toolbar
         // FIXME: Toolbar doesnt work in xcode beta
         //            .toolbar {
