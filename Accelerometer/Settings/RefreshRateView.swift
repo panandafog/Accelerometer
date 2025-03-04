@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct RefreshRateView: View {
-    @ObservedObject var measurer = Measurer.shared
+    @ObservedObject var settings = Settings.shared
     @ObservedObject var recorder = Recorder.shared
     
-    @State private var value: Double = Measurer.shared.updateInterval
+    @State private var value: Double = Settings.shared.updateInterval
     @State private var isEditing = false
     
     var body: some View {
         VStack {
-//            Text("Measurements update interval")
-            Text(String(value, roundPlaces: Measurer.updateIntervalRoundPlaces))
+            Text(String(value, roundPlaces: Settings.updateIntervalRoundPlaces))
                     .foregroundColor(isEditing ? .blue : .accentColor)
             Slider(
                 value: $value,
                 in: .init(uncheckedBounds: (
-                    lower: Measurer.minUpdateInterval,
-                    upper: Measurer.maxUpdateInterval
+                    lower: Settings.minUpdateInterval,
+                    upper: Settings.maxUpdateInterval
                 )),
-                step: Measurer.updateIntervalStep,
+                step: Settings.updateIntervalStep,
                 onEditingChanged: { editing in
                     isEditing = editing
-                    measurer.updateInterval = value
+                    settings.updateInterval = value
                 },
-                minimumValueLabel: Text(String(Measurer.minUpdateInterval)),
-                maximumValueLabel: Text(String(Measurer.maxUpdateInterval)),
+                minimumValueLabel: Text(String(Settings.minUpdateInterval)),
+                maximumValueLabel: Text(String(Settings.maxUpdateInterval)),
                 label: { }
             )
             .disabled(recorder.recordingInProgress)
@@ -60,9 +59,9 @@ struct RefreshRateView_Previews: PreviewProvider {
     }()
     
     static var previews: some View {
-        RefreshRateView(measurer: .shared, recorder: recorder1)
+        RefreshRateView(settings: .shared, recorder: recorder1)
             .previewLayout(.sizeThatFits)
-        RefreshRateView(measurer: .shared, recorder: recorder2)
+        RefreshRateView(settings: .shared, recorder: recorder2)
             .previewLayout(.sizeThatFits)
     }
 }

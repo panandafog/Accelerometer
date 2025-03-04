@@ -33,6 +33,7 @@
 		0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFC9289A9E85007130D9 /* Settings.swift */; };
 		0B36DFCC289AA096007130D9 /* ExportDateFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */; };
 		0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */; };
+		0B4BE8532D74BB420065D938 /* AnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */; };
 		0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
 		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
 		0B508CD6289C3E4A00326C6E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CD5289C3E4A00326C6E /* DatabaseManager.swift */; };
@@ -122,6 +123,7 @@
 		0B36DFC9289A9E85007130D9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDateFormatView.swift; sourceTree = "<group>"; };
 		0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryViewExtended.swift; sourceTree = "<group>"; };
+		0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsView.swift; sourceTree = "<group>"; };
 		0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramAxesNamesStyle.swift; sourceTree = "<group>"; };
 		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
 		0B508CD5289C3E4A00326C6E /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 		0B24EC3C2862327E00AD3EF1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */,
 				0B24EC3928622B7100AD3EF1 /* SettingsView.swift */,
 				0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */,
 				0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */,
@@ -689,6 +692,7 @@
 				0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */,
 				0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */,
 				0BE138F4289401210026D0DC /* MeasurementType.swift in Sources */,
+				0B4BE8532D74BB420065D938 /* AnimationsView.swift in Sources */,
 				0BDBDAEC2B825F910045A008 /* Bool.swift in Sources */,
 				0B9BDC132899A6F900842161 /* Array.swift in Sources */,
 				0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */,
@@ -903,7 +907,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -934,7 +938,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -954,7 +958,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.AccelerometerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Acc.elerometer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Acc.elerometer";
 			};
@@ -975,7 +979,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.AccelerometerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Acc.elerometer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Acc.elerometer";
 			};
@@ -994,7 +998,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.AccelerometerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Accelerometer;
 			};
@@ -1013,7 +1017,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.AccelerometerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Accelerometer;
 			};

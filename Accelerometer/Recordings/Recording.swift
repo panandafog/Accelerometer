@@ -48,7 +48,7 @@ struct Recording: Identifiable {
         self.measurementTypes = measurementTypes
     }
     
-    func csv(of type: MeasurementType) -> TextFile? {
+    @MainActor func csv(of type: MeasurementType) -> TextFile? {
         guard measurementTypes.contains(type) else {
             return nil
         }
@@ -91,7 +91,7 @@ extension Recording {
         let date: Date
         let axes: any Axes
         
-        var csvString: String {
+        @MainActor var csvString: String {
             let dateString: String
             switch Settings.shared.exportDateFormat {
             case .dateFormat:

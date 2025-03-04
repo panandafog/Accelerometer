@@ -8,6 +8,7 @@
 import Combine
 import SwiftUI
 
+@MainActor
 class Recorder: ObservableObject {
     static let shared = Recorder()
     // private init() { }
@@ -21,7 +22,7 @@ class Recorder: ObservableObject {
     
     private let disableIdleTimer = true
     
-    private (set) var activeRecording: Recording? = nil
+    private(set) var activeRecording: Recording? = nil
     var recordingInProgress: Bool {
         activeRecording != nil
     }

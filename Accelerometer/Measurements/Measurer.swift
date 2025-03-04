@@ -9,20 +9,14 @@ import Combine
 import CoreMotion
 import SwiftUI
 
+@MainActor
 class Measurer: ObservableObject {
-    static let shared = Measurer()
-    
-    static let measurementsDisplayRoundPlaces = 3
-    
-    static let maxUpdateInterval = 1.0
-    static let minUpdateInterval = 0.1
-    static let updateIntervalStep = 0.1
-    static let updateIntervalRoundPlaces = 1
-    
-    private static let initialUpdateInterval = 0.5
+    @MainActor static let shared = Measurer()
     
     @Published var observableAxes: [MeasurementType: ObservableAxes] = [:]
     var subscriptions: [MeasurementType: AnyCancellable] = [:]
+    
+    @ObservedObject private var settings = Settings.shared
     
     private let displayableAbsMax: [MeasurementType: Double] = [
         .userAcceleration: 0.1,
@@ -33,26 +27,20 @@ class Measurer: ObservableObject {
         .gravity: 1.0
     ]
     
-    var updateInterval: Double {
-        get {
-            let defaultValue = UserDefaults.standard.double(forKey: "MeasurementsUpdateInterval")
-            if defaultValue == 0.0 || defaultValue < Self.minUpdateInterval || defaultValue > Self.maxUpdateInterval {
-                return Self.initialUpdateInterval
-            } else {
-                return defaultValue
-            }
-        }
-        set {
-            let roundedValue = newValue.rounded(toPlaces: Self.updateIntervalRoundPlaces)
-            objectWillChange.send()
-            motion.setUpdateInterval(roundedValue)
-            UserDefaults.standard.set(roundedValue, forKey: "MeasurementsUpdateInterval")
-        }
-    }
-    
     private let motion = CMMotionManager()
     
-    func startAll() {
+    private var settingsSubscription: AnyCancellable?
+    
+    init() {
+        settingsSubscription = settings.updateIntervalPublisher
+            .sink { [weak self] newInterval in
+                if ((self?.motion.isDeviceMotionActive) != nil) {
+                    self?.prepareMotion()
+                }
+            }
+    }
+    
+    @MainActor func startAll() {
         startDeviceMotion()
         startAccelerometer()
         startGyro()
@@ -60,7 +48,7 @@ class Measurer: ObservableObject {
         startProximity()
     }
     
-    func startDeviceMotion() {
+    @MainActor func startDeviceMotion() {
         guard !motion.isDeviceMotionActive else {
             return
         }
@@ -94,7 +82,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    func startAccelerometer() {
+    @MainActor func startAccelerometer() {
         guard !MeasurementType.acceleration.isHidden
                 && !motion.isAccelerometerActive else {
             return
@@ -117,7 +105,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    func startGyro() {
+    @MainActor func startGyro() {
         guard !MeasurementType.rotationRate.isHidden
                 && !motion.isGyroActive else {
             return
@@ -140,8 +128,8 @@ class Measurer: ObservableObject {
         }
     }
     
-    func startMagnetometer() {
-        guard !MeasurementType.magneticField.isHidden 
+    @MainActor func startMagnetometer() {
+        guard !MeasurementType.magneticField.isHidden
                 && !motion.isMagnetometerActive else {
             return
         }
@@ -163,7 +151,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    func startProximity() {
+    @MainActor func startProximity() {
         guard !MeasurementType.proximity.isHidden else { return }
         UIDevice.current.isProximityMonitoringEnabled = true
         
@@ -215,8 +203,8 @@ class Measurer: ObservableObject {
         observableAxes[type]?.reset()
     }
     
-    private func prepareMotion() {
-        motion.setUpdateInterval(updateInterval)
+    @MainActor private func prepareMotion() {
+        motion.setUpdateInterval(Settings.shared.updateInterval)
     }
     
     func saveData<AxesType: Axes>(axesType: AxesType.Type, measurementType: MeasurementType, values: [AxeType: AxesType.ValueType]) {
@@ -238,7 +226,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    @objc func proximityDidChange(notification: NSNotification) {
+    @MainActor @objc func proximityDidChange(notification: NSNotification) {
         guard let device = notification.object as? UIDevice else { return }
         let currentProximityState = device.proximityState
         

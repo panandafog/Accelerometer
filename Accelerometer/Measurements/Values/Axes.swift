@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Axes: Equatable {
-    associatedtype ValueType: LosslessStringConvertible, Comparable
+    associatedtype ValueType: LosslessStringConvertible, Comparable, Sendable
     
     static var axesTypes: Set<AxeType> { get }
     
@@ -20,6 +20,8 @@ protocol Axes: Equatable {
     var displayableAbsMax: ValueType { get set }
     
     mutating func set(values: [AxeType: ValueType])
+    
+    mutating func resetValues()
     
     func valueLabel(of type: AxeType) -> String?
 }
@@ -34,6 +36,18 @@ extension Axes {
     }
 }
 
+extension Axes where ValueType: AdditiveArithmetic {
+    
+    mutating func resetValues() {
+        self.values = values.mapValues { axis in
+            var newAxis = axis
+            newAxis.min = newAxis.value
+            newAxis.max = newAxis.value
+            return newAxis
+        }
+    }
+}
+
 extension Axes where ValueType == Double {
     func valueLabel(of type: AxeType) -> String? {
         guard let value = values[type]?.value else {
@@ -45,7 +59,7 @@ extension Axes where ValueType == Double {
     func label(for value: ValueType) -> String {
         String(
             value,
-            roundPlaces: Measurer.measurementsDisplayRoundPlaces
+            roundPlaces: Settings.measurementsDisplayRoundPlaces
         ) + " \(measurementType?.unit ?? "")"
     }
 }

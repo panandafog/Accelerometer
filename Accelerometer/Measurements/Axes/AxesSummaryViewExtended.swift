@@ -32,7 +32,7 @@ struct AxesSummaryViewExtended: View {
         if let vectorAxe = vectorAxe {
             return String(
                 vectorAxe.max ?? 0,
-                roundPlaces: Measurer.measurementsDisplayRoundPlaces
+                roundPlaces: Settings.measurementsDisplayRoundPlaces
             )
         } else {
             return "no data"
@@ -43,7 +43,7 @@ struct AxesSummaryViewExtended: View {
         if let vectorAxe = vectorAxe {
             return String(
                 vectorAxe.min ?? 0,
-                roundPlaces: Measurer.measurementsDisplayRoundPlaces
+                roundPlaces: Settings.measurementsDisplayRoundPlaces
             )
         } else {
             return "no data"

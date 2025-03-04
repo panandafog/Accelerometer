@@ -8,7 +8,7 @@
 import SwiftUI
 import enum Accelerate.vDSP
 
-struct TriangleAxes: VectorAxes {
+struct TriangleAxes: VectorAxes, Sendable {
 
     typealias ValueType = Double
     

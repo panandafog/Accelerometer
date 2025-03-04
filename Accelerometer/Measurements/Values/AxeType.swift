@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AxeType: String, CaseIterable {
+enum AxeType: String, CaseIterable, Sendable {
     case x
     case y
     case z

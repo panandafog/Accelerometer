@@ -20,6 +20,10 @@ struct DiagramView: View {
             ZStack {
                 triangle(max: true)
                 triangle(showAxesNames: shouldShowAxesNames(shapeSize: geometry.size))
+                    .animation(
+                        .linear(duration: Settings.shared.updateInterval),
+                        value: axes.wrappedValue?.axes as? TriangleAxes
+                    )
             }
         }
     }
@@ -64,7 +68,6 @@ struct DiagramView: View {
                 $0.fill(Color.accentColor)
             }
         }
-        .animation(.linear)
     }
     
     func shouldShowAxesNames(shapeSize: CGSize) -> Bool {

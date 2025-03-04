@@ -15,6 +15,8 @@ final class ObservableAxes: ObservableObject {
     }
     
     func reset() {
-        axes = type(of: axes).zero
+        if let newAxes = axes.resetValues() as? (any Axes) {
+            axes = newAxes
+        }
     }
 }

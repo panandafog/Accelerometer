@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Axis<T> where T: Comparable, T: LosslessStringConvertible {
+struct Axis<T>: Sendable where T: Comparable, T: LosslessStringConvertible, T: Sendable {
     let type_: AxeType
     var value: T
     var min: T?

@@ -7,12 +7,13 @@
 
 import Foundation
 
-final class BooleanAxes: Axes {
+final class BooleanAxes: @preconcurrency Axes {
+    
     typealias ValueType = Bool
     
     static var axesTypes: Set<AxeType> { [.bool] }
     
-    static let zero: BooleanAxes = BooleanAxes()
+    @MainActor static let zero: BooleanAxes = BooleanAxes()
     
     var measurementType: MeasurementType?
     
@@ -48,4 +49,6 @@ final class BooleanAxes: Axes {
         }
         return value ? "close" : "far"
     }
+    
+    func resetValues() { }
 }

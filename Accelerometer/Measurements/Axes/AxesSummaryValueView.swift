@@ -17,7 +17,10 @@ struct AxesSummaryValueView: View {
         Text(value ?? Self.noValueLabel)
             .padding(.defaultPadding)
             .background(
-                color.animation(.linear)
+                color.animation(
+                    .linear(duration: Settings.shared.updateInterval),
+                    value: color
+                )
             )
             .cornerRadius(.defaultCornerRadius)
     }

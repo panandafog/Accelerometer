@@ -12,12 +12,24 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Section(header: Text("Measurements update interval"), footer: Text("Interval between measurements in seconds")) {
+            Section(
+                header: Text("Measurements update interval"),
+                footer: Text("Interval between measurements in seconds")
+            ) {
                 RefreshRateView()
                     .padding()
             }
-            Section(header: Spacer(), footer: Text("Format of dates in recording file")) {
+            Section(
+                header: Spacer(),
+                footer: Text("Format of dates in recording file")
+            ) {
                 ExportDateFormatView()
+            }
+            Section(
+                header: Spacer(),
+                footer: Text("Enable animations")
+            ) {
+                AnimationsView()
             }
 //            Section(header: Text("Accelerometer"), footer: Text("")) {
 //                Toggle("Remove gravity", isOn: .init(get: { measurer.removeGravity }, set: { measurer.removeGravity = $0 }))

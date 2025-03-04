@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MeasurementType: String, CaseIterable {
+enum MeasurementType: String, CaseIterable, Sendable {
     case acceleration
     case rotationRate = "rotation"
     case userAcceleration = "deviceMotion"
