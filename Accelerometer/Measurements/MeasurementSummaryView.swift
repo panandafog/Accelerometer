@@ -75,6 +75,7 @@ struct MeasurementSummaryView: View {
             Button("Reset min / max") {
                 measurer.reset(type)
             }
+            .disabled(recorder.recordingInProgress)
         }
     }
 }
