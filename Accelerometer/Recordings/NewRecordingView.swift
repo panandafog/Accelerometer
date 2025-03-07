@@ -16,7 +16,7 @@ struct NewRecordingView: View {
     @State var measurementTypes: [MeasurementType: Bool] = {
         var dictionary: [MeasurementType: Bool] = [:]
         MeasurementType.allShownCases.forEach {
-            dictionary[$0] = false
+            dictionary[$0] = true
         }
         return dictionary
     }()
