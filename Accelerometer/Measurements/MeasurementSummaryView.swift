@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MeasurementSummaryView: View {
-    @ObservedObject var measurer = Measurer.shared
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var measurer: Measurer
+    @EnvironmentObject var recorder: Recorder
     
     let type: MeasurementType
     
@@ -54,7 +54,7 @@ struct MeasurementSummaryView: View {
                     HStack (spacing: geometryVStack.size.width * 0.1) {
                         let diagramSize = geometryVStack.size.width * 0.3
                         
-                        AxesSummaryViewExtended(measurer: measurer, type: type)
+                        AxesSummaryViewExtended(type: type)
                             .frame(width: diagramSize, height: diagramSize)
                         DiagramView(axes: axesBinding)
                             .frame(width: diagramSize, height: diagramSize)
@@ -81,8 +81,10 @@ struct MeasurementSummaryView: View {
 
 struct MeasurementSummaryView_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    
     static let measurer: Measurer = {
-        let measurer = Measurer()
+        let measurer = Measurer(settings: settings)
         measurer.saveData(
             axesType: TriangleAxes.self,
             measurementType: .acceleration,
@@ -96,18 +98,24 @@ struct MeasurementSummaryView_Previews: PreviewProvider {
     }()
     
     static let recorder1: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()
     
     static var previews: some View {
-        MeasurementSummaryView(measurer: measurer, recorder: recorder1, type: .acceleration)
-        MeasurementSummaryView(measurer: measurer, recorder: recorder2, type: .acceleration)
+        MeasurementSummaryView(type: .acceleration)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder1)
+        MeasurementSummaryView(type: .acceleration)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder2)
     }
 }

@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct MeasurementsView: View {
-    @ObservedObject var measurer = Measurer.shared
-    
     
     func sectionHeader(isFirst: Bool) -> (some View)? {
         isFirst ? Spacer() : nil
@@ -21,9 +19,9 @@ struct MeasurementsView: View {
                 let measurementType = MeasurementType.allShownCases[id]
                 Section(header: sectionHeader(isFirst: id == 0)) {
                     NavigationLink {
-                        MeasurementSummaryView(measurer: measurer, type: measurementType)
+                        MeasurementSummaryView(type: measurementType)
                     } label: {
-                        MeasurementPreview(measurer: measurer, type: measurementType)
+                        MeasurementPreview(type: measurementType)
                     }
                 }
             }
@@ -33,21 +31,12 @@ struct MeasurementsView: View {
 
 struct MeasurementsView_Previews: PreviewProvider {
     
-    static let measurer: Measurer = {
-        let measurer = Measurer()
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .acceleration,
-            values: [
-                .x: 0.5,
-                .y: 0.5,
-                .z: 0.5
-            ]
-        )
-        return measurer
-    }()
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
     
     static var previews: some View {
-        MeasurementsView(measurer: measurer)
+        MeasurementsView()
+            .environmentObject(settings)
+            .environmentObject(measurer)
     }
 }

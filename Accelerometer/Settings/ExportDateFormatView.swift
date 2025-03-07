@@ -9,16 +9,7 @@ import SwiftUI
 
 struct ExportDateFormatView: View {
     
-    @ObservedObject var settings = Settings.shared
-    
-    //    private var selectedDateFormat: Settings.ExportDateFormat {
-    //        get {
-    //            settings.exportDateFormat
-    //        }
-    //        set {
-    //            settings.exportDateFormat = newValue
-    //        }
-    //    }
+    @EnvironmentObject var settings: Settings
     
     func selectedDateFormat() -> Settings.ExportDateFormat {
         settings.exportDateFormat
@@ -50,5 +41,6 @@ struct ExportDateFormatView_Previews: PreviewProvider {
     static var previews: some View {
         ExportDateFormatView()
             .previewLayout(.sizeThatFits)
+            .environmentObject(Settings())
     }
 }

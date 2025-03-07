@@ -19,9 +19,6 @@ class Settings: ObservableObject {
     
     private static let initialUpdateInterval = 0.5
     
-    nonisolated(unsafe) static let shared = Settings()
-    private init() { }
-    
     var exportDateFormat: ExportDateFormat {
         get {
             let stringValue = UserDefaults.standard.string(forKey: Key.exportDateFormat.rawValue)

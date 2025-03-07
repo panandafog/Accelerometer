@@ -11,7 +11,7 @@ struct NewRecordingView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var recorder: Recorder
     
     @State var measurementTypes: [MeasurementType: Bool] = {
         var dictionary: [MeasurementType: Bool] = [:]

@@ -10,10 +10,8 @@ import SwiftUI
 
 @MainActor
 class Recorder: ObservableObject {
-    static let shared = Recorder()
-    // private init() { }
+    @ObservedObject private var measurer: Measurer
     
-    @ObservedObject private var measurer = Measurer.shared
     private let repository: RecordingsRepository = {
         let repository = RecordingsRepository()
         repository.update()
@@ -36,6 +34,10 @@ class Recorder: ObservableObject {
     }
     
     private var subscriptions: [AnyCancellable?] = []
+    
+    init(measurer: Measurer) {
+        self.measurer = measurer
+    }
     
     func record(measurements measurementTypes: Set<MeasurementType>) {
         if disableIdleTimer {

@@ -11,12 +11,11 @@ import SwiftUI
 
 @MainActor
 class Measurer: ObservableObject {
-    @MainActor static let shared = Measurer()
     
     @Published var observableAxes: [MeasurementType: ObservableAxes] = [:]
     var subscriptions: [MeasurementType: AnyCancellable] = [:]
     
-    @ObservedObject private var settings = Settings.shared
+    @ObservedObject private var settings: Settings
     
     private let displayableAbsMax: [MeasurementType: Double] = [
         .userAcceleration: 0.1,
@@ -31,7 +30,9 @@ class Measurer: ObservableObject {
     
     private var settingsSubscription: AnyCancellable?
     
-    init() {
+    init(settings: Settings) {
+        self.settings = settings
+        
         settingsSubscription = settings.updateIntervalPublisher
             .sink { [weak self] newInterval in
                 if ((self?.motion.isDeviceMotionActive) != nil) {
@@ -204,7 +205,7 @@ class Measurer: ObservableObject {
     }
     
     @MainActor private func prepareMotion() {
-        motion.setUpdateInterval(Settings.shared.updateInterval)
+        motion.setUpdateInterval(settings.updateInterval)
     }
     
     func saveData<AxesType: Axes>(axesType: AxesType.Type, measurementType: MeasurementType, values: [AxeType: AxesType.ValueType]) {

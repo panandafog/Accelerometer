@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DiagramView: View {
     
+    @EnvironmentObject var settings: Settings
+    
     var axes: Binding<ObservableAxes?>
     var style: DiagramViewStyle = .default
     
@@ -21,7 +23,7 @@ struct DiagramView: View {
                 triangle(max: true)
                 triangle(showAxesNames: shouldShowAxesNames(shapeSize: geometry.size))
                     .animation(
-                        .linear(duration: Settings.shared.updateInterval),
+                        .linear(duration: settings.updateInterval),
                         value: axes.wrappedValue?.axes as? TriangleAxes
                     )
             }
@@ -185,5 +187,6 @@ struct DiagramView_Previews: PreviewProvider {
             DiagramView(axes: axesBinding1)
                 .previewLayout(.fixed(width: 80, height: 80))
         }
+        .environmentObject(Settings())
     }
 }

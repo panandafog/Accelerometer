@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct RefreshRateView: View {
-    @ObservedObject var settings = Settings.shared
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var settings: Settings
+    @EnvironmentObject var recorder: Recorder
     
-    @State private var value: Double = Settings.shared.updateInterval
+    @State private var value = 0.0
     @State private var isEditing = false
     
     var body: some View {
@@ -42,26 +42,38 @@ struct RefreshRateView: View {
                     .foregroundColor(.secondary)
             }
         }
+        .onAppear {
+            value = settings.updateInterval
+        }
     }
 }
 
 struct RefreshRateView_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    
     static let recorder1: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()
     
     static var previews: some View {
-        RefreshRateView(settings: .shared, recorder: recorder1)
+        RefreshRateView()
             .previewLayout(.sizeThatFits)
-        RefreshRateView(settings: .shared, recorder: recorder2)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder1)
+        RefreshRateView()
             .previewLayout(.sizeThatFits)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder2)
     }
 }

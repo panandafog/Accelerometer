@@ -48,7 +48,7 @@ struct Recording: Identifiable {
         self.measurementTypes = measurementTypes
     }
     
-    @MainActor func csv(of type: MeasurementType) -> TextFile? {
+    func csv(of type: MeasurementType, dateFormat: Settings.ExportDateFormat) -> TextFile? {
         guard measurementTypes.contains(type) else {
             return nil
         }
@@ -56,7 +56,7 @@ struct Recording: Identifiable {
             .filter({ $0.measurementType == type })
         
         var csvStrings = RecordingUtils.stringsHeader(of: type)
-        csvStrings.append(contentsOf: filteredEntries.map({ $0.csvString }))
+        csvStrings.append(contentsOf: filteredEntries.map({ $0.getCsvString(dateFormat: dateFormat) }))
         
         return TextFile(initialText: csvStrings.joined(separator: "\n"))
     }
@@ -91,9 +91,9 @@ extension Recording {
         let date: Date
         let axes: any Axes
         
-        @MainActor var csvString: String {
+        func getCsvString(dateFormat: Settings.ExportDateFormat) -> String {
             let dateString: String
-            switch Settings.shared.exportDateFormat {
+            switch dateFormat {
             case .dateFormat:
                 dateString = DateFormatter.Recordings.csvString(from: date)
             case .unix:
@@ -116,19 +116,3 @@ extension Recording {
         }
     }
 }
-
-//extension Recording {
-//
-//    var entity: RecordingEntity {
-////        let newEntity = RecordingEntity()
-//        let newEntity = NSEntityDescription.insertNewObjectForEntityForName("RecordingEntity", inManagedObjectContext: self.managedObjectContext) as! RecordingEntity
-//        newEntity.id = id
-//        newEntity.created = created
-//        newEntity.state = state.rawValue
-//        return newEntity
-//    }
-//
-//    init(from entity: RecordingEntity) {
-//        self.init(id: entity.id!, created: entity.created!, entries: [], state: .init(rawValue: entity.state!)!, measurementTypes: [])
-//    }
-//}

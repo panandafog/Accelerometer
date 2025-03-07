@@ -11,7 +11,9 @@ import SwiftUICharts
 struct RecordingSummaryView: View {
     
     let recording: Recording
-    @ObservedObject var recorder: Recorder = .shared
+    
+    @EnvironmentObject var settings: Settings
+    @EnvironmentObject var recorder: Recorder
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var isPresentingDeleteConfirmation = false
@@ -71,39 +73,42 @@ struct RecordingSummaryView: View {
 //            }
         
         // MARK: Delete confirmation
-            .modify {
-                if #available(iOS 15.0, *) {
-                    $0.confirmationDialog(
-                        deleteAlertTitleText,
-                        isPresented: $isPresentingDeleteConfirmation
-                    ) {
-                        Button("Delete", role: .destructive) {
-                            deleteRecording()
-                        }
-                    }
-                } else {
-                    $0.alert(isPresented: $isPresentingDeleteConfirmation) {
-                        Alert(
-                            title: Text(deleteAlertTitleText),
-                            primaryButton: .destructive(
-                                Text("Delete"),
-                                action: {
-                                    deleteRecording()
-                                }
-                            ),
-                            secondaryButton: .cancel(
-                                Text("Cancel"),
-                                action: { }
-                            )
-                        )
-                    }
-                }
-            }
+//            .modify {
+//                if #available(iOS 15.0, *) {
+//                    $0.confirmationDialog(
+//                        deleteAlertTitleText,
+//                        isPresented: $isPresentingDeleteConfirmation
+//                    ) {
+//                        Button("Delete", role: .destructive) {
+//                            deleteRecording()
+//                        }
+//                    }
+//                } else {
+//                    $0.alert(isPresented: $isPresentingDeleteConfirmation) {
+//                        Alert(
+//                            title: Text(deleteAlertTitleText),
+//                            primaryButton: .destructive(
+//                                Text("Delete"),
+//                                action: {
+//                                    deleteRecording()
+//                                }
+//                            ),
+//                            secondaryButton: .cancel(
+//                                Text("Cancel"),
+//                                action: { }
+//                            )
+//                        )
+//                    }
+//                }
+//            }
         
         // MARK: Exporter
             .fileExporter(
                 isPresented: $isPresentingExporter,
-                document: recording.csv(of: exportMeasurementType),
+                document: recording.csv(
+                    of: exportMeasurementType,
+                    dateFormat: settings.exportDateFormat
+                ),
                 contentType: TextFile.readableContentTypes.first ?? .plainText,
                 defaultFilename: exportMeasurementType.name + ".csv"
             ) { result in
@@ -155,6 +160,10 @@ private extension ChartStyle {
 
 struct RecordingView_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    static let recorder = Recorder(measurer: measurer)
+    
     static let axes: TriangleAxes = {
         var axes = TriangleAxes.zero
         axes.displayableAbsMax = 1.0
@@ -173,10 +182,11 @@ struct RecordingView_Previews: PreviewProvider {
                 ],
                 state: .completed,
                 measurementTypes: [.acceleration]
-            ),
-            recorder: .shared
+            )
         )
         .preferredColorScheme(.light)
+        .environmentObject(recorder)
+        .environmentObject(settings)
         
         RecordingSummaryView(
             recording: Recording(
@@ -189,9 +199,10 @@ struct RecordingView_Previews: PreviewProvider {
                 ],
                 state: .completed,
                 measurementTypes: [.acceleration]
-            ),
-            recorder: .shared
+            )
         )
         .preferredColorScheme(.dark)
+        .environmentObject(recorder)
+        .environmentObject(settings)
     }
 }

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AxesSummaryViewExtended: View {
-    @ObservedObject var measurer = Measurer.shared
+    @EnvironmentObject var measurer: Measurer
+    
     let type: MeasurementType
     
     private var observableAxes: ObservableAxes? {
@@ -67,9 +68,11 @@ struct AxesSummaryViewExtended: View {
 
 struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
-    // FIXME
+    static let settings = Settings()
+    
+    // TODO: refactor this
     static let measurer1: Measurer = {
-        let measurer = Measurer()
+        let measurer = Measurer(settings: settings)
         var axes = TriangleAxes.zero
         axes.displayableAbsMax = 1.0
         measurer.saveData(
@@ -94,7 +97,7 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
     }()
     
     static let measurer2: Measurer = {
-        let measurer = Measurer()
+        let measurer = Measurer(settings: settings)
         var axes = TriangleAxes.zero
         axes.displayableAbsMax = 1.0
         measurer.saveData(
@@ -119,7 +122,7 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
     }()
     
     static let measurer3: Measurer = {
-        let measurer = Measurer()
+        let measurer = Measurer(settings: settings)
         var axes = TriangleAxes.zero
         axes.displayableAbsMax = 1.0
         measurer.saveData(
@@ -145,24 +148,31 @@ struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            AxesSummaryViewExtended(measurer: measurer1, type: .userAcceleration)
+            AxesSummaryViewExtended(type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer2, type: .userAcceleration)
+                .environmentObject(measurer1)
+            AxesSummaryViewExtended(type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer3, type: .userAcceleration)
+                .environmentObject(measurer2)
+            AxesSummaryViewExtended(type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer1, type: .magneticField)
+                .environmentObject(measurer3)
+            AxesSummaryViewExtended(type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer2, type: .magneticField)
+                .environmentObject(measurer1)
+            AxesSummaryViewExtended(type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer3, type: .magneticField)
+                .environmentObject(measurer2)
+            AxesSummaryViewExtended(type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
+                .environmentObject(measurer3)
         }
+        .environmentObject(settings)
     }
 }

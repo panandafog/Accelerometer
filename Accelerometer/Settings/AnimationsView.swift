@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AnimationsView: View {
     
-    @ObservedObject var settings = Settings.shared
+    @EnvironmentObject var settings: Settings
     
     func enableAnimations() -> Bool {
         settings.enableAnimations
@@ -34,5 +34,6 @@ struct AnimationsViewPreviews: PreviewProvider {
     static var previews: some View {
         AnimationsView()
             .previewLayout(.sizeThatFits)
+            .environmentObject(Settings())
     }
 }

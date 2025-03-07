@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MeasurementPreview: View {
-    @ObservedObject var measurer = Measurer.shared
+    @EnvironmentObject var measurer: Measurer
+    
     let type: MeasurementType
     
     var observableAxes: ObservableAxes? {
@@ -50,8 +51,10 @@ struct MeasurementPreview: View {
 
 struct MeasurementPreview_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    
     static let measurer: Measurer = {
-        let measurer = Measurer()
+        let measurer = Measurer(settings: settings)
         measurer.saveData(
             axesType: TriangleAxes.self,
             measurementType: .userAcceleration,
@@ -65,7 +68,9 @@ struct MeasurementPreview_Previews: PreviewProvider {
     }()
     
     static var previews: some View {
-        MeasurementPreview(measurer: measurer, type: .userAcceleration)
+        MeasurementPreview(type: .userAcceleration)
             .previewLayout(.sizeThatFits)
+            .environmentObject(settings)
+            .environmentObject(measurer)
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @ObservedObject var measurer = Measurer.shared
+    @EnvironmentObject var measurer: Measurer
     
     var body: some View {
         List {
@@ -39,7 +39,15 @@ struct SettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
+    
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    static let recorder = Recorder(measurer: measurer)
+    
     static var previews: some View {
         SettingsView()
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder)
     }
 }

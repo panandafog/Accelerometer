@@ -11,10 +11,24 @@ import SwiftUI
 struct AccelerometerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    let settings = Settings()
+    let measurer: Measurer
+    let recorder: Recorder
+
+    init() {
+        self.measurer = Measurer(settings: settings)
+        self.recorder = Recorder(measurer: measurer)
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-//            DiagramView(axes: demoAxes, style: .init(axesNames: .hide))
+                .environmentObject(settings)
+                .environmentObject(measurer)
+                .environmentObject(recorder)
+                .onAppear {
+                    measurer.startAll()
+                }
         }
     }
 }

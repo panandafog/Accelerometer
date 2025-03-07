@@ -127,5 +127,6 @@ struct AxesSummaryView_Previews: PreviewProvider {
                 .previewLayout(.sizeThatFits)
                 .preferredColorScheme(.dark)
         }
+        .environmentObject(Settings())
     }
 }
