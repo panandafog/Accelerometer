@@ -45,6 +45,12 @@ extension Axes where ValueType: AdditiveArithmetic {
             newAxis.max = newAxis.value
             return newAxis
         }
+        
+        var vectorAxes = self as? (any VectorAxes)
+        if vectorAxes != nil {
+            vectorAxes?.resetVector()
+            self = vectorAxes as? Self ?? self
+        }
     }
 }
 

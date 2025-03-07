@@ -9,8 +9,16 @@ import SwiftUI
 import enum Accelerate.vDSP
 
 protocol VectorAxes: Axes, ChartEntry, VectorArithmetic {
-    var vector: Axis<ValueType> { get }
+    var vector: Axis<ValueType> { get set }
     var intensityColor: Color { get }
+}
+
+extension VectorAxes {
+    
+    mutating func resetVector() {
+        vector.min = vector.value
+        vector.max = vector.value
+    }
 }
 
 extension VectorAxes where ValueType == Double {
