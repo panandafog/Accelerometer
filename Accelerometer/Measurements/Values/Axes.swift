@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Axes: Equatable {
+protocol Axes: Equatable, Sendable {
     associatedtype ValueType: LosslessStringConvertible, Comparable, Sendable
     
     static var axesTypes: Set<AxeType> { get }

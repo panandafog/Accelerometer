@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class BooleanAxes: @preconcurrency Axes {
+struct BooleanAxes: Axes {
     
     typealias ValueType = Bool
     
     static var axesTypes: Set<AxeType> { [.bool] }
     
-    @MainActor static let zero: BooleanAxes = BooleanAxes()
+    static let zero: BooleanAxes = BooleanAxes()
     
     var measurementType: MeasurementType?
     
@@ -33,7 +33,7 @@ final class BooleanAxes: @preconcurrency Axes {
         self.displayableAbsMax = displayableAbsMax
     }
     
-    func set(values newValues: [AxeType: ValueType]) {
+    mutating func set(values newValues: [AxeType: ValueType]) {
         Self.axesTypes.forEach {
             var axis = values[$0]
             if let newValue = newValues[$0] {

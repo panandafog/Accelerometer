@@ -41,7 +41,7 @@ class Measurer: ObservableObject {
             }
     }
     
-    @MainActor func startAll() {
+    func startAll() {
         startDeviceMotion()
         startAccelerometer()
         startGyro()
@@ -49,7 +49,7 @@ class Measurer: ObservableObject {
         startProximity()
     }
     
-    @MainActor func startDeviceMotion() {
+    func startDeviceMotion() {
         guard !motion.isDeviceMotionActive else {
             return
         }
@@ -83,7 +83,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    @MainActor func startAccelerometer() {
+    func startAccelerometer() {
         guard !MeasurementType.acceleration.isHidden
                 && !motion.isAccelerometerActive else {
             return
@@ -106,7 +106,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    @MainActor func startGyro() {
+    func startGyro() {
         guard !MeasurementType.rotationRate.isHidden
                 && !motion.isGyroActive else {
             return
@@ -129,7 +129,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    @MainActor func startMagnetometer() {
+    func startMagnetometer() {
         guard !MeasurementType.magneticField.isHidden
                 && !motion.isMagnetometerActive else {
             return
@@ -152,7 +152,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    @MainActor func startProximity() {
+    func startProximity() {
         guard !MeasurementType.proximity.isHidden else { return }
         UIDevice.current.isProximityMonitoringEnabled = true
         
@@ -204,7 +204,7 @@ class Measurer: ObservableObject {
         observableAxes[type]?.reset()
     }
     
-    @MainActor private func prepareMotion() {
+    private func prepareMotion() {
         motion.setUpdateInterval(settings.updateInterval)
     }
     
@@ -227,7 +227,7 @@ class Measurer: ObservableObject {
         }
     }
     
-    @MainActor @objc func proximityDidChange(notification: NSNotification) {
+    @objc func proximityDidChange(notification: NSNotification) {
         guard let device = notification.object as? UIDevice else { return }
         let currentProximityState = device.proximityState
         
