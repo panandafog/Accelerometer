@@ -8,30 +8,29 @@
 import SwiftUI
 
 struct RefreshRateView: View {
-    @ObservedObject var measurer = Measurer.shared
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var settings: Settings
+    @EnvironmentObject var recorder: Recorder
     
-    @State private var value: Double = Measurer.shared.updateInterval
+    @State private var value = 0.0
     @State private var isEditing = false
     
     var body: some View {
         VStack {
-//            Text("Measurements update interval")
-            Text(String(value, roundPlaces: Measurer.updateIntervalRoundPlaces))
+            Text(String(value, roundPlaces: Settings.updateIntervalRoundPlaces))
                     .foregroundColor(isEditing ? .blue : .accentColor)
             Slider(
                 value: $value,
                 in: .init(uncheckedBounds: (
-                    lower: Measurer.minUpdateInterval,
-                    upper: Measurer.maxUpdateInterval
+                    lower: Settings.minUpdateInterval,
+                    upper: Settings.maxUpdateInterval
                 )),
-                step: Measurer.updateIntervalStep,
+                step: Settings.updateIntervalStep,
                 onEditingChanged: { editing in
                     isEditing = editing
-                    measurer.updateInterval = value
+                    settings.updateInterval = value
                 },
-                minimumValueLabel: Text(String(Measurer.minUpdateInterval)),
-                maximumValueLabel: Text(String(Measurer.maxUpdateInterval)),
+                minimumValueLabel: Text(String(Settings.minUpdateInterval)),
+                maximumValueLabel: Text(String(Settings.maxUpdateInterval)),
                 label: { }
             )
             .disabled(recorder.recordingInProgress)
@@ -43,26 +42,38 @@ struct RefreshRateView: View {
                     .foregroundColor(.secondary)
             }
         }
+        .onAppear {
+            value = settings.updateInterval
+        }
     }
 }
 
 struct RefreshRateView_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    
     static let recorder1: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()
     
     static var previews: some View {
-        RefreshRateView(measurer: .shared, recorder: recorder1)
+        RefreshRateView()
             .previewLayout(.sizeThatFits)
-        RefreshRateView(measurer: .shared, recorder: recorder2)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder1)
+        RefreshRateView()
             .previewLayout(.sizeThatFits)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder2)
     }
 }

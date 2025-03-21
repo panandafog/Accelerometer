@@ -11,21 +11,24 @@ import SwiftUI
 struct AccelerometerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    let demoAxes: Binding<ObservableAxes?> = {
-        .init(
-            get: {
-                let axes = ObservableAxes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.2, y: 0.5, z: 0.6)
-                return axes
-            },
-            set: { _ in }
-        )
-    }()
+    let settings = Settings()
+    let measurer: Measurer
+    let recorder: Recorder
+
+    init() {
+        self.measurer = Measurer(settings: settings)
+        self.recorder = Recorder(measurer: measurer)
+    }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-//            DiagramView(axes: demoAxes, style: .init(axesNames: .hide))
+                .environmentObject(settings)
+                .environmentObject(measurer)
+                .environmentObject(recorder)
+                .onAppear {
+                    measurer.startAll()
+                }
         }
     }
 }

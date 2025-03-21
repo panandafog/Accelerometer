@@ -9,7 +9,7 @@ import SwiftUI
 import enum Accelerate.vDSP
 
 struct AnimatableArray: VectorArithmetic {
-    static var zero = AnimatableArray(values: [0.0])
+    static let zero = AnimatableArray(values: [0.0])
 
     static func + (lhs: AnimatableArray, rhs: AnimatableArray) -> AnimatableArray {
         let count = min(lhs.values.count, rhs.values.count)

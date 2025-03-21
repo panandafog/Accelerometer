@@ -35,7 +35,7 @@ struct LevelView: View {
 private extension Double {
     
     var displayableString: String {
-        var roundedValueString = String(self, roundPlaces: Measurer.measurementsDisplayRoundPlaces)
+        var roundedValueString = String(self, roundPlaces: Settings.measurementsDisplayRoundPlaces)
         if self > 0.0 {
             roundedValueString = " " + roundedValueString
         }

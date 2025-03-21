@@ -57,125 +57,147 @@ struct RecordingListRowView_Previews: PreviewProvider {
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
             measurementTypes: [
                 .acceleration,
-                .deviceMotion,
-                .rotation
+                .userAcceleration,
+                .rotationRate
             ]
         ))
         .previewLayout(.sizeThatFits)
+        
         RecordingPreview(recording: Recording(
             entries: [
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date() - 5 - 5 * 60 - 60 * 60,
-                    value: nil
+                    axes: TriangleAxes()
                 ),
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
             measurementTypes: [
                 .acceleration,
-                .deviceMotion,
-                .rotation
+                .userAcceleration,
+                .rotationRate
             ]
         ))
         .previewLayout(.sizeThatFits)
+        
         RecordingPreview(recording: Recording(
             entries: [
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date() - 5 - 5 * 60 - 10 * 360,
-                    value: nil
+                    axes: TriangleAxes()
                 ),
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
             measurementTypes: [
                 .acceleration,
-                .deviceMotion,
-                .rotation
+                .userAcceleration,
+                .rotationRate
             ]
         ))
         .previewLayout(.sizeThatFits)
+        
         RecordingPreview(recording: Recording(
             entries: [
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date() - 5,
-                    value: nil
+                    axes: TriangleAxes()
                 ),
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
-            measurementTypes: [.acceleration]
+            measurementTypes: [
+                .acceleration,
+                .userAcceleration,
+                .rotationRate
+            ]
         ))
         .previewLayout(.sizeThatFits)
+        
         RecordingPreview(recording: Recording(
             entries: [
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date() - 5 * 60 - 5,
-                    value: nil
+                    axes: TriangleAxes()
                 ),
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
-            measurementTypes: [.acceleration]
+            measurementTypes: [
+                .acceleration,
+                .userAcceleration,
+                .rotationRate
+            ]
         ))
         .previewLayout(.sizeThatFits)
+        
         RecordingPreview(recording: Recording(
             entries: [
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date() - 5 * 60 * 60 - 5 * 60 - 5,
-                    value: nil
+                    axes: TriangleAxes()
                 ),
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
-            measurementTypes: [.acceleration]
+            measurementTypes: [
+                .acceleration,
+                .userAcceleration,
+                .rotationRate
+            ]
         ))
         .previewLayout(.sizeThatFits)
+        
         RecordingPreview(recording: Recording(
             entries: [
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date() - 50000 * 60 * 60 - 5 * 60 - 5,
-                    value: nil
+                    axes: TriangleAxes()
                 ),
                 Recording.Entry(
                     measurementType: .acceleration,
                     date: Date(),
-                    value: nil
+                    axes: TriangleAxes()
                 )
             ],
             state: .completed,
-            measurementTypes: [.acceleration]
+            measurementTypes: [
+                .acceleration,
+                .userAcceleration,
+                .rotationRate
+            ]
         ))
         .previewLayout(.sizeThatFits)
     }

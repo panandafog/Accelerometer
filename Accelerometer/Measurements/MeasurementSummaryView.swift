@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct MeasurementSummaryView: View {
-    @ObservedObject var measurer = Measurer.shared
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var measurer: Measurer
+    @EnvironmentObject var recorder: Recorder
     
     let type: MeasurementType
     
     var axesBinding: Binding<ObservableAxes?> {
         Binding<ObservableAxes?>.init(
             get: {
-                measurer.axes(of: type)
+                measurer.observableAxes[type]
             },
             set: { _ in }
         )
@@ -48,20 +48,21 @@ struct MeasurementSummaryView: View {
                     .padding()
                     .padding([.horizontal])
                 
-                HStack (spacing: geometryVStack.size.width * 0.1) {
-                    //                    Spacer()
-                    let diagramSize = geometryVStack.size.width * 0.3
-                    AxesSummaryViewExtended(measurer: measurer, type: type)
-                        .frame(width: diagramSize, height: diagramSize)
-                    //                    Spacer()
-                    DiagramView(axes: axesBinding)
-                        .frame(width: diagramSize, height: diagramSize)
-                        .padding()
-                    //                    .frame(maxWidth: .infinity)
-                    //                    Spacer()
+                if axesBinding.wrappedValue?.axes.measurementType?
+                    .supportsDiagramRepresentation ?? false {
+                    
+                    HStack (spacing: geometryVStack.size.width * 0.1) {
+                        let diagramSize = geometryVStack.size.width * 0.3
+                        
+                        AxesSummaryViewExtended(type: type)
+                            .frame(width: diagramSize, height: diagramSize)
+                        DiagramView(axes: axesBinding)
+                            .frame(width: diagramSize, height: diagramSize)
+                            .padding()
+                    }
                 }
                 
-                MeasurementsAxesView(axes: axesBinding, showSummary: false)
+                AxesTableView(observableAxes: axesBinding)
                     .padding()
                 Spacer()
                 recordButton
@@ -74,31 +75,48 @@ struct MeasurementSummaryView: View {
             Button("Reset min / max") {
                 measurer.reset(type)
             }
+            .disabled(recorder.recordingInProgress)
         }
     }
 }
 
 struct MeasurementSummaryView_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    
     static let measurer: Measurer = {
-        let measurer = Measurer()
-        measurer.saveData(x: 0.5, y: 1, z: 0.2, type: .acceleration)
+        let measurer = Measurer(settings: settings)
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .acceleration,
+            values: [
+                .x: 0.5,
+                .y: 0.5,
+                .z: 0.5
+            ]
+        )
         return measurer
     }()
     
     static let recorder1: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder()
+        let recorder = Recorder(measurer: measurer)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()
     
     static var previews: some View {
-        MeasurementSummaryView(measurer: measurer, recorder: recorder1, type: .acceleration)
-        MeasurementSummaryView(measurer: measurer, recorder: recorder2, type: .acceleration)
+        MeasurementSummaryView(type: .acceleration)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder1)
+        MeasurementSummaryView(type: .acceleration)
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder2)
     }
 }

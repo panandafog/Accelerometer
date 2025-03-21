@@ -11,13 +11,15 @@ import SwiftUICharts
 struct RecordingSummaryView: View {
     
     let recording: Recording
-    @ObservedObject var recorder: Recorder = .shared
+    
+    @EnvironmentObject var settings: Settings
+    @EnvironmentObject var recorder: Recorder
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var isPresentingDeleteConfirmation = false
     
     @State private var isPresentingExporter = false
-    @State private var exportMeasurementType: MeasurementType = .acceleration
+    @State private var exportMeasurementType: MeasurementType? = nil
     
     let deleteAlertTitleText = "Are you sure?"
     
@@ -102,9 +104,9 @@ struct RecordingSummaryView: View {
         // MARK: Exporter
             .fileExporter(
                 isPresented: $isPresentingExporter,
-                document: recording.csv(of: exportMeasurementType),
+                document: document,
                 contentType: TextFile.readableContentTypes.first ?? .plainText,
-                defaultFilename: exportMeasurementType.name + ".csv"
+                defaultFilename: (exportMeasurementType?.name ?? "recording") + ".csv"
             ) { result in
                 switch result {
                 case .success(let url):
@@ -115,7 +117,17 @@ struct RecordingSummaryView: View {
             }
     }
     
-    func deleteRecording() {
+    private var document: TextFile? {
+        guard let type = exportMeasurementType else {
+            return nil
+        }
+        return recording.csv(
+            of: type,
+            dateFormat: settings.exportDateFormat
+        )
+    }
+    
+    private func deleteRecording() {
         recorder.delete(recordingID: recording.id)
         presentationMode.wrappedValue.dismiss()
     }
@@ -154,6 +166,16 @@ private extension ChartStyle {
 
 struct RecordingView_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    static let recorder = Recorder(measurer: measurer)
+    
+    static let axes: TriangleAxes = {
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        return axes
+    }()
+    
     static var previews: some View {
         RecordingSummaryView(
             recording: Recording(
@@ -161,15 +183,16 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes.getZero(displayableAbsMax: 1.0)
+                        axes: axes
                     )
                 ],
                 state: .completed,
                 measurementTypes: [.acceleration]
-            ),
-            recorder: .shared
+            )
         )
         .preferredColorScheme(.light)
+        .environmentObject(recorder)
+        .environmentObject(settings)
         
         RecordingSummaryView(
             recording: Recording(
@@ -177,14 +200,15 @@ struct RecordingView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes.getZero(displayableAbsMax: 1.0)
+                        axes: axes
                     )
                 ],
                 state: .completed,
                 measurementTypes: [.acceleration]
-            ),
-            recorder: .shared
+            )
         )
         .preferredColorScheme(.dark)
+        .environmentObject(recorder)
+        .environmentObject(settings)
     }
 }

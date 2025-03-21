@@ -48,18 +48,31 @@ struct Recording: Identifiable {
         self.measurementTypes = measurementTypes
     }
     
-    func csv(of type: MeasurementType) -> TextFile? {
+    func csv(of type: MeasurementType, dateFormat: Settings.ExportDateFormat) -> TextFile? {
         guard measurementTypes.contains(type) else {
             return nil
         }
         let filteredEntries = entries
             .filter({ $0.measurementType == type })
         
-        var csvStrings = filteredEntries
-            .map({ $0.csvString })
-        csvStrings.insert(Entry.firstCsvString, at: 0)
+        var csvStrings = [RecordingUtils.stringsHeader(of: type)]
+        csvStrings.append(contentsOf: filteredEntries.map({ $0.getCsvString(dateFormat: dateFormat) }))
         
-        return TextFile(initialText: csvStrings.joined(separator: "\n"))
+        return TextFile(initialText: csvStrings.joined(separator: RecordingUtils.rowSeparator))
+    }
+    
+    func chartValues(of measurementType: MeasurementType) -> [[Double]] {
+        var chartEntries: [any ChartEntry] = []
+        
+        for entry in entries where entry.measurementType == measurementType {
+            if let axes = entry.axes as? (any ChartEntry) {
+                chartEntries.append(axes)
+            }
+        }
+        
+        return chartEntries
+            .map({ $0.chartValues })
+            .transposed()
     }
 }
 
@@ -76,21 +89,11 @@ extension Recording {
         
         let measurementType: MeasurementType
         let date: Date
-        let value: Axes?
+        let axes: any Axes
         
-        static var firstCsvString: String = {
-            [
-                "Datetime",
-                "x",
-                "y",
-                "z",
-                "sum"
-            ].joined(separator: ",")
-        }()
-        
-        var csvString: String {
+        func getCsvString(dateFormat: Settings.ExportDateFormat) -> String {
             let dateString: String
-            switch Settings.shared.exportDateFormat {
+            switch dateFormat {
             case .dateFormat:
                 dateString = DateFormatter.Recordings.csvString(from: date)
             case .unix:
@@ -99,39 +102,17 @@ extension Recording {
                 dateString = String(Double(date.timeIntervalSince1970) / 86400.0 + 25569.0)
             }
             
-            guard let axes = value else {
-                return dateString
-            }
-            return [
-                dateString,
-                String(axes.x),
-                String(axes.y),
-                String(axes.z),
-                String(axes.vector)
-            ].joined(separator: ",")
+            var outputArray = [dateString]
+            outputArray.append(contentsOf: RecordingUtils.stringRepresentation(of: axes))
+            
+            return outputArray.joined(separator: RecordingUtils.columnSeparator)
         }
         
-        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, value: Axes?) {
+        init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, axes: any Axes) {
             self.id = id
             self.measurementType = measurementType
             self.date = date
-            self.value = value
+            self.axes = axes
         }
     }
 }
-
-//extension Recording {
-//
-//    var entity: RecordingEntity {
-////        let newEntity = RecordingEntity()
-//        let newEntity = NSEntityDescription.insertNewObjectForEntityForName("RecordingEntity", inManagedObjectContext: self.managedObjectContext) as! RecordingEntity
-//        newEntity.id = id
-//        newEntity.created = created
-//        newEntity.state = state.rawValue
-//        return newEntity
-//    }
-//
-//    init(from entity: RecordingEntity) {
-//        self.init(id: entity.id!, created: entity.created!, entries: [], state: .init(rawValue: entity.state!)!, measurementTypes: [])
-//    }
-//}

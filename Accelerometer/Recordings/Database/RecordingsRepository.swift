@@ -24,7 +24,7 @@ class RecordingsRepository: ObservableObject {
     }
     
     func delete(recordingID: String) {
-        let recordings: [RecordingRealm] = Array(databaseManager.read())
+        let recordings: [RecordingRealm] = Array(databaseManager.read() as Results<RecordingRealm>)
         guard let recording = recordings.first(where: { $0.id == recordingID }) else {
             return
         }

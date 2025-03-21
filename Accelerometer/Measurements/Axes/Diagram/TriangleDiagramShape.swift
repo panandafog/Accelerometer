@@ -9,10 +9,10 @@ import SwiftUI
 
 struct TriangleDiagramShape: Shape {
     
-    var axes: Axes?
+    var axes: TriangleAxes?
     let showMax: Bool
     
-    var animatableData: Axes {
+    var animatableData: TriangleAxes {
         get {
             axes ?? .zero
         }
@@ -31,11 +31,16 @@ struct TriangleDiagramShape: Shape {
         let zeroX = width / 2.0
         let zeroY = height / 1.5
         
-        let axes = axes ?? .init(x: 0, y: 0, z: 0, displayableAbsMax: 1)
+        var axes = axes
+        if axes == nil {
+            axes = .zero
+            axes?.displayableAbsMax = 1.0
+        }
         
         let maxX = width / 2.0
         let angle = angle(width: width, height: height)
-        let hypotenuse = maxXValue(maxX: maxX, angle: angle) * (showMax ? 1.0 : (min(abs(axes.x), axes.displayableAbsMax) / axes.displayableAbsMax))
+        let hypotenuse = maxXValue(maxX: maxX, angle: angle) * 
+        (showMax ? 1.0 : (min(abs(axes!.values[.x]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax))
         
         return CGPoint(
             x: zeroX - (hypotenuse * sin(Double.radians(degrees: angle))),
@@ -47,13 +52,17 @@ struct TriangleDiagramShape: Shape {
         let zeroX = width / 2.0
         let zeroY = height / 1.5
         
-        let axes = axes ?? .init(x: 0, y: 0, z: 0, displayableAbsMax: 1)
+        var axes = axes
+        if axes == nil {
+            axes = .zero
+            axes?.displayableAbsMax = 1.0
+        }
         
         let maxY = zeroY
         
         return CGPoint(
             x: zeroX,
-            y: zeroY - (showMax ? 1.0 : (min(abs(axes.y), axes.displayableAbsMax) / axes.displayableAbsMax)) * maxY
+            y: zeroY - (showMax ? 1.0 : (min(abs(axes!.values[.y]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax)) * maxY
         )
     }
     
@@ -61,11 +70,16 @@ struct TriangleDiagramShape: Shape {
         let zeroX = width / 2.0
         let zeroY = height / 1.5
         
-        let axes = axes ?? .init(x: 0, y: 0, z: 0, displayableAbsMax: 1)
+        var axes = axes
+        if axes == nil {
+            axes = .zero
+            axes?.displayableAbsMax = 1.0
+        }
         
         let maxX = width / 2.0
         let angle = angle(width: width, height: height)
-        let hypotenuse = maxXValue(maxX: maxX, angle: angle) * (showMax ? 1.0 : (min(abs(axes.z), axes.displayableAbsMax) / axes.displayableAbsMax))
+        let hypotenuse = maxXValue(maxX: maxX, angle: angle) * 
+        (showMax ? 1.0 : (min(abs(axes!.values[.z]?.value ?? 0.0), axes!.displayableAbsMax) / axes!.displayableAbsMax))
         
         return CGPoint(
             x: zeroX + (hypotenuse * sin(angle * Double.pi / 180)),

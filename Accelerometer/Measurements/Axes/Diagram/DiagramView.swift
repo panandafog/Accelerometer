@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DiagramView: View {
     
+    @EnvironmentObject var settings: Settings
+    
     var axes: Binding<ObservableAxes?>
     var style: DiagramViewStyle = .default
     
@@ -17,14 +19,14 @@ struct DiagramView: View {
     
     var body: some View {
         GeometryReader { geometry in
-//            ZStack {
             ZStack {
                 triangle(max: true)
                 triangle(showAxesNames: shouldShowAxesNames(shapeSize: geometry.size))
+                    .animation(
+                        .linear(duration: settings.updateInterval),
+                        value: axes.wrappedValue?.axes as? TriangleAxes
+                    )
             }
-//            .frame(width: 300, height: 300)
-//                Color.clear
-//            }
         }
     }
     
@@ -41,11 +43,14 @@ struct DiagramView: View {
         })
     }
     
-    func axeName(axe: Axe) -> some View {
+    func axeName(axe: AxeType) -> some View {
         GeometryReader { geometry in
-            ZStack(alignment: axe.alignment) {
+            ZStack(alignment: axe.alignment ?? .center) {
                 Color.clear
-                let offsetSize = axe.offset(size: geometry.size, multiplier: axesNamesOffsetMultiplier)
+                let offsetSize = axe.offset(
+                    size: geometry.size,
+                    multiplier: axesNamesOffsetMultiplier
+                ) ?? (x: 0.0, y: 0.0)
                 Text(axe.rawValue)
                     .offset(x: offsetSize.x, y: offsetSize.y)
                     .foregroundColor(.white)
@@ -55,7 +60,7 @@ struct DiagramView: View {
     
     func triangleShape(max: Bool = false) -> some View {
         TriangleDiagramShape(
-            axes: axes.wrappedValue?.properties,
+            axes: axes.wrappedValue?.axes as? TriangleAxes,
             showMax: max
         )
         .modify {
@@ -65,7 +70,6 @@ struct DiagramView: View {
                 $0.fill(Color.accentColor)
             }
         }
-        .animation(.linear)
     }
     
     func shouldShowAxesNames(shapeSize: CGSize) -> Bool {
@@ -77,9 +81,9 @@ struct DiagramView: View {
     }
 }
 
-private extension Axe {
+private extension AxeType {
     
-    var alignment: Alignment {
+    var alignment: Alignment? {
         switch self {
         case .x:
             return .bottomLeading
@@ -87,10 +91,22 @@ private extension Axe {
             return .top
         case .z:
             return .bottomTrailing
+        case .magnitude:
+            return nil
+        case .unnamed:
+            return nil
+        case .roll:
+            return nil
+        case .pitch:
+            return nil
+        case .yaw:
+            return nil
+        case .bool:
+            return nil
         }
     }
     
-    func offset(size: CGSize, multiplier: CGFloat) -> (x: CGFloat, y: CGFloat) {
+    func offset(size: CGSize, multiplier: CGFloat) -> (x: CGFloat, y: CGFloat)? {
         
         switch self {
         case .x:
@@ -105,6 +121,18 @@ private extension Axe {
                 -1 * (size.width * multiplier),
                  -1 * (size.height * multiplier * 0.5)
             )
+        case .magnitude:
+            return nil
+        case .unnamed:
+            return nil
+        case .roll:
+            return nil
+        case .pitch:
+            return nil
+        case .yaw:
+            return nil
+        case .bool:
+            return nil
         }
     }
 }
@@ -114,9 +142,16 @@ struct DiagramView_Previews: PreviewProvider {
     static let axesBinding1: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = ObservableAxes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.4, y: 0.4, z: 0.4)
-                return axes
+                var axes = TriangleAxes(
+                    measurementType: .acceleration,
+                    displayableAbsMax: 1.0
+                )
+                axes.set(values: [
+                    .x: 0.4,
+                    .y: 0.4,
+                    .z: 0.4
+                ])
+                return ObservableAxes(axes: axes)
             },
             set: { _ in }
         )
@@ -125,9 +160,16 @@ struct DiagramView_Previews: PreviewProvider {
     static let axesBinding2: Binding<ObservableAxes?> = {
         .init(
             get: {
-                let axes = ObservableAxes(displayableAbsMax: 1.0)
-                axes.properties.setValues(x: 0.2, y: 0.5, z: 0.7)
-                return axes
+                var axes = TriangleAxes(
+                    measurementType: .acceleration,
+                    displayableAbsMax: 1.0
+                )
+                axes.set(values: [
+                    .x: 0.2,
+                    .y: 0.5,
+                    .z: 0.7
+                ])
+                return ObservableAxes(axes: axes)
             },
             set: { _ in }
         )
@@ -145,5 +187,6 @@ struct DiagramView_Previews: PreviewProvider {
             DiagramView(axes: axesBinding1)
                 .previewLayout(.fixed(width: 80, height: 80))
         }
+        .environmentObject(Settings())
     }
 }

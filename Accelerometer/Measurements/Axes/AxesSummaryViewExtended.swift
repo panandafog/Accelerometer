@@ -8,32 +8,58 @@
 import SwiftUI
 
 struct AxesSummaryViewExtended: View {
-    @ObservedObject var measurer = Measurer.shared
+    @EnvironmentObject var measurer: Measurer
+    
     let type: MeasurementType
     
-    var axes: ObservableAxes? {
-        measurer.axes(of: type)
+    private var observableAxes: ObservableAxes? {
+        measurer.observableAxes[type]
+    }
+    
+    private var magnitudeAxe: Axis<Double>? {
+        (observableAxes?.axes as? TriangleAxes)?.magnitude
+    }
+    
+    var axesBinding: Binding<ObservableAxes?> {
+        Binding<ObservableAxes?>.init(
+            get: {
+                observableAxes
+            },
+            set: { _ in }
+        )
+    }
+    
+    private var maxString: String {
+        if let magnitudeAxe = magnitudeAxe {
+            return String(
+                magnitudeAxe.max ?? 0,
+                roundPlaces: Settings.measurementsDisplayRoundPlaces
+            )
+        } else {
+            return "no data"
+        }
+    }
+    
+    private var minString: String {
+        if let magnitudeAxe = magnitudeAxe {
+            return String(
+                magnitudeAxe.min ?? 0,
+                roundPlaces: Settings.measurementsDisplayRoundPlaces
+            )
+        } else {
+            return "no data"
+        }
     }
     
     var body: some View {
         HStack {
             VStack {
-                Text(
-                    String(
-                        axes?.properties.maxV ?? 0.0,
-                        roundPlaces: Measurer.measurementsDisplayRoundPlaces
-                    )
-                )
+                Text(maxString)
                 
-                AxesSummaryView(measurer: measurer, type: type)
+                AxesSummaryView(axesBinding: axesBinding, type: type)
                 
                 if type.hasMinimum {
-                    Text(
-                        String(
-                            axes?.properties.minV ?? 0.0,
-                            roundPlaces: Measurer.measurementsDisplayRoundPlaces
-                        )
-                    )
+                    Text(minString)
                 }
             }
         }
@@ -42,50 +68,111 @@ struct AxesSummaryViewExtended: View {
 
 struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    
+    // TODO: refactor this
     static let measurer1: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 0, y: 0, z: 0, type: .deviceMotion)
-        measurer.saveData(x: 0, y: 0, z: 0, type: .magneticField)
+        let measurer = Measurer(settings: settings)
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .userAcceleration,
+            values: [
+                .x: 0,
+                .y: 0,
+                .z: 0
+            ]
+        )
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .magneticField,
+            values: [
+                .x: 0,
+                .y: 0,
+                .z: 0
+            ]
+        )
         return measurer
     }()
     
     static let measurer2: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: .deviceMotion)
-        measurer.saveData(x: 100, y: 100, z: 100, type: .magneticField)
+        let measurer = Measurer(settings: settings)
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .userAcceleration,
+            values: [
+                .x: 0.5,
+                .y: 0.5,
+                .z: 0.5
+            ]
+        )
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .magneticField,
+            values: [
+                .x: 100,
+                .y: 100,
+                .z: 100
+            ]
+        )
         return measurer
     }()
     
     static let measurer3: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 1, y: 1, z: 1, type: .deviceMotion)
-        measurer.saveData(x: 200, y: 200, z: 200, type: .magneticField)
+        let measurer = Measurer(settings: settings)
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .userAcceleration,
+            values: [
+                .x: 1,
+                .y: 1,
+                .z: 1
+            ]
+        )
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .magneticField,
+            values: [
+                .x: 200,
+                .y: 200,
+                .z: 200
+            ]
+        )
         return measurer
     }()
     
     static var previews: some View {
         Group {
-            AxesSummaryViewExtended(measurer: measurer1, type: .deviceMotion)
+            AxesSummaryViewExtended(type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer2, type: .deviceMotion)
+                .environmentObject(measurer1)
+            AxesSummaryViewExtended(type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer3, type: .deviceMotion)
+                .environmentObject(measurer2)
+            AxesSummaryViewExtended(type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer1, type: .magneticField)
+                .environmentObject(measurer3)
+            AxesSummaryViewExtended(type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer2, type: .magneticField)
+                .environmentObject(measurer1)
+            AxesSummaryViewExtended(type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryViewExtended(measurer: measurer3, type: .magneticField)
+                .environmentObject(measurer2)
+            AxesSummaryViewExtended(type: .magneticField)
                 .padding()
                 .previewLayout(.sizeThatFits)
+                .environmentObject(measurer3)
         }
+        .environmentObject(settings)
     }
 }

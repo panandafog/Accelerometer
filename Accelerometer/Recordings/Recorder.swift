@@ -8,11 +8,10 @@
 import Combine
 import SwiftUI
 
+@MainActor
 class Recorder: ObservableObject {
-    static let shared = Recorder()
-    // private init() { }
+    @ObservedObject private var measurer: Measurer
     
-    @ObservedObject private var measurer = Measurer.shared
     private let repository: RecordingsRepository = {
         let repository = RecordingsRepository()
         repository.update()
@@ -21,7 +20,7 @@ class Recorder: ObservableObject {
     
     private let disableIdleTimer = true
     
-    private (set) var activeRecording: Recording? = nil
+    private(set) var activeRecording: Recording? = nil
     var recordingInProgress: Bool {
         activeRecording != nil
     }
@@ -35,6 +34,10 @@ class Recorder: ObservableObject {
     }
     
     private var subscriptions: [AnyCancellable?] = []
+    
+    init(measurer: Measurer) {
+        self.measurer = measurer
+    }
     
     func record(measurements measurementTypes: Set<MeasurementType>) {
         if disableIdleTimer {
@@ -69,6 +72,8 @@ class Recorder: ObservableObject {
             repository.update()
         }
         
+        print(activeRecording?.entries.count)
+        
         activeRecording = nil
         cancelSubscriptions()
         objectWillChange.send()
@@ -80,34 +85,20 @@ class Recorder: ObservableObject {
     }
     
     private func subscribeForChanges(of measurementType: MeasurementType) {
-        switch measurementType {
-        case .acceleration:
-            subscriptions.append(measurer.acceleration?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.acceleration?.properties, of: .acceleration)
-            })
-        case .rotation:
-            subscriptions.append(measurer.rotation?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.rotation?.properties, of: .rotation)
-            })
-        case .deviceMotion:
-            subscriptions.append(measurer.deviceMotion?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.deviceMotion?.properties, of: .deviceMotion)
-            })
-        case .magneticField:
-            subscriptions.append(measurer.magneticField?.objectWillChange.sink { [ weak self ] in
-                self?.save(value: self?.measurer.magneticField?.properties, of: .magneticField)
-            })
+        let newSubsription = measurer.observableAxes[measurementType]?.objectWillChange.sink { [ weak self ] in
+            self?.save(axes: self?.measurer.observableAxes[measurementType]?.axes, of: measurementType)
         }
+        subscriptions.append(newSubsription)
     }
     
-    private func save(value: Axes?, of type: MeasurementType) {
-        let newEntry = Recording.Entry(measurementType: type, date: Date(), value: value)
-        
+    private func save(axes: (any Axes)?, of type: MeasurementType) {
+        guard let axes = axes else { return }
+        save(axes: axes, of: type)
+    }
+    
+    private func save(axes: any Axes, of type: MeasurementType) {
+        let newEntry = Recording.Entry(measurementType: type, date: Date(), axes: axes)
         activeRecording?.entries.append(newEntry)
-        
-        guard let activeRecording = activeRecording else {
-            return
-        }
         
         objectWillChange.send()
     }

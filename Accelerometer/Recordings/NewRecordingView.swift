@@ -11,12 +11,12 @@ struct NewRecordingView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var recorder: Recorder
     
     @State var measurementTypes: [MeasurementType: Bool] = {
         var dictionary: [MeasurementType: Bool] = [:]
-        MeasurementType.allCases.forEach {
-            dictionary[$0] = false
+        MeasurementType.allShownCases.forEach {
+            dictionary[$0] = true
         }
         return dictionary
     }()
@@ -86,7 +86,7 @@ struct NewRecordingView: View {
                     })
                 }
                 List {
-                    ForEach(MeasurementType.allCases, id: \.self) { measurementType in
+                    ForEach(MeasurementType.allShownCases, id: \.self) { measurementType in
                         HStack {
                             Toggle(isOn: .init(
                                 get: {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecordingsView: View {
     
-    @ObservedObject var recorder = Recorder.shared
+    @EnvironmentObject var recorder: Recorder
     
     @State var presentingNewRecordingSheet = false
     
@@ -143,15 +143,19 @@ struct RecordingsView: View {
 
 struct RecordingsView_Previews: PreviewProvider {
     
-    static let recorder1: Recorder = {
-        let recorder = Recorder()
-        recorder.record(measurements: [.acceleration, .deviceMotion])
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    
+    static let recorder: Recorder = {
+        let recorder = Recorder(measurer: measurer)
+        recorder.record(measurements: [.acceleration, .userAcceleration])
         recorder.stopRecording()
         recorder.record(measurements: [.magneticField])
         return recorder
     }()
     
     static var previews: some View {
-        RecordingsView(recorder: recorder1)
+        RecordingsView()
+            .environmentObject(recorder)
     }
 }

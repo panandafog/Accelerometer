@@ -8,70 +8,125 @@
 import SwiftUI
 
 struct AxesSummaryView: View {
-    @ObservedObject var measurer = Measurer.shared
+    var axesBinding: Binding<ObservableAxes?>
     let type: MeasurementType
     
-    var axes: ObservableAxes? {
-        measurer.axes(of: type)
+    var observableAxes: ObservableAxes? {
+        axesBinding.wrappedValue
+    }
+    
+    var magnitudeAxes: (any MagnitudeAxes)? {
+        observableAxes?.axes as? (any MagnitudeAxes)
+    }
+    
+    var attitudeAxes: AttitudeAxes? {
+        observableAxes?.axes as? AttitudeAxes
+    }
+    
+    var booleanAxes: BooleanAxes? {
+        observableAxes?.axes as? BooleanAxes
     }
     
     var body: some View {
-        Text((measurer.valueLabel(of: type) ?? "0.0"))
-            .padding(.defaultPadding)
-            .background(
-                (axes?.intensityColor ?? .clear)
-                    .animation(.linear)
+        // TODO: use MeasurementType.axesType
+        if let magnitudeAxes = magnitudeAxes {
+            MagnitudeAxesSummaryView(
+                axes: magnitudeAxes,
+                type: type
             )
-            .cornerRadius(.defaultCornerRadius)
+        } else if let attitudeAxes = attitudeAxes {
+            AttitudeAxesSummaryView(
+                axes: attitudeAxes,
+                type: type
+            )
+        } else if let booleanAxes = booleanAxes {
+            BooleanAxesSummaryView(
+                axes: booleanAxes,
+                type: type
+            )
+        } else {
+            AnyAxesSummaryView(
+                type: type
+            )
+        }
     }
 }
 
 struct AxesSummaryView_Previews: PreviewProvider {
     
-    static let measurer1: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 0, y: 0, z: 0, type: .deviceMotion)
-        return measurer
-    }()
+    static let axes1: Binding<ObservableAxes?> = .init(
+        get: {
+            return ObservableAxes(
+                axes: TriangleAxes(
+                    axes: [
+                        .x: .init(type_: .x, value: 0),
+                        .y: .init(type_: .y, value: 0),
+                        .z: .init(type_: .z, value: 0),
+                    ],
+                    measurementType: .userAcceleration
+                )
+            )
+        },
+        set: { _ in }
+    )
     
-    static let measurer2: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 0.5, y: 0.5, z: 0.5, type: .deviceMotion)
-        return measurer
-    }()
+    static let axes2: Binding<ObservableAxes?> = .init(
+        get: {
+            return ObservableAxes(
+                axes: TriangleAxes(
+                    axes: [
+                        .x: .init(type_: .x, value: 0.5),
+                        .y: .init(type_: .y, value: 0.5),
+                        .z: .init(type_: .z, value: 0.5),
+                    ],
+                    measurementType: .userAcceleration
+                )
+            )
+        },
+        set: { _ in }
+    )
     
-    static let measurer3: Measurer = {
-        let measurer = Measurer()
-        measurer.deviceMotion = .init(displayableAbsMax: 1.0)
-        measurer.saveData(x: 1, y: 1, z: 1, type: .deviceMotion)
-        return measurer
-    }()
+    static let axes3: Binding<ObservableAxes?> = .init(
+        get: {
+            return ObservableAxes(
+                axes: TriangleAxes(
+                    axes: [
+                        .x: .init(type_: .x, value: 1),
+                        .y: .init(type_: .y, value: 1),
+                        .z: .init(type_: .z, value: 1),
+                    ],
+                    measurementType: .userAcceleration
+                )
+            )
+        },
+        set: { _ in }
+    )
     
     static var previews: some View {
         Group {
-            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
+            AxesSummaryView(axesBinding: axes1, type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
+            AxesSummaryView(axesBinding: axes2, type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
+            AxesSummaryView(axesBinding: axes3, type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
-            AxesSummaryView(measurer: measurer1, type: .deviceMotion)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .preferredColorScheme(.dark)
-            AxesSummaryView(measurer: measurer2, type: .deviceMotion)
+            
+            AxesSummaryView(axesBinding: axes1, type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .preferredColorScheme(.dark)
-            AxesSummaryView(measurer: measurer3, type: .deviceMotion)
+            AxesSummaryView(axesBinding: axes2, type: .userAcceleration)
+                .padding()
+                .previewLayout(.sizeThatFits)
+                .preferredColorScheme(.dark)
+            AxesSummaryView(axesBinding: axes3, type: .userAcceleration)
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .preferredColorScheme(.dark)
         }
+        .environmentObject(Settings())
     }
 }

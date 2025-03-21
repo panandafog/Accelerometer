@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct MeasurementPreview: View {
-    @ObservedObject var measurer = Measurer.shared
+    @EnvironmentObject var measurer: Measurer
+    
     let type: MeasurementType
     
-    var axes: ObservableAxes? {
-        measurer.axes(of: type)
+    var observableAxes: ObservableAxes? {
+        measurer.observableAxes[type]
     }
     
-    var axesBinding: Binding<ObservableAxes?> {
+    var observableAxesBinding: Binding<ObservableAxes?> {
         Binding<ObservableAxes?>.init(
             get: {
-                axes
+                observableAxes
             },
             set: { _ in }
         )
@@ -30,31 +31,46 @@ struct MeasurementPreview: View {
                 Text(type.name.capitalizingFirstLetter())
                     .font(.title2)
                     .padding([.vertical])
-                AxesSummaryView(type: type)
+                AxesSummaryView(axesBinding: observableAxesBinding, type: type)
                     .padding([.horizontal, .bottom])
             }.layoutPriority(1)
-            Spacer()
-            ZStack(alignment: .trailing) {
-                Color.clear
-                DiagramView(axes: axesBinding)
-                    .frame(width: 70, height: 70)
+            if observableAxes?.axes.measurementType?
+                .supportsDiagramRepresentation ?? false {
+                Spacer()
+                ZStack(alignment: .trailing) {
+                    Color.clear
+                    DiagramView(axes: observableAxesBinding)
+                        .frame(width: 70, height: 70)
+                }
+                .frame(minWidth: 70, minHeight: 70)
+                .padding()
             }
-            .frame(minWidth: 70, minHeight: 70)
-            .padding()
         }
     }
 }
 
 struct MeasurementPreview_Previews: PreviewProvider {
     
+    static let settings = Settings()
+    
     static let measurer: Measurer = {
-        let measurer = Measurer()
-        measurer.saveData(x: 0.03, y: 0.03, z: 0.03, type: .deviceMotion)
+        let measurer = Measurer(settings: settings)
+        measurer.saveData(
+            axesType: TriangleAxes.self,
+            measurementType: .userAcceleration,
+            values: [
+                .x: 0.5,
+                .y: 0.5,
+                .z: 0.5
+            ]
+        )
         return measurer
     }()
     
     static var previews: some View {
-        MeasurementPreview(measurer: measurer, type: .deviceMotion)
+        MeasurementPreview(type: .userAcceleration)
             .previewLayout(.sizeThatFits)
+            .environmentObject(settings)
+            .environmentObject(measurer)
     }
 }

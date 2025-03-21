@@ -23,27 +23,37 @@ struct RecordingMeasurementView: View {
         CGSize(width: generalSize.width * 0.7, height: 240)
     }
     
-    var values: [Double] {
-        let entries = recording.entries
-            .filter({ $0.measurementType == measurementType })
-            .map({ $0.value?.vector ?? 0.0 })
+    var values: [[Double]] {
+        var entries = recording.chartValues(of: measurementType)
         let limit = 100
-        if entries.count > limit {
-            return entries
-                .chunked(into: Int((Double(entries.count) / 100.0).rounded()))
-                .map({ chunk -> Double in
-                    let sumArray = chunk.reduce(0, +)
-                    return sumArray / Double(chunk.count)
-                })
-        } else {
-            return entries
+        
+        for index in 0 ..< entries.count {
+            if entries[index].count > limit {
+                entries[index] = entries[index]
+                    .chunked(into: Int((Double(entries[index].count) / 100.0).rounded()))
+                    .map({ chunk -> Double in
+                        let sumArray = chunk.reduce(0, +)
+                        return sumArray / Double(chunk.count)
+                    })
+            }
+        }
+        
+        return entries
+    }
+    
+    var chartData: [([Double], GradientColor)] {
+        values.map {
+            ($0, GradientColor(
+                start: .intensity(0.0),
+                end: .intensity(1.0)
+            ))
         }
     }
     
     var rateValue: Int {
-        let allValues = values
-        guard let first = allValues.first,
-              let last = allValues.last else {
+        let allValues = values.first
+        guard let first = allValues?.first,
+              let last = allValues?.last else {
             return 0
         }
         guard first != 0.0 else {
@@ -59,22 +69,26 @@ struct RecordingMeasurementView: View {
         return max(min(rate, Self.maxRate), Self.minRate)
     }
     
+    var title: String { measurementType.name.capitalizingFirstLetter() }
+    
     var body: some View {
         HStack {
-            ScrollView {
-                MultiLineChartView(
-                    data: [(values, GradientColor(
-                        start: .intensity(0.0),
-                        end: .intensity(1.0)
-                    ))],
-                    title: measurementType.name.capitalizingFirstLetter(),
-                    legend: nil,
-                    style: .recordingEntry,
-                    form: chartForm(generalSize: screenSize),
-                    rateValue: rateValue,
-                    dropShadow: false
-                )
-            }.disabled(true)
+            // TODO: common title
+            if measurementType.supportsChartRepresentation {
+                ScrollView {
+                    MultiLineChartView(
+                        data: chartData,
+                        title: title,
+                        legend: nil,
+                        style: .recordingEntry,
+                        form: chartForm(generalSize: screenSize),
+                        rateValue: rateValue,
+                        dropShadow: false
+                    )
+                }.disabled(true)
+            } else {
+                Text(title)
+            }
             Spacer()
             VStack {
                 Menu {
@@ -129,6 +143,12 @@ private extension ChartStyle {
 
 struct RecordingMeasurementView_Previews: PreviewProvider {
     
+    static let axes: TriangleAxes = {
+        var axes = TriangleAxes.zero
+        axes.displayableAbsMax = 1.0
+        return axes
+    }()
+    
     static var previews: some View {
         RecordingMeasurementView(
             recording: Recording(
@@ -136,7 +156,7 @@ struct RecordingMeasurementView_Previews: PreviewProvider {
                     .init(
                         measurementType: .acceleration,
                         date: .init(),
-                        value: Axes.getZero(displayableAbsMax: 1.0)
+                        axes: axes
                     )
                 ],
                 state: .completed,

@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var measurer = Measurer.shared
     
     var body: some View {
         TabView {
             NavigationView {
                 MeasurementsView()
                     .navigationTitle(Text("Measurements"))
-//                    .toolbar {
-//                        Button("Reset min / max") {
-//                            measurer.resetAll()
-//                        }
-//                    }
             }
             .phoneOnlyStackNavigationView()
             .tabItem {
@@ -48,7 +42,15 @@ struct ContentView: View {
 }
 
 struct ContentView_Previews: PreviewProvider {
+    
+    static let settings = Settings()
+    static let measurer = Measurer(settings: settings)
+    static let recorder = Recorder(measurer: measurer)
+    
     static var previews: some View {
         ContentView()
+            .environmentObject(settings)
+            .environmentObject(measurer)
+            .environmentObject(recorder)
     }
 }
