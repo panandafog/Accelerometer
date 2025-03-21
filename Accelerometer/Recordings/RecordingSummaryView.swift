@@ -19,7 +19,7 @@ struct RecordingSummaryView: View {
     @State private var isPresentingDeleteConfirmation = false
     
     @State private var isPresentingExporter = false
-    @State private var exportMeasurementType: MeasurementType = .acceleration
+    @State private var exportMeasurementType: MeasurementType? = nil
     
     let deleteAlertTitleText = "Are you sure?"
     
@@ -104,12 +104,9 @@ struct RecordingSummaryView: View {
         // MARK: Exporter
             .fileExporter(
                 isPresented: $isPresentingExporter,
-                document: recording.csv(
-                    of: exportMeasurementType,
-                    dateFormat: settings.exportDateFormat
-                ),
+                document: document,
                 contentType: TextFile.readableContentTypes.first ?? .plainText,
-                defaultFilename: exportMeasurementType.name + ".csv"
+                defaultFilename: (exportMeasurementType?.name ?? "recording") + ".csv"
             ) { result in
                 switch result {
                 case .success(let url):
@@ -120,7 +117,17 @@ struct RecordingSummaryView: View {
             }
     }
     
-    func deleteRecording() {
+    private var document: TextFile? {
+        guard let type = exportMeasurementType else {
+            return nil
+        }
+        return recording.csv(
+            of: type,
+            dateFormat: settings.exportDateFormat
+        )
+    }
+    
+    private func deleteRecording() {
         recorder.delete(recordingID: recording.id)
         presentationMode.wrappedValue.dismiss()
     }
