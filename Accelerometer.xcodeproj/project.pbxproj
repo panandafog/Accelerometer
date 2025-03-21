@@ -903,7 +903,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -934,7 +934,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SWIFT_EMIT_LOC_STRINGS = YES;
