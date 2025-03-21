@@ -53,54 +53,53 @@ struct RecordingSummaryView: View {
             .navigationTitle("Recording")
         
         // MARK: Toolbar
-        // FIXME: This does not compile in XCode 15
-//            .toolbar {
-//                ToolbarItem(placement: .primaryAction) {
-//                    if #available(iOS 15.0, *) {
-//                        Button(role: .destructive, action: {
-//                            isPresentingDeleteConfirmation = true
-//                        }) {
-//                            Label("Delete", systemImage: "trash")
-//                        }
-//                    } else {
-//                        Button(action: {
-//                            isPresentingDeleteConfirmation = true
-//                        }) {
-//                            Label("Delete", systemImage: "trash")
-//                        }
-//                    }
-//                }
-//            }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    if #available(iOS 15.0, *) {
+                        Button(role: .destructive, action: {
+                            isPresentingDeleteConfirmation = true
+                        }) {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } else {
+                        Button(action: {
+                            isPresentingDeleteConfirmation = true
+                        }) {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
+                }
+            }
         
         // MARK: Delete confirmation
-//            .modify {
-//                if #available(iOS 15.0, *) {
-//                    $0.confirmationDialog(
-//                        deleteAlertTitleText,
-//                        isPresented: $isPresentingDeleteConfirmation
-//                    ) {
-//                        Button("Delete", role: .destructive) {
-//                            deleteRecording()
-//                        }
-//                    }
-//                } else {
-//                    $0.alert(isPresented: $isPresentingDeleteConfirmation) {
-//                        Alert(
-//                            title: Text(deleteAlertTitleText),
-//                            primaryButton: .destructive(
-//                                Text("Delete"),
-//                                action: {
-//                                    deleteRecording()
-//                                }
-//                            ),
-//                            secondaryButton: .cancel(
-//                                Text("Cancel"),
-//                                action: { }
-//                            )
-//                        )
-//                    }
-//                }
-//            }
+            .modify {
+                if #available(iOS 15.0, *) {
+                    $0.confirmationDialog(
+                        deleteAlertTitleText,
+                        isPresented: $isPresentingDeleteConfirmation
+                    ) {
+                        Button("Delete", role: .destructive) {
+                            deleteRecording()
+                        }
+                    }
+                } else {
+                    $0.alert(isPresented: $isPresentingDeleteConfirmation) {
+                        Alert(
+                            title: Text(deleteAlertTitleText),
+                            primaryButton: .destructive(
+                                Text("Delete"),
+                                action: {
+                                    deleteRecording()
+                                }
+                            ),
+                            secondaryButton: .cancel(
+                                Text("Cancel"),
+                                action: { }
+                            )
+                        )
+                    }
+                }
+            }
         
         // MARK: Exporter
             .fileExporter(
