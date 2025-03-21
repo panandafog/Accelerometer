@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0152C57173B5A7117F4F15D8 /* Pods_AccelerometerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D1941BEB77F79AC9EA829F /* Pods_AccelerometerTests.framework */; };
-		0B05EB5E2A9A1523005497F6 /* VectorAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */; };
+		0B05EB5E2A9A1523005497F6 /* MagnitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5D2A9A1523005497F6 /* MagnitudeAxes.swift */; };
 		0B05EB602A9A1CFB005497F6 /* TriangleAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */; };
 		0B1E6D2328724B2B003B8C5B /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E6D2228724B2B003B8C5B /* Collection.swift */; };
 		0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC0728621BBE00AD3EF1 /* AccelerometerApp.swift */; };
@@ -58,7 +58,7 @@
 		0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
 		0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* AxeType.swift */; };
 		0BBF0918289D163300B42740 /* RecordingEntryRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */; };
-		0BBF54AA2AD1F9CF0095B63F /* VectorAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF54A92AD1F9CF0095B63F /* VectorAxesSummaryView.swift */; };
+		0BBF54AA2AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF54A92AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift */; };
 		0BBF54AC2AD1FE690095B63F /* AnyAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */; };
 		0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
@@ -95,7 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAxes.swift; sourceTree = "<group>"; };
+		0B05EB5D2A9A1523005497F6 /* MagnitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnitudeAxes.swift; sourceTree = "<group>"; };
 		0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleAxes.swift; sourceTree = "<group>"; };
 		0B1E6D2228724B2B003B8C5B /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acc.elerometer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,7 +147,7 @@
 		0BBAD4AE2895715400251262 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* AxeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxeType.swift; sourceTree = "<group>"; };
 		0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEntryRealm.swift; sourceTree = "<group>"; };
-		0BBF54A92AD1F9CF0095B63F /* VectorAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorAxesSummaryView.swift; sourceTree = "<group>"; };
+		0BBF54A92AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnitudeAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxes.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
@@ -310,7 +310,7 @@
 				0B34710C288C5491004E87FA /* AxesSummaryView.swift */,
 				0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */,
 				0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */,
-				0BBF54A92AD1F9CF0095B63F /* VectorAxesSummaryView.swift */,
+				0BBF54A92AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift */,
 				0BDBDAED2B8264880045A008 /* BooleanAxesSummaryView.swift */,
 				0BF7A0B12AD29D6F005E75CC /* AxesSummaryValueView.swift */,
 				0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */,
@@ -381,7 +381,7 @@
 				0B8C3B292A99F9FF00488B1E /* Axis.swift */,
 				0B8C3B2B2A99FC9600488B1E /* Axes.swift */,
 				0BBDC4DF288C188400CE6061 /* AxeType.swift */,
-				0B05EB5D2A9A1523005497F6 /* VectorAxes.swift */,
+				0B05EB5D2A9A1523005497F6 /* MagnitudeAxes.swift */,
 				0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */,
 				0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */,
 				0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */,
@@ -713,7 +713,7 @@
 				0BBF54AC2AD1FE690095B63F /* AnyAxesSummaryView.swift in Sources */,
 				0B34710D288C5491004E87FA /* AxesSummaryView.swift in Sources */,
 				0B508CD8289C413700326C6E /* RecordingRealm.swift in Sources */,
-				0BBF54AA2AD1F9CF0095B63F /* VectorAxesSummaryView.swift in Sources */,
+				0BBF54AA2AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift in Sources */,
 				0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */,
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
 				0B508CD6289C3E4A00326C6E /* DatabaseManager.swift in Sources */,
@@ -732,7 +732,7 @@
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
 				0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */,
 				0BE138F6289409820026D0DC /* Recorder.swift in Sources */,
-				0B05EB5E2A9A1523005497F6 /* VectorAxes.swift in Sources */,
+				0B05EB5E2A9A1523005497F6 /* MagnitudeAxes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

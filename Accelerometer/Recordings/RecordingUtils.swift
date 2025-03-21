@@ -15,28 +15,31 @@ enum RecordingUtils {
         axesValues: [String]
     )
     
-    static func stringsHeader(of measurementType: MeasurementType) -> [String] {
+    static let columnSeparator = ","
+    static let rowSeparator = "\n"
+    
+    static func stringsHeader(of measurementType: MeasurementType) -> String {
         return stringsHeader(of: measurementType.axesType.type.self)
     }
     
-    static func stringsHeader<AxesType: Axes>(of axes: AxesType.Type) -> [String] {
-        var outputArray: [String] = ["Datetime"]
+    static func stringsHeader<AxesType: Axes>(of axes: AxesType.Type) -> String {
+        var titles: [String] = ["datetime"]
         
-        axes.axesTypes.forEach { axeType in
-            outputArray.append(axeType.rawValue)
+        axes.sortedAxesTypes.forEach { axeType in
+            titles.append(axeType.rawValue)
         }
         
-        if let _ = axes as? (any VectorAxes) {
-            outputArray.append("vector")
+        if let _ = axes as? (any MagnitudeAxes.Type) {
+            titles.append("magnitude")
         }
         
-        return outputArray
+        return titles.joined(separator: RecordingUtils.columnSeparator)
     }
     
     static func stringRepresentation(of axes: some Axes, defaultValue: String = "") -> [String] {
         var outputArray: [String] = []
         
-        for axeType in type(of: axes).axesTypes {
+        for axeType in type(of: axes).sortedAxesTypes {
             var stringRepresentation: String = defaultValue
             
             if let value = axes.values[axeType]?.value {
@@ -46,8 +49,8 @@ enum RecordingUtils {
             outputArray.append(stringRepresentation)
         }
         
-        if let vectorAxes = axes as? (any VectorAxes) {
-            outputArray.append(getVectorValue(vectorAxes))
+        if let magnitudeAxes = axes as? (any MagnitudeAxes) {
+            outputArray.append(getMagnitudeValue(magnitudeAxes))
         }
         return outputArray
     }
@@ -60,8 +63,8 @@ enum RecordingUtils {
             values[$0.key.rawValue] = String($0.value.value)
         }
         
-        if let vectorAxes = axes as? (any VectorAxes) {
-            values[AxeType.vector.rawValue] = getVectorValue(vectorAxes)
+        if let magnitudeAxes = axes as? (any MagnitudeAxes) {
+            values[AxeType.magnitude.rawValue] = getMagnitudeValue(magnitudeAxes)
         }
         
         return (
@@ -88,8 +91,8 @@ enum RecordingUtils {
         switch measurementType.axesType {
         case .triangle:
             guard let displayableAbsMax = TriangleAxes.ValueType(realm.displayableAbsMax),
-                  let vectorString = axesStrings[.vector],
-                  let vector = TriangleAxes.ValueType(vectorString)
+                  let magnitudeString = axesStrings[.magnitude],
+                  let magnitude = TriangleAxes.ValueType(magnitudeString)
             else {
                 return nil
             }
@@ -110,7 +113,7 @@ enum RecordingUtils {
                 axes: axes,
                 measurementType: measurementType,
                 displayableAbsMax: displayableAbsMax,
-                vector: .init(type_: .vector, value: vector)
+                magnitude: .init(type_: .magnitude, value: magnitude)
             )
         case .attitude:
             guard let displayableAbsMax = AttitudeAxes.ValueType(realm.displayableAbsMax) else {
@@ -140,7 +143,7 @@ enum RecordingUtils {
         }
     }
     
-    private static func getVectorValue<VectorAxesType: VectorAxes>(_ axes: VectorAxesType) -> String {
-        String(axes.vector.value)
+    private static func getMagnitudeValue<MagnitudeAxesType: MagnitudeAxes>(_ axes: MagnitudeAxesType) -> String {
+        String(axes.magnitude.value)
     }
 }

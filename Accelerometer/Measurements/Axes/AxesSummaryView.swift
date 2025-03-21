@@ -15,8 +15,8 @@ struct AxesSummaryView: View {
         axesBinding.wrappedValue
     }
     
-    var vectorAxes: (any VectorAxes)? {
-        observableAxes?.axes as? (any VectorAxes)
+    var magnitudeAxes: (any MagnitudeAxes)? {
+        observableAxes?.axes as? (any MagnitudeAxes)
     }
     
     var attitudeAxes: AttitudeAxes? {
@@ -29,9 +29,9 @@ struct AxesSummaryView: View {
     
     var body: some View {
         // TODO: use MeasurementType.axesType
-        if let vectorAxes = vectorAxes {
-            VectorAxesSummaryView(
-                axes: vectorAxes,
+        if let magnitudeAxes = magnitudeAxes {
+            MagnitudeAxesSummaryView(
+                axes: magnitudeAxes,
                 type: type
             )
         } else if let attitudeAxes = attitudeAxes {

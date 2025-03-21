@@ -11,14 +11,14 @@ struct AxesTableView: View {
     @Binding var observableAxes: ObservableAxes?
     
     var axes: (any Axes)? { observableAxes?.axes }
-    var vectorAxes: (any VectorAxes)? { observableAxes?.axes as? any VectorAxes }
+    var magnitudeAxes: (any MagnitudeAxes)? { observableAxes?.axes as? any MagnitudeAxes }
     
     var axesTypes: [AxeType] {
         guard let axes = axes else { return [] }
         return type(of: axes).sortedAxesTypes
     }
     
-    var showSummary: Bool { vectorAxes != nil }
+    var showSummary: Bool { magnitudeAxes != nil }
     
     var rows: [RowData] {
         guard let axes = axes else { return [] }
@@ -27,8 +27,8 @@ struct AxesTableView: View {
             rowData(axes: axes, axeType: axeType)
         }
         
-        if let vectorAxes = vectorAxes {
-            rows.append(summaryData(axes: vectorAxes))
+        if let magnitudeAxes = magnitudeAxes {
+            rows.append(summaryData(axes: magnitudeAxes))
         }
         return rows
     }
@@ -42,12 +42,12 @@ struct AxesTableView: View {
         )
     }
     
-    private func summaryData<AxesType: VectorAxes>(axes: AxesType) -> RowData {
+    private func summaryData<AxesType: MagnitudeAxes>(axes: AxesType) -> RowData {
         RowData(
-            name: AxeType.vector.name,
-            min: axes.vector.min as? Double,
-            value: axes.vector.value as? Double,
-            max: axes.vector.max as? Double
+            name: AxeType.magnitude.name,
+            min: axes.magnitude.min as? Double,
+            value: axes.magnitude.value as? Double,
+            max: axes.magnitude.max as? Double
         )
     }
     
@@ -59,7 +59,7 @@ struct AxesTableView: View {
                         .foregroundColor(.secondary)
                 }
                 if showSummary {
-                    Text("summary")
+                    Text("magnitude")
                         .foregroundColor(.secondary)
                 }
             }.padding([.trailing])

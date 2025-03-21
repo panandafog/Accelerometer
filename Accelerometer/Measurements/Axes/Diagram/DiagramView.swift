@@ -91,7 +91,7 @@ private extension AxeType {
             return .top
         case .z:
             return .bottomTrailing
-        case .vector:
+        case .magnitude:
             return nil
         case .unnamed:
             return nil
@@ -121,7 +121,7 @@ private extension AxeType {
                 -1 * (size.width * multiplier),
                  -1 * (size.height * multiplier * 0.5)
             )
-        case .vector:
+        case .magnitude:
             return nil
         case .unnamed:
             return nil

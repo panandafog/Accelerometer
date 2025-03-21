@@ -16,8 +16,8 @@ struct AxesSummaryViewExtended: View {
         measurer.observableAxes[type]
     }
     
-    private var vectorAxe: Axis<Double>? {
-        (observableAxes?.axes as? TriangleAxes)?.vector
+    private var magnitudeAxe: Axis<Double>? {
+        (observableAxes?.axes as? TriangleAxes)?.magnitude
     }
     
     var axesBinding: Binding<ObservableAxes?> {
@@ -30,9 +30,9 @@ struct AxesSummaryViewExtended: View {
     }
     
     private var maxString: String {
-        if let vectorAxe = vectorAxe {
+        if let magnitudeAxe = magnitudeAxe {
             return String(
-                vectorAxe.max ?? 0,
+                magnitudeAxe.max ?? 0,
                 roundPlaces: Settings.measurementsDisplayRoundPlaces
             )
         } else {
@@ -41,9 +41,9 @@ struct AxesSummaryViewExtended: View {
     }
     
     private var minString: String {
-        if let vectorAxe = vectorAxe {
+        if let magnitudeAxe = magnitudeAxe {
             return String(
-                vectorAxe.min ?? 0,
+                magnitudeAxe.min ?? 0,
                 roundPlaces: Settings.measurementsDisplayRoundPlaces
             )
         } else {

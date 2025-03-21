@@ -70,22 +70,22 @@ class Settings: ObservableObject {
 extension Settings {
     
     enum ExportDateFormat: String, CaseIterable {
-        case dateFormat
-        case excel
         case unix
+        case excel
+        case dateFormat
         
         static var byDefault: ExportDateFormat {
-            .dateFormat
+            .unix
         }
         
         var displayableName: String {
             switch self {
-            case .dateFormat:
-                return DateFormatter.Recordings.csvStringFormat
-            case .excel:
-                return rawValue.capitalizingFirstLetter()
             case .unix:
                 return rawValue.capitalizingFirstLetter()
+            case .excel:
+                return "Spreadsheet Serial Date (1900 System)"
+            case .dateFormat:
+                return DateFormatter.Recordings.csvStringFormat
             }
         }
     }

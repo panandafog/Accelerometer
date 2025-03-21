@@ -55,10 +55,10 @@ struct Recording: Identifiable {
         let filteredEntries = entries
             .filter({ $0.measurementType == type })
         
-        var csvStrings = RecordingUtils.stringsHeader(of: type)
+        var csvStrings = [RecordingUtils.stringsHeader(of: type)]
         csvStrings.append(contentsOf: filteredEntries.map({ $0.getCsvString(dateFormat: dateFormat) }))
         
-        return TextFile(initialText: csvStrings.joined(separator: "\n"))
+        return TextFile(initialText: csvStrings.joined(separator: RecordingUtils.rowSeparator))
     }
     
     func chartValues(of measurementType: MeasurementType) -> [[Double]] {
@@ -105,7 +105,7 @@ extension Recording {
             var outputArray = [dateString]
             outputArray.append(contentsOf: RecordingUtils.stringRepresentation(of: axes))
             
-            return outputArray.joined(separator: ",")
+            return outputArray.joined(separator: RecordingUtils.columnSeparator)
         }
         
         init(id: String = UUID().uuidString, measurementType: MeasurementType, date: Date, axes: any Axes) {

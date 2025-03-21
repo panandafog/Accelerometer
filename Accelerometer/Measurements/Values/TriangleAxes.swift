@@ -8,7 +8,7 @@
 import SwiftUI
 import enum Accelerate.vDSP
 
-struct TriangleAxes: VectorAxes {
+struct TriangleAxes: MagnitudeAxes {
 
     typealias ValueType = Double
     
@@ -19,18 +19,23 @@ struct TriangleAxes: VectorAxes {
     var values: [AxeType: Axis<ValueType>]
     var measurementType: MeasurementType?
     var displayableAbsMax: ValueType
-    var vector: Axis<ValueType>
+    var magnitude: Axis<ValueType>
     
     var intensityColor: Color {
-        let intensity = abs(vector.value) / displayableAbsMax
+        let intensity = abs(magnitude.value) / displayableAbsMax
         return Color.intensity(intensity)
     }
     
     var chartValues: [Double] {
-        [vector.value as Double]
+        [magnitude.value as Double]
     }
     
-    init(axes: [AxeType : Axis<ValueType>]? = nil, measurementType: MeasurementType? = nil, displayableAbsMax: ValueType = .zero, vector: Axis<ValueType> = .zero) {
+    init(
+        axes: [AxeType : Axis<ValueType>]? = nil,
+        measurementType: MeasurementType? = nil,
+        displayableAbsMax: ValueType = .zero,
+        magnitude: Axis<ValueType> = .zero
+    ) {
         self.values = axes ?? [
             .x: Axis(type_: .x, value: .zero),
             .y: Axis(type_: .y, value: .zero),
@@ -38,7 +43,7 @@ struct TriangleAxes: VectorAxes {
         ]
         self.measurementType = measurementType
         self.displayableAbsMax = displayableAbsMax
-        self.vector = vector
+        self.magnitude = magnitude
     }
     
     mutating func set(values newValues: [AxeType: ValueType]) {
@@ -49,15 +54,15 @@ struct TriangleAxes: VectorAxes {
             }
             values[$0] = axis
         }
-        updateVector()
+        updateMagnitude()
     }
     
-    private mutating func updateVector() {
-        vector.set(value: sqrt(
-            pow(values[.x]?.value ?? 0.0, 2.0) +
-            pow(values[.y]?.value ?? 0.0, 2.0) +
-            pow(values[.z]?.value ?? 0.0, 2.0)
-        ))
+    private mutating func updateMagnitude() {
+        let x = values[.x]?.value ?? 0.0
+        let y = values[.y]?.value ?? 0.0
+        let z = values[.z]?.value ?? 0.0
+        
+        magnitude.set(value: hypot(hypot(x, y), z))
     }
 }
 
@@ -70,7 +75,7 @@ extension TriangleAxes: AdditiveArithmetic {
         return TriangleAxes(
             axes: axes,
             displayableAbsMax: lhs.displayableAbsMax - rhs.displayableAbsMax,
-            vector: lhs.vector - rhs.vector
+            magnitude: lhs.magnitude - rhs.magnitude
         )
     }
     
@@ -82,7 +87,7 @@ extension TriangleAxes: AdditiveArithmetic {
         return TriangleAxes(
             axes: axes,
             displayableAbsMax: lhs.displayableAbsMax + rhs.displayableAbsMax,
-            vector: lhs.vector + rhs.vector
+            magnitude: lhs.magnitude + rhs.magnitude
         )
     }
 }

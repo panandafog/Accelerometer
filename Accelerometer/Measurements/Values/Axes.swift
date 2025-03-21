@@ -32,7 +32,7 @@ extension Axes {
     }
     
     static var sortedAxesTypes: [AxeType] {
-        Array(axesTypes).sorted { $0.rawValue > $1.rawValue }
+        Array(axesTypes).sorted { $0.rawValue < $1.rawValue }
     }
 }
 
@@ -46,10 +46,10 @@ extension Axes where ValueType: AdditiveArithmetic {
             return newAxis
         }
         
-        var vectorAxes = self as? (any VectorAxes)
-        if vectorAxes != nil {
-            vectorAxes?.resetVector()
-            self = vectorAxes as? Self ?? self
+        var magnitudeAxes = self as? (any MagnitudeAxes)
+        if magnitudeAxes != nil {
+            magnitudeAxes?.resetMagnitude()
+            self = magnitudeAxes as? Self ?? self
         }
     }
 }

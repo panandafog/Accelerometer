@@ -14,7 +14,7 @@ enum AxeType: String, CaseIterable, Sendable {
     case roll
     case pitch
     case yaw
-    case vector
+    case magnitude
     case bool
     case unnamed
     

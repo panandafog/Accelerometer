@@ -22,7 +22,7 @@ class ObservableAxesTests: XCTestCase {
             .z: .init(type_: .z, value: 1.0)
         ],
         displayableAbsMax: 1.0,
-        vector: .init(type_: .vector, value: 1.0)
+        magnitude: .init(type_: .magnitude, value: 1.0)
     )
 
     override func setUpWithError() throws {
