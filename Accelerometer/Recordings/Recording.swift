@@ -61,6 +61,7 @@ struct Recording: Identifiable {
         return TextFile(initialText: csvStrings.joined(separator: RecordingUtils.rowSeparator))
     }
     
+    // TODO: remove
     func chartValues(of measurementType: MeasurementType) -> [[Double]] {
         var chartEntries: [any ChartEntry] = []
         
@@ -73,6 +74,12 @@ struct Recording: Identifiable {
         return chartEntries
             .map({ $0.chartValues })
             .transposed()
+    }
+    
+    func chartValues2(of measurementType: MeasurementType) -> [Entry] {
+        let filtered: [Entry] = entries.filter { $0.measurementType == measurementType }
+        
+        return filtered
     }
 }
 

@@ -5,10 +5,11 @@
 //  Created by Andrey on 26.08.2023.
 //
 
+import Charts
 import Foundation
 
 protocol Axes: Equatable, Sendable {
-    associatedtype ValueType: LosslessStringConvertible, Comparable, Sendable
+    associatedtype ValueType: LosslessStringConvertible, Comparable, Sendable, Plottable
     
     static var axesTypes: Set<AxeType> { get }
     

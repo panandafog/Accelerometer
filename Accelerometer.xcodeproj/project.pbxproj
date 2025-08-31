@@ -33,6 +33,7 @@
 		0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFC9289A9E85007130D9 /* Settings.swift */; };
 		0B36DFCC289AA096007130D9 /* ExportDateFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */; };
 		0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */; };
+		0B45FF962D8EC361009F5CDF /* RecordingMeasurementChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */; };
 		0B4BE8532D74BB420065D938 /* AnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */; };
 		0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
 		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
@@ -123,6 +124,7 @@
 		0B36DFC9289A9E85007130D9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDateFormatView.swift; sourceTree = "<group>"; };
 		0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryViewExtended.swift; sourceTree = "<group>"; };
+		0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingMeasurementChartView.swift; sourceTree = "<group>"; };
 		0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsView.swift; sourceTree = "<group>"; };
 		0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramAxesNamesStyle.swift; sourceTree = "<group>"; };
 		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
 				0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */,
+				0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
 				0BE138F5289409820026D0DC /* Recorder.swift */,
@@ -639,9 +642,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer/Pods-Accelerometer-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer/Pods-Accelerometer-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -656,9 +663,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -680,6 +691,7 @@
 				0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */,
 				0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
+				0B45FF962D8EC361009F5CDF /* RecordingMeasurementChartView.swift in Sources */,
 				0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */,
 				0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */,
 				0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */,
@@ -901,6 +913,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -934,6 +947,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

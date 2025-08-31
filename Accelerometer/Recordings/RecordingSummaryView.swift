@@ -33,13 +33,24 @@ struct RecordingSummaryView: View {
                 Section(header: Text("Measurements")) {
                     ForEach(Array(recording.sortedMeasurementTypes), id: \.self) { measurementType in
                         HStack {
-                            RecordingMeasurementView(
-                                recording: recording,
-                                measurementType: measurementType,
-                                screenSize: geometry.size
-                            ) {
-                                isPresentingExporter = true
-                                exportMeasurementType = measurementType
+                            if #available(iOS 16.0, *) {
+                                RecordingMeasurementChartView(
+                                    recording: recording,
+                                    measurementType: measurementType
+                                ) {
+                                    isPresentingExporter = true
+                                    exportMeasurementType = measurementType
+                                }
+                            } else {
+                                // TODO: deprecate?
+                                RecordingMeasurementView(
+                                    recording: recording,
+                                    measurementType: measurementType,
+                                    screenSize: geometry.size
+                                ) {
+                                    isPresentingExporter = true
+                                    exportMeasurementType = measurementType
+                                }
                             }
                         }
                     }
