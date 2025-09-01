@@ -24,13 +24,13 @@ struct RecordingMeasurementChartView: View {
     var body: some View {
         VStack {
             Text(title)
-                .padding(.top, 2)
+                .padding(.top, 4)
                 .padding(.bottom, 2)
             
             Chart(chartEntries) { entry in
                 CustomChartContent(entry: entry)
             }
-            .padding(.bottom, 2)
+            .padding(.bottom, 4)
         }
     }
 }
