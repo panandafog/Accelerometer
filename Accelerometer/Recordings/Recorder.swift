@@ -72,15 +72,23 @@ class Recorder: ObservableObject {
             repository.update()
         }
         
-        print(activeRecording?.entries.count)
-        
         activeRecording = nil
         cancelSubscriptions()
+        
         objectWillChange.send()
     }
     
     func delete(recordingID: String) {
         repository.delete(recordingID: recordingID)
+        repository.update()
+        
+        objectWillChange.send()
+    }
+    
+    func delete(recordingIDs: [String]) {
+        repository.delete(recordingIDs: recordingIDs)
+        repository.update()
+        
         objectWillChange.send()
     }
     

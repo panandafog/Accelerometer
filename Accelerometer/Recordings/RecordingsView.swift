@@ -11,7 +11,11 @@ struct RecordingsView: View {
     
     @EnvironmentObject var recorder: Recorder
     
-    @State var presentingNewRecordingSheet = false
+    @State private var presentingNewRecordingSheet = false
+    @State private var isEditMode = false
+    @State private var selectedRecordings = Set<Recording.ID>()
+    
+    // MARK: Recording info
     
     var recordingTitle: String {
         if recorder.recordingInProgress {
@@ -27,34 +31,6 @@ struct RecordingsView: View {
         } else {
             return nil
         }
-    }
-    
-    var startStopButtonImage: some View {
-        if recorder.recordingInProgress {
-            return Image(systemName: "stop.fill")
-        } else {
-            return Image(systemName: "play.fill")
-        }
-    }
-    
-    var startStopButton: some View {
-        Button(
-            action: {
-                if recorder.recordingInProgress {
-                    recorder.stopRecording()
-                } else {
-                    presentingNewRecordingSheet = true
-                }
-            },
-            label: {
-                startStopButtonImage
-                    .padding(13)
-                    .foregroundColor(Color.background)
-                    .background(Color.accentColor)
-                    .clipShape(Circle())
-                    .font(.title2)
-            }
-        )
     }
     
     var activeRecording: Recording? {
@@ -76,65 +52,170 @@ struct RecordingsView: View {
         return recordings
     }
     
-    func recordingView(recording: Recording) -> some View {
-        switch recording.state {
-        case .completed:
-            return AnyView(completedRecordingView(recording: recording))
-        case .inProgress:
-            return AnyView(activeRecordingView(recording: recording))
+    // MARK: Selection
+    
+    var selectableRecordings: [Recording] {
+        lastRecordings.filter { $0.state == .completed }
+    }
+    
+    var allSelected: Bool {
+        let ids = Set(selectableRecordings.map(\.id))
+        return !ids.isEmpty && selectedRecordings == ids
+    }
+    
+    func toggleSelectAll() {
+        if (allSelected) {
+            selectedRecordings.removeAll()
+        } else {
+            selectedRecordings = Set(selectableRecordings.map(\.id))
         }
     }
     
-    func activeRecordingView(recording: Recording) -> some View {
-        RecordingPreview(recording: recording)
-            .padding(.vertical)
+    func deleteSelected() {
+        // TODO: implement actual deletion in Recorder
+        recorder.delete(recordingIDs: Array(selectedRecordings))
+        selectedRecordings.removeAll()
+        isEditMode = false
     }
     
-    func completedRecordingView(recording: Recording) -> some View {
-        NavigationLink {
-            RecordingSummaryView(recording: recording)
-        } label: {
+    // MARK: Views
+    
+    var startStopButton: some View {
+        Button(
+            action: {
+                if recorder.recordingInProgress {
+                    recorder.stopRecording()
+                } else {
+                    presentingNewRecordingSheet = true
+                }
+            },
+            label: {
+                Image(
+                    systemName: recorder.recordingInProgress ? "stop.fill" : "play.fill"
+                )
+                .padding(13)
+                .foregroundColor(Color.background)
+                .background(Color.accentColor)
+                .clipShape(Circle())
+                .font(.title2)
+            }
+        )
+        .disabled(isEditMode)
+    }
+    
+    @ViewBuilder
+    func recordingPreview(recording: Recording) -> some View {
+        if recording.state == .inProgress || isEditMode {
             RecordingPreview(recording: recording)
+        } else {
+            NavigationLink {
+                RecordingSummaryView(recording: recording)
+            } label: {
+                RecordingPreview(recording: recording)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func recordingRow(recording: Recording) -> some View {
+        HStack {
+            if isEditMode {
+                Button {
+                    if selectedRecordings.contains(recording.id) {
+                        selectedRecordings.remove(recording.id)
+                    } else {
+                        selectedRecordings.insert(recording.id)
+                    }
+                } label: {
+                    Image(
+                        systemName: selectedRecordings.contains(recording.id) ? "checkmark.circle.fill" : "circle"
+                    )
+                    .foregroundColor(
+                        selectedRecordings.contains(recording.id) ? .accentColor : .gray
+                    )
+                    .font(.title2)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            
+            recordingPreview(recording: recording)
                 .padding(.vertical)
         }
     }
     
+    // MARK: - Body
+    
     var body: some View {
-        List {
-            Section(header: Spacer()) {
-                HStack {
-                    ZStack(alignment: .topLeading) {
+        VStack {
+            List {
+                Section(header: Spacer()) {
+                    HStack {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(recordingTitle)
                                 .font(.title2)
-                            if let secondaryRecordingTitle = secondaryRecordingTitle {
-                                Text(secondaryRecordingTitle)
+                            if let subtitle = secondaryRecordingTitle {
+                                Text(subtitle)
                                     .font(.footnote)
-                                    .padding([.leading])
-                                    .foregroundColor(Color.secondary)
+                                    .foregroundColor(.secondary)
+                                    .padding(.leading)
                             }
                         }
-                        Color.clear
+                        Spacer()
+                        startStopButton
                     }
-                    .padding(.vertical)
-                    Spacer()
-                    startStopButton
-                        .padding(.vertical)
+                }
+                
+                if let activeRecording = activeRecording {
+                    Section(header: Text("Recording in progress")) {
+                        recordingRow(recording: activeRecording)
+                    }
+                }
+                
+                if !lastRecordings.isEmpty {
+                    Section(header: Text("Last recordings")) {
+                        ForEach(lastRecordings) { recording in
+                            recordingRow(recording: recording)
+                        }
+                    }
                 }
             }
-            if let activeRecording = activeRecording {
-                Section(header: Text("Recording in progress")) {
-                    recordingView(recording: activeRecording)
+            .environment(\.editMode, .constant(isEditMode ? .active : .inactive))
+            
+            if isEditMode && !selectedRecordings.isEmpty {
+                Button(
+                    action: deleteSelected,
+                    label: {
+                        Label("Delete (\(selectedRecordings.count))", systemImage: "trash")
+                    }
+                )
+                .padding(.vertical)
+                .transition(.move(edge: .bottom))
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if isEditMode {
+                    Button(allSelected ? "Deselect All" : "Select All") {
+                        toggleSelectAll()
+                    }
+                    .disabled(selectableRecordings.isEmpty)
                 }
             }
-            if !lastRecordings.isEmpty {
-                Section(header: Text("Last recordings")) {
-                    ForEach(lastRecordings) { recording in
-                        recordingView(recording: recording)
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if isEditMode {
+                    Button("Done") {
+                        isEditMode = false
+                        selectedRecordings.removeAll()
                     }
+                } else if activeRecording == nil {
+                    Button("Edit") {
+                        isEditMode = true
+                    }
+                    .disabled(selectableRecordings.isEmpty)
                 }
             }
         }
+        .environment(\.editMode, .constant(isEditMode ? .active : .inactive))
         .sheet(isPresented: $presentingNewRecordingSheet) {
             NewRecordingView()
         }

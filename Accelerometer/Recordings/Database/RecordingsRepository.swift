@@ -23,6 +23,10 @@ class RecordingsRepository: ObservableObject {
         databaseManager.delete(recordings.map({ RecordingRealm(recording: $0) }))
     }
     
+    func delete(recordingIDs: [String]) {
+        recordingIDs.forEach { delete(recordingID: $0) }
+    }
+    
     func delete(recordingID: String) {
         let recordings: [RecordingRealm] = Array(databaseManager.read() as Results<RecordingRealm>)
         guard let recording = recordings.first(where: { $0.id == recordingID }) else {
