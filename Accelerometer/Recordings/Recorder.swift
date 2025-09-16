@@ -10,6 +10,7 @@ import SwiftUI
 
 @MainActor
 class Recorder: ObservableObject {
+    @Published var isInEditMode = false
     @ObservedObject private var measurer: Measurer
     
     private let repository: RecordingsRepository = {

@@ -143,24 +143,6 @@ struct RecordingsView: View {
         }
     }
     
-    private var deleteButtonBar: some View {
-        HStack {
-            Button(action: deleteSelected) {
-                Label("Delete (\(selectedRecordings.count))", systemImage: "trash")
-                    .foregroundColor(.white)
-                    .font(.headline)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(Color.red)
-            .cornerRadius(12)
-            .padding(.horizontal, 16)
-            .padding(.bottom, 8)
-        }
-        .background(Color(.systemBackground))
-        .transition(.move(edge: .bottom).combined(with: .opacity))
-    }
-    
     // MARK: - Body
     
     var body: some View {
@@ -198,11 +180,6 @@ struct RecordingsView: View {
                 }
             }
             .environment(\.editMode, .constant(isEditMode ? .active : .inactive))
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                if isEditMode && !selectedRecordings.isEmpty {
-                    deleteButtonBar
-                }
-            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -226,7 +203,16 @@ struct RecordingsView: View {
                     .disabled(selectableRecordings.isEmpty)
                 }
             }
+            ToolbarItem(placement: .bottomBar) {
+                if isEditMode && !selectedRecordings.isEmpty {
+                    Button(role: .destructive, action: deleteSelected) {
+                        Label("Delete (\(selectedRecordings.count))", systemImage: "trash")
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
         }
+        .toolbar(isEditMode ? .hidden : .visible,  for: .tabBar)
         .environment(\.editMode, .constant(isEditMode ? .active : .inactive))
         .sheet(isPresented: $presentingNewRecordingSheet) {
             NewRecordingView()

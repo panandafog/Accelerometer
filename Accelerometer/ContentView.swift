@@ -8,38 +8,44 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @EnvironmentObject var recorder: Recorder
+    @State private var selectedTab = 0
+
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             NavigationView {
                 MeasurementsView()
-                    .navigationTitle(Text("Measurements"))
+                    .navigationTitle("Measurements")
             }
             .phoneOnlyStackNavigationView()
             .tabItem {
                 Label("Measurements", systemImage: "list.bullet")
             }
-            
+            .tag(0)
+
             NavigationView {
                 RecordingsView()
-                    .navigationTitle(Text("Recordings"))
+                    .navigationTitle("Recordings")
             }
             .phoneOnlyStackNavigationView()
             .tabItem {
                 Label("Recordings", systemImage: "play")
             }
-            
+            .tag(1)
+
             NavigationView {
                 SettingsView()
-                    .navigationTitle(Text("Settings"))
+                    .navigationTitle("Settings")
             }
             .navigationViewStyle(.stack)
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
+            .tag(2)
         }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     
