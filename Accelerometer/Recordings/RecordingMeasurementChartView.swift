@@ -22,15 +22,17 @@ struct RecordingMeasurementChartView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 8) {
             Text(title)
+                .font(.headline)
                 .padding(.top, 4)
-                .padding(.bottom, 2)
             
             Chart(chartEntries) { entry in
                 CustomChartContent(entry: entry)
             }
-            .padding(.bottom, 4)
+            .frame(height: 200)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 20)
         }
     }
 }

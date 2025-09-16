@@ -77,9 +77,14 @@ struct Recording: Identifiable {
     }
     
     func chartValues2(of measurementType: MeasurementType) -> [Entry] {
-        let filtered: [Entry] = entries.filter { $0.measurementType == measurementType }
+        let filtered = entries.filter { $0.measurementType == measurementType }
         
-        return filtered
+        guard filtered.count > 1000 else { return filtered }
+        
+        let stride = filtered.count / 1000
+        return filtered.enumerated().compactMap { index, entry in
+            return index % stride == 0 ? entry : nil
+        }
     }
 }
 
