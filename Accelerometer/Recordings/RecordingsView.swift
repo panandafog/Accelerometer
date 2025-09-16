@@ -143,6 +143,24 @@ struct RecordingsView: View {
         }
     }
     
+    private var deleteButtonBar: some View {
+        HStack {
+            Button(action: deleteSelected) {
+                Label("Delete (\(selectedRecordings.count))", systemImage: "trash")
+                    .foregroundColor(.white)
+                    .font(.headline)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(Color.red)
+            .cornerRadius(12)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
+        }
+        .background(Color(.systemBackground))
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+    
     // MARK: - Body
     
     var body: some View {
@@ -180,16 +198,10 @@ struct RecordingsView: View {
                 }
             }
             .environment(\.editMode, .constant(isEditMode ? .active : .inactive))
-            
-            if isEditMode && !selectedRecordings.isEmpty {
-                Button(
-                    action: deleteSelected,
-                    label: {
-                        Label("Delete (\(selectedRecordings.count))", systemImage: "trash")
-                    }
-                )
-                .padding(.vertical)
-                .transition(.move(edge: .bottom))
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                if isEditMode && !selectedRecordings.isEmpty {
+                    deleteButtonBar
+                }
             }
         }
         .toolbar {
