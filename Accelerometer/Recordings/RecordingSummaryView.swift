@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUICharts
 
 struct RecordingSummaryView: View {
     
@@ -33,24 +32,12 @@ struct RecordingSummaryView: View {
                 Section(header: Text("Measurements")) {
                     ForEach(Array(recording.sortedMeasurementTypes), id: \.self) { measurementType in
                         HStack {
-                            if #available(iOS 16.0, *) {
-                                RecordingMeasurementChartView(
-                                    recording: recording,
-                                    measurementType: measurementType
-                                ) {
-                                    isPresentingExporter = true
-                                    exportMeasurementType = measurementType
-                                }
-                            } else {
-                                // TODO: deprecate?
-                                RecordingMeasurementView(
-                                    recording: recording,
-                                    measurementType: measurementType,
-                                    screenSize: geometry.size
-                                ) {
-                                    isPresentingExporter = true
-                                    exportMeasurementType = measurementType
-                                }
+                            RecordingMeasurementChartView(
+                                recording: recording,
+                                measurementType: measurementType
+                            ) {
+                                isPresentingExporter = true
+                                exportMeasurementType = measurementType
                             }
                         }
                     }
@@ -141,37 +128,6 @@ struct RecordingSummaryView: View {
     private func deleteRecording() {
         recorder.delete(recordingID: recording.id)
         presentationMode.wrappedValue.dismiss()
-    }
-}
-
-private extension ChartStyle {
-    
-    static var recordingEntry: ChartStyle {
-        ChartStyle(
-            backgroundColor: Color.secondaryBackground,
-            accentColor: Color.accentColor,
-            gradientColor: .init(
-                start: Color.accentColor,
-                end: Color.accentColor
-            ),
-            textColor: Color.primary,
-            legendTextColor: Color.primary,
-            dropShadowColor: Color.clear
-        )
-    }
-    
-    static var recordingEntryDarkMode: ChartStyle {
-        ChartStyle(
-            backgroundColor: Color.accentColor,
-            accentColor: Color.accentColor,
-            gradientColor: .init(
-                start: Color.accentColor,
-                end: Color.accentColor
-            ),
-            textColor: Color.primary,
-            legendTextColor: Color.primary,
-            dropShadowColor: Color.clear
-        )
     }
 }
 

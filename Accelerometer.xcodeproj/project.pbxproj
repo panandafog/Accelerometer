@@ -45,7 +45,6 @@
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
-		0B9BDC11289973CC00842161 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 0B9BDC10289973CC00842161 /* SwiftUICharts */; };
 		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
 		0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */; };
 		0BA619CF2AADC9E7005DABD3 /* ObservableAxesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */; };
@@ -54,7 +53,6 @@
 		0BA63B702897EFED0040B63D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6F2897EFED0040B63D /* Date.swift */; };
 		0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B712897FBCE0040B63D /* RecordingPreview.swift */; };
 		0BADCA5D2899ED5C00238A25 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BADCA5C2899ED5C00238A25 /* TextFile.swift */; };
-		0BADCA5F289A720600238A25 /* RecordingMeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */; };
 		0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */; };
 		0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
 		0BBDC4E0288C188400CE6061 /* AxeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* AxeType.swift */; };
@@ -144,7 +142,6 @@
 		0BA63B6F2897EFED0040B63D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0BA63B712897FBCE0040B63D /* RecordingPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPreview.swift; sourceTree = "<group>"; };
 		0BADCA5C2899ED5C00238A25 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
-		0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingMeasurementView.swift; sourceTree = "<group>"; };
 		0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSummaryView.swift; sourceTree = "<group>"; };
 		0BBAD4AE2895715400251262 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		0BBDC4DF288C188400CE6061 /* AxeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxeType.swift; sourceTree = "<group>"; };
@@ -180,7 +177,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B9BDC11289973CC00842161 /* SwiftUICharts in Frameworks */,
 				A844F53C6B72222DA87BA782 /* Pods_Accelerometer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,7 +394,6 @@
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
-				0BADCA5E289A720600238A25 /* RecordingMeasurementView.swift */,
 				0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
@@ -450,7 +445,6 @@
 			);
 			name = Accelerometer;
 			packageProductDependencies = (
-				0B9BDC10289973CC00842161 /* SwiftUICharts */,
 			);
 			productName = Accelerometer;
 			productReference = 0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */;
@@ -528,7 +522,6 @@
 			);
 			mainGroup = 0B24EBFB28621BBE00AD3EF1;
 			packageReferences = (
-				0B9BDC0F289973CC00842161 /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 0B24EC0528621BBE00AD3EF1 /* Products */;
 			projectDirPath = "";
@@ -731,7 +724,6 @@
 				0B508CD6289C3E4A00326C6E /* DatabaseManager.swift in Sources */,
 				0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */,
 				0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */,
-				0BADCA5F289A720600238A25 /* RecordingMeasurementView.swift in Sources */,
 				0BBF0918289D163300B42740 /* RecordingEntryRealm.swift in Sources */,
 				0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */,
 				0BFBA1E828737CC300529B50 /* ObservableAxes.swift in Sources */,
@@ -829,7 +821,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -883,7 +875,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -913,7 +905,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -947,7 +939,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1081,25 +1073,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		0B9BDC0F289973CC00842161 /* XCRemoteSwiftPackageReference "ChartView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
-			requirement = {
-				kind = exactVersion;
-				version = 1.5.5;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		0B9BDC10289973CC00842161 /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0B9BDC0F289973CC00842161 /* XCRemoteSwiftPackageReference "ChartView" */;
-			productName = SwiftUICharts;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
 }

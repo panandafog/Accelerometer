@@ -72,7 +72,6 @@ struct RecordingsView: View {
     }
     
     func deleteSelected() {
-        // TODO: implement actual deletion in Recorder
         recorder.delete(recordingIDs: Array(selectedRecordings))
         selectedRecordings.removeAll()
         isEditMode = false
