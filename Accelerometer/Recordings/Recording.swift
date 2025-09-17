@@ -61,12 +61,12 @@ struct Recording: Identifiable {
         return TextFile(initialText: csvStrings.joined(separator: RecordingUtils.rowSeparator))
     }
     
-    func chartValues2(of measurementType: MeasurementType) -> [Entry] {
+    func chartValues(of measurementType: MeasurementType) -> [Entry] {
         let filtered = entries.filter { $0.measurementType == measurementType }
         
-        guard filtered.count > 1000 else { return filtered }
+        guard filtered.count > 50 else { return filtered }
         
-        let stride = filtered.count / 1000
+        let stride = filtered.count / 50
         return filtered.enumerated().compactMap { index, entry in
             return index % stride == 0 ? entry : nil
         }

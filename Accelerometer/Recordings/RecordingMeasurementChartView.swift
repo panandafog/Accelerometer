@@ -18,7 +18,7 @@ struct RecordingMeasurementChartView: View {
     var title: String { measurementType.name.capitalizingFirstLetter() }
     
     var chartEntries: [Recording.Entry] {
-        recording.chartValues2(of: measurementType)
+        recording.chartValues(of: measurementType)
     }
     
     var body: some View {
@@ -105,20 +105,34 @@ struct RecordingMeasurementChartView_Previews: PreviewProvider {
     static let baseAxes: [TriangleAxes] = [axes1, axes2, axes3]
     
     static var allEntries: [Recording.Entry] {
-        let repeats = 5
-        let interval: TimeInterval = 60
-        return (0..<repeats).flatMap { round in
-            baseAxes.enumerated().map { index, axes in
-                .init(
-                    measurementType: .acceleration,
-                    date: .init() + interval * TimeInterval(
-                        round * baseAxes.count + index
-                    ),
-                    axes: axes
-                )
-            }
+        let totalPoints = 50
+        let pointsPerSecond = 1.0
+        let startDate = Date()
+        
+        return (0..<totalPoints).map { index in
+            let timeOffset = Double(index) / pointsPerSecond
+            let date = startDate.addingTimeInterval(timeOffset)
+            
+            let xValue = Double.random(in: -1.0...1.0)
+            let yValue = Double.random(in: -1.0...1.0)
+            let zValue = Double.random(in: -1.0...1.0)
+            
+            var axes = TriangleAxes.zero
+            axes.displayableAbsMax = 1.0
+            axes.values = [
+                .x: Axis(type_: .x, value: xValue),
+                .y: Axis(type_: .y, value: yValue),
+                .z: Axis(type_: .z, value: zValue)
+            ]
+            
+            return Recording.Entry(
+                measurementType: .acceleration,
+                date: date,
+                axes: axes
+            )
         }
     }
+
     
     static var previews: some View {
         RecordingMeasurementChartView(
