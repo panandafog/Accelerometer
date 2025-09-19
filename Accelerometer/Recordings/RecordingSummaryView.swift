@@ -6,163 +6,119 @@
 //
 
 import SwiftUI
-import SwiftUICharts
+import UniformTypeIdentifiers
 
 struct RecordingSummaryView: View {
     
     let recording: Recording
     
-    @EnvironmentObject var settings: Settings
-    @EnvironmentObject var recorder: Recorder
+    @EnvironmentObject private var settings: Settings
+    @EnvironmentObject private var recorder: Recorder
+    @Environment(\.presentationMode) private var presentationMode
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var isPresentingDeleteConfirmation = false
-    
     @State private var isPresentingExporter = false
-    @State private var exportMeasurementType: MeasurementType? = nil
+    @State private var exportURL: URL? = nil
+    @State private var exportLoading = false
     
-    let deleteAlertTitleText = "Are you sure?"
-    
-    var entriesView: some View {
-        GeometryReader { geometry in
-            List {
-                Section(header: Text("Info")) {
-                    RecordingPreview(recording: recording)
-                        .padding(.vertical)
-                }
-                Section(header: Text("Measurements")) {
-                    ForEach(Array(recording.sortedMeasurementTypes), id: \.self) { measurementType in
-                        HStack {
-                            RecordingMeasurementView(
-                                recording: recording,
-                                measurementType: measurementType,
-                                screenSize: geometry.size
-                            ) {
-                                isPresentingExporter = true
-                                exportMeasurementType = measurementType
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    private let processor = RecordingProcessor()
     
     var body: some View {
-        entriesView
-            .navigationTitle("Recording")
-        
-        // MARK: Toolbar
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    if #available(iOS 15.0, *) {
-                        Button(role: .destructive, action: {
-                            isPresentingDeleteConfirmation = true
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    } else {
-                        Button(action: {
-                            isPresentingDeleteConfirmation = true
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
-                }
+        List {
+            Section("Info") {
+                RecordingPreview(recording: recording)
             }
-        
-        // MARK: Delete confirmation
-            .modify {
-                if #available(iOS 15.0, *) {
-                    $0.confirmationDialog(
-                        deleteAlertTitleText,
-                        isPresented: $isPresentingDeleteConfirmation
+            Section("Measurements") {
+                ForEach(recording.sortedMeasurementTypes, id: \.self) { type in
+                    RecordingMeasurementChartView(
+                        recording: recording,
+                        measurementType: type
                     ) {
-                        Button("Delete", role: .destructive) {
-                            deleteRecording()
-                        }
-                    }
-                } else {
-                    $0.alert(isPresented: $isPresentingDeleteConfirmation) {
-                        Alert(
-                            title: Text(deleteAlertTitleText),
-                            primaryButton: .destructive(
-                                Text("Delete"),
-                                action: {
-                                    deleteRecording()
-                                }
-                            ),
-                            secondaryButton: .cancel(
-                                Text("Cancel"),
-                                action: { }
-                            )
-                        )
+                        export(type: type)
                     }
                 }
             }
-        
-        // MARK: Exporter
-            .fileExporter(
-                isPresented: $isPresentingExporter,
-                document: document,
-                contentType: TextFile.readableContentTypes.first ?? .plainText,
-                defaultFilename: (exportMeasurementType?.name ?? "recording") + ".csv"
-            ) { result in
-                switch result {
-                case .success(let url):
-                    print("Saved to \(url)")
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-    }
-    
-    private var document: TextFile? {
-        guard let type = exportMeasurementType else {
-            return nil
         }
-        return recording.csv(
-            of: type,
-            dateFormat: settings.exportDateFormat
-        )
+        .navigationTitle("Recording")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button(role: .destructive) {
+                    isPresentingDeleteConfirmation = true
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            }
+            // TODO: export
+//            ToolbarItem(placement: .primaryAction) {
+//                Button {
+//                } label: {
+//                    Label("Export", systemImage: "square.and.arrow.up")
+//                }
+//                .disabled(true)
+//            }
+        }
+        .confirmationDialog(
+            "Are you sure?",
+            isPresented: $isPresentingDeleteConfirmation
+        ) {
+            Button("Delete", role: .destructive, action: deleteRecording)
+        }
+        .fileExporter(
+            isPresented: $isPresentingExporter,
+            document: exportURL.map { FileDocumentWrapper(url: $0) },
+            contentType: UTType.plainText,
+            defaultFilename: defaultFilename()
+        ) { _ in }
     }
     
     private func deleteRecording() {
         recorder.delete(recordingID: recording.id)
         presentationMode.wrappedValue.dismiss()
     }
+    
+    private func export(type: MeasurementType) {
+        guard !exportLoading else { return }
+        exportLoading = true
+        Task {
+            defer { exportLoading = false }
+            do {
+                let url = try await processor.generateCSV(
+                    from: recording,
+                    for: type,
+                    dateFormat: settings.exportDateFormat
+                )
+                
+                exportURL = url
+                isPresentingExporter = true
+            } catch {
+                print("Export failed:", error)
+            }
+        }
+    }
+    
+    private func defaultFilename() -> String {
+        (exportURL?.lastPathComponent ?? recording.id) + ".csv"
+    }
 }
 
-private extension ChartStyle {
+
+struct FileDocumentWrapper: FileDocument {
     
-    static var recordingEntry: ChartStyle {
-        ChartStyle(
-            backgroundColor: Color.secondaryBackground,
-            accentColor: Color.accentColor,
-            gradientColor: .init(
-                start: Color.accentColor,
-                end: Color.accentColor
-            ),
-            textColor: Color.primary,
-            legendTextColor: Color.primary,
-            dropShadowColor: Color.clear
-        )
+    let url: URL
+    
+    static var readableContentTypes: [UTType] { [.plainText] }
+    
+    init(url: URL) { self.url = url }
+    
+    init(configuration: ReadConfiguration) throws {
+        throw CocoaError(.coderReadCorrupt)
     }
     
-    static var recordingEntryDarkMode: ChartStyle {
-        ChartStyle(
-            backgroundColor: Color.accentColor,
-            accentColor: Color.accentColor,
-            gradientColor: .init(
-                start: Color.accentColor,
-                end: Color.accentColor
-            ),
-            textColor: Color.primary,
-            legendTextColor: Color.primary,
-            dropShadowColor: Color.clear
-        )
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        try FileWrapper(url: url, options: .immediate)
     }
 }
+
 
 struct RecordingView_Previews: PreviewProvider {
     

@@ -7,34 +7,37 @@
 
 import RealmSwift
 
-class RecordingsRepository: ObservableObject {
+actor RecordingsRepository {
     
-    private let databaseManager = DatabaseManagerImpl(configuration: .defaultConfiguration)
-    
-    var recordings: [Recording] = []
-    
-    func save(_ recordings: [Recording]) {
-        databaseManager.write(
-            recordings.map { RecordingRealm(recording: $0) }
-        )
-    }
-    
-    func delete(recordings: [Recording]) {
-        databaseManager.delete(recordings.map({ RecordingRealm(recording: $0) }))
+    private let databaseManager = DatabaseManagerImpl(
+        configuration: .defaultConfiguration
+    )
+
+    private(set) var recordings: [Recording] = []
+
+    func save(_ items: [Recording]) {
+        let realms = items.map { RecordingRealm(recording: $0) }
+        databaseManager.write(realms)
     }
     
     func delete(recordingID: String) {
-        let recordings: [RecordingRealm] = Array(databaseManager.read() as Results<RecordingRealm>)
-        guard let recording = recordings.first(where: { $0.id == recordingID }) else {
-            return
+        let all: [RecordingRealm] = Array(databaseManager.read() as Results<RecordingRealm>)
+        if let recording = all.first(where: { $0.id == recordingID }) {
+            databaseManager.delete([recording])
         }
-        databaseManager.delete([recording])
+    }
+    
+    func delete(recordingIDs: [String]) {
+        let all: [RecordingRealm] = Array(databaseManager.read() as Results<RecordingRealm>)
+        let toDelete = all.filter { recordingIDs.contains($0.id) }
+        databaseManager.delete(toDelete)
     }
     
     func update() {
         let realmRecordings: Results<RecordingRealm> = databaseManager.read()
-        recordings = Array(realmRecordings)
+        let reversed = Array(realmRecordings)
             .map { $0.recording }
             .reversed()
+        recordings = Array(reversed)
     }
 }

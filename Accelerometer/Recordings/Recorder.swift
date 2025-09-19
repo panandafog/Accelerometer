@@ -10,100 +10,114 @@ import SwiftUI
 
 @MainActor
 class Recorder: ObservableObject {
+    @Published var isInEditMode = false
+    @Published private(set) var recordings: [Recording] = []
+    @Published private(set) var activeRecording: Recording? = nil
+    
     @ObservedObject private var measurer: Measurer
-    
-    private let repository: RecordingsRepository = {
-        let repository = RecordingsRepository()
-        repository.update()
-        return repository
-    }()
-    
+    private let repository = RecordingsRepository()
     private let disableIdleTimer = true
+    private var subscriptions: [AnyCancellable] = []
     
-    private(set) var activeRecording: Recording? = nil
+    init(measurer: Measurer) {
+        self.measurer = measurer
+        Task {
+            await refreshRecordings()
+        }
+    }
+    
     var recordingInProgress: Bool {
         activeRecording != nil
     }
     
-    var recordings: [Recording] {
-        var savedRecordings = repository.recordings
-        if let activeRecording = activeRecording {
-            savedRecordings.insert(activeRecording, at: 0)
-        }
-        return savedRecordings
-    }
-    
-    private var subscriptions: [AnyCancellable?] = []
-    
-    init(measurer: Measurer) {
-        self.measurer = measurer
-    }
-    
-    func record(measurements measurementTypes: Set<MeasurementType>) {
+    func record(measurements types: Set<MeasurementType>) {
         if disableIdleTimer {
             UIApplication.shared.isIdleTimerDisabled = true
         }
+        guard !recordingInProgress, !types.isEmpty else { return }
         
-        guard !recordingInProgress, !measurementTypes.isEmpty else {
-            return
-        }
+        activeRecording = Recording(
+            entries: [],
+            state: .inProgress,
+            measurementTypes: types
+        )
         
-        let newRecording = Recording(entries: [], state: .inProgress, measurementTypes: measurementTypes)
-        activeRecording = newRecording
-//        repository.save([newRecording])
+        types.forEach(subscribeForChanges)
         
-        for type in measurementTypes {
-            subscribeForChanges(of: type)
-        }
+        objectWillChange.send()
     }
     
     func stopRecording() {
         if disableIdleTimer {
             UIApplication.shared.isIdleTimerDisabled = false
         }
+        guard recordingInProgress,
+              var current = activeRecording
+        else { return }
         
-        guard recordingInProgress else {
-            return
+        current.state = .completed
+        
+        Task {
+            await repository.save([current])
+            await repository.update()
+            await refreshRecordings()
         }
-        
-        if var activeRecording = activeRecording {
-            activeRecording.state = .completed
-            repository.save([activeRecording])
-            repository.update()
-        }
-        
-        print(activeRecording?.entries.count)
         
         activeRecording = nil
-        cancelSubscriptions()
+        subscriptions.removeAll()
+
         objectWillChange.send()
     }
     
     func delete(recordingID: String) {
-        repository.delete(recordingID: recordingID)
-        objectWillChange.send()
-    }
-    
-    private func subscribeForChanges(of measurementType: MeasurementType) {
-        let newSubsription = measurer.observableAxes[measurementType]?.objectWillChange.sink { [ weak self ] in
-            self?.save(axes: self?.measurer.observableAxes[measurementType]?.axes, of: measurementType)
+        Task {
+            await repository.delete(recordingID: recordingID)
+            await repository.update()
+            await refreshRecordings()
         }
-        subscriptions.append(newSubsription)
     }
     
-    private func save(axes: (any Axes)?, of type: MeasurementType) {
-        guard let axes = axes else { return }
-        save(axes: axes, of: type)
+    func delete(recordingIDs: [String]) {
+        Task {
+            await repository.delete(recordingIDs: recordingIDs)
+            await repository.update()
+            await refreshRecordings()
+        }
     }
     
-    private func save(axes: any Axes, of type: MeasurementType) {
-        let newEntry = Recording.Entry(measurementType: type, date: Date(), axes: axes)
-        activeRecording?.entries.append(newEntry)
+    private func subscribeForChanges(of type: MeasurementType) {
+        guard let obs = measurer.observableAxes[type] else { return }
+        let sub = obs.objectWillChange.sink { [weak self] in
+            self?.appendEntry(for: type)
+        }
+        subscriptions.append(sub)
+    }
+    
+    private func appendEntry(for type: MeasurementType) {
+        guard let axes = measurer.observableAxes[type]?.axes,
+              var current = activeRecording
+        else { return }
+        
+        let entry = Recording.Entry(
+            measurementType: type,
+            date: Date(),
+            axes: axes
+        )
+        current.entries.append(entry)
+        activeRecording = current
         
         objectWillChange.send()
     }
     
-    private func cancelSubscriptions() {
-        subscriptions = []
+    // MARK: - Helpers
+    
+    private func refreshRecordings() async {
+        await repository.update()
+        let stored = await repository.recordings
+        var list = stored
+        if let current = activeRecording {
+            list.insert(current, at: 0)
+        }
+        recordings = list
     }
 }

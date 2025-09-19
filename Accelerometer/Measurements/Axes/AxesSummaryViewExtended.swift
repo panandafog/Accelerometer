@@ -66,113 +66,75 @@ struct AxesSummaryViewExtended: View {
     }
 }
 
+// MARK: - Previews
+
 struct AxesSummaryViewExtended_Previews: PreviewProvider {
     
-    static let settings = Settings()
+    // MARK: Test Measurers
     
-    // TODO: refactor this
-    static let measurer1: Measurer = {
-        let measurer = Measurer(settings: settings)
-        var axes = TriangleAxes.zero
-        axes.displayableAbsMax = 1.0
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .userAcceleration,
-            values: [
-                .x: 0,
-                .y: 0,
-                .z: 0
-            ]
-        )
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .magneticField,
-            values: [
-                .x: 0,
-                .y: 0,
-                .z: 0
-            ]
-        )
-        return measurer
-    }()
+    struct MeasurerScenario {
+        let title: String
+        let measurer: Measurer
+    }
     
-    static let measurer2: Measurer = {
-        let measurer = Measurer(settings: settings)
-        var axes = TriangleAxes.zero
-        axes.displayableAbsMax = 1.0
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .userAcceleration,
-            values: [
-                .x: 0.5,
-                .y: 0.5,
-                .z: 0.5
-            ]
-        )
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .magneticField,
-            values: [
-                .x: 100,
-                .y: 100,
-                .z: 100
-            ]
-        )
-        return measurer
-    }()
+    private static let settings = Settings()
     
-    static let measurer3: Measurer = {
-        let measurer = Measurer(settings: settings)
-        var axes = TriangleAxes.zero
-        axes.displayableAbsMax = 1.0
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .userAcceleration,
-            values: [
-                .x: 1,
-                .y: 1,
-                .z: 1
-            ]
-        )
-        measurer.saveData(
-            axesType: TriangleAxes.self,
-            measurementType: .magneticField,
-            values: [
-                .x: 200,
-                .y: 200,
-                .z: 200
-            ]
-        )
-        return measurer
-    }()
+    private static func makeMeasurer(x: Double, y: Double, z: Double) -> Measurer {
+        let m = Measurer(settings: settings)
+        m.saveData(axesType: TriangleAxes.self, measurementType: .userAcceleration,
+                   values: [.x: x, .y: y, .z: z])
+        m.saveData(axesType: TriangleAxes.self, measurementType: .magneticField,
+                   values: [.x: x * 200, .y: y * 200, .z: z * 200])
+        return m
+    }
+    
+    private static let scenarios: [MeasurerScenario] = [
+        MeasurerScenario(title: "Zero",    measurer: makeMeasurer(x: 0,   y: 0,   z: 0)),
+        MeasurerScenario(title: "Half-Max",measurer: makeMeasurer(x: 0.5, y: 0.5, z: 0.5)),
+        MeasurerScenario(title: "Full-Max",measurer: makeMeasurer(x: 1,   y: 1,   z: 1))
+    ]
+    
+    // MARK: Preview
     
     static var previews: some View {
         Group {
-            AxesSummaryViewExtended(type: .userAcceleration)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .environmentObject(measurer1)
-            AxesSummaryViewExtended(type: .userAcceleration)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .environmentObject(measurer2)
-            AxesSummaryViewExtended(type: .userAcceleration)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .environmentObject(measurer3)
-            AxesSummaryViewExtended(type: .magneticField)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .environmentObject(measurer1)
-            AxesSummaryViewExtended(type: .magneticField)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .environmentObject(measurer2)
-            AxesSummaryViewExtended(type: .magneticField)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .environmentObject(measurer3)
+            ForEach([MeasurementType.userAcceleration, .magneticField], id: \.self) { type in
+                PreviewSection(type: type, scenarios: scenarios)
+            }
         }
         .environmentObject(settings)
+    }
+}
+
+// MARK: Helper Views
+
+private struct PreviewSection: View {
+    let type: MeasurementType
+    let scenarios: [AxesSummaryViewExtended_Previews.MeasurerScenario]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(type.name.capitalizingFirstLetter())
+                .font(.title2)
+                .padding(.bottom)
+            
+            VStack(spacing: 20) {
+                ForEach(scenarios, id: \.title) { scenario in
+                    VStack(spacing: 8) {
+                        Text(scenario.title)
+                            .font(.caption)
+                        AxesSummaryViewExtended(type: type)
+                            .environmentObject(scenario.measurer)
+                            .padding()
+                            .background(Color(.systemBackground))
+                            .cornerRadius(6)
+                            .shadow(radius: 1)
+                    }
+                }
+            }
+        }
+        .padding()
+        .previewDisplayName(type.name.capitalizingFirstLetter())
+        .previewLayout(.sizeThatFits)
     }
 }
