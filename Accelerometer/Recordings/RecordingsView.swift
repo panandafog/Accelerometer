@@ -33,21 +33,10 @@ struct RecordingsView: View {
         }
     }
     
-    var activeRecording: Recording? {
-        guard let firstRecording = recorder.recordings.first else {
-            return nil
-        }
-        if firstRecording.state == .inProgress {
-            return firstRecording
-        } else {
-            return nil
-        }
-    }
-    
     var lastRecordings: [Recording] {
         var recordings = recorder.recordings
-        if activeRecording != nil {
-            recordings.removeFirst()
+        if let activeRecording = recorder.activeRecording {
+            recordings.removeAll { $0.id == activeRecording.id }
         }
         return recordings
     }
@@ -164,7 +153,7 @@ struct RecordingsView: View {
                     }
                 }
                 
-                if let activeRecording = activeRecording {
+                if let activeRecording = recorder.activeRecording {
                     Section(header: Text("Recording in progress")) {
                         recordingRow(recording: activeRecording)
                     }
@@ -195,7 +184,7 @@ struct RecordingsView: View {
                         isEditMode = false
                         selectedRecordings.removeAll()
                     }
-                } else if activeRecording == nil {
+                } else if recorder.activeRecording == nil {
                     Button("Edit") {
                         isEditMode = true
                     }

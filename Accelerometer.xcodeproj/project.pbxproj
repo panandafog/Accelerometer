@@ -10,6 +10,7 @@
 		0152C57173B5A7117F4F15D8 /* Pods_AccelerometerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D1941BEB77F79AC9EA829F /* Pods_AccelerometerTests.framework */; };
 		0B05EB5E2A9A1523005497F6 /* MagnitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5D2A9A1523005497F6 /* MagnitudeAxes.swift */; };
 		0B05EB602A9A1CFB005497F6 /* TriangleAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */; };
+		0B1845512E7DA059004F5474 /* RecordingProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1845502E7DA052004F5474 /* RecordingProcessor.swift */; };
 		0B1E6D2328724B2B003B8C5B /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E6D2228724B2B003B8C5B /* Collection.swift */; };
 		0B24EC0828621BBE00AD3EF1 /* AccelerometerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC0728621BBE00AD3EF1 /* AccelerometerApp.swift */; };
 		0B24EC0A28621BBE00AD3EF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC0928621BBE00AD3EF1 /* ContentView.swift */; };
@@ -96,6 +97,7 @@
 /* Begin PBXFileReference section */
 		0B05EB5D2A9A1523005497F6 /* MagnitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnitudeAxes.swift; sourceTree = "<group>"; };
 		0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleAxes.swift; sourceTree = "<group>"; };
+		0B1845502E7DA052004F5474 /* RecordingProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingProcessor.swift; sourceTree = "<group>"; };
 		0B1E6D2228724B2B003B8C5B /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acc.elerometer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B24EC0728621BBE00AD3EF1 /* AccelerometerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccelerometerApp.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
+				0B1845502E7DA052004F5474 /* RecordingProcessor.swift */,
 				0BE138F5289409820026D0DC /* Recorder.swift */,
 				0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */,
 			);
@@ -732,6 +735,7 @@
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
 				0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */,
 				0BE138EE2893FFA10026D0DC /* RecordingsView.swift in Sources */,
+				0B1845512E7DA059004F5474 /* RecordingProcessor.swift in Sources */,
 				0BA63B702897EFED0040B63D /* Date.swift in Sources */,
 				0B24EC4C2862690800AD3EF1 /* HeaderView.swift in Sources */,
 				0BA63B722897FBCE0040B63D /* RecordingPreview.swift in Sources */,

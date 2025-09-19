@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreData
 
 struct Recording: Identifiable {
     
@@ -46,30 +45,6 @@ struct Recording: Identifiable {
         self.entries = entries
         self.state = state
         self.measurementTypes = measurementTypes
-    }
-    
-    func csv(of type: MeasurementType, dateFormat: Settings.ExportDateFormat) -> TextFile? {
-        guard measurementTypes.contains(type) else {
-            return nil
-        }
-        let filteredEntries = entries
-            .filter({ $0.measurementType == type })
-        
-        var csvStrings = [RecordingUtils.stringsHeader(of: type)]
-        csvStrings.append(contentsOf: filteredEntries.map({ $0.getCsvString(dateFormat: dateFormat) }))
-        
-        return TextFile(initialText: csvStrings.joined(separator: RecordingUtils.rowSeparator))
-    }
-    
-    func chartValues(of measurementType: MeasurementType) -> [Entry] {
-        let filtered = entries.filter { $0.measurementType == measurementType }
-        
-        guard filtered.count > 50 else { return filtered }
-        
-        let stride = filtered.count / 50
-        return filtered.enumerated().compactMap { index, entry in
-            return index % stride == 0 ? entry : nil
-        }
     }
 }
 
