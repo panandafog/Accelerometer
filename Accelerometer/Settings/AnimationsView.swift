@@ -27,6 +27,7 @@ struct AnimationsView: View {
                 set: { setEnableAnimations($0) }
             )
         )
+        .tint(.accentColor)
     }
 }
 

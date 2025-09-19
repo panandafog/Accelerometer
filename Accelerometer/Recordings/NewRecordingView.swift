@@ -98,6 +98,7 @@ struct NewRecordingView: View {
                             )) {
                                 Text(measurementType.name)
                             }
+                            .tint(.accentColor)
                         }
                     }
                 }
