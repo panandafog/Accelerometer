@@ -49,67 +49,59 @@ struct NewRecordingView: View {
         presentationMode.wrappedValue.dismiss()
     }
     
-    var startRecordingButton: some View {
-        let startAllowed = !allMeasurementAreUnselected
-        let text = startAllowed ? "Start recording" : "Select measurements to start recording"
-        let backgroundColor: Color = startAllowed ? .enabledButton : .disabledButton
-        
-        return Button(
-            action: {
-                startRecording()
-            }
-        ) {
-            Text(text)
-                .foregroundColor(.background)
-            
-        }
-        .disabled(!startAllowed)
-        .padding(.defaultPadding)
-        .background(backgroundColor)
-        .cornerRadius(CGFloat.defaultCornerRadius)
+    private func setAll(_ selected: Bool) {
+        measurementTypes.keys.forEach { measurementTypes[$0] = selected }
+    }
+    
+    private var allSelected: Bool {
+        !measurementTypes.values.contains(false)
+    }
+    
+    private var noneSelected: Bool {
+        !measurementTypes.values.contains(true)
     }
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 16) {
+                
                 HStack {
                     Spacer()
-                    Button(action: {
-                        if allMeasurementAreSelected {
-                            setAllMeasurementTypes(selected: false)
-                        } else {
-                            setAllMeasurementTypes(selected: true)
-                        }
-                    }, label: {
-                        Text(allMeasurementAreSelected ? "Unselect all" : "Select all")
-                            .padding()
-                    })
+                    Button(allSelected ? "Unselect All" : "Select All") {
+                        setAll(!allSelected)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.accentColor)
                 }
+                .padding(.horizontal)
+                
                 List {
-                    ForEach(MeasurementType.allShownCases, id: \.self) { measurementType in
-                        HStack {
-                            Toggle(isOn: .init(
-                                get: {
-                                    measurementTypes[measurementType] ?? false
-                                },
-                                set: { newValue in
-                                    measurementTypes[measurementType] = newValue
-                                }
-                            )) {
-                                Text(measurementType.name)
-                            }
-                            .tint(.accentColor)
-                        }
+                    ForEach(MeasurementType.allShownCases, id: \.self) { type in
+                        Toggle(type.name, isOn: Binding(
+                            get: { measurementTypes[type] ?? false },
+                            set: { measurementTypes[type] = $0 }
+                        ))
+                        .tint(.accentColor)
                     }
                 }
-                .listStyle(.inset)
-                startRecordingButton
-                    .padding()
+                .listStyle(.insetGrouped)
+                
+                Button {
+                    startRecording()
+                } label: {
+                    Text("Start Recording")
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .disabled(noneSelected)
+                .padding(.horizontal)
             }
-            .navigationTitle("New recording")
+            .navigationTitle("New Recording")
             .toolbar {
-                Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
             }
         }

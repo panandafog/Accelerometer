@@ -25,7 +25,6 @@ struct MeasurementSummaryView: View {
     var recordButton: some View {
         let enabled = !recorder.recordingInProgress
         let text = enabled ? "Start recording this value" : "Recording is already enabled"
-        let backgroundColor: Color = enabled ? .enabledButton : .disabledButton
         
         return Button(
             action: {
@@ -35,10 +34,10 @@ struct MeasurementSummaryView: View {
                     .foregroundColor(.background)
             }
         )
+        .buttonStyle(.borderedProminent)
+        .controlSize(.large)
         .disabled(!enabled)
         .padding(.defaultPadding)
-        .background(backgroundColor)
-        .cornerRadius(.defaultCornerRadius)
     }
     
     var body: some View {
