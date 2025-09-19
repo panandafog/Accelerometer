@@ -10,42 +10,18 @@ import SwiftUI
 struct NewRecordingView: View {
     
     @Environment(\.presentationMode) var presentationMode
-    
     @EnvironmentObject var recorder: Recorder
     
     @State var measurementTypes: [MeasurementType: Bool] = {
-        var dictionary: [MeasurementType: Bool] = [:]
-        MeasurementType.allShownCases.forEach {
-            dictionary[$0] = true
-        }
-        return dictionary
+        var dict: [MeasurementType: Bool] = [:]
+        MeasurementType.allShownCases.forEach { dict[$0] = true }
+        return dict
     }()
     
-    func setAllMeasurementTypes(selected: Bool) {
-        for key in Array(measurementTypes.keys) {
-            measurementTypes[key] = selected
-        }
-    }
-    
-    func allMeasurementTypesAre(selected: Bool) -> Bool {
-        !Array(measurementTypes.values).contains {
-            $0 == !selected
-        }
-    }
-    
-    var allMeasurementAreSelected: Bool {
-        allMeasurementTypesAre(selected: true)
-    }
-    
-    var allMeasurementAreUnselected: Bool {
-        allMeasurementTypesAre(selected: false)
-    }
-    
-    func startRecording() {
-        let enabledMeasurementTypes: Set<MeasurementType> = Set(measurementTypes.compactMap {
-            $0.value ? $0.key : nil
-        })
-        recorder.record(measurements: enabledMeasurementTypes)
+    private func startRecording() {
+        let enabled = measurementTypes
+            .compactMap { $0.value ? $0.key : nil }
+        recorder.record(measurements: Set(enabled))
         presentationMode.wrappedValue.dismiss()
     }
     
@@ -79,22 +55,27 @@ struct NewRecordingView: View {
                     ForEach(MeasurementType.allShownCases, id: \.self) { type in
                         Toggle(type.name, isOn: Binding(
                             get: { measurementTypes[type] ?? false },
-                            set: { measurementTypes[type] = $0 }
+                            set: { newValue in
+                                withAnimation(.easeInOut) {
+                                    measurementTypes[type] = newValue
+                                }
+                            }
                         ))
                         .tint(.accentColor)
                     }
                 }
                 .listStyle(.insetGrouped)
+                .animation(.easeInOut, value: measurementTypes)
                 
-                Button {
+                Button("Start Recording") {
                     startRecording()
-                } label: {
-                    Text("Start Recording")
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+                .tint(noneSelected ? .gray : .accentColor)
                 .disabled(noneSelected)
                 .padding(.horizontal)
+                .animation(.easeInOut, value: noneSelected)
             }
             .navigationTitle("New Recording")
             .toolbar {
