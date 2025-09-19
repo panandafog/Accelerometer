@@ -15,8 +15,7 @@ struct RecordingSummaryView: View {
     @EnvironmentObject private var settings: Settings
     @EnvironmentObject private var recorder: Recorder
     @Environment(\.presentationMode) private var presentationMode
-    
-    @State private var isPresentingDeleteConfirmation = false
+
     @State private var isPresentingExporter = false
     @State private var exportURL: URL? = nil
     @State private var exportLoading = false
@@ -41,9 +40,9 @@ struct RecordingSummaryView: View {
         }
         .navigationTitle("Recording")
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
+            ToolbarItem(placement: .secondaryAction) {
                 Button(role: .destructive) {
-                    isPresentingDeleteConfirmation = true
+                    deleteRecording()
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
@@ -56,12 +55,6 @@ struct RecordingSummaryView: View {
 //                }
 //                .disabled(true)
 //            }
-        }
-        .confirmationDialog(
-            "Are you sure?",
-            isPresented: $isPresentingDeleteConfirmation
-        ) {
-            Button("Delete", role: .destructive, action: deleteRecording)
         }
         .fileExporter(
             isPresented: $isPresentingExporter,
