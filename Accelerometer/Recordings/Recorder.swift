@@ -143,12 +143,7 @@ class Recorder: ObservableObject {
     private func refreshRecordings() async {
         await repository.update()
         let stored = await repository.recordings
-        var list = stored
-        if let current = activeRecording {
-            list.insert(current, at: 0)
-        }
-        
-        await MainActor.run { recordings = list }
+        await MainActor.run { recordings = stored }
     }
     
     private func hasEnoughMemory() async -> Bool {
