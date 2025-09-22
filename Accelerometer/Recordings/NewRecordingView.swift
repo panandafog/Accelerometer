@@ -64,7 +64,7 @@ struct NewRecordingView: View {
                         .tint(.accentColor)
                     }
                 }
-                .listStyle(.insetGrouped)
+                .listStyle(.plain)
                 .animation(.easeInOut, value: measurementTypes)
                 
                 Button("Start Recording") {
