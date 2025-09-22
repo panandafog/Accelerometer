@@ -16,7 +16,7 @@ class Recorder: ObservableObject {
     @Published var isInEditMode = false
     @Published var hasEnoughMemory = true
     
-    @Published private(set) var recordings: [Recording] = []
+    @Published private(set) var recordingsMetadata: [Recording] = []
     @Published private(set) var activeRecording: Recording? = nil
     
     @ObservedObject private var measurer: Measurer
@@ -75,17 +75,16 @@ class Recorder: ObservableObject {
                 }
             }
             
-            guard let current = activeRecording else { return }
+            guard var activeRecording = activeRecording else { return }
+            activeRecording.state = .completed
+            activeRecording.end = Date.now
             
-            var completed = current
-            completed.state = .completed
-            
-            await repository.save([completed])
-            await repository.update()
+            await repository.save([activeRecording])
+            await repository.updateMetadata()
             await refreshRecordings()
             
             await MainActor.run {
-                activeRecording = nil
+                self.activeRecording = nil
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
@@ -95,7 +94,7 @@ class Recorder: ObservableObject {
     func delete(recordingID: String) {
         Task {
             await repository.delete(recordingID: recordingID)
-            await repository.update()
+            await repository.updateMetadata()
             await refreshRecordings()
         }
     }
@@ -103,7 +102,7 @@ class Recorder: ObservableObject {
     func delete(recordingIDs: [String]) {
         Task {
             await repository.delete(recordingIDs: recordingIDs)
-            await repository.update()
+            await repository.updateMetadata()
             await refreshRecordings()
         }
     }
@@ -130,7 +129,11 @@ class Recorder: ObservableObject {
                 date: Date(),
                 axes: axes
             )
-            current.entries.append(entry)
+            
+            if current.entries == nil {
+                current.entries = []
+            }
+            current.entries?.append(entry)
             
             await MainActor.run {
                 activeRecording = current
@@ -140,9 +143,9 @@ class Recorder: ObservableObject {
     }
     
     private func refreshRecordings() async {
-        await repository.update()
-        let stored = await repository.recordings
-        await MainActor.run { recordings = stored }
+        await repository.updateMetadata()
+        let stored = await repository.recordingsMetadata
+        await MainActor.run { recordingsMetadata = stored }
     }
     
     private func watchFreeSpace() async {

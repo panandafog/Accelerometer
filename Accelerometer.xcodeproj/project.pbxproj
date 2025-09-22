@@ -399,15 +399,15 @@
 			isa = PBXGroup;
 			children = (
 				0B508CD9289C7EEB00326C6E /* Database */,
+				0BE138F5289409820026D0DC /* Recorder.swift */,
+				0BE138F1289400E70026D0DC /* Recording.swift */,
+				0B1845502E7DA052004F5474 /* RecordingProcessor.swift */,
+				0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */,
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
 				0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
-				0BE138F1289400E70026D0DC /* Recording.swift */,
-				0B1845502E7DA052004F5474 /* RecordingProcessor.swift */,
-				0BE138F5289409820026D0DC /* Recorder.swift */,
-				0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";

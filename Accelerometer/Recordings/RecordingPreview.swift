@@ -12,13 +12,9 @@ struct RecordingPreview: View {
     let recording: Recording
     
     var startString: String {
-        let startString: String
-        if let start = recording.start {
-            startString = DateFormatter.Recordings.string(from: start)
-        } else {
-            startString = "???"
-        }
-        return startString
+        DateFormatter.Recordings.string(
+            from: recording.start
+        )
     }
     
     var durationString: String {

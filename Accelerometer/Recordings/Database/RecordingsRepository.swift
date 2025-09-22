@@ -13,7 +13,7 @@ actor RecordingsRepository {
         configuration: .defaultConfiguration
     )
 
-    private(set) var recordings: [Recording] = []
+    private(set) var recordingsMetadata: [Recording] = []
 
     func save(_ items: [Recording]) {
         let realms = items.map { RecordingRealm(recording: $0) }
@@ -33,11 +33,11 @@ actor RecordingsRepository {
         databaseManager.delete(toDelete)
     }
     
-    func update() {
-        let realmRecordings: Results<RecordingRealm> = databaseManager.read()
-        let reversed = Array(realmRecordings)
-            .map { $0.recording }
+    func updateMetadata() {
+        let realmRecs: Results<RecordingRealm> = databaseManager.read()
+        let metas = realmRecs
+            .map(\.recordingMetadata)
             .reversed()
-        recordings = Array(reversed)
+        recordingsMetadata = Array(metas)
     }
 }

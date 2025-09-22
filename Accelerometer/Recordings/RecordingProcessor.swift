@@ -18,8 +18,9 @@ actor RecordingProcessor {
             throw ProcessingError.invalidType
         }
         
+        // TODO load entries for csv
         let header = RecordingUtils.stringsHeader(of: type)
-        let rows = recording.entries
+        let rows = (recording.entries ?? [])
             .filter { $0.measurementType == type }
             .map { $0.getCsvString(dateFormat: dateFormat) }
         let csvText = ([header] + rows).joined(separator: RecordingUtils.rowSeparator)
@@ -37,7 +38,7 @@ actor RecordingProcessor {
         for type: MeasurementType,
         maxCount: Int = 50
     ) async -> [Recording.Entry] {
-        let filtered = recording.entries
+        let filtered = (recording.entries ?? [])
             .filter { $0.measurementType == type }
     
         guard filtered.count > maxCount else { return filtered }
