@@ -44,6 +44,8 @@ class Recorder: ObservableObject {
         activeRecording != nil
     }
     
+    // MARK: - Recordings management
+    
     func record(measurements types: Set<MeasurementType>) {
         Task {
             if !hasEnoughMemory { return }
@@ -147,6 +149,26 @@ class Recorder: ObservableObject {
         let stored = await repository.recordingsMetadata
         await MainActor.run { recordingsMetadata = stored }
     }
+    
+    // MARK: -  Recordings cache menagement
+    
+    func loadFullRecording(id: String) async -> Recording? {
+        return await repository.loadFullRecording(id: id)
+    }
+    
+    func clearRecordingCache(id: String) async {
+        await repository.clearCache(for: id)
+    }
+    
+    func clearAllRecordingCache() async {
+        await repository.clearAllCache()
+    }
+    
+    func getCacheSize() async -> Int {
+        return await repository.cacheSize
+    }
+    
+    // MARK: - Memory control
     
     private func watchFreeSpace() async {
         while true {

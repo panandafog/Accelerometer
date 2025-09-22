@@ -101,7 +101,7 @@ struct RecordingsView: View {
             RecordingPreview(recording: recording)
         } else {
             NavigationLink {
-                RecordingSummaryView(recording: recording)
+                RecordingSummaryView(recordingMetadata: recording)
             } label: {
                 RecordingPreview(recording: recording)
             }

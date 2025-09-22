@@ -10,30 +10,40 @@ import UniformTypeIdentifiers
 
 struct RecordingSummaryView: View {
     
-    let recording: Recording
+    let recordingMetadata: Recording
     
     @EnvironmentObject private var settings: Settings
     @EnvironmentObject private var recorder: Recorder
     @Environment(\.presentationMode) private var presentationMode
-
+    
+    @State private var fullRecording: Recording?
+    @State private var isLoading = false
+    
     @State private var isPresentingExporter = false
-    @State private var exportURL: URL? = nil
+    @State private var exportURL: URL?
     @State private var exportLoading = false
     
     private let processor = RecordingProcessor()
     
     var body: some View {
+        let recording = fullRecording ?? recordingMetadata
         List {
             Section("Info") {
                 RecordingPreview(recording: recording)
             }
             Section("Measurements") {
-                ForEach(recording.sortedMeasurementTypes, id: \.self) { type in
-                    RecordingMeasurementChartView(
-                        recording: recording,
-                        measurementType: type
-                    ) {
-                        export(type: type)
+                if isLoading {
+                    ProgressView()
+                } else {
+                    ForEach(
+                        recording.sortedMeasurementTypes, id: \.self
+                    ) { type in
+                        RecordingMeasurementChartView(
+                            recording: recording,
+                            measurementType: type
+                        ) {
+                            export(type: type)
+                        }
                     }
                 }
             }
@@ -62,15 +72,27 @@ struct RecordingSummaryView: View {
             contentType: UTType.plainText,
             defaultFilename: defaultFilename()
         ) { _ in }
+            .onDisappear {
+                Task {
+                    await recorder.clearRecordingCache(id: recordingMetadata.id)
+                }
+            }
+            .task {
+                if recordingMetadata.entries == nil {
+                    isLoading = true
+                    fullRecording = await recorder.loadFullRecording(id: recordingMetadata.id)
+                    isLoading = false
+                }
+            }
     }
     
     private func deleteRecording() {
-        recorder.delete(recordingID: recording.id)
+        recorder.delete(recordingID: recordingMetadata.id)
         presentationMode.wrappedValue.dismiss()
     }
     
     private func export(type: MeasurementType) {
-        guard !exportLoading else { return }
+        guard !exportLoading, let recording = fullRecording else { return }
         exportLoading = true
         Task {
             defer { exportLoading = false }
@@ -80,7 +102,6 @@ struct RecordingSummaryView: View {
                     for: type,
                     dateFormat: settings.exportDateFormat
                 )
-                
                 exportURL = url
                 isPresentingExporter = true
             } catch {
@@ -90,9 +111,29 @@ struct RecordingSummaryView: View {
     }
     
     private func defaultFilename() -> String {
-        (exportURL?.lastPathComponent ?? recording.id) + ".csv"
+        (exportURL?.lastPathComponent ?? recordingMetadata.id) + ".csv"
     }
 }
+
+// Debug-only initializer for previews
+#if DEBUG
+extension RecordingSummaryView {
+    
+    init(previewRecording: Recording) {
+        self.recordingMetadata = Recording(
+            id: previewRecording.id,
+            start: previewRecording.start,
+            end: previewRecording.end,
+            entries: nil,
+            state: previewRecording.state,
+            measurementTypes: previewRecording.measurementTypes
+        )
+        
+        _fullRecording = State(initialValue: previewRecording)
+        _isLoading = State(initialValue: false)
+    }
+}
+#endif
 
 
 struct FileDocumentWrapper: FileDocument {
@@ -112,52 +153,45 @@ struct FileDocumentWrapper: FileDocument {
     }
 }
 
-
-struct RecordingView_Previews: PreviewProvider {
+struct RecordingSummaryView_Previews: PreviewProvider {
     
     static let settings = Settings()
-    static let measurer = Measurer(settings: settings)
-    static let recorder = Recorder(measurer: measurer, settings: settings)
+    static let recorder = Recorder(
+        measurer: Measurer(settings: settings),
+        settings: settings
+    )
     
     static let axes: TriangleAxes = {
-        var axes = TriangleAxes.zero
-        axes.displayableAbsMax = 1.0
-        return axes
+        var a = TriangleAxes.zero
+        a.displayableAbsMax = 1.0
+        return a
     }()
     
+    static let sampleRecording = Recording(
+        id: UUID().uuidString,
+        start: Date().addingTimeInterval(-60),
+        end: Date(),
+        entries: [
+            .init(measurementType: .acceleration, date: Date().addingTimeInterval(-60), axes: axes),
+            .init(measurementType: .acceleration, date: Date(),                    axes: axes)
+        ],
+        state: .completed,
+        measurementTypes: [.acceleration]
+    )
+    
     static var previews: some View {
-        RecordingSummaryView(
-            recording: Recording(
-                entries: [
-                    .init(
-                        measurementType: .acceleration,
-                        date: .init(),
-                        axes: axes
-                    )
-                ],
-                state: .completed,
-                measurementTypes: [.acceleration]
-            )
-        )
+        NavigationView {
+            RecordingSummaryView(previewRecording: sampleRecording)
+                .environmentObject(settings)
+                .environmentObject(recorder)
+        }
         .preferredColorScheme(.light)
-        .environmentObject(recorder)
-        .environmentObject(settings)
         
-        RecordingSummaryView(
-            recording: Recording(
-                entries: [
-                    .init(
-                        measurementType: .acceleration,
-                        date: .init(),
-                        axes: axes
-                    )
-                ],
-                state: .completed,
-                measurementTypes: [.acceleration]
-            )
-        )
+        NavigationView {
+            RecordingSummaryView(previewRecording: sampleRecording)
+                .environmentObject(settings)
+                .environmentObject(recorder)
+        }
         .preferredColorScheme(.dark)
-        .environmentObject(recorder)
-        .environmentObject(settings)
     }
 }
