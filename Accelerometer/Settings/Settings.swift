@@ -17,6 +17,8 @@ class Settings: ObservableObject {
     
     static let measurementsDisplayRoundPlaces = 3
     
+    static let minFreeSpaceMB = 500
+    
     private static let initialUpdateInterval = 0.5
     
     var exportDateFormat: ExportDateFormat {

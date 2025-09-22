@@ -10,12 +10,19 @@ import SwiftUI
 
 @MainActor
 class Recorder: ObservableObject {
+    
+    private static let memoryCheckCooldownNs: UInt64 = 5_000_000_000
+    
     @Published var isInEditMode = false
+    @Published var hasEnoughMemory = true
+    
     @Published private(set) var recordings: [Recording] = []
     @Published private(set) var activeRecording: Recording? = nil
     
     @ObservedObject private var measurer: Measurer
     private let repository = RecordingsRepository()
+    private let memoryMonitor = MemoryMonitor()
+    
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
     
@@ -24,6 +31,9 @@ class Recorder: ObservableObject {
         Task {
             await refreshRecordings()
         }
+        Task {
+            await watchFreeSpace()
+        }
     }
     
     var recordingInProgress: Bool {
@@ -31,42 +41,51 @@ class Recorder: ObservableObject {
     }
     
     func record(measurements types: Set<MeasurementType>) {
-        if disableIdleTimer {
-            UIApplication.shared.isIdleTimerDisabled = true
+        Task {
+            if !hasEnoughMemory { return }
+            
+            await MainActor.run {
+                if disableIdleTimer {
+                    UIApplication.shared.isIdleTimerDisabled = true
+                }
+                
+                guard !recordingInProgress, !types.isEmpty else { return }
+                activeRecording = Recording(
+                    entries: [],
+                    state: .inProgress,
+                    measurementTypes: types
+                )
+                
+                types.forEach(subscribeForChanges)
+                
+                objectWillChange.send()
+            }
         }
-        guard !recordingInProgress, !types.isEmpty else { return }
-        
-        activeRecording = Recording(
-            entries: [],
-            state: .inProgress,
-            measurementTypes: types
-        )
-        
-        types.forEach(subscribeForChanges)
-        
-        objectWillChange.send()
     }
     
     func stopRecording() {
-        if disableIdleTimer {
-            UIApplication.shared.isIdleTimerDisabled = false
-        }
-        guard recordingInProgress,
-              var current = activeRecording
-        else { return }
-        
-        current.state = .completed
-        
         Task {
-            await repository.save([current])
+            await MainActor.run {
+                if disableIdleTimer {
+                    UIApplication.shared.isIdleTimerDisabled = false
+                }
+            }
+            
+            guard let current = activeRecording else { return }
+            
+            var completed = current
+            completed.state = .completed
+            
+            await repository.save([completed])
             await repository.update()
             await refreshRecordings()
+            
+            await MainActor.run {
+                activeRecording = nil
+                subscriptions.removeAll()
+                objectWillChange.send()
+            }
         }
-        
-        activeRecording = nil
-        subscriptions.removeAll()
-
-        objectWillChange.send()
     }
     
     func delete(recordingID: String) {
@@ -87,6 +106,7 @@ class Recorder: ObservableObject {
     
     private func subscribeForChanges(of type: MeasurementType) {
         guard let obs = measurer.observableAxes[type] else { return }
+        
         let sub = obs.objectWillChange.sink { [weak self] in
             self?.appendEntry(for: type)
         }
@@ -94,30 +114,56 @@ class Recorder: ObservableObject {
     }
     
     private func appendEntry(for type: MeasurementType) {
-        guard let axes = measurer.observableAxes[type]?.axes,
-              var current = activeRecording
-        else { return }
-        
-        let entry = Recording.Entry(
-            measurementType: type,
-            date: Date(),
-            axes: axes
-        )
-        current.entries.append(entry)
-        activeRecording = current
-        
-        objectWillChange.send()
+        Task {
+            if !hasEnoughMemory { return }
+            
+            guard let axes = measurer.observableAxes[type]?.axes,
+                  var current = activeRecording
+            else { return }
+            
+            let entry = Recording.Entry(
+                measurementType: type,
+                date: Date(),
+                axes: axes
+            )
+            current.entries.append(entry)
+            
+            await MainActor.run {
+                activeRecording = current
+                objectWillChange.send()
+            }
+        }
     }
-    
-    // MARK: - Helpers
     
     private func refreshRecordings() async {
         await repository.update()
         let stored = await repository.recordings
-        var list = stored
-        if let current = activeRecording {
-            list.insert(current, at: 0)
+        await MainActor.run { recordings = stored }
+    }
+    
+    private func watchFreeSpace() async {
+        while true {
+            await checkMemory()
+            
+            try? await Task.sleep(
+                nanoseconds: Self.memoryCheckCooldownNs
+            )
         }
-        recordings = list
+    }
+    
+    private func checkMemory() async {
+        let hasEnoughMemory = await hasEnoughMemory()
+        if !hasEnoughMemory {
+            await MainActor.run { stopRecording() }
+        }
+        
+        await MainActor.run { self.hasEnoughMemory = hasEnoughMemory }
+    }
+    
+    
+    private func hasEnoughMemory() async -> Bool {
+        let freeMB = await memoryMonitor.freeSpaceMB()
+        let hasEnoughMemory = freeMB >= Double(Settings.minFreeSpaceMB)
+        return hasEnoughMemory
     }
 }
