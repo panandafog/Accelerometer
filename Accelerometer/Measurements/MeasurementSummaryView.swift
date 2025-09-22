@@ -23,8 +23,15 @@ struct MeasurementSummaryView: View {
     }
     
     var recordButton: some View {
-        let enabled = !recorder.recordingInProgress
-        let text = enabled ? "Start recording this value" : "Recording is already enabled"
+        let enabled = !recorder.recordingInProgress && recorder.hasEnoughMemory
+        
+        let text = if !recorder.hasEnoughMemory {
+            "Not enought memory"
+        } else if recorder.recordingInProgress {
+            "Recording is already started"
+        } else {
+            "Start recording this value"
+        }
         
         return Button(
             action: {
@@ -98,12 +105,12 @@ struct MeasurementSummaryView_Previews: PreviewProvider {
     }()
     
     static let recorder1: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()

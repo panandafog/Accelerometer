@@ -117,7 +117,7 @@ struct RecordingView_Previews: PreviewProvider {
     
     static let settings = Settings()
     static let measurer = Measurer(settings: settings)
-    static let recorder = Recorder(measurer: measurer)
+    static let recorder = Recorder(measurer: measurer, settings: settings)
     
     static let axes: TriangleAxes = {
         var axes = TriangleAxes.zero

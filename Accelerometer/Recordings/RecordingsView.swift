@@ -218,7 +218,7 @@ struct RecordingsView_Previews: PreviewProvider {
     static let measurer = Measurer(settings: settings)
     
     static let recorder: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         recorder.record(measurements: [.acceleration, .userAcceleration])
         recorder.stopRecording()
         recorder.record(measurements: [.magneticField])

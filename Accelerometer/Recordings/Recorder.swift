@@ -20,14 +20,18 @@ class Recorder: ObservableObject {
     @Published private(set) var activeRecording: Recording? = nil
     
     @ObservedObject private var measurer: Measurer
+    @ObservedObject private var settings: Settings
+    
     private let repository = RecordingsRepository()
     private let memoryMonitor = MemoryMonitor()
     
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
     
-    init(measurer: Measurer) {
+    init(measurer: Measurer, settings: Settings) {
         self.measurer = measurer
+        self.settings = settings
+        
         Task {
             await refreshRecordings()
         }
@@ -152,7 +156,16 @@ class Recorder: ObservableObject {
     }
     
     private func checkMemory() async {
+        #if (DEBUG)
+        let hasEnoughMemory = if settings.alwaysNotEnoughMemory {
+            false
+        } else {
+            await hasEnoughMemory()
+        }
+        #else
         let hasEnoughMemory = await hasEnoughMemory()
+        #endif
+        
         if !hasEnoughMemory {
             await MainActor.run { stopRecording() }
         }
