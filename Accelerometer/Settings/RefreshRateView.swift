@@ -54,12 +54,12 @@ struct RefreshRateView_Previews: PreviewProvider {
     static let measurer = Measurer(settings: settings)
     
     static let recorder1: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()
