@@ -28,6 +28,8 @@ struct RecordingsView: View {
     var secondaryRecordingTitle: String? {
         if recorder.recordingInProgress {
             return "Do not close the app"
+        } else if !recorder.hasEnoughMemory {
+            return "Not enough memory on device"
         } else {
             return nil
         }
@@ -69,7 +71,9 @@ struct RecordingsView: View {
     // MARK: Views
     
     var startStopButton: some View {
-        Button(
+        let enabled = !isEditMode && recorder.hasEnoughMemory
+        
+        return Button(
             action: {
                 if recorder.recordingInProgress {
                     recorder.stopRecording()
@@ -83,12 +87,12 @@ struct RecordingsView: View {
                 )
                 .padding(13)
                 .foregroundColor(Color.background)
-                .background(Color.accentColor)
+                .background(enabled ? Color.accentColor : Color.gray)
                 .clipShape(Circle())
                 .font(.title2)
             }
         )
-        .disabled(isEditMode)
+        .disabled(!enabled)
     }
     
     @ViewBuilder

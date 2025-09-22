@@ -10,7 +10,12 @@ import SwiftUI
 
 @MainActor
 class Recorder: ObservableObject {
+    
+    private static let memoryCheckCooldownNs: UInt64 = 5_000_000_000
+    
     @Published var isInEditMode = false
+    @Published var hasEnoughMemory = true
+    
     @Published private(set) var recordings: [Recording] = []
     @Published private(set) var activeRecording: Recording? = nil
     
@@ -37,7 +42,7 @@ class Recorder: ObservableObject {
     
     func record(measurements types: Set<MeasurementType>) {
         Task {
-            if await !hasEnoughMemory() { return }
+            if !hasEnoughMemory { return }
             
             await MainActor.run {
                 if disableIdleTimer {
@@ -110,7 +115,7 @@ class Recorder: ObservableObject {
     
     private func appendEntry(for type: MeasurementType) {
         Task {
-            if await !hasEnoughMemory() { return }
+            if !hasEnoughMemory { return }
             
             guard let axes = measurer.observableAxes[type]?.axes,
                   var current = activeRecording
@@ -130,24 +135,35 @@ class Recorder: ObservableObject {
         }
     }
     
-    private func watchFreeSpace() async {
-        while true {
-            try? await Task.sleep(nanoseconds: 10_000_000_000)
-            
-            if await !hasEnoughMemory() {
-                await MainActor.run { stopRecording() }
-            }
-        }
-    }
-    
     private func refreshRecordings() async {
         await repository.update()
         let stored = await repository.recordings
         await MainActor.run { recordings = stored }
     }
     
+    private func watchFreeSpace() async {
+        while true {
+            await checkMemory()
+            
+            try? await Task.sleep(
+                nanoseconds: Self.memoryCheckCooldownNs
+            )
+        }
+    }
+    
+    private func checkMemory() async {
+        let hasEnoughMemory = await hasEnoughMemory()
+        if !hasEnoughMemory {
+            await MainActor.run { stopRecording() }
+        }
+        
+        await MainActor.run { self.hasEnoughMemory = hasEnoughMemory }
+    }
+    
+    
     private func hasEnoughMemory() async -> Bool {
         let freeMB = await memoryMonitor.freeSpaceMB()
-        return freeMB >= Double(Settings.minFreeSpaceMB)
+        let hasEnoughMemory = freeMB >= Double(Settings.minFreeSpaceMB)
+        return hasEnoughMemory
     }
 }
