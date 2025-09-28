@@ -76,6 +76,18 @@ class Recorder: ObservableObject {
             let completedRecording = await activeRecordingManager.stopRecording()
             
             if let recording = completedRecording {
+                
+                #if (DEBUG)
+                print("--- Recording stopped ---")
+                for measurementType in recording.sortedMeasurementTypes {
+                    let count = recording.entries?.filter { $0.measurementType == measurementType }.count ?? 0
+                    print("\(measurementType.name): \(count) entries")
+                }
+                let totalCount = recording.entries?.count ?? 0
+                print("Total entries: \(totalCount)")
+                print("-------------------------")
+                #endif
+                
                 await repository.save([recording])
                 await repository.updateMetadata()
                 await refreshRecordings()
