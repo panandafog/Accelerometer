@@ -24,6 +24,7 @@ class Recorder: ObservableObject {
     
     private let repository = RecordingsRepository()
     private let memoryMonitor = MemoryMonitor()
+    private let activeRecordingManager = ActiveRecordingManager()
     
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
@@ -48,20 +49,21 @@ class Recorder: ObservableObject {
     
     func record(measurements types: Set<MeasurementType>) {
         Task {
-            if !hasEnoughMemory { return }
+            guard hasEnoughMemory, !recordingInProgress, !types.isEmpty else { return }
+            
+            let newRecording = Recording(
+                entries: [],
+                state: .inProgress,
+                measurementTypes: types
+            )
+            
+            await activeRecordingManager.startRecording(newRecording)
             
             await MainActor.run {
                 if disableIdleTimer {
                     UIApplication.shared.isIdleTimerDisabled = true
                 }
-                
-                guard !recordingInProgress, !types.isEmpty else { return }
-                activeRecording = Recording(
-                    entries: [],
-                    state: .inProgress,
-                    measurementTypes: types
-                )
-                
+                activeRecording = newRecording
                 types.forEach(subscribeForChanges)
                 
                 objectWillChange.send()
@@ -71,22 +73,19 @@ class Recorder: ObservableObject {
     
     func stopRecording() {
         Task {
+            let completedRecording = await activeRecordingManager.stopRecording()
+            
+            if let recording = completedRecording {
+                await repository.save([recording])
+                await repository.updateMetadata()
+                await refreshRecordings()
+            }
+            
             await MainActor.run {
                 if disableIdleTimer {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
-            }
-            
-            guard var activeRecording = activeRecording else { return }
-            activeRecording.state = .completed
-            activeRecording.end = Date.now
-            
-            await repository.save([activeRecording])
-            await repository.updateMetadata()
-            await refreshRecordings()
-            
-            await MainActor.run {
-                self.activeRecording = nil
+                activeRecording = nil
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
@@ -120,11 +119,9 @@ class Recorder: ObservableObject {
     
     private func appendEntry(for type: MeasurementType) {
         Task {
-            if !hasEnoughMemory { return }
+            guard hasEnoughMemory else { return }
             
-            guard let axes = measurer.observableAxes[type]?.axes,
-                  var current = activeRecording
-            else { return }
+            guard let axes = measurer.observableAxes[type]?.axes else { return }
             
             let entry = Recording.Entry(
                 measurementType: type,
@@ -132,13 +129,10 @@ class Recorder: ObservableObject {
                 axes: axes
             )
             
-            if current.entries == nil {
-                current.entries = []
-            }
-            current.entries?.append(entry)
+            let updatedRecording = await activeRecordingManager.appendEntry(entry)
             
             await MainActor.run {
-                activeRecording = current
+                activeRecording = updatedRecording
                 objectWillChange.send()
             }
         }
