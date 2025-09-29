@@ -48,6 +48,7 @@
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
+		0B96B73F2E8A91510007E730 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96B73E2E8A91510007E730 /* DequeModule */; };
 		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
 		0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */; };
 		0BA619CF2AADC9E7005DABD3 /* ObservableAxesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */; };
@@ -184,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A844F53C6B72222DA87BA782 /* Pods_Accelerometer.framework in Frameworks */,
+				0B96B73F2E8A91510007E730 /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,6 +456,7 @@
 			);
 			name = Accelerometer;
 			packageProductDependencies = (
+				0B96B73E2E8A91510007E730 /* DequeModule */,
 			);
 			productName = Accelerometer;
 			productReference = 0B24EC0428621BBE00AD3EF1 /* Acc.elerometer.app */;
@@ -531,6 +534,7 @@
 			);
 			mainGroup = 0B24EBFB28621BBE00AD3EF1;
 			packageReferences = (
+				0B96B73D2E8A91510007E730 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 0B24EC0528621BBE00AD3EF1 /* Products */;
 			projectDirPath = "";
@@ -1085,6 +1089,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0B96B73D2E8A91510007E730 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0B96B73E2E8A91510007E730 /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B96B73D2E8A91510007E730 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0B24EBFC28621BBE00AD3EF1 /* Project object */;
 }
