@@ -126,6 +126,10 @@ class Recorder: ObservableObject {
         }
     }
     
+    func loadFullRecording(id: String) async -> Recording? {
+        return await repository.loadFullRecording(id: id)
+    }
+    
     private func subscribeForChanges(of type: MeasurementType) {
         guard let obs = measurer.observableAxes[type] else { return }
         
@@ -154,25 +158,7 @@ class Recorder: ObservableObject {
     private func refreshRecordings() async {
         await repository.updateMetadata()
         let stored = await repository.recordingsMetadata
-        await MainActor.run { recordingsMetadata = stored }
-    }
-    
-    // MARK: -  Recordings cache menagement
-    
-    func loadFullRecording(id: String) async -> Recording? {
-        return await repository.loadFullRecording(id: id)
-    }
-    
-    func clearRecordingCache(id: String) async {
-        await repository.clearCache(for: id)
-    }
-    
-    func clearAllRecordingCache() async {
-        await repository.clearAllCache()
-    }
-    
-    func getCacheSize() async -> Int {
-        return await repository.cacheSize
+        await MainActor.run { recordingsMetadata = Array(stored.values) }
     }
     
     // MARK: - Memory control

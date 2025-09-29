@@ -13,16 +13,13 @@ actor RecordingsRepository {
         configuration: .defaultConfiguration
     )
 
-    private(set) var recordingsMetadata: [Recording] = []
-    private var recordings: [String: Recording] = [:]
+    private(set) var recordingsMetadata: [String: Recording] = [:]
     
     func save(_ items: [Recording]) {
         let realms = items.map { RecordingRealm(recording: $0) }
         databaseManager.write(realms)
         
-        items.forEach {
-            recordings.removeValue(forKey: $0.id)
-        }
+        updateMetadata()
     }
     
     func delete(recordingID: String) {
@@ -31,7 +28,7 @@ actor RecordingsRepository {
             databaseManager.delete([recording])
         }
         
-        recordings.removeValue(forKey: recordingID)
+        recordingsMetadata.removeValue(forKey: recordingID)
     }
     
     func delete(recordingIDs: [String]) {
@@ -40,7 +37,7 @@ actor RecordingsRepository {
         databaseManager.delete(toDelete)
         
         recordingIDs.forEach {
-            recordings.removeValue(forKey: $0)
+            recordingsMetadata.removeValue(forKey: $0)
         }
     }
     
@@ -49,34 +46,20 @@ actor RecordingsRepository {
         let metas = realmRecs
             .map(\.recordingMetadata)
             .reversed()
-        recordingsMetadata = Array(metas)
+        
+        recordingsMetadata = Dictionary(
+            uniqueKeysWithValues: metas.map { metadata in
+                (metadata.id, metadata)
+            }
+        )
     }
     
     func loadFullRecording(id: String) -> Recording? {
-        if let cached = recordings[id] {
-            return cached
-        }
-        
         let results: Results<RecordingRealm> = databaseManager.read()
         guard let realm = results.first(where: { $0.id == id }) else {
             return nil
         }
         
-        let recording = realm.recording
-        recordings[id] = recording
-        
-        return recording
-    }
-    
-    func clearCache(for id: String) {
-        recordings.removeValue(forKey: id)
-    }
-    
-    func clearAllCache() {
-        recordings.removeAll()
-    }
-    
-    var cacheSize: Int {
-        recordings.count
+        return realm.recording
     }
 }

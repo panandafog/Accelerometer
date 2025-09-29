@@ -58,13 +58,13 @@ struct RecordingSummaryView: View {
                 }
             }
             // TODO: export
-//            ToolbarItem(placement: .primaryAction) {
-//                Button {
-//                } label: {
-//                    Label("Export", systemImage: "square.and.arrow.up")
-//                }
-//                .disabled(true)
-//            }
+            //            ToolbarItem(placement: .primaryAction) {
+            //                Button {
+            //                } label: {
+            //                    Label("Export", systemImage: "square.and.arrow.up")
+            //                }
+            //                .disabled(true)
+            //            }
         }
         .fileExporter(
             isPresented: $isPresentingExporter,
@@ -72,18 +72,13 @@ struct RecordingSummaryView: View {
             contentType: UTType.plainText,
             defaultFilename: defaultFilename()
         ) { _ in }
-            .onDisappear {
-                Task {
-                    await recorder.clearRecordingCache(id: recordingMetadata.id)
-                }
+        .task {
+            if recordingMetadata.entries == nil {
+                isLoading = true
+                fullRecording = await recorder.loadFullRecording(id: recordingMetadata.id)
+                isLoading = false
             }
-            .task {
-                if recordingMetadata.entries == nil {
-                    isLoading = true
-                    fullRecording = await recorder.loadFullRecording(id: recordingMetadata.id)
-                    isLoading = false
-                }
-            }
+        }
     }
     
     private func deleteRecording() {
