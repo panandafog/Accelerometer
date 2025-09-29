@@ -19,6 +19,9 @@ struct RecordingSummaryView: View {
     @State private var fullRecording: Recording?
     @State private var isLoading = false
     
+    @State private var isShowingExportMenu = false
+    @State private var selectedTypeForExport: MeasurementType?
+    
     @State private var isPresentingExporter = false
     @State private var exportURL: URL?
     @State private var exportLoading = false
@@ -27,6 +30,7 @@ struct RecordingSummaryView: View {
     
     var body: some View {
         let recording = fullRecording ?? recordingMetadata
+        
         List {
             Section("Info") {
                 RecordingPreview(recording: recording)
@@ -41,9 +45,7 @@ struct RecordingSummaryView: View {
                         RecordingMeasurementChartView(
                             recording: recording,
                             measurementType: type
-                        ) {
-                            export(type: type)
-                        }
+                        )
                     }
                 }
             }
@@ -51,39 +53,65 @@ struct RecordingSummaryView: View {
         .navigationTitle("Recording")
         .toolbar {
             ToolbarItem(placement: .secondaryAction) {
-                Button(role: .destructive) {
-                    deleteRecording()
-                } label: {
+                Button(
+                    role: .destructive,
+                    action: deleteRecording
+                ) {
                     Label("Delete", systemImage: "trash")
                 }
+                .disabled(fullRecording == nil)
             }
-            // TODO: export
-            //            ToolbarItem(placement: .primaryAction) {
-            //                Button {
-            //                } label: {
-            //                    Label("Export", systemImage: "square.and.arrow.up")
-            //                }
-            //                .disabled(true)
-            //            }
+            
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Text("Export")
+                        .font(.headline)
+                        .padding(.vertical, 4)
+                    Divider()
+                    ForEach(
+                        fullRecording?.sortedMeasurementTypes ?? [],
+                        id: \.self
+                    ) { type in
+                        Button(type.name) {
+                            export(type: type)
+                        }
+                    }
+                } label: {
+                    Label(
+                        "Export",
+                        systemImage: "square.and.arrow.up"
+                    )
+                }
+                .disabled(fullRecording == nil)
+            }
         }
+
         .fileExporter(
             isPresented: $isPresentingExporter,
             document: exportURL.map { FileDocumentWrapper(url: $0) },
             contentType: UTType.plainText,
             defaultFilename: defaultFilename()
         ) { _ in }
-        .task {
-            if recordingMetadata.entries == nil {
-                isLoading = true
-                fullRecording = await recorder.loadFullRecording(id: recordingMetadata.id)
-                isLoading = false
+            .task {
+                if recordingMetadata.entries == nil {
+                    isLoading = true
+                    fullRecording = await recorder.loadFullRecording(id: recordingMetadata.id)
+                    isLoading = false
+                }
             }
-        }
     }
     
-    private func deleteRecording() {
-        recorder.delete(recordingID: recordingMetadata.id)
-        presentationMode.wrappedValue.dismiss()
+    private func exportButtons() -> [ActionSheet.Button] {
+        guard let recording = fullRecording else {
+            return [.cancel()]
+        }
+        var buttons: [ActionSheet.Button] = recording.sortedMeasurementTypes.map { type in
+                .default(Text(type.name)) {
+                    export(type: type)
+                }
+        }
+        buttons.append(.cancel())
+        return buttons
     }
     
     private func export(type: MeasurementType) {
@@ -107,6 +135,11 @@ struct RecordingSummaryView: View {
     
     private func defaultFilename() -> String {
         (exportURL?.lastPathComponent ?? recordingMetadata.id) + ".csv"
+    }
+    
+    private func deleteRecording() {
+        recorder.delete(recordingID: recordingMetadata.id)
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

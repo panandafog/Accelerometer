@@ -12,10 +12,14 @@ struct RecordingMeasurementChartView: View {
     
     let recording: Recording
     let measurementType: MeasurementType
-    let export: () -> Void
     
     @State private var chartEntries: [Recording.Entry] = []
     @State private var isLoading = true
+    
+    @State private var isPresentingExporter = false
+    @State private var exportURL: URL?
+    
+    @EnvironmentObject private var settings: Settings
     
     private let processor = RecordingProcessor()
     
@@ -70,54 +74,51 @@ struct RecordingMeasurementChartView: View {
         }
     }
     
+    // MARK: - body
     var body: some View {
-        HStack {
-            VStack() {
-                Text(title)
-                    .font(.headline)
-                    .padding(.top)
-                
-                if isLoading {
-                    ProgressView()
-                        .frame(height: 200)
-                } else {
-                    Chart(chartEntries) { entry in
-                        CustomChartContent(entry: entry, startDate: startDate)
-                    }
-                    .chartXScale(domain: 0...totalDuration)
-                    .chartXAxis {
-                        AxisMarks(values: .stride(by: chartXAxisStride)) { value in
-                            AxisGridLine()
-                            AxisTick()
-                            if let seconds = value.as(Double.self) {
-                                AxisValueLabel {
-                                    Text(formatElapsedTime(seconds))
-                                }
-                            }
-                        }
-                    }
+        VStack {
+            Text(title)
+                .font(.headline)
+            
+            if isLoading {
+                ProgressView()
                     .frame(height: 200)
+            } else {
+                Chart(chartEntries) { entry in
+                    CustomChartContent(entry: entry, startDate: startDate)
                 }
-            }
-            VStack {
-                Menu {
-                    Section {
-                        Button(action: {
-                            export()
-                        }) {
-                            Label("Export to .csv", systemImage: "folder")
-                        }
+                .frame(height: 200)
+                .contextMenu {
+                    Button("Export \(measurementType.name) to .csv") {
+                        export()
                     }
-                } label: {
-                    Image(systemName: "square.and.arrow.up")
                 }
-                .padding([.vertical, .leading])
-                .buttonStyle(BorderlessButtonStyle())
-                Spacer()
             }
         }
         .task {
             await loadChartData()
+        }
+        .fileExporter(
+            isPresented: $isPresentingExporter,
+            document: exportURL.map { FileDocumentWrapper(url: $0) },
+            contentType: .plainText,
+            defaultFilename: "\(measurementType.rawValue).csv"
+        ) { _ in }
+    }
+    
+    private func export() {
+        Task {
+            do {
+                let url = try await processor.generateCSV(
+                    from: recording,
+                    for: measurementType,
+                    dateFormat: settings.exportDateFormat
+                )
+                exportURL = url
+                isPresentingExporter = true
+            } catch {
+                print("Export failed:", error)
+            }
         }
     }
     
@@ -267,8 +268,7 @@ private struct PreviewChart: View {
                     state: .completed,
                     measurementTypes: [.acceleration]
                 ),
-                measurementType: .acceleration,
-                export: {}
+                measurementType: .acceleration
             )
             .frame(height: 200)
         }
