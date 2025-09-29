@@ -6,32 +6,36 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RecordingPreview: View {
     
     let recording: Recording
+
+    @State private var timerPublisher = Timer.publish(
+        every: 1, on: .main, in: .common
+    )
+    @State private var timerCancellable: Cancellable?
     
-    var startString: String {
-        DateFormatter.Recordings.string(
-            from: recording.start
-        )
+    @State private var durationStringState: String = ""
+    
+    private var durationString: String {
+        return if let duration = recording.duration {
+            duration.durationString
+        } else {
+            "???"
+        }
     }
     
-    var durationString: String {
-        let durationString: String
-        if let duration = recording.duration {
-            durationString = duration.durationString
-        } else {
-            durationString = "???"
-        }
-        return durationString
+    private var startString: String {
+        DateFormatter.Recordings.string(from: recording.start)
     }
     
     var body: some View {
         VStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text("Started: " + startString)
-                Text("Duration: " + durationString)
+                Text("Duration: " + durationStringState)
                     .padding([.bottom], 5)
                 Text("Measurements:")
                 ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in
@@ -42,6 +46,23 @@ struct RecordingPreview: View {
                         .foregroundColor(.accentColor)
                 }
             }
+        }
+        .onAppear {
+            durationStringState = durationString
+            updateTimer()
+        }
+        .onChange(of: recording.state) {
+            updateTimer()
+        }
+        .onReceive(timerPublisher) { _ in
+            durationStringState = durationString
+        }
+    }
+
+    private func updateTimer() {
+        timerCancellable?.cancel()
+        if recording.state == .inProgress {
+            timerCancellable = timerPublisher.connect()
         }
     }
 }
