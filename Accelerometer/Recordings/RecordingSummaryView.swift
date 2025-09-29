@@ -10,6 +10,8 @@ import UniformTypeIdentifiers
 
 struct RecordingSummaryView: View {
     
+    // MARK: - Properties
+    
     let recordingMetadata: Recording
     
     @EnvironmentObject private var settings: Settings
@@ -19,14 +21,13 @@ struct RecordingSummaryView: View {
     @State private var fullRecording: Recording?
     @State private var isLoading = false
     
-    @State private var isShowingExportMenu = false
-    @State private var selectedTypeForExport: MeasurementType?
-    
     @State private var isPresentingExporter = false
     @State private var exportURL: URL?
     @State private var exportLoading = false
     
     private let processor = RecordingProcessor()
+    
+    // MARK: - Body
     
     var body: some View {
         let recording = fullRecording ?? recordingMetadata
@@ -40,7 +41,8 @@ struct RecordingSummaryView: View {
                     ProgressView()
                 } else {
                     ForEach(
-                        recording.sortedMeasurementTypes, id: \.self
+                        recording.sortedMeasurementTypes,
+                        id: \.self
                     ) { type in
                         RecordingMeasurementChartView(
                             recording: recording,
@@ -52,6 +54,8 @@ struct RecordingSummaryView: View {
         }
         .navigationTitle("Recording")
         .toolbar {
+            // MARK: Toolbar Items
+            
             ToolbarItem(placement: .secondaryAction) {
                 Button(
                     role: .destructive,
@@ -72,8 +76,13 @@ struct RecordingSummaryView: View {
                         fullRecording?.sortedMeasurementTypes ?? [],
                         id: \.self
                     ) { type in
-                        Button(type.name) {
+                        Button {
                             export(type: type)
+                        } label: {
+                            Label(
+                                type.name,
+                                systemImage: type.iconName
+                            )
                         }
                     }
                 } label: {
@@ -92,28 +101,23 @@ struct RecordingSummaryView: View {
             contentType: UTType.plainText,
             defaultFilename: defaultFilename()
         ) { _ in }
-            .task {
-                if recordingMetadata.entries == nil {
-                    isLoading = true
-                    fullRecording = await recorder.loadFullRecording(id: recordingMetadata.id)
-                    isLoading = false
-                }
-            }
+        .task {
+            await loadFullRecordingIfNeeded()
+        }
     }
     
-    private func exportButtons() -> [ActionSheet.Button] {
-        guard let recording = fullRecording else {
-            return [.cancel()]
-        }
-        var buttons: [ActionSheet.Button] = recording.sortedMeasurementTypes.map { type in
-                .default(Text(type.name)) {
-                    export(type: type)
-                }
-        }
-        buttons.append(.cancel())
-        return buttons
-    }
+    // MARK: - Private Methods
     
+    private func loadFullRecordingIfNeeded() async {
+        if recordingMetadata.entries == nil {
+            isLoading = true
+            fullRecording = await recorder.loadFullRecording(
+                id: recordingMetadata.id
+            )
+            isLoading = false
+        }
+    }
+
     private func export(type: MeasurementType) {
         guard !exportLoading, let recording = fullRecording else { return }
         exportLoading = true
@@ -143,7 +147,8 @@ struct RecordingSummaryView: View {
     }
 }
 
-// Debug-only initializer for previews
+// MARK: - Debug Preview
+
 #if DEBUG
 extension RecordingSummaryView {
     
@@ -163,6 +168,7 @@ extension RecordingSummaryView {
 }
 #endif
 
+// MARK: - FileDocument Wrapper
 
 struct FileDocumentWrapper: FileDocument {
     
@@ -180,6 +186,8 @@ struct FileDocumentWrapper: FileDocument {
         try FileWrapper(url: url, options: .immediate)
     }
 }
+
+// MARK: - Previews
 
 struct RecordingSummaryView_Previews: PreviewProvider {
     
@@ -200,8 +208,16 @@ struct RecordingSummaryView_Previews: PreviewProvider {
         start: Date().addingTimeInterval(-60),
         end: Date(),
         entries: [
-            .init(measurementType: .acceleration, date: Date().addingTimeInterval(-60), axes: axes),
-            .init(measurementType: .acceleration, date: Date(),                    axes: axes)
+            .init(
+                measurementType: .acceleration,
+                date: Date().addingTimeInterval(-60),
+                axes: axes
+            ),
+            .init(
+                measurementType: .acceleration,
+                date: Date(),
+                axes: axes
+            )
         ],
         state: .completed,
         measurementTypes: [.acceleration]

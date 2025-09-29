@@ -20,6 +20,8 @@ enum MeasurementType: String, CaseIterable, Sendable {
         Self.allCases.filter { !$0.isHidden }
     }
     
+    // MARK: - Axes Configuration
+    
     var axesType: AxesType {
         switch self {
         case .attitude:
@@ -30,6 +32,8 @@ enum MeasurementType: String, CaseIterable, Sendable {
             return .triangle
         }
     }
+    
+    // MARK: - Display Properties
     
     var name: String {
         switch self {
@@ -104,6 +108,29 @@ A G is a unit of gravitation force equal to that exerted by the earth’s gravit
             return "<proximity description>"
         }
     }
+    
+    /// SF Symbol name for this measurement type
+    var iconName: String {
+        switch self {
+        case .acceleration:
+            return "speedometer"
+        case .rotationRate:
+            return "gyroscope"
+        case .userAcceleration:
+            return "figure.walk.motion"
+        case .magneticField:
+            return "wave.3.left"
+        case .attitude:
+            return "perspective"
+        case .gravity:
+            return "globe"
+        case .proximity:
+            return "antenna.radiowaves.left.and.right"
+        }
+    }
+
+    
+    // MARK: - Capabilities
     
     var hasMinimum: Bool {
         switch self {
