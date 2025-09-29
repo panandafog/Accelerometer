@@ -24,7 +24,6 @@ class Recorder: ObservableObject {
     
     private let repository = RecordingsRepository()
     private let memoryMonitor = MemoryMonitor()
-    private let activeRecordingManager = ActiveRecordingManager()
     
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
@@ -49,21 +48,20 @@ class Recorder: ObservableObject {
     
     func record(measurements types: Set<MeasurementType>) {
         Task {
-            guard hasEnoughMemory, !recordingInProgress, !types.isEmpty else { return }
-            
-            let newRecording = Recording(
-                entries: [],
-                state: .inProgress,
-                measurementTypes: types
-            )
-            
-            await activeRecordingManager.startRecording(newRecording)
+            if !hasEnoughMemory { return }
             
             await MainActor.run {
                 if disableIdleTimer {
                     UIApplication.shared.isIdleTimerDisabled = true
                 }
-                activeRecording = newRecording
+                
+                guard !recordingInProgress, !types.isEmpty else { return }
+                activeRecording = Recording(
+                    entries: [],
+                    state: .inProgress,
+                    measurementTypes: types
+                )
+                
                 types.forEach(subscribeForChanges)
                 
                 objectWillChange.send()
@@ -73,31 +71,22 @@ class Recorder: ObservableObject {
     
     func stopRecording() {
         Task {
-            let completedRecording = await activeRecordingManager.stopRecording()
-            
-            if let recording = completedRecording {
-                
-                #if (DEBUG)
-                print("--- Recording stopped ---")
-                for measurementType in recording.sortedMeasurementTypes {
-                    let count = recording.entries?.filter { $0.measurementType == measurementType }.count ?? 0
-                    print("\(measurementType.name): \(count) entries")
-                }
-                let totalCount = recording.entries?.count ?? 0
-                print("Total entries: \(totalCount)")
-                print("-------------------------")
-                #endif
-                
-                await repository.save([recording])
-                await repository.updateMetadata()
-                await refreshRecordings()
-            }
-            
             await MainActor.run {
                 if disableIdleTimer {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
-                activeRecording = nil
+            }
+            
+            guard var activeRecording = activeRecording else { return }
+            activeRecording.state = .completed
+            activeRecording.end = Date.now
+            
+            await repository.save([activeRecording])
+            await repository.updateMetadata()
+            await refreshRecordings()
+            
+            await MainActor.run {
+                self.activeRecording = nil
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
@@ -131,9 +120,11 @@ class Recorder: ObservableObject {
     
     private func appendEntry(for type: MeasurementType) {
         Task {
-            guard hasEnoughMemory else { return }
+            if !hasEnoughMemory { return }
             
-            guard let axes = measurer.observableAxes[type]?.axes else { return }
+            guard let axes = measurer.observableAxes[type]?.axes,
+                  var current = activeRecording
+            else { return }
             
             let entry = Recording.Entry(
                 measurementType: type,
@@ -141,10 +132,13 @@ class Recorder: ObservableObject {
                 axes: axes
             )
             
-            let updatedRecording = await activeRecordingManager.appendEntry(entry)
+            if current.entries == nil {
+                current.entries = []
+            }
+            current.entries?.append(entry)
             
             await MainActor.run {
-                activeRecording = updatedRecording
+                activeRecording = current
                 objectWillChange.send()
             }
         }
