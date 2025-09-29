@@ -36,7 +36,7 @@ struct RecordingsView: View {
     }
     
     var lastRecordings: [Recording] {
-        var recordings = recorder.recordings
+        var recordings = recorder.recordingsMetadata
         if let activeRecording = recorder.activeRecording {
             recordings.removeAll { $0.id == activeRecording.id }
         }
@@ -101,7 +101,7 @@ struct RecordingsView: View {
             RecordingPreview(recording: recording)
         } else {
             NavigationLink {
-                RecordingSummaryView(recording: recording)
+                RecordingSummaryView(recordingMetadata: recording)
             } label: {
                 RecordingPreview(recording: recording)
             }

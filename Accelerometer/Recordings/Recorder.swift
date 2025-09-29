@@ -5,6 +5,7 @@
 //  Created by Andrey on 29.07.2022.
 //
 
+import DequeModule
 import Combine
 import SwiftUI
 
@@ -16,8 +17,9 @@ class Recorder: ObservableObject {
     @Published var isInEditMode = false
     @Published var hasEnoughMemory = true
     
-    @Published private(set) var recordings: [Recording] = []
+    @Published private(set) var recordingsMetadata: [Recording] = []
     @Published private(set) var activeRecording: Recording? = nil
+    private var activeRecordingEntries: Deque<Recording.Entry> = []
     
     @ObservedObject private var measurer: Measurer
     @ObservedObject private var settings: Settings
@@ -44,6 +46,8 @@ class Recorder: ObservableObject {
         activeRecording != nil
     }
     
+    // MARK: - Recordings management
+    
     func record(measurements types: Set<MeasurementType>) {
         Task {
             if !hasEnoughMemory { return }
@@ -59,6 +63,7 @@ class Recorder: ObservableObject {
                     state: .inProgress,
                     measurementTypes: types
                 )
+                activeRecordingEntries = []
                 
                 types.forEach(subscribeForChanges)
                 
@@ -75,17 +80,30 @@ class Recorder: ObservableObject {
                 }
             }
             
-            guard let current = activeRecording else { return }
+            guard var activeRecording = activeRecording else { return }
+            activeRecording.state = .completed
+            activeRecording.end = Date.now
+            activeRecording.entries = Array(activeRecordingEntries)
             
-            var completed = current
-            completed.state = .completed
+#if (DEBUG)
+            print("--- Recording stopped ---")
+            for measurementType in activeRecording.sortedMeasurementTypes {
+                let count = activeRecordingEntries.filter { $0.measurementType == measurementType }.count
+                print("\(measurementType.name): \(count) entries")
+            }
+            let totalCount = activeRecordingEntries.count
+            print("Total entries: \(totalCount)")
+            print("-------------------------")
+#endif
             
-            await repository.save([completed])
-            await repository.update()
+            activeRecordingEntries = []
+            
+            await repository.save([activeRecording])
+            await repository.updateMetadata()
             await refreshRecordings()
             
             await MainActor.run {
-                activeRecording = nil
+                self.activeRecording = nil
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
@@ -95,7 +113,7 @@ class Recorder: ObservableObject {
     func delete(recordingID: String) {
         Task {
             await repository.delete(recordingID: recordingID)
-            await repository.update()
+            await repository.updateMetadata()
             await refreshRecordings()
         }
     }
@@ -103,9 +121,13 @@ class Recorder: ObservableObject {
     func delete(recordingIDs: [String]) {
         Task {
             await repository.delete(recordingIDs: recordingIDs)
-            await repository.update()
+            await repository.updateMetadata()
             await refreshRecordings()
         }
+    }
+    
+    func loadFullRecording(id: String) async -> Recording? {
+        return await repository.loadFullRecording(id: id)
     }
     
     private func subscribeForChanges(of type: MeasurementType) {
@@ -118,32 +140,28 @@ class Recorder: ObservableObject {
     }
     
     private func appendEntry(for type: MeasurementType) {
-        Task {
-            if !hasEnoughMemory { return }
-            
-            guard let axes = measurer.observableAxes[type]?.axes,
-                  var current = activeRecording
-            else { return }
-            
-            let entry = Recording.Entry(
+        guard
+            let axes = measurer.observableAxes[type]?.axes,
+            activeRecording != nil,
+            hasEnoughMemory
+        else { return }
+        
+        activeRecordingEntries.append(
+            Recording.Entry(
                 measurementType: type,
                 date: Date(),
                 axes: axes
             )
-            current.entries.append(entry)
-            
-            await MainActor.run {
-                activeRecording = current
-                objectWillChange.send()
-            }
-        }
+        )
     }
     
     private func refreshRecordings() async {
-        await repository.update()
-        let stored = await repository.recordings
-        await MainActor.run { recordings = stored }
+        await repository.updateMetadata()
+        let stored = await repository.recordingsMetadata
+        await MainActor.run { recordingsMetadata = Array(stored.values) }
     }
+    
+    // MARK: - Memory control
     
     private func watchFreeSpace() async {
         while true {
@@ -156,15 +174,15 @@ class Recorder: ObservableObject {
     }
     
     private func checkMemory() async {
-        #if (DEBUG)
+#if (DEBUG)
         let hasEnoughMemory = if settings.alwaysNotEnoughMemory {
             false
         } else {
             await hasEnoughMemory()
         }
-        #else
+#else
         let hasEnoughMemory = await hasEnoughMemory()
-        #endif
+#endif
         
         if !hasEnoughMemory {
             await MainActor.run { stopRecording() }

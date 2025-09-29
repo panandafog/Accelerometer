@@ -10,22 +10,16 @@ import Foundation
 struct Recording: Identifiable {
     
     let id: String
-    let created: Date
+    let start: Date
+    var end: Date?
     
-    var entries: [Entry]
+    var entries: [Entry]?
     var state: State
+    
     let measurementTypes: Set<MeasurementType>
     
-    var start: Date? {
-        entries.first?.date ?? created
-    }
-    
-    var end: Date? {
-        entries.last?.date
-    }
-    
     var duration: DateComponents? {
-        guard let start = start, let end = end else {
+        guard let end = (state == .inProgress) ? Date.now : end else {
             return nil
         }
 
@@ -39,9 +33,17 @@ struct Recording: Identifiable {
             }
     }
     
-    init(id: String = UUID().uuidString, created: Date = Date(), entries: [Entry], state: State, measurementTypes: Set<MeasurementType>) {
+    init(
+        id: String = UUID().uuidString,
+        start: Date = Date(),
+        end: Date? = nil,
+        entries: [Entry]? = nil,
+        state: State,
+        measurementTypes: Set<MeasurementType>
+    ) {
         self.id = id
-        self.created = created
+        self.start = start
+        self.end = end
         self.entries = entries
         self.state = state
         self.measurementTypes = measurementTypes
