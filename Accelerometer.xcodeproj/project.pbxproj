@@ -35,7 +35,7 @@
 		0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFC9289A9E85007130D9 /* Settings.swift */; };
 		0B36DFCC289AA096007130D9 /* ExportDateFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */; };
 		0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */; };
-		0B45FF962D8EC361009F5CDF /* RecordingMeasurementChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */; };
+		0B45FF962D8EC361009F5CDF /* RecordingSmallChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45FF952D8EC357009F5CDF /* RecordingSmallChartView.swift */; };
 		0B4BE8532D74BB420065D938 /* AnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */; };
 		0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
 		0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
@@ -49,7 +49,11 @@
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
 		0B96B73F2E8A91510007E730 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96B73E2E8A91510007E730 /* DequeModule */; };
+		0B96B7432E8AD39C0007E730 /* RecordingBigChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7422E8AD39B0007E730 /* RecordingBigChartView.swift */; };
+		0B96B7452E8AD3D20007E730 /* RecordingChartContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7442E8AD3D10007E730 /* RecordingChartContainerView.swift */; };
+		0B96B7472E8AD49F0007E730 /* RecordingChartContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7462E8AD49E0007E730 /* RecordingChartContent.swift */; };
 		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
+		0B9FB1532E8F365B00D70505 /* PreviewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1522E8F365B00D70505 /* PreviewUtils.swift */; };
 		0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */; };
 		0BA619CF2AADC9E7005DABD3 /* ObservableAxesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */; };
 		0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6B289598B40040B63D /* NewRecordingView.swift */; };
@@ -128,7 +132,7 @@
 		0B36DFC9289A9E85007130D9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportDateFormatView.swift; sourceTree = "<group>"; };
 		0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxesSummaryViewExtended.swift; sourceTree = "<group>"; };
-		0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingMeasurementChartView.swift; sourceTree = "<group>"; };
+		0B45FF952D8EC357009F5CDF /* RecordingSmallChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSmallChartView.swift; sourceTree = "<group>"; };
 		0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsView.swift; sourceTree = "<group>"; };
 		0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramAxesNamesStyle.swift; sourceTree = "<group>"; };
 		0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramViewStyle.swift; sourceTree = "<group>"; };
@@ -141,7 +145,11 @@
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0B8C3B292A99F9FF00488B1E /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		0B8C3B2B2A99FC9600488B1E /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
+		0B96B7422E8AD39B0007E730 /* RecordingBigChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingBigChartView.swift; sourceTree = "<group>"; };
+		0B96B7442E8AD3D10007E730 /* RecordingChartContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingChartContainerView.swift; sourceTree = "<group>"; };
+		0B96B7462E8AD49E0007E730 /* RecordingChartContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingChartContent.swift; sourceTree = "<group>"; };
 		0B9BDC122899A6F900842161 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		0B9FB1522E8F365B00D70505 /* PreviewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUtils.swift; sourceTree = "<group>"; };
 		0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableAxesTests.swift; sourceTree = "<group>"; };
 		0BA63B6B289598B40040B63D /* NewRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordingView.swift; sourceTree = "<group>"; };
@@ -208,6 +216,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B041D792E8F3096007BBFCF /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				0B45FF952D8EC357009F5CDF /* RecordingSmallChartView.swift */,
+				0B96B7422E8AD39B0007E730 /* RecordingBigChartView.swift */,
+				0B96B7442E8AD3D10007E730 /* RecordingChartContainerView.swift */,
+				0B96B7462E8AD49E0007E730 /* RecordingChartContent.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		0B24EBFB28621BBE00AD3EF1 = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +398,7 @@
 			children = (
 				0B801285286DA9C000F4AA85 /* AnimatableArray.swift */,
 				0B1845532E7DCB90004F5474 /* MemoryMonitor.swift */,
+				0B9FB1522E8F365B00D70505 /* PreviewUtils.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -400,6 +420,7 @@
 		0BE138EC2893FF8A0026D0DC /* Recordings */ = {
 			isa = PBXGroup;
 			children = (
+				0B041D792E8F3096007BBFCF /* Charts */,
 				0B508CD9289C7EEB00326C6E /* Database */,
 				0BE138F5289409820026D0DC /* Recorder.swift */,
 				0BE138F1289400E70026D0DC /* Recording.swift */,
@@ -408,7 +429,6 @@
 				0BE138ED2893FFA10026D0DC /* RecordingsView.swift */,
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
-				0B45FF952D8EC357009F5CDF /* RecordingMeasurementChartView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
 			);
 			path = Recordings;
@@ -698,13 +718,15 @@
 				0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */,
 				0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */,
 				0B24EC3428621E1C00AD3EF1 /* AppDelegate.swift in Sources */,
-				0B45FF962D8EC361009F5CDF /* RecordingMeasurementChartView.swift in Sources */,
+				0B45FF962D8EC361009F5CDF /* RecordingSmallChartView.swift in Sources */,
 				0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */,
 				0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */,
 				0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */,
 				0B24EC582863527800AD3EF1 /* DiagramView.swift in Sources */,
 				0BA63B6E2897EDD80040B63D /* DateFormatter.swift in Sources */,
+				0B96B7452E8AD3D20007E730 /* RecordingChartContainerView.swift in Sources */,
 				0BDBDAEE2B8264880045A008 /* BooleanAxesSummaryView.swift in Sources */,
+				0B9FB1532E8F365B00D70505 /* PreviewUtils.swift in Sources */,
 				0BDBDAEA2B825CAC0045A008 /* BooleanAxes.swift in Sources */,
 				0BF7A0B22AD29D6F005E75CC /* AxesSummaryValueView.swift in Sources */,
 				0B24EC3828622AB700AD3EF1 /* MeasurementsView.swift in Sources */,
@@ -736,6 +758,7 @@
 				0BBF54AA2AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift in Sources */,
 				0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */,
 				0B24EC4128623C1B00AD3EF1 /* Double.swift in Sources */,
+				0B96B7432E8AD39C0007E730 /* RecordingBigChartView.swift in Sources */,
 				0B508CD6289C3E4A00326C6E /* DatabaseManager.swift in Sources */,
 				0B4CC365287C31AB000F0C94 /* DiagramViewStyle.swift in Sources */,
 				0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */,
@@ -743,6 +766,7 @@
 				0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */,
 				0BFBA1E828737CC300529B50 /* ObservableAxes.swift in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
+				0B96B7472E8AD49F0007E730 /* RecordingChartContent.swift in Sources */,
 				0BBAD4AF2895715400251262 /* CGFloat.swift in Sources */,
 				0B24EC4E2862898F00AD3EF1 /* View.swift in Sources */,
 				0BBAD4AD2895564C00251262 /* RecordingSummaryView.swift in Sources */,

@@ -44,10 +44,18 @@ struct RecordingSummaryView: View {
                         recording.sortedMeasurementTypes,
                         id: \.self
                     ) { type in
-                        RecordingMeasurementChartView(
-                            recording: recording,
-                            measurementType: type
-                        )
+                        VStack {
+                            Text(
+                                type
+                                    .name
+                                    .capitalizingFirstLetter()
+                            )
+                                .font(.headline)
+                            RecordingSmallChartView(
+                                recording: recording,
+                                measurementType: type
+                            )
+                        }
                     }
                 }
             }
