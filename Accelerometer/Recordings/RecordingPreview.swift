@@ -12,19 +12,13 @@ struct RecordingPreview: View {
     
     let recording: Recording
 
-    @State private var timerPublisher = Timer.publish(
-        every: 1, on: .main, in: .common
-    )
+    @State private var timerPublisher: Timer.TimerPublisher?
     @State private var timerCancellable: Cancellable?
     
     @State private var durationStringState: String = ""
     
     private var durationString: String {
-        return if let duration = recording.duration {
-            duration.durationString
-        } else {
-            "???"
-        }
+        recording.duration?.durationString ?? "???"
     }
     
     private var startString: String {
@@ -32,38 +26,42 @@ struct RecordingPreview: View {
     }
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Started: " + startString)
-                Text("Duration: " + durationStringState)
-                    .padding([.bottom], 5)
-                Text("Measurements:")
-                ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in
-                    lhs.name < rhs.name
-                }), id: \.self) { measurementType in
-                    Text(measurementType.name)
-                        .padding(.leading)
-                        .foregroundColor(.accentColor)
-                }
+        VStack(alignment: .leading, spacing: 5) {
+            Text("Started: " + startString)
+            Text("Duration: " + durationStringState)
+                .padding([.bottom], 5)
+            Text("Measurements:")
+            ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in
+                lhs.name < rhs.name
+            }), id: \.self) { measurementType in
+                Text(measurementType.name)
+                    .padding(.leading)
+                    .foregroundColor(.accentColor)
             }
         }
         .onAppear {
             durationStringState = durationString
-            updateTimer()
+            setupTimerIfNeeded()
         }
         .onChange(of: recording.state) {
-            updateTimer()
-        }
-        .onReceive(timerPublisher) { _ in
-            durationStringState = durationString
+            setupTimerIfNeeded()
         }
     }
-
-    private func updateTimer() {
+    
+    private func setupTimerIfNeeded() {
         timerCancellable?.cancel()
-        if recording.state == .inProgress {
-            timerCancellable = timerPublisher.connect()
-        }
+        timerCancellable = nil
+        timerPublisher = nil
+        
+        guard recording.state == .inProgress else { return }
+        
+        let publisher = Timer.publish(every: 1, on: .main, in: .common)
+        timerPublisher = publisher
+        timerCancellable = publisher
+            .autoconnect()
+            .sink { _ in
+                durationStringState = durationString
+            }
     }
 }
 
