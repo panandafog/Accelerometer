@@ -60,14 +60,28 @@ struct ChartContainerView: View {
         } else if absSeconds < 60 {
             return String(format: "%.0fs", seconds)
         } else if absSeconds < 3600 {
-            let minutes = seconds / 60
-            return String(format: "%.0fm", minutes)
-        } else {
-            let hours = seconds / 3600
-            if hours.truncatingRemainder(dividingBy: 1) == 0 {
-                return String(format: "%.0fh", hours)
+            // If stride is less than a minute, display minutes:seconds
+            if chartXAxisStride < 60 {
+                let minutes = Int(seconds / 60)
+                let remainingSeconds = Int(seconds.truncatingRemainder(dividingBy: 60))
+                return String(format: "%dm%02ds", minutes, remainingSeconds)
             } else {
-                return String(format: "%.1fh", hours)
+                // Otherwise only minutes
+                let minutes = seconds / 60
+                return String(format: "%.0fm", minutes)
+            }
+        } else {
+            if chartXAxisStride < 3600 {
+                let hours = Int(seconds / 3600)
+                let minutes = Int((seconds.truncatingRemainder(dividingBy: 3600)) / 60)
+                return String(format: "%dh%02dm", hours, minutes)
+            } else {
+                let hours = seconds / 3600
+                if hours.truncatingRemainder(dividingBy: 1) == 0 {
+                    return String(format: "%.0fh", hours)
+                } else {
+                    return String(format: "%.1fh", hours)
+                }
             }
         }
     }
