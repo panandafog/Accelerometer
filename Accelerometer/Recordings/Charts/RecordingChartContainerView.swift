@@ -113,7 +113,8 @@ struct ChartContainerView: View {
         Chart(chartEntries) { entry in
             RecordingChartContent(
                 entry: entry,
-                startDate: recording.start
+                // Can be delay between start and first entry
+                startDate: chartEntries.first?.date ?? recording.start
             )
         }
         .chartXScale(domain: 0...totalDuration)
