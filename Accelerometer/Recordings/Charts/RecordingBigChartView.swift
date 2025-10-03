@@ -17,7 +17,7 @@ struct RecordingBigChartView: View {
             measurementType: measurementType,
             style: .big
         )
-        .padding(.vertical)
+        .padding()
         .navigationTitle(measurementType.name.capitalized)
         .navigationBarTitleDisplayMode(.inline)
     }
