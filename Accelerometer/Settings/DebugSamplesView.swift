@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if DEBUG
 struct DebugSamplesView: View {
     
     @EnvironmentObject var settings: Settings
@@ -33,4 +34,4 @@ struct DebugSamplesViewPreviews: PreviewProvider {
             .environmentObject(Settings())
     }
 }
-
+#endif

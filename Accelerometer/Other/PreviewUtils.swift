@@ -213,4 +213,3 @@ struct PreviewUtils {
     static let gravityTestRecording = recordingWithType(.gravity, duration: 60)
 }
 #endif
-

@@ -28,6 +28,7 @@ struct RecordingSmallChartView: View {
 
 // MARK: - Previews
 
+#if DEBUG
 struct RecordingSmallChartView_Previews: PreviewProvider {
 
     static var sampleRecordings: [Recording] = [
@@ -55,3 +56,4 @@ struct RecordingSmallChartView_Previews: PreviewProvider {
         }
     }
 }
+#endif

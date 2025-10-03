@@ -8,6 +8,7 @@
 import DequeModule
 import Combine
 import SwiftUI
+import AVFoundation
 
 @MainActor
 class Recorder: ObservableObject {
@@ -30,6 +31,8 @@ class Recorder: ObservableObject {
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
     
+    private var audioPlayer: AVAudioPlayer?
+    
     init(measurer: Measurer, settings: Settings) {
         self.measurer = measurer
         self.settings = settings
@@ -40,6 +43,8 @@ class Recorder: ObservableObject {
         Task {
             await watchFreeSpace()
         }
+        
+        configureAudioSession()
     }
     
     var recordingInProgress: Bool {
@@ -69,6 +74,8 @@ class Recorder: ObservableObject {
                 
                 objectWillChange.send()
             }
+            
+            startSilentAudioLoop()
         }
     }
     
@@ -107,6 +114,8 @@ class Recorder: ObservableObject {
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
+            
+            stopSilentAudioLoop()
         }
     }
     
@@ -200,6 +209,42 @@ class Recorder: ObservableObject {
         let hasEnoughMemory = freeMB >= Double(Settings.minFreeSpaceMB)
         return hasEnoughMemory
     }
+    
+    // MARK: - Audio control
+
+    private func configureAudioSession() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, options: [.mixWithOthers])
+            try session.setMode(.default)
+            try session.setActive(true)
+        } catch {
+            print("Audio session setup failed:", error)
+        }
+    }
+
+    
+    private func startSilentAudioLoop() {
+        guard audioPlayer == nil else { return }
+        if let url = Bundle.main.url(forResource: "silence", withExtension: "mp3") {
+            do {
+                let player = try AVAudioPlayer(contentsOf: url)
+                player.numberOfLoops = -1
+                player.volume = 0
+                player.play()
+                audioPlayer = player
+            } catch {
+                print("Failed to start silent audio:", error)
+            }
+        }
+    }
+    
+    private func stopSilentAudioLoop() {
+        audioPlayer?.stop()
+        audioPlayer = nil
+    }
+    
+    // MARK: - Debug
     
 #if (DEBUG)
     func createDebugSamples() {

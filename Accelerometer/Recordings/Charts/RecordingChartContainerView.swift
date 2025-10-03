@@ -196,6 +196,7 @@ struct RecordingChartContainerView: View {
 
 // MARK: - Previews
 
+#if DEBUG
 struct RecordingChartContainerView_Previews: PreviewProvider {
     static let recording = PreviewUtils.mediumRecording
     static let type = measurementType(from: recording)
@@ -225,3 +226,4 @@ struct RecordingChartContainerView_Previews: PreviewProvider {
         recording.sortedMeasurementTypes.first ?? .acceleration
     }
 }
+#endif

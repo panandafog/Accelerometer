@@ -74,7 +74,7 @@ struct NewRecordingView: View {
                 .controlSize(.large)
                 .tint(noneSelected ? .gray : .accentColor)
                 .disabled(noneSelected)
-                .padding(.horizontal)
+                .padding()
                 .animation(.easeInOut, value: noneSelected)
             }
             .navigationTitle("New recording")

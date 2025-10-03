@@ -17,12 +17,13 @@ struct RecordingBigChartView: View {
             measurementType: measurementType,
             style: .big
         )
-        .padding(.vertical)
+        .padding()
         .navigationTitle(measurementType.name.capitalized)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
+#if DEBUG
 struct RecordingBigChartView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -44,3 +45,4 @@ struct RecordingBigChartView_Previews: PreviewProvider {
         }
     }
 }
+#endif
