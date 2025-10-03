@@ -57,6 +57,7 @@ struct RecordingSummaryView: View {
                             )
                         }
                     }
+                    .navigationLinkIndicatorVisibility(.hidden)
                 }
             }
         }

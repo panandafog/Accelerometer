@@ -30,7 +30,6 @@ struct RecordingSmallChartView: View {
 
 struct RecordingSmallChartView_Previews: PreviewProvider {
 
-    // Reuse PreviewUtils for sample recordings
     static var sampleRecordings: [Recording] = [
         PreviewUtils.shortRecording,
         PreviewUtils.mediumRecording,

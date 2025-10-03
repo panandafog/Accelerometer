@@ -43,13 +43,13 @@ struct ChartContainerView: View {
         ]
         
         for interval in niceIntervals {
-            let tickCount = Int(totalDuration / interval) + 1
-            if tickCount <= 5 {
+            let tickCount = Int(totalDuration / interval)
+            if tickCount <= style.tickCount {
                 return interval
             }
         }
         
-        return totalDuration / 4.0
+        return totalDuration / Double(style.tickCount)
     }
     
     private func formatElapsedTime(_ seconds: TimeInterval) -> String {
@@ -104,26 +104,13 @@ struct ChartContainerView: View {
         }
         .chartXScale(domain: 0...totalDuration)
         .chartXAxis {
-            switch style {
-            case .big:
-                AxisMarks(values: .automatic) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    if let seconds = value.as(Double.self) {
-                        AxisValueLabel {
-                            Text(formatElapsedTime(seconds))
-                        }
-                    }
-                }
-            case .small:
-                let values = AxisMarkValues.stride(by: chartXAxisStride)
-                AxisMarks(values: values) { value in
-                    AxisGridLine()
-                    AxisTick()
-                    if let seconds = value.as(Double.self) {
-                        AxisValueLabel {
-                            Text(formatElapsedTime(seconds))
-                        }
+            let values = AxisMarkValues.stride(by: chartXAxisStride)
+            AxisMarks(values: values) { value in
+                AxisGridLine()
+                AxisTick()
+                if let seconds = value.as(Double.self) {
+                    AxisValueLabel {
+                        Text(formatElapsedTime(seconds))
                     }
                 }
             }
@@ -179,6 +166,15 @@ struct ChartContainerView: View {
                 300
             case .small:
                 100
+            }
+        }
+        
+        var tickCount: Int {
+            switch self {
+            case .big:
+                16
+            case .small:
+                4
             }
         }
     }
