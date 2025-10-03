@@ -23,9 +23,15 @@ struct MeasurementSummaryView: View {
     }
     
     var recordButton: some View {
-        let enabled = !recorder.recordingInProgress
-        let text = enabled ? "Start recording this value" : "Recording is already enabled"
-        let backgroundColor: Color = enabled ? .enabledButton : .disabledButton
+        let enabled = !recorder.recordingInProgress && recorder.hasEnoughMemory
+        
+        let text = if !recorder.hasEnoughMemory {
+            "Not enough memory"
+        } else if recorder.recordingInProgress {
+            "Recording is already started"
+        } else {
+            "Start recording this value"
+        }
         
         return Button(
             action: {
@@ -35,10 +41,10 @@ struct MeasurementSummaryView: View {
                     .foregroundColor(.background)
             }
         )
+        .buttonStyle(.glassProminent)
+        .controlSize(.large)
         .disabled(!enabled)
         .padding(.defaultPadding)
-        .background(backgroundColor)
-        .cornerRadius(.defaultCornerRadius)
     }
     
     var body: some View {
@@ -99,12 +105,12 @@ struct MeasurementSummaryView_Previews: PreviewProvider {
     }()
     
     static let recorder1: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         return recorder
     }()
     
     static let recorder2: Recorder = {
-        let recorder = Recorder(measurer: measurer)
+        let recorder = Recorder(measurer: measurer, settings: settings)
         recorder.record(measurements: [.acceleration])
         return recorder
     }()

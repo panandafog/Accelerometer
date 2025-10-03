@@ -6,209 +6,248 @@
 //
 
 import SwiftUI
-import SwiftUICharts
+import UniformTypeIdentifiers
 
 struct RecordingSummaryView: View {
     
-    let recording: Recording
+    // MARK: - Properties
     
-    @EnvironmentObject var settings: Settings
-    @EnvironmentObject var recorder: Recorder
+    let recordingMetadata: Recording
     
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State private var isPresentingDeleteConfirmation = false
+    @EnvironmentObject private var settings: Settings
+    @EnvironmentObject private var recorder: Recorder
+    @Environment(\.presentationMode) private var presentationMode
     
-    @State private var isPresentingExporter = false
-    @State private var exportMeasurementType: MeasurementType? = nil
+    @State private var fullRecording: Recording?
+    @State private var isLoading = false
     
-    let deleteAlertTitleText = "Are you sure?"
+    @State private var exportingMeasurement: MeasurementType? = nil
+    @State private var exportURL: URL?
+    @State private var exportLoading = false
     
-    var entriesView: some View {
-        GeometryReader { geometry in
-            List {
-                Section(header: Text("Info")) {
-                    RecordingPreview(recording: recording)
-                        .padding(.vertical)
-                }
-                Section(header: Text("Measurements")) {
-                    ForEach(Array(recording.sortedMeasurementTypes), id: \.self) { measurementType in
-                        HStack {
-                            RecordingMeasurementView(
-                                recording: recording,
-                                measurementType: measurementType,
-                                screenSize: geometry.size
-                            ) {
-                                isPresentingExporter = true
-                                exportMeasurementType = measurementType
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    private let processor = RecordingProcessor()
+    
+    // MARK: - Body
     
     var body: some View {
-        entriesView
-            .navigationTitle("Recording")
+        let recording = fullRecording ?? recordingMetadata
         
-        // MARK: Toolbar
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    if #available(iOS 15.0, *) {
-                        Button(role: .destructive, action: {
-                            isPresentingDeleteConfirmation = true
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    } else {
-                        Button(action: {
-                            isPresentingDeleteConfirmation = true
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    }
-                }
+        List {
+            Section("Info") {
+                RecordingPreview(recording: recording)
             }
-        
-        // MARK: Delete confirmation
-            .modify {
-                if #available(iOS 15.0, *) {
-                    $0.confirmationDialog(
-                        deleteAlertTitleText,
-                        isPresented: $isPresentingDeleteConfirmation
-                    ) {
-                        Button("Delete", role: .destructive) {
-                            deleteRecording()
-                        }
-                    }
+            Section("Measurements") {
+                if isLoading {
+                    ProgressView()
                 } else {
-                    $0.alert(isPresented: $isPresentingDeleteConfirmation) {
-                        Alert(
-                            title: Text(deleteAlertTitleText),
-                            primaryButton: .destructive(
-                                Text("Delete"),
-                                action: {
-                                    deleteRecording()
-                                }
-                            ),
-                            secondaryButton: .cancel(
-                                Text("Cancel"),
-                                action: { }
+                    ForEach(
+                        recording.sortedMeasurementTypes,
+                        id: \.self
+                    ) { type in
+                        VStack {
+                            Text(
+                                type
+                                    .name
+                                    .capitalizingFirstLetter()
                             )
-                        )
+                                .font(.headline)
+                            RecordingSmallChartView(
+                                recording: recording,
+                                measurementType: type
+                            )
+                        }
                     }
+                    .navigationLinkIndicatorVisibility(.hidden)
                 }
             }
-        
-        // MARK: Exporter
-            .fileExporter(
-                isPresented: $isPresentingExporter,
-                document: document,
-                contentType: TextFile.readableContentTypes.first ?? .plainText,
-                defaultFilename: (exportMeasurementType?.name ?? "recording") + ".csv"
-            ) { result in
-                switch result {
-                case .success(let url):
-                    print("Saved to \(url)")
-                case .failure(let error):
-                    print(error.localizedDescription)
+        }
+        .navigationTitle("Recording")
+        .toolbar {
+            // MARK: Toolbar Items
+            
+            ToolbarItem(placement: .secondaryAction) {
+                Button(
+                    role: .destructive,
+                    action: deleteRecording
+                ) {
+                    Label("Delete", systemImage: "trash")
                 }
+                .disabled(fullRecording == nil)
             }
+            
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Text("Export")
+                        .font(.headline)
+                        .padding(.vertical, 4)
+                    Divider()
+                    ForEach(
+                        fullRecording?.sortedMeasurementTypes ?? [],
+                        id: \.self
+                    ) { type in
+                        Button {
+                            export(type: type)
+                        } label: {
+                            Label(
+                                type.name,
+                                systemImage: type.iconName
+                            )
+                        }
+                    }
+                } label: {
+                    Label(
+                        "Export",
+                        systemImage: "square.and.arrow.up"
+                    )
+                }
+                .disabled(fullRecording == nil)
+            }
+        }
+        .exportable(
+            isPresented: .init(
+                get: { exportingMeasurement != nil },
+                set: { presented in
+                    if !presented { exportingMeasurement = nil }
+                }
+            ),
+            url: $exportURL,
+            measurementType: exportingMeasurement ?? recording.measurementTypes.first!
+        )
+        .task {
+            await loadFullRecordingIfNeeded()
+        }
     }
     
-    private var document: TextFile? {
-        guard let type = exportMeasurementType else {
-            return nil
+    // MARK: - Private Methods
+    
+    private func loadFullRecordingIfNeeded() async {
+        if recordingMetadata.entries == nil {
+            isLoading = true
+            fullRecording = await recorder.loadFullRecording(
+                id: recordingMetadata.id
+            )
+            isLoading = false
         }
-        return recording.csv(
-            of: type,
-            dateFormat: settings.exportDateFormat
-        )
+    }
+
+    private func export(type: MeasurementType) {
+        guard !exportLoading, let recording = fullRecording else { return }
+        exportLoading = true
+        Task {
+            defer { exportLoading = false }
+            do {
+                let url = try await processor.generateCSV(
+                    from: recording,
+                    for: type,
+                    dateFormat: settings.exportDateFormat
+                )
+                exportURL = url
+                exportingMeasurement = type
+            } catch {
+                print("Export failed:", error)
+            }
+        }
+    }
+    
+    private func defaultFilename() -> String {
+        (exportURL?.lastPathComponent ?? recordingMetadata.id) + ".csv"
     }
     
     private func deleteRecording() {
-        recorder.delete(recordingID: recording.id)
+        recorder.delete(recordingID: recordingMetadata.id)
         presentationMode.wrappedValue.dismiss()
     }
 }
 
-private extension ChartStyle {
+// MARK: - Debug Preview
+
+#if DEBUG
+extension RecordingSummaryView {
     
-    static var recordingEntry: ChartStyle {
-        ChartStyle(
-            backgroundColor: Color.secondaryBackground,
-            accentColor: Color.accentColor,
-            gradientColor: .init(
-                start: Color.accentColor,
-                end: Color.accentColor
-            ),
-            textColor: Color.primary,
-            legendTextColor: Color.primary,
-            dropShadowColor: Color.clear
+    init(previewRecording: Recording) {
+        self.recordingMetadata = Recording(
+            id: previewRecording.id,
+            start: previewRecording.start,
+            end: previewRecording.end,
+            entries: nil,
+            state: previewRecording.state,
+            measurementTypes: previewRecording.measurementTypes
         )
+        
+        _fullRecording = State(initialValue: previewRecording)
+        _isLoading = State(initialValue: false)
+    }
+}
+#endif
+
+// MARK: - FileDocument Wrapper
+
+struct FileDocumentWrapper: FileDocument {
+    
+    let url: URL
+    
+    static var readableContentTypes: [UTType] { [.plainText] }
+    
+    init(url: URL) { self.url = url }
+    
+    init(configuration: ReadConfiguration) throws {
+        throw CocoaError(.coderReadCorrupt)
     }
     
-    static var recordingEntryDarkMode: ChartStyle {
-        ChartStyle(
-            backgroundColor: Color.accentColor,
-            accentColor: Color.accentColor,
-            gradientColor: .init(
-                start: Color.accentColor,
-                end: Color.accentColor
-            ),
-            textColor: Color.primary,
-            legendTextColor: Color.primary,
-            dropShadowColor: Color.clear
-        )
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        try FileWrapper(url: url, options: .immediate)
     }
 }
 
-struct RecordingView_Previews: PreviewProvider {
+// MARK: - Previews
+
+struct RecordingSummaryView_Previews: PreviewProvider {
     
     static let settings = Settings()
-    static let measurer = Measurer(settings: settings)
-    static let recorder = Recorder(measurer: measurer)
+    static let recorder = Recorder(
+        measurer: Measurer(settings: settings),
+        settings: settings
+    )
     
     static let axes: TriangleAxes = {
-        var axes = TriangleAxes.zero
-        axes.displayableAbsMax = 1.0
-        return axes
+        var a = TriangleAxes.zero
+        a.displayableAbsMax = 1.0
+        return a
     }()
     
+    static let sampleRecording = Recording(
+        id: UUID().uuidString,
+        start: Date().addingTimeInterval(-60),
+        end: Date(),
+        entries: [
+            .init(
+                measurementType: .acceleration,
+                date: Date().addingTimeInterval(-60),
+                axes: axes
+            ),
+            .init(
+                measurementType: .acceleration,
+                date: Date(),
+                axes: axes
+            )
+        ],
+        state: .completed,
+        measurementTypes: [.acceleration]
+    )
+    
     static var previews: some View {
-        RecordingSummaryView(
-            recording: Recording(
-                entries: [
-                    .init(
-                        measurementType: .acceleration,
-                        date: .init(),
-                        axes: axes
-                    )
-                ],
-                state: .completed,
-                measurementTypes: [.acceleration]
-            )
-        )
+        NavigationView {
+            RecordingSummaryView(previewRecording: sampleRecording)
+                .environmentObject(settings)
+                .environmentObject(recorder)
+        }
         .preferredColorScheme(.light)
-        .environmentObject(recorder)
-        .environmentObject(settings)
         
-        RecordingSummaryView(
-            recording: Recording(
-                entries: [
-                    .init(
-                        measurementType: .acceleration,
-                        date: .init(),
-                        axes: axes
-                    )
-                ],
-                state: .completed,
-                measurementTypes: [.acceleration]
-            )
-        )
+        NavigationView {
+            RecordingSummaryView(previewRecording: sampleRecording)
+                .environmentObject(settings)
+                .environmentObject(recorder)
+        }
         .preferredColorScheme(.dark)
-        .environmentObject(recorder)
-        .environmentObject(settings)
     }
 }

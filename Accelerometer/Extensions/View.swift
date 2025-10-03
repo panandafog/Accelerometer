@@ -23,11 +23,11 @@ extension View {
     var statusBarOrientation: UIInterfaceOrientation? {
         get {
             guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else {
-                #if DEBUG
+#if DEBUG
                 fatalError("Could not obtain UIInterfaceOrientation from a valid windowScene")
-                #else
+#else
                 return nil
-                #endif
+#endif
             }
             return orientation
         }
@@ -39,6 +39,30 @@ extension View {
         } else {
             self
         }
+    }
+    
+    func exportable(
+        isPresented: Binding<Bool>,
+        url: Binding<URL?>,
+        filename: String
+    ) -> some View {
+        modifier(ExportModifier(
+            isPresented: isPresented,
+            url: url,
+            filename: filename
+        ))
+    }
+    
+    func exportable(
+        isPresented: Binding<Bool>,
+        url: Binding<URL?>,
+        measurementType: MeasurementType
+    ) -> some View {
+        modifier(ExportModifier(
+            isPresented: isPresented,
+            url: url,
+            measurementType: measurementType
+        ))
     }
 }
 

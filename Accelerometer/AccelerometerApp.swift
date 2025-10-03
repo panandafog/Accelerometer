@@ -17,7 +17,7 @@ struct AccelerometerApp: App {
 
     init() {
         self.measurer = Measurer(settings: settings)
-        self.recorder = Recorder(measurer: measurer)
+        self.recorder = Recorder(measurer: measurer, settings: settings)
     }
     
     var body: some Scene {

@@ -17,7 +17,11 @@ class Settings: ObservableObject {
     
     static let measurementsDisplayRoundPlaces = 3
     
+    static let minFreeSpaceMB = 500
+    
     private static let initialUpdateInterval = 0.5
+    
+    // MARK: - User options
     
     var exportDateFormat: ExportDateFormat {
         get {
@@ -31,16 +35,6 @@ class Settings: ObservableObject {
         set {
             objectWillChange.send()
             UserDefaults.standard.set(newValue.rawValue, forKey: Key.exportDateFormat.rawValue)
-        }
-    }
-    
-    var enableAnimations: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: Key.enableAnimations.rawValue)
-        }
-        set {
-            objectWillChange.send()
-            UserDefaults.standard.set(newValue, forKey: Key.enableAnimations.rawValue)
         }
     }
     
@@ -65,7 +59,32 @@ class Settings: ObservableObject {
             updateIntervalSubject.send(roundedValue)
         }
     }
+    
+    // MARK: - Debug options
+    #if DEBUG
+    var enableAnimations: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: Key.enableAnimations.rawValue)
+        }
+        set {
+            objectWillChange.send()
+            UserDefaults.standard.set(newValue, forKey: Key.enableAnimations.rawValue)
+        }
+    }
+
+    var alwaysNotEnoughMemory: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: Key.alwaysNotEnoughMemory.rawValue)
+        }
+        set {
+            objectWillChange.send()
+            UserDefaults.standard.set(newValue, forKey: Key.alwaysNotEnoughMemory.rawValue)
+        }
+    }
+    #endif
 }
+
+// MARK: - ExportDateFormat
 
 extension Settings {
     
@@ -91,10 +110,15 @@ extension Settings {
     }
 }
 
+// MARK: - Keys
+
 extension Settings {
     enum Key: String {
         case exportDateFormat = "ExportDateFormat"
+        #if DEBUG
         case enableAnimations = "EnableAnimations"
+        case alwaysNotEnoughMemory = "AlwaysNotEnoughMemory"
+        #endif
         case measurementsUpdateInterval = "MeasurementsUpdateInterval"
     }
 }

@@ -25,12 +25,18 @@ struct SettingsView: View {
             ) {
                 ExportDateFormatView()
             }
+            
+            #if (DEBUG)
             Section(
                 header: Spacer(),
-                footer: Text("Enable animations")
+                footer: Text("Debug options")
             ) {
                 AnimationsView()
+                AlwaysNotEnoughMemoryView()
+                DebugSamplesView()
             }
+            #endif
+            
 //            Section(header: Text("Accelerometer"), footer: Text("")) {
 //                Toggle("Remove gravity", isOn: .init(get: { measurer.removeGravity }, set: { measurer.removeGravity = $0 }))
 //            }
@@ -42,7 +48,7 @@ struct SettingsView_Previews: PreviewProvider {
     
     static let settings = Settings()
     static let measurer = Measurer(settings: settings)
-    static let recorder = Recorder(measurer: measurer)
+    static let recorder = Recorder(measurer: measurer, settings: settings)
     
     static var previews: some View {
         SettingsView()

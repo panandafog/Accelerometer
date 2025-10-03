@@ -6,47 +6,62 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RecordingPreview: View {
     
     let recording: Recording
+
+    @State private var timerPublisher: Timer.TimerPublisher?
+    @State private var timerCancellable: Cancellable?
     
-    var startString: String {
-        let startString: String
-        if let start = recording.start {
-            startString = DateFormatter.Recordings.string(from: start)
-        } else {
-            startString = "???"
-        }
-        return startString
+    @State private var durationStringState: String = ""
+    
+    private var durationString: String {
+        recording.duration?.durationString ?? "???"
     }
     
-    var durationString: String {
-        let durationString: String
-        if let duration = recording.duration {
-            durationString = duration.durationString
-        } else {
-            durationString = "???"
-        }
-        return durationString
+    private var startString: String {
+        DateFormatter.Recordings.string(from: recording.start)
     }
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Started: " + startString)
-                Text("Duration: " + durationString)
-                    .padding([.bottom], 5)
-                Text("Measurements:")
-                ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in
-                    lhs.name < rhs.name
-                }), id: \.self) { measurementType in
-                    Text(measurementType.name)
-                        .padding(.leading)
-                        .foregroundColor(.accentColor)
-                }
+        VStack(alignment: .leading, spacing: 5) {
+            Text("Started: " + startString)
+            Text("Duration: " + durationStringState)
+                .padding([.bottom], 5)
+            Text("Measurements:")
+            ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in
+                lhs.name < rhs.name
+            }), id: \.self) { measurementType in
+                Text(measurementType.name)
+                    .padding(.leading)
+                    .foregroundColor(.accentColor)
             }
         }
+        .onAppear {
+            durationStringState = durationString
+            setupTimerIfNeeded()
+        }
+        .onChange(of: recording.state) {
+            setupTimerIfNeeded()
+        }
+    }
+    
+    private func setupTimerIfNeeded() {
+        timerCancellable?.cancel()
+        timerCancellable = nil
+        timerPublisher = nil
+        
+        guard recording.state == .inProgress else { return }
+        
+        let publisher = Timer.publish(every: 1, on: .main, in: .common)
+        timerPublisher = publisher
+        timerCancellable = publisher
+            .autoconnect()
+            .sink { _ in
+                durationStringState = durationString
+            }
     }
 }
 

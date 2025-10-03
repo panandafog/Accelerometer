@@ -6,27 +6,20 @@
 //
 
 import Foundation
-import CoreData
 
 struct Recording: Identifiable {
     
     let id: String
-    let created: Date
+    let start: Date
+    var end: Date?
     
-    var entries: [Entry]
+    var entries: [Entry]?
     var state: State
+    
     let measurementTypes: Set<MeasurementType>
     
-    var start: Date? {
-        entries.first?.date ?? created
-    }
-    
-    var end: Date? {
-        entries.last?.date
-    }
-    
     var duration: DateComponents? {
-        guard let start = start, let end = end else {
+        guard let end = (state == .inProgress) ? Date.now : end else {
             return nil
         }
 
@@ -40,39 +33,20 @@ struct Recording: Identifiable {
             }
     }
     
-    init(id: String = UUID().uuidString, created: Date = Date(), entries: [Entry], state: State, measurementTypes: Set<MeasurementType>) {
+    init(
+        id: String = UUID().uuidString,
+        start: Date = Date(),
+        end: Date? = nil,
+        entries: [Entry]? = nil,
+        state: State,
+        measurementTypes: Set<MeasurementType>
+    ) {
         self.id = id
-        self.created = created
+        self.start = start
+        self.end = end
         self.entries = entries
         self.state = state
         self.measurementTypes = measurementTypes
-    }
-    
-    func csv(of type: MeasurementType, dateFormat: Settings.ExportDateFormat) -> TextFile? {
-        guard measurementTypes.contains(type) else {
-            return nil
-        }
-        let filteredEntries = entries
-            .filter({ $0.measurementType == type })
-        
-        var csvStrings = [RecordingUtils.stringsHeader(of: type)]
-        csvStrings.append(contentsOf: filteredEntries.map({ $0.getCsvString(dateFormat: dateFormat) }))
-        
-        return TextFile(initialText: csvStrings.joined(separator: RecordingUtils.rowSeparator))
-    }
-    
-    func chartValues(of measurementType: MeasurementType) -> [[Double]] {
-        var chartEntries: [any ChartEntry] = []
-        
-        for entry in entries where entry.measurementType == measurementType {
-            if let axes = entry.axes as? (any ChartEntry) {
-                chartEntries.append(axes)
-            }
-        }
-        
-        return chartEntries
-            .map({ $0.chartValues })
-            .transposed()
     }
 }
 

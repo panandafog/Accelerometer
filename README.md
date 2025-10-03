@@ -1,6 +1,6 @@
 # <img src="https://github.com/panandafog/Accelerometer/blob/main/Images/icon.png" width="25"> Acc.elerometer
 
-This iOS application allows you to view the readings of the sensors of your device and write them to a csv file.
+An iOS app that lets you visualize real-time data from your device’s motion and environmental sensors, inspect detailed measurement charts, and export any sensor log to a CSV file for further analysis.
 
 ### System requirements 
 - iOS 14.0
