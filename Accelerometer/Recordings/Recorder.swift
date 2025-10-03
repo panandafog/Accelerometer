@@ -197,4 +197,18 @@ class Recorder: ObservableObject {
         let hasEnoughMemory = freeMB >= Double(Settings.minFreeSpaceMB)
         return hasEnoughMemory
     }
+    
+#if (DEBUG)
+    func createDebugSamples() {
+        Task {
+            await repository.save(
+                PreviewUtils.allSampleCompletedRecordings
+            )
+            await refreshRecordings()
+            await MainActor.run {
+                objectWillChange.send()
+            }
+        }
+    }
+#endif
 }

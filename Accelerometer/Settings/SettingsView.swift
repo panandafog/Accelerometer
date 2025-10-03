@@ -33,6 +33,7 @@ struct SettingsView: View {
             ) {
                 AnimationsView()
                 AlwaysNotEnoughMemoryView()
+                DebugSamplesView()
             }
             #endif
             

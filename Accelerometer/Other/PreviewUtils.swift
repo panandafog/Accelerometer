@@ -205,6 +205,9 @@ struct PreviewUtils {
         emptyRecording
     ]
     
+    static let allSampleCompletedRecordings: [Recording] =
+    allSampleRecordings.filter { $0.end != nil }
+    
     static let magneticFieldTestRecording = recordingWithType(.magneticField, duration: 120)
     
     static let gravityTestRecording = recordingWithType(.gravity, duration: 60)
