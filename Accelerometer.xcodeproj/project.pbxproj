@@ -55,6 +55,7 @@
 		0B9BDC132899A6F900842161 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
 		0B9FB1532E8F365B00D70505 /* PreviewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1522E8F365B00D70505 /* PreviewUtils.swift */; };
 		0B9FB1552E8F52CA00D70505 /* DebugSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1542E8F52CA00D70505 /* DebugSamplesView.swift */; };
+		0B9FB1572E8F653300D70505 /* ExportModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1562E8F653300D70505 /* ExportModifier.swift */; };
 		0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */; };
 		0BA619CF2AADC9E7005DABD3 /* ObservableAxesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */; };
 		0BA63B6C289598B40040B63D /* NewRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6B289598B40040B63D /* NewRecordingView.swift */; };
@@ -152,6 +153,7 @@
 		0B9BDC122899A6F900842161 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0B9FB1522E8F365B00D70505 /* PreviewUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewUtils.swift; sourceTree = "<group>"; };
 		0B9FB1542E8F52CA00D70505 /* DebugSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSamplesView.swift; sourceTree = "<group>"; };
+		0B9FB1562E8F653300D70505 /* ExportModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportModifier.swift; sourceTree = "<group>"; };
 		0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BA619CE2AADC9E7005DABD3 /* ObservableAxesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableAxesTests.swift; sourceTree = "<group>"; };
 		0BA63B6B289598B40040B63D /* NewRecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecordingView.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				0BA63B712897FBCE0040B63D /* RecordingPreview.swift */,
 				0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */,
 				0BA63B6B289598B40040B63D /* NewRecordingView.swift */,
+				0B9FB1562E8F653300D70505 /* ExportModifier.swift */,
 			);
 			path = Recordings;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				0B4CC363287C30FF000F0C94 /* DiagramAxesNamesStyle.swift in Sources */,
 				0BBF0918289D163300B42740 /* RecordingEntryRealm.swift in Sources */,
 				0B38C323288DC56D00A4541A /* AxesSummaryViewExtended.swift in Sources */,
+				0B9FB1572E8F653300D70505 /* ExportModifier.swift in Sources */,
 				0BFBA1E828737CC300529B50 /* ObservableAxes.swift in Sources */,
 				0B24EC3228621BE000AD3EF1 /* Measurer.swift in Sources */,
 				0B96B7472E8AD49F0007E730 /* RecordingChartContent.swift in Sources */,

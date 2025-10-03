@@ -1,5 +1,5 @@
 //
-//  ChartContainerView.swift
+//  RecordingChartContainerView.swift
 //  Accelerometer
 //
 //  Created by Andrey Pantyuhin on 22.03.2025.
@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 import UniformTypeIdentifiers
 
-struct ChartContainerView: View {
+struct RecordingChartContainerView: View {
     
     let recording: Recording
     let measurementType: MeasurementType
@@ -88,12 +88,11 @@ struct ChartContainerView: View {
     
     var body: some View {
         chart
-            .fileExporter(
+            .exportable(
                 isPresented: $isPresentingExporter,
-                document: exportURL.map { FileDocumentWrapper(url: $0) },
-                contentType: .plainText,
-                defaultFilename: "\(measurementType.rawValue).csv"
-            ) { _ in }
+                url: $exportURL,
+                measurementType: measurementType
+            )
             .task {
                 await loadData()
             }
@@ -197,13 +196,13 @@ struct ChartContainerView: View {
 
 // MARK: - Previews
 
-struct ChartContainerView_Previews: PreviewProvider {
+struct RecordingChartContainerView_Previews: PreviewProvider {
     static let recording = PreviewUtils.mediumRecording
     static let type = measurementType(from: recording)
 
     static var previews: some View {
         Group {
-            ChartContainerView(
+            RecordingChartContainerView(
                 recording: recording,
                 measurementType: type,
                 style: .small
@@ -212,7 +211,7 @@ struct ChartContainerView_Previews: PreviewProvider {
             .padding()
             .previewDisplayName("Small")
 
-            ChartContainerView(
+            RecordingChartContainerView(
                 recording: recording,
                 measurementType: type,
                 style: .big

@@ -12,7 +12,7 @@ struct RecordingBigChartView: View {
     let measurementType: MeasurementType
     
     var body: some View {
-        ChartContainerView(
+        RecordingChartContainerView(
             recording: recording,
             measurementType: measurementType,
             style: .big

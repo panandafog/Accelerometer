@@ -21,7 +21,7 @@ struct RecordingSummaryView: View {
     @State private var fullRecording: Recording?
     @State private var isLoading = false
     
-    @State private var isPresentingExporter = false
+    @State private var exportingMeasurement: MeasurementType? = nil
     @State private var exportURL: URL?
     @State private var exportLoading = false
     
@@ -103,13 +103,16 @@ struct RecordingSummaryView: View {
                 .disabled(fullRecording == nil)
             }
         }
-
-        .fileExporter(
-            isPresented: $isPresentingExporter,
-            document: exportURL.map { FileDocumentWrapper(url: $0) },
-            contentType: UTType.plainText,
-            defaultFilename: defaultFilename()
-        ) { _ in }
+        .exportable(
+            isPresented: .init(
+                get: { exportingMeasurement != nil },
+                set: { presented in
+                    if !presented { exportingMeasurement = nil }
+                }
+            ),
+            url: $exportURL,
+            measurementType: exportingMeasurement ?? recording.measurementTypes.first!
+        )
         .task {
             await loadFullRecordingIfNeeded()
         }
@@ -139,7 +142,7 @@ struct RecordingSummaryView: View {
                     dateFormat: settings.exportDateFormat
                 )
                 exportURL = url
-                isPresentingExporter = true
+                exportingMeasurement = type
             } catch {
                 print("Export failed:", error)
             }

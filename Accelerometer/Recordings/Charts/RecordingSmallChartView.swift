@@ -17,7 +17,7 @@ struct RecordingSmallChartView: View {
             recording: recording,
             measurementType: measurementType
         )) {
-            ChartContainerView(
+            RecordingChartContainerView(
                 recording: recording,
                 measurementType: measurementType,
                 style: .small
