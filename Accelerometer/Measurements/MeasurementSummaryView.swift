@@ -26,7 +26,7 @@ struct MeasurementSummaryView: View {
         let enabled = !recorder.recordingInProgress && recorder.hasEnoughMemory
         
         let text = if !recorder.hasEnoughMemory {
-            "Not enought memory"
+            "Not enough memory"
         } else if recorder.recordingInProgress {
             "Recording is already started"
         } else {
@@ -41,7 +41,7 @@ struct MeasurementSummaryView: View {
                     .foregroundColor(.background)
             }
         )
-        .buttonStyle(.borderedProminent)
+        .buttonStyle(.glassProminent)
         .controlSize(.large)
         .disabled(!enabled)
         .padding(.defaultPadding)

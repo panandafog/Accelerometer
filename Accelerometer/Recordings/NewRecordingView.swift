@@ -43,7 +43,7 @@ struct NewRecordingView: View {
                 
                 HStack {
                     Spacer()
-                    Button(allSelected ? "Unselect All" : "Select All") {
+                    Button(allSelected ? "Deselect all" : "Select all") {
                         setAll(!allSelected)
                     }
                     .buttonStyle(.bordered)
@@ -67,17 +67,17 @@ struct NewRecordingView: View {
                 .listStyle(.plain)
                 .animation(.easeInOut, value: measurementTypes)
                 
-                Button("Start Recording") {
+                Button("Start") {
                     startRecording()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.glassProminent)
                 .controlSize(.large)
                 .tint(noneSelected ? .gray : .accentColor)
                 .disabled(noneSelected)
                 .padding(.horizontal)
                 .animation(.easeInOut, value: noneSelected)
             }
-            .navigationTitle("New Recording")
+            .navigationTitle("New recording")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {

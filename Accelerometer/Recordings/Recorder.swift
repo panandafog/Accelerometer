@@ -158,7 +158,10 @@ class Recorder: ObservableObject {
     private func refreshRecordings() async {
         await repository.updateMetadata()
         let stored = await repository.recordingsMetadata
-        await MainActor.run { recordingsMetadata = Array(stored.values) }
+        await MainActor.run {
+            recordingsMetadata = Array(stored.values)
+                .sorted { $0.start > $1.start }
+        }
     }
     
     // MARK: - Memory control
@@ -197,4 +200,18 @@ class Recorder: ObservableObject {
         let hasEnoughMemory = freeMB >= Double(Settings.minFreeSpaceMB)
         return hasEnoughMemory
     }
+    
+#if (DEBUG)
+    func createDebugSamples() {
+        Task {
+            await repository.save(
+                PreviewUtils.allSampleCompletedRecordings
+            )
+            await refreshRecordings()
+            await MainActor.run {
+                objectWillChange.send()
+            }
+        }
+    }
+#endif
 }
