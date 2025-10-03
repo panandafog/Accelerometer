@@ -23,6 +23,7 @@ struct RecordingBigChartView: View {
     }
 }
 
+#if DEBUG
 struct RecordingBigChartView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -44,3 +45,4 @@ struct RecordingBigChartView_Previews: PreviewProvider {
         }
     }
 }
+#endif

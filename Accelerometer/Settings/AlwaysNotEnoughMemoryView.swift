@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if DEBUG
 struct AlwaysNotEnoughMemoryView: View {
     
     @EnvironmentObject var settings: Settings
@@ -34,3 +35,4 @@ struct AlwaysNotEnoughMemoryViewPreviews: PreviewProvider {
             .environmentObject(Settings())
     }
 }
+#endif

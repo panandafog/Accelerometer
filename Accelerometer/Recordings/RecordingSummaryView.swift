@@ -50,7 +50,7 @@ struct RecordingSummaryView: View {
                                     .name
                                     .capitalizingFirstLetter()
                             )
-                                .font(.headline)
+                            .font(.headline)
                             RecordingSmallChartView(
                                 recording: recording,
                                 measurementType: type
@@ -129,7 +129,7 @@ struct RecordingSummaryView: View {
             isLoading = false
         }
     }
-
+    
     private func export(type: MeasurementType) {
         guard !exportLoading, let recording = fullRecording else { return }
         exportLoading = true
@@ -201,6 +201,7 @@ struct FileDocumentWrapper: FileDocument {
 
 // MARK: - Previews
 
+#if DEBUG
 struct RecordingSummaryView_Previews: PreviewProvider {
     
     static let settings = Settings()
@@ -251,3 +252,4 @@ struct RecordingSummaryView_Previews: PreviewProvider {
         .preferredColorScheme(.dark)
     }
 }
+#endif

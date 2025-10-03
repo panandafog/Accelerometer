@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if DEBUG
 struct AnimationsView: View {
     
     @EnvironmentObject var settings: Settings
@@ -38,3 +39,4 @@ struct AnimationsViewPreviews: PreviewProvider {
             .environmentObject(Settings())
     }
 }
+#endif
