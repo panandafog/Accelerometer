@@ -21,6 +21,10 @@ struct RecordingChartContainerView: View {
     @State private var isPresentingExporter = false
     @State private var exportURL: URL?
     
+    @State private var zoomScale: Double = 1.0
+    @State private var visibleStart: Double = 0.0
+    @State private var visibleEnd: Double = 0.0
+    
     private let processor = RecordingProcessor()
     
     private var startDate: Date {
@@ -32,7 +36,19 @@ struct RecordingChartContainerView: View {
         return last.timeIntervalSince(startDate)
     }
     
+    private var visibleDomain: ClosedRange<Double> {
+        if zoomScale <= 1.0 {
+            return 0...totalDuration
+        } else {
+            let visibleDuration = totalDuration / zoomScale
+            let start = max(0, visibleStart)
+            let end = min(totalDuration, start + visibleDuration)
+            return start...end
+        }
+    }
+    
     private var chartXAxisStride: Double {
+        let visibleDuration = visibleDomain.upperBound - visibleDomain.lowerBound
         let niceIntervals: [Double] = [
             // seconds
             0.1, 0.2, 0.5, 1, 2, 5, 10, 15, 30, 60,
@@ -43,13 +59,13 @@ struct RecordingChartContainerView: View {
         ]
         
         for interval in niceIntervals {
-            let tickCount = Int(totalDuration / interval)
+            let tickCount = Int(visibleDuration / interval)
             if tickCount <= style.tickCount {
                 return interval
             }
         }
         
-        return totalDuration / Double(style.tickCount)
+        return visibleDuration / Double(style.tickCount)
     }
     
     private func formatElapsedTime(_ seconds: TimeInterval) -> String {
@@ -116,7 +132,7 @@ struct RecordingChartContainerView: View {
                 startDate: chartEntries.first?.date ?? recording.start
             )
         }
-        .chartXScale(domain: 0...totalDuration)
+        .chartXScale(domain: visibleDomain)
         .chartXAxis {
             let values = AxisMarkValues.stride(by: chartXAxisStride)
             AxisMarks(values: values) { value in
@@ -132,9 +148,28 @@ struct RecordingChartContainerView: View {
         .modify {
             switch style {
             case .big:
-                $0
-                    .chartScrollableAxes(.horizontal)
-                    .chartScrollPosition(initialX: Int.max)
+                $0.gesture(
+                    SimultaneousGesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                print("magnify \(value)")
+                                zoomScale = max(1.0, min(20.0, value))
+                            },
+                        
+                        DragGesture()
+                            .onChanged { value in
+                                if zoomScale > 1.0 {
+                                    let dragDistance = -Double(value.translation.width) / 200.0 * totalDuration / zoomScale
+                                    let newStart = visibleStart + dragDistance
+                                    let visibleDuration = totalDuration / zoomScale
+                                    
+                                    visibleStart = max(0, min(totalDuration - visibleDuration, newStart))
+                                    
+                                    print("drag \(value.translation.width) \(visibleStart) \(newStart) \(visibleDuration)")
+                                }
+                            }
+                    )
+                )
             case .small:
                 $0
             }
@@ -142,6 +177,23 @@ struct RecordingChartContainerView: View {
         .contextMenu {
             Button("Export \(measurementType.name)") {
                 export()
+            }
+//            if style == .big && zoomScale > 1.0 {
+//                Button("Reset Zoom") {
+//                    withAnimation(.easeInOut(duration: 0.3)) {
+//                        zoomScale = 1.0
+//                        visibleStart = 0.0
+//                    }
+//                }
+//            }
+        }
+        .onChange(of: zoomScale) {
+            let visibleDuration = totalDuration / zoomScale
+            visibleEnd = visibleStart + visibleDuration
+            
+            if visibleEnd > totalDuration {
+                visibleStart = max(0, totalDuration - visibleDuration)
+                visibleEnd = totalDuration
             }
         }
     }
