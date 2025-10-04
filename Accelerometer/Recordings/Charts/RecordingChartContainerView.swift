@@ -22,6 +22,7 @@ struct RecordingChartContainerView: View {
     @State private var exportURL: URL?
     
     @State private var zoomScale: Double = 1.0
+    @State private var lastZoomScale: Double = 1.0
     @State private var visibleStart: Double = 0.0
     @State private var visibleEnd: Double = 0.0
     
@@ -153,7 +154,11 @@ struct RecordingChartContainerView: View {
                         MagnificationGesture()
                             .onChanged { value in
                                 print("magnify \(value)")
-                                zoomScale = max(1.0, min(20.0, value))
+                                zoomScale = max(1.0, min(20.0, lastZoomScale * value))
+                            }
+                            .onEnded { value in
+                                lastZoomScale = max(1.0, min(20.0, lastZoomScale * value))
+                                zoomScale = lastZoomScale
                             },
                         
                         DragGesture()
