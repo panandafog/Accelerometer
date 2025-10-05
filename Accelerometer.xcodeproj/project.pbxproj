@@ -45,6 +45,7 @@
 		0B548E1A2876ED5000EDCDA8 /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
 		0B6DD8CF2B816BED0076D93A /* ChartEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */; };
 		0B7A81602E816FE900399013 /* AlwaysNotEnoughMemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A815F2E816FE900399013 /* AlwaysNotEnoughMemoryView.swift */; };
+		0B7F6D7E2E92A77F00AE5F38 /* StubMeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7F6D7D2E92A77200AE5F38 /* StubMeasurementsView.swift */; };
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
@@ -144,6 +145,7 @@
 		0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementPreview.swift; sourceTree = "<group>"; };
 		0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartEntry.swift; sourceTree = "<group>"; };
 		0B7A815F2E816FE900399013 /* AlwaysNotEnoughMemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysNotEnoughMemoryView.swift; sourceTree = "<group>"; };
+		0B7F6D7D2E92A77200AE5F38 /* StubMeasurementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubMeasurementsView.swift; sourceTree = "<group>"; };
 		0B801285286DA9C000F4AA85 /* AnimatableArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableArray.swift; sourceTree = "<group>"; };
 		0B8C3B292A99F9FF00488B1E /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
 		0B8C3B2B2A99FC9600488B1E /* Axes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axes.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 		0B24EC3C2862327E00AD3EF1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0B7F6D7D2E92A77200AE5F38 /* StubMeasurementsView.swift */,
 				0B36DFC9289A9E85007130D9 /* Settings.swift */,
 				0B24EC3928622B7100AD3EF1 /* SettingsView.swift */,
 				0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */,
@@ -721,6 +724,7 @@
 				0B24EC45286247AD00AD3EF1 /* String.swift in Sources */,
 				0B9FB1552E8F52CA00D70505 /* DebugSamplesView.swift in Sources */,
 				0BDED2D828983A4D00CAEAC3 /* DateComponents.swift in Sources */,
+				0B7F6D7E2E92A77F00AE5F38 /* StubMeasurementsView.swift in Sources */,
 				0B24EC3A28622B7100AD3EF1 /* SettingsView.swift in Sources */,
 				0B36DFCA289A9E85007130D9 /* Settings.swift in Sources */,
 				0BA5B7BC2AD319AC004F1808 /* AttitudeAxesSummaryView.swift in Sources */,

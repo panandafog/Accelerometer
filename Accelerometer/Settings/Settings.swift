@@ -81,6 +81,16 @@ class Settings: ObservableObject {
             UserDefaults.standard.set(newValue, forKey: Key.alwaysNotEnoughMemory.rawValue)
         }
     }
+    
+    var stubMeasurements: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: Key.stubMeasurements.rawValue)
+        }
+        set {
+            objectWillChange.send()
+            UserDefaults.standard.set(newValue, forKey: Key.stubMeasurements.rawValue)
+        }
+    }
     #endif
 }
 
@@ -118,6 +128,7 @@ extension Settings {
         #if DEBUG
         case enableAnimations = "EnableAnimations"
         case alwaysNotEnoughMemory = "AlwaysNotEnoughMemory"
+        case stubMeasurements = "StubMeasurements"
         #endif
         case measurementsUpdateInterval = "MeasurementsUpdateInterval"
     }

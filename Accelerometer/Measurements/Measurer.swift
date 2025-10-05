@@ -29,6 +29,7 @@ class Measurer: ObservableObject {
     private let motion = CMMotionManager()
     
     private var settingsSubscription: AnyCancellable?
+    private var stubTimer: AnyCancellable?
     
     init(settings: Settings) {
         self.settings = settings
@@ -38,16 +39,42 @@ class Measurer: ObservableObject {
                 if ((self?.motion.isDeviceMotionActive) != nil) {
                     self?.prepareMotion()
                 }
+                if self?.settings.stubMeasurements == true {
+                    self?.restartStubTimer()
+                }
             }
+        
+        if settings.stubMeasurements {
+            startStubMeasurements()
+        }
     }
     
     func startAll() {
-        startDeviceMotion()
-        startAccelerometer()
-        startGyro()
-        startMagnetometer()
-        startProximity()
+        if settings.stubMeasurements {
+            startStubMeasurements()
+        } else {
+            startDeviceMotion()
+            startAccelerometer()
+            startGyro()
+            startMagnetometer()
+            startProximity()
+        }
     }
+    
+    func stopAll() {
+        if settings.stubMeasurements {
+            stubTimer?.cancel()
+            stubTimer = nil
+        } else {
+            stopDeviceMotion()
+            stopAccelerometer()
+            stopGyro()
+            stopMagnetometer()
+            stopProximity()
+        }
+    }
+    
+    // MARK: — Real sensors
     
     func startDeviceMotion() {
         guard !motion.isDeviceMotionActive else {
@@ -97,7 +124,7 @@ class Measurer: ObservableObject {
             guard let data = data else {
                 fatalError("no data")
             }
-
+            
             saveData(
                 axesType: TriangleAxes.self,
                 measurementType: .acceleration,
@@ -159,19 +186,11 @@ class Measurer: ObservableObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(proximityDidChange),
-            name: 
+            name:
                 UIDevice
                 .proximityStateDidChangeNotification,
             object: UIDevice.current
         )
-    }
-    
-    func stopAll() {
-        stopDeviceMotion()
-        stopAccelerometer()
-        stopGyro()
-        stopMagnetometer()
-        stopProximity()
     }
     
     func stopDeviceMotion() {
@@ -194,6 +213,84 @@ class Measurer: ObservableObject {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: — Stub measurements for emulator
+    
+    private func startStubMeasurements() {
+        stubTimer = Timer
+            .publish(
+                every: settings.updateInterval,
+                on: .main,
+                in: .common
+            )
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.emitStubValues()
+            }
+    }
+    
+    private func restartStubTimer() {
+        stubTimer?.cancel()
+        startStubMeasurements()
+    }
+    
+    private func emitStubValues() {
+        for type in MeasurementType.allShownCases {
+            let maxVal = displayableAbsMax[type] ?? 1.0
+            
+            switch type {
+                
+            case .acceleration, .userAcceleration, .gravity:
+                let vx = Double.random(in: -maxVal...maxVal)
+                let vy = Double.random(in: -maxVal...maxVal)
+                let vz = Double.random(in: -maxVal...maxVal)
+                
+                saveData(
+                    axesType: TriangleAxes.self,
+                    measurementType: type,
+                    values: [.x: vx, .y: vy, .z: vz]
+                )
+                
+            case .rotationRate:
+                let vx = Double.random(in: -maxVal...maxVal)
+                let vy = Double.random(in: -maxVal...maxVal)
+                let vz = Double.random(in: -maxVal...maxVal)
+                
+                saveData(
+                    axesType: TriangleAxes.self,
+                    measurementType: type,
+                    values: [.x: vx, .y: vy, .z: vz]
+                )
+                
+            case .magneticField:
+                let vx = Double.random(in: -maxVal...maxVal)
+                let vy = Double.random(in: -maxVal...maxVal)
+                let vz = Double.random(in: -maxVal...maxVal)
+                
+                saveData(
+                    axesType: TriangleAxes.self,
+                    measurementType: type,
+                    values: [.x: vx, .y: vy, .z: vz]
+                )
+                
+            case .attitude:
+                let roll  = Double.random(in: -maxVal...maxVal)
+                let pitch = Double.random(in: -maxVal...maxVal)
+                let yaw   = Double.random(in: -maxVal...maxVal)
+                
+                saveData(
+                    axesType: AttitudeAxes.self,
+                    measurementType: .attitude,
+                    values: [.roll: roll, .pitch: pitch, .yaw: yaw]
+                )
+                
+            default:
+                break
+            }
+        }
+    }
+    
+    // MARK: — Shared helpers
+    
     func resetAll() {
         MeasurementType.allCases.forEach {
             reset($0)
@@ -208,7 +305,11 @@ class Measurer: ObservableObject {
         motion.setUpdateInterval(settings.updateInterval)
     }
     
-    func saveData<AxesType: Axes>(axesType: AxesType.Type, measurementType: MeasurementType, values: [AxeType: AxesType.ValueType]) {
+    func saveData<AxesType: Axes>(
+        axesType: AxesType.Type,
+        measurementType: MeasurementType,
+        values: [AxeType: AxesType.ValueType]
+    ) {
         if observableAxes[measurementType] == nil {
             var axes = axesType.zero
             if let displayableAbsMax = displayableAbsMax[measurementType] as? AxesType.ValueType {
@@ -228,14 +329,13 @@ class Measurer: ObservableObject {
     }
     
     @objc func proximityDidChange(notification: NSNotification) {
-        guard let device = notification.object as? UIDevice else { return }
-        let currentProximityState = device.proximityState
-        
-        saveData(
-            axesType: BooleanAxes.self,
-            measurementType: .proximity,
-            values: [.bool: currentProximityState]
-        )
+        if let device = notification.object as? UIDevice {
+            saveData(
+                axesType: BooleanAxes.self,
+                measurementType: .proximity,
+                values: [.bool: device.proximityState]
+            )
+        }
     }
 }
 
