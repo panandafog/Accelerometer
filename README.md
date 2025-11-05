@@ -1,9 +1,12 @@
 # <img src="https://github.com/panandafog/Accelerometer/blob/main/Images/icon.png" width="25"> Acc.elerometer
 
-An iOS app that lets you visualize real-time data from your device’s motion and environmental sensors, inspect detailed measurement charts, and export any sensor log to a CSV file for further analysis.
+Transform your device into a powerful motion sensor laboratory.
+
+Record and visualize real-time data from your device's built-in sensors with interactive charts and precise measurements.
+Perfect for researchers, developers, students, and anyone interested in understanding device motion.
 
 ### System requirements 
-- iOS 14.0
+- iOS 26.0
 
 ## Installation
 
