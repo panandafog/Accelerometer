@@ -1,0 +1,252 @@
+{
+  "primaryLanguage" : "en-US",
+  "languages" : {
+    "en-US" : {
+      "screenshots" : [
+        {
+          "uploadedAt" : "2025-11-05T13:31:19Z",
+          "originalFileName" : "Simulator Screenshot - iPhone 17 Pro Max - 2025-11-05 at 16.30.29.png",
+          "pageName" : "Page 1",
+          "title" : "",
+          "id" : "663A82C8-386F-499D-9FD5-E24B57DCB068",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "detectedDisplayClass" : "6.9",
+          "selectedSuggestionIndex" : 0,
+          "imagePath" : "screenshots\/originals\/en-US-page1-618D16BA-E977-44DD-B876-A4CE0056BAFB.png"
+        },
+        {
+          "uploadedAt" : "2025-11-05T13:33:38Z",
+          "originalFileName" : "182F31F4-2164-41F6-9057-297098FADB45_screen_2.png",
+          "pageName" : "Page 2",
+          "title" : "",
+          "id" : "555C1050-4A22-4A94-833E-752BBC79EBEA",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "detectedDisplayClass" : "6.9",
+          "selectedSuggestionIndex" : 0,
+          "imagePath" : "screenshots\/originals\/en-US-page2-EE189B2C-D43B-4302-BAEC-3BAE4C3F93F5.png"
+        },
+        {
+          "uploadedAt" : "2025-11-05T13:33:40Z",
+          "originalFileName" : "9D5226E5-045E-4EC3-A7A5-2C996E43452B_screen_3.png",
+          "pageName" : "Page 3",
+          "title" : "",
+          "id" : "60F4DF3A-F855-4D88-9C0A-70F187E1E730",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "detectedDisplayClass" : "6.9",
+          "selectedSuggestionIndex" : 0,
+          "imagePath" : "screenshots\/originals\/en-US-page3-A620DEB4-0724-461C-9B72-5BF2270FC9AE.png"
+        },
+        {
+          "pageName" : "Page 4",
+          "uploadedAt" : "2025-11-05T14:07:20Z",
+          "selectedSuggestionIndex" : 0,
+          "detectedDisplayClass" : "6.9",
+          "title" : "",
+          "id" : "CA2FFD87-5AC8-49D4-9421-4A7CFB4938E2",
+          "originalFileName" : "9F702F6B-AB97-43D7-8D90-2936FB7F7E1B_Simulator Screenshot - iPhone 17 Pro Max - 2025-11-05 at 17.07.03.png",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "imagePath" : "screenshots\/originals\/en-US-page4-849CEA8B-0B43-4D0C-A900-FC2791E11FEA.png"
+        }
+      ],
+      "usesMasterDesign" : true
+    }
+  },
+  "targetDisplay" : "6.9",
+  "master" : {
+    "pages" : [
+      {
+        "title" : "",
+        "screenshot" : {
+          "title" : "",
+          "id" : "3E1938EA-832B-4D54-9345-6D9820E86387",
+          "pageName" : "",
+          "selectedSuggestionIndex" : 0
+        },
+        "id" : "B1969F92-0432-401A-A6D6-E67C882834BF",
+        "pageName" : "Page 1",
+        "design" : {
+          "backgroundColor" : "#FFFFFF",
+          "deviceColor" : "Black Titanium",
+          "gradientColor3" : "#592CAA",
+          "showGradient" : true,
+          "gradientColor1" : "#F5D4CC",
+          "strokeColor" : "#000000",
+          "deviceRotation" : 0,
+          "gradientType" : "Linear",
+          "gradientColor4" : "#1E0C47",
+          "strokeWidth" : 15,
+          "deviceAlignment" : "Bottom",
+          "margin" : "Medium",
+          "titleSize" : "100",
+          "strokeOpacity" : 0.8056989397321429,
+          "textAlignment" : "Center",
+          "textColor" : "#000000",
+          "shadowDirection" : "Up",
+          "frameStyle" : "Stroke",
+          "iconLayers" : [
+
+          ],
+          "titleFont" : "SF Pro",
+          "showTitle" : true,
+          "devicePosition" : 100,
+          "gradientPosition" : "Bottom",
+          "textOpacity" : 1,
+          "gradientColor2" : "#E57359",
+          "titleWeight" : "Bold",
+          "shadowIntensity" : 0.5015345982142857
+        }
+      },
+      {
+        "title" : "",
+        "screenshot" : {
+          "id" : "66ED2185-3FF6-49E0-9307-B4A58992829D",
+          "pageName" : "",
+          "title" : "",
+          "selectedSuggestionIndex" : 0
+        },
+        "id" : "8DB57E61-4A4F-4A11-AFFD-AB1D5FC907F4",
+        "pageName" : "Page 2",
+        "design" : {
+          "backgroundColor" : "#FFFFFF",
+          "deviceColor" : "Black Titanium",
+          "gradientColor3" : "#592CAA",
+          "showGradient" : true,
+          "gradientColor1" : "#F5D4CC",
+          "strokeColor" : "#000000",
+          "deviceRotation" : 0,
+          "gradientType" : "Linear",
+          "gradientColor4" : "#1E0C47",
+          "strokeWidth" : 15,
+          "deviceAlignment" : "Bottom",
+          "margin" : "Medium",
+          "titleSize" : "100",
+          "strokeOpacity" : 0.8056989397321429,
+          "textAlignment" : "Center",
+          "textColor" : "#000000",
+          "shadowDirection" : "Up",
+          "frameStyle" : "Stroke",
+          "iconLayers" : [
+
+          ],
+          "titleFont" : "SF Pro",
+          "showTitle" : true,
+          "devicePosition" : 100,
+          "gradientPosition" : "Bottom",
+          "textOpacity" : 1,
+          "gradientColor2" : "#E57359",
+          "titleWeight" : "Bold",
+          "shadowIntensity" : 0.5015345982142857
+        }
+      },
+      {
+        "title" : "",
+        "screenshot" : {
+          "title" : "",
+          "pageName" : "",
+          "selectedSuggestionIndex" : 0,
+          "id" : "96814EEC-ACE4-4749-BBC3-B507D30AAAB0"
+        },
+        "id" : "DAAE0869-8680-447E-B70A-2B2CD0C2F7D9",
+        "pageName" : "Page 3",
+        "design" : {
+          "backgroundColor" : "#FFFFFF",
+          "deviceColor" : "Black Titanium",
+          "gradientColor3" : "#592CAA",
+          "showGradient" : true,
+          "gradientColor1" : "#F5D4CC",
+          "strokeColor" : "#000000",
+          "deviceRotation" : 0,
+          "gradientType" : "Linear",
+          "gradientColor4" : "#1E0C47",
+          "strokeWidth" : 15,
+          "deviceAlignment" : "Bottom",
+          "margin" : "Medium",
+          "titleSize" : "100",
+          "strokeOpacity" : 0.8056989397321429,
+          "textAlignment" : "Center",
+          "textColor" : "#000000",
+          "shadowDirection" : "Up",
+          "frameStyle" : "Stroke",
+          "iconLayers" : [
+
+          ],
+          "titleFont" : "SF Pro",
+          "showTitle" : true,
+          "devicePosition" : 100,
+          "gradientPosition" : "Bottom",
+          "textOpacity" : 1,
+          "gradientColor2" : "#E57359",
+          "titleWeight" : "Bold",
+          "shadowIntensity" : 0.5015345982142857
+        }
+      },
+      {
+        "title" : "",
+        "screenshot" : {
+          "pageName" : "",
+          "selectedSuggestionIndex" : 0,
+          "title" : "",
+          "id" : "EFEC5A73-E728-45A6-AB5F-69D758334DD0"
+        },
+        "id" : "DD2BD4E6-0D27-49DC-B5DF-2ACD2485747F",
+        "pageName" : "Page 4",
+        "design" : {
+          "gradientColor1" : "#F5D4CC",
+          "gradientPosition" : "Bottom",
+          "textColor" : "#000000",
+          "margin" : "Medium",
+          "devicePosition" : 100,
+          "textAlignment" : "Center",
+          "titleWeight" : "Bold",
+          "strokeOpacity" : 0.8056989397321429,
+          "iconLayers" : [
+
+          ],
+          "shadowDirection" : "Up",
+          "textOpacity" : 1,
+          "titleSize" : "100",
+          "deviceRotation" : 0,
+          "backgroundColor" : "#FFFFFF",
+          "gradientColor3" : "#592CAA",
+          "deviceAlignment" : "Bottom",
+          "showTitle" : true,
+          "deviceColor" : "Black Titanium",
+          "strokeWidth" : 15,
+          "shadowIntensity" : 0.5015345982142857,
+          "gradientColor2" : "#E57359",
+          "gradientType" : "Linear",
+          "showGradient" : true,
+          "strokeColor" : "#000000",
+          "frameStyle" : "Stroke",
+          "titleFont" : "SF Pro",
+          "gradientColor4" : "#1E0C47"
+        }
+      }
+    ]
+  },
+  "version" : "1.0",
+  "createdAt" : "2025-11-05T12:54:29Z",
+  "appContext" : {
+    "doNotTranslateTerms" : "",
+    "languageStyle" : "Neutral",
+    "description" : "",
+    "tagline" : "",
+    "appStoreURL" : "",
+    "category" : "Productivity",
+    "name" : ""
+  },
+  "hasLockedTarget" : true,
+  "modifiedAt" : "2025-11-05T12:54:29Z"
+}

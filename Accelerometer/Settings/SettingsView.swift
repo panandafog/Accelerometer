@@ -32,6 +32,7 @@ struct SettingsView: View {
                 footer: Text("Debug options")
             ) {
                 AnimationsView()
+                StubMeasurementsView()
                 AlwaysNotEnoughMemoryView()
                 DebugSamplesView()
             }
