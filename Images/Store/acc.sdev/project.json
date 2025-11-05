@@ -1,0 +1,196 @@
+{
+  "createdAt" : "2025-11-05T12:54:29Z",
+  "appContext" : {
+    "description" : "",
+    "tagline" : "",
+    "appStoreURL" : "",
+    "languageStyle" : "Neutral",
+    "name" : "",
+    "doNotTranslateTerms" : "",
+    "category" : "Productivity"
+  },
+  "languages" : {
+    "en-US" : {
+      "usesMasterDesign" : true,
+      "screenshots" : [
+        {
+          "title" : "",
+          "uploadedAt" : "2025-11-05T13:31:19Z",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "imagePath" : "screenshots\/originals\/en-US-page1-618D16BA-E977-44DD-B876-A4CE0056BAFB.png",
+          "originalFileName" : "Simulator Screenshot - iPhone 17 Pro Max - 2025-11-05 at 16.30.29.png",
+          "selectedSuggestionIndex" : 0,
+          "id" : "663A82C8-386F-499D-9FD5-E24B57DCB068",
+          "pageName" : "Page 1",
+          "detectedDisplayClass" : "6.9"
+        },
+        {
+          "title" : "",
+          "uploadedAt" : "2025-11-05T13:33:38Z",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "imagePath" : "screenshots\/originals\/en-US-page2-EE189B2C-D43B-4302-BAEC-3BAE4C3F93F5.png",
+          "originalFileName" : "182F31F4-2164-41F6-9057-297098FADB45_screen_2.png",
+          "selectedSuggestionIndex" : 0,
+          "id" : "555C1050-4A22-4A94-833E-752BBC79EBEA",
+          "pageName" : "Page 2",
+          "detectedDisplayClass" : "6.9"
+        },
+        {
+          "title" : "",
+          "uploadedAt" : "2025-11-05T13:33:40Z",
+          "imageSize" : [
+            1320,
+            2868
+          ],
+          "imagePath" : "screenshots\/originals\/en-US-page3-A620DEB4-0724-461C-9B72-5BF2270FC9AE.png",
+          "originalFileName" : "9D5226E5-045E-4EC3-A7A5-2C996E43452B_screen_3.png",
+          "selectedSuggestionIndex" : 0,
+          "id" : "60F4DF3A-F855-4D88-9C0A-70F187E1E730",
+          "pageName" : "Page 3",
+          "detectedDisplayClass" : "6.9"
+        }
+      ]
+    }
+  },
+  "modifiedAt" : "2025-11-05T12:54:29Z",
+  "targetDisplay" : "6.9",
+  "hasLockedTarget" : true,
+  "version" : "1.0",
+  "master" : {
+    "pages" : [
+      {
+        "pageName" : "Page 1",
+        "title" : "",
+        "screenshot" : {
+          "id" : "3E1938EA-832B-4D54-9345-6D9820E86387",
+          "title" : "",
+          "pageName" : "",
+          "selectedSuggestionIndex" : 0
+        },
+        "id" : "B1969F92-0432-401A-A6D6-E67C882834BF",
+        "design" : {
+          "gradientPosition" : "Bottom",
+          "gradientColor4" : "#1E0C47",
+          "textColor" : "#000000",
+          "margin" : "Medium",
+          "devicePosition" : 100,
+          "textAlignment" : "Center",
+          "titleWeight" : "Bold",
+          "strokeOpacity" : 0.8056989397321429,
+          "iconLayers" : [
+
+          ],
+          "shadowDirection" : "Up",
+          "textOpacity" : 1,
+          "titleSize" : "100",
+          "deviceRotation" : 0,
+          "gradientColor3" : "#592CAA",
+          "backgroundColor" : "#FFFFFF",
+          "deviceAlignment" : "Bottom",
+          "showTitle" : true,
+          "deviceColor" : "Black Titanium",
+          "strokeWidth" : 15,
+          "shadowIntensity" : 0.5015345982142857,
+          "titleFont" : "SF Pro",
+          "gradientType" : "Linear",
+          "showGradient" : true,
+          "strokeColor" : "#000000",
+          "frameStyle" : "Stroke",
+          "gradientColor1" : "#F5D4CC",
+          "gradientColor2" : "#E57359"
+        }
+      },
+      {
+        "pageName" : "Page 2",
+        "title" : "",
+        "screenshot" : {
+          "pageName" : "",
+          "id" : "66ED2185-3FF6-49E0-9307-B4A58992829D",
+          "title" : "",
+          "selectedSuggestionIndex" : 0
+        },
+        "id" : "8DB57E61-4A4F-4A11-AFFD-AB1D5FC907F4",
+        "design" : {
+          "gradientPosition" : "Bottom",
+          "gradientColor4" : "#1E0C47",
+          "textColor" : "#000000",
+          "margin" : "Medium",
+          "devicePosition" : 100,
+          "textAlignment" : "Center",
+          "titleWeight" : "Bold",
+          "strokeOpacity" : 0.8056989397321429,
+          "iconLayers" : [
+
+          ],
+          "shadowDirection" : "Up",
+          "textOpacity" : 1,
+          "titleSize" : "100",
+          "deviceRotation" : 0,
+          "gradientColor3" : "#592CAA",
+          "backgroundColor" : "#FFFFFF",
+          "deviceAlignment" : "Bottom",
+          "showTitle" : true,
+          "deviceColor" : "Black Titanium",
+          "strokeWidth" : 15,
+          "shadowIntensity" : 0.5015345982142857,
+          "titleFont" : "SF Pro",
+          "gradientType" : "Linear",
+          "showGradient" : true,
+          "strokeColor" : "#000000",
+          "frameStyle" : "Stroke",
+          "gradientColor1" : "#F5D4CC",
+          "gradientColor2" : "#E57359"
+        }
+      },
+      {
+        "pageName" : "Page 3",
+        "screenshot" : {
+          "title" : "",
+          "id" : "96814EEC-ACE4-4749-BBC3-B507D30AAAB0",
+          "pageName" : "",
+          "selectedSuggestionIndex" : 0
+        },
+        "design" : {
+          "showGradient" : true,
+          "strokeColor" : "#000000",
+          "showTitle" : true,
+          "titleSize" : "100",
+          "deviceRotation" : 0,
+          "textAlignment" : "Center",
+          "strokeOpacity" : 0.8056989397321429,
+          "backgroundColor" : "#FFFFFF",
+          "shadowIntensity" : 0.5015345982142857,
+          "textOpacity" : 1,
+          "gradientType" : "Linear",
+          "deviceColor" : "Black Titanium",
+          "iconLayers" : [
+
+          ],
+          "gradientPosition" : "Bottom",
+          "devicePosition" : 100,
+          "gradientColor1" : "#F5D4CC",
+          "gradientColor2" : "#E57359",
+          "textColor" : "#000000",
+          "gradientColor3" : "#592CAA",
+          "margin" : "Medium",
+          "titleWeight" : "Bold",
+          "frameStyle" : "Stroke",
+          "deviceAlignment" : "Bottom",
+          "titleFont" : "SF Pro",
+          "shadowDirection" : "Up",
+          "gradientColor4" : "#1E0C47",
+          "strokeWidth" : 15
+        },
+        "title" : "",
+        "id" : "DAAE0869-8680-447E-B70A-2B2CD0C2F7D9"
+      }
+    ]
+  },
+  "primaryLanguage" : "en-US"
+}

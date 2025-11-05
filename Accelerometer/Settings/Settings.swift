@@ -61,37 +61,53 @@ class Settings: ObservableObject {
     }
     
     // MARK: - Debug options
-    #if DEBUG
     var enableAnimations: Bool {
         get {
+#if DEBUG
             return UserDefaults.standard.bool(forKey: Key.enableAnimations.rawValue)
+#else
+            return true
+#endif
         }
         set {
+#if DEBUG
             objectWillChange.send()
             UserDefaults.standard.set(newValue, forKey: Key.enableAnimations.rawValue)
+#endif
         }
     }
 
     var alwaysNotEnoughMemory: Bool {
         get {
+#if DEBUG
             return UserDefaults.standard.bool(forKey: Key.alwaysNotEnoughMemory.rawValue)
+#else
+            return false
+#endif
         }
         set {
+#if DEBUG
             objectWillChange.send()
             UserDefaults.standard.set(newValue, forKey: Key.alwaysNotEnoughMemory.rawValue)
+#endif
         }
     }
     
     var stubMeasurements: Bool {
         get {
+#if DEBUG
             return UserDefaults.standard.bool(forKey: Key.stubMeasurements.rawValue)
+#else
+            return false
+#endif
         }
         set {
+#if DEBUG
             objectWillChange.send()
             UserDefaults.standard.set(newValue, forKey: Key.stubMeasurements.rawValue)
+#endif
         }
     }
-    #endif
 }
 
 // MARK: - ExportDateFormat
