@@ -169,6 +169,7 @@
 		0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingEntryRealm.swift; sourceTree = "<group>"; };
 		0BBF54A92AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnitudeAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyAxesSummaryView.swift; sourceTree = "<group>"; };
+		0BBF85402EBC9DA900D97D6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxes.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
 		0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUtils.swift; sourceTree = "<group>"; };
@@ -257,6 +258,7 @@
 		0B24EC0628621BBE00AD3EF1 /* Accelerometer */ = {
 			isa = PBXGroup;
 			children = (
+				0BBF85402EBC9DA900D97D6E /* Info.plist */,
 				0B24EC0728621BBE00AD3EF1 /* AccelerometerApp.swift */,
 				0B24EC3328621E1C00AD3EF1 /* AppDelegate.swift */,
 				0B24EC0928621BBE00AD3EF1 /* ContentView.swift */,
@@ -944,11 +946,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Accelerometer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Acc.elerometer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -962,7 +965,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -982,11 +985,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Accelerometer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Acc.elerometer;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1000,7 +1004,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer;
 				PRODUCT_NAME = Acc.elerometer;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -5,6 +5,7 @@
 //  Created by Andrey on 29.07.2022.
 //
 
+import CoreLocation
 import DequeModule
 import Combine
 import SwiftUI
@@ -31,7 +32,8 @@ class Recorder: ObservableObject {
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
     
-    private var audioPlayer: AVAudioPlayer?
+    private var locationManager: CLLocationManager?
+    private var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
     
     init(measurer: Measurer, settings: Settings) {
         self.measurer = measurer
@@ -44,7 +46,7 @@ class Recorder: ObservableObject {
             await watchFreeSpace()
         }
         
-        configureAudioSession()
+        setupLocationManager()
     }
     
     var recordingInProgress: Bool {
@@ -74,9 +76,10 @@ class Recorder: ObservableObject {
                 
                 objectWillChange.send()
             }
-            
-            startSilentAudioLoop()
         }
+        
+        startLocationUpdates()
+        beginBackgroundTask()
     }
     
     func stopRecording() {
@@ -114,9 +117,10 @@ class Recorder: ObservableObject {
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
-            
-            stopSilentAudioLoop()
         }
+        
+        stopLocationUpdates()
+        endBackgroundTask()
     }
     
     func delete(recordingID: String) {
@@ -210,39 +214,55 @@ class Recorder: ObservableObject {
         return hasEnoughMemory
     }
     
-    // MARK: - Audio control
-
-    private func configureAudioSession() {
-        let session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playback, options: [.mixWithOthers])
-            try session.setMode(.default)
-            try session.setActive(true)
-        } catch {
-            print("Audio session setup failed:", error)
+    // MARK: - Background mode, location
+    
+    private func setupLocationManager() {
+        locationManager = CLLocationManager()
+        locationManager?.delegate = nil
+        locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager?.distanceFilter = 1000
+        locationManager?.pausesLocationUpdatesAutomatically = false
+        locationManager?.allowsBackgroundLocationUpdates = true
+    }
+    
+    private func startLocationUpdates() {
+        guard let locationManager = locationManager else { return }
+        
+        let status = locationManager.authorizationStatus
+        
+        if status == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+            print("✅ Location updates started")
+        } else {
+            print("⚠️ Location permission denied")
         }
     }
 
-    
-    private func startSilentAudioLoop() {
-        guard audioPlayer == nil else { return }
-        if let url = Bundle.main.url(forResource: "silence", withExtension: "mp3") {
-            do {
-                let player = try AVAudioPlayer(contentsOf: url)
-                player.numberOfLoops = -1
-                player.volume = 0
-                player.play()
-                audioPlayer = player
-            } catch {
-                print("Failed to start silent audio:", error)
-            }
+
+    private func stopLocationUpdates() {
+        locationManager?.stopUpdatingLocation()
+        print("✅ Location updates stopped")
+    }
+
+    private func beginBackgroundTask() {
+        backgroundTaskID = UIApplication.shared.beginBackgroundTask { [weak self] in
+            self?.endBackgroundTask()
+        }
+        print("✅ Background task started: \(backgroundTaskID)")
+    }
+
+    private func endBackgroundTask() {
+        if backgroundTaskID != .invalid {
+            UIApplication.shared.endBackgroundTask(backgroundTaskID)
+            backgroundTaskID = .invalid
+            print("✅ Background task ended")
         }
     }
-    
-    private func stopSilentAudioLoop() {
-        audioPlayer?.stop()
-        audioPlayer = nil
-    }
+
     
     // MARK: - Debug
     
