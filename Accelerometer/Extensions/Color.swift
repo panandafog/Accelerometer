@@ -12,13 +12,19 @@ extension Color {
     static let highlightedBackground = Color("HighlightedBackgroundColor")
     
     #if os(macOS)
-    static let background = Color(NSColor.windowBackgroundColor)
-    static let secondaryBackground = Color(NSColor.underPageBackgroundColor)
-    static let tertiaryBackground = Color(NSColor.controlBackgroundColor)
-    #else
-    static let background = Color(UIColor.systemBackground)
-    static let secondaryBackground = Color(UIColor.secondarySystemBackground)
-    static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
+    static let background = Color(nsColor: .windowBackgroundColor)
+    static let secondaryBackground = Color(nsColor: .underPageBackgroundColor)
+    static let tertiaryBackground = Color(nsColor: .controlBackgroundColor)
+
+    #elseif os(iOS) || os(tvOS) || os(visionOS)
+    static let background = Color(uiColor: .systemBackground)
+    static let secondaryBackground = Color(uiColor: .secondarySystemBackground)
+    static let tertiaryBackground = Color(uiColor: .tertiarySystemBackground)
+
+    #elseif os(watchOS)
+    static let background = Color("Background")
+    static let secondaryBackground = Color("SecondaryBackground")
+    static let tertiaryBackground = Color("TertiaryBackground")
     #endif
     
     static let enabledButton = Color.accentColor

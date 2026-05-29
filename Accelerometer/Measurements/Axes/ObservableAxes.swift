@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 final class ObservableAxes: ObservableObject {
     @Published var axes: any Axes
