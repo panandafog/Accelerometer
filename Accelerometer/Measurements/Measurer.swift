@@ -107,6 +107,24 @@ class Measurer: ObservableObject {
                 measurementType: .gravity,
                 values: [.x: data.gravity.x, .y: data.gravity.y, .z: data.gravity.z]
             )
+
+#if os(watchOS)
+            saveData(
+                axesType: TriangleAxes.self,
+                measurementType: .rotationRate,
+                values: [.x: data.rotationRate.x, .y: data.rotationRate.y, .z: data.rotationRate.z]
+            )
+
+            saveData(
+                axesType: TriangleAxes.self,
+                measurementType: .magneticField,
+                values: [
+                    .x: data.magneticField.field.x,
+                    .y: data.magneticField.field.y,
+                    .z: data.magneticField.field.z
+                ]
+            )
+#endif
         }
     }
     
@@ -180,6 +198,7 @@ class Measurer: ObservableObject {
     }
     
     func startProximity() {
+#if os(iOS)
         guard !MeasurementType.proximity.isHidden else { return }
         UIDevice.current.isProximityMonitoringEnabled = true
         
@@ -191,6 +210,7 @@ class Measurer: ObservableObject {
                 .proximityStateDidChangeNotification,
             object: UIDevice.current
         )
+#endif
     }
     
     func stopDeviceMotion() {
@@ -210,7 +230,9 @@ class Measurer: ObservableObject {
     }
     
     func stopProximity() {
+#if os(iOS)
         NotificationCenter.default.removeObserver(self)
+#endif
     }
     
     // MARK: — Stub measurements for emulator
@@ -328,6 +350,7 @@ class Measurer: ObservableObject {
         }
     }
     
+#if os(iOS)
     @objc func proximityDidChange(notification: NSNotification) {
         if let device = notification.object as? UIDevice {
             saveData(
@@ -337,6 +360,7 @@ class Measurer: ObservableObject {
             )
         }
     }
+#endif
 }
 
 extension CMMotionManager {

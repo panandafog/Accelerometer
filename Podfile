@@ -14,12 +14,3 @@ target 'Accelerometer' do
   end
 
 end
-
-target 'Accelerometer Watch Watch App' do
-  platform :watchos, '26.0'
-  use_frameworks!
-
-  pod 'RealmSwift'
-  pod 'Realm'
-
-end

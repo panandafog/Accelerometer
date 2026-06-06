@@ -51,72 +51,22 @@
 		0B801286286DA9C000F4AA85 /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B8C3B2A2A99F9FF00488B1E /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
 		0B8C3B2C2A99FC9600488B1E /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
-		0B902B432EBCDA6A00A6ECBA /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
-		0B902B442EBCDA6A00A6ECBA /* RecordingChartContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7462E8AD49E0007E730 /* RecordingChartContent.swift */; };
-		0B902B452EBCDA6A00A6ECBA /* BooleanAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAED2B8264880045A008 /* BooleanAxesSummaryView.swift */; };
-		0B902B462EBCDA6A00A6ECBA /* NewRecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6B289598B40040B63D /* NewRecordingView.swift */; };
 		0B902B472EBCDA6A00A6ECBA /* Measurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3128621BE000AD3EF1 /* Measurer.swift */; };
-		0B902B482EBCDA6A00A6ECBA /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9BDC122899A6F900842161 /* Array.swift */; };
-		0B902B492EBCDA6A00A6ECBA /* StubMeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7F6D7D2E92A77200AE5F38 /* StubMeasurementsView.swift */; };
 		0B902B4A2EBCDA6A00A6ECBA /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B292A99F9FF00488B1E /* Axis.swift */; };
-		0B902B4B2EBCDA6A00A6ECBA /* MeasurementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3728622AB700AD3EF1 /* MeasurementsView.swift */; };
-		0B902B4C2EBCDA6A00A6ECBA /* DebugSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1542E8F52CA00D70505 /* DebugSamplesView.swift */; };
-		0B902B4D2EBCDA6A00A6ECBA /* AnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BE8522D74BB2F0065D938 /* AnimationsView.swift */; };
-		0B902B4E2EBCDA6A00A6ECBA /* AttitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA5B7BB2AD319AC004F1808 /* AttitudeAxesSummaryView.swift */; };
 		0B902B4F2EBCDA6A00A6ECBA /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4F28628B9900AD3EF1 /* Color.swift */; };
-		0B902B502EBCDA6A00A6ECBA /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F5289409820026D0DC /* Recorder.swift */; };
-		0B902B512EBCDA6A00A6ECBA /* ExportDateFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFCB289AA096007130D9 /* ExportDateFormatView.swift */; };
-		0B902B522EBCDA6A00A6ECBA /* AlwaysNotEnoughMemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A815F2E816FE900399013 /* AlwaysNotEnoughMemoryView.swift */; };
 		0B902B532EBCDA6A00A6ECBA /* BooleanAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */; };
-		0B902B542EBCDA6A00A6ECBA /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4D2862898F00AD3EF1 /* View.swift */; };
-		0B902B552EBCDA6A00A6ECBA /* DateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDED2D728983A4D00CAEAC3 /* DateComponents.swift */; };
-		0B902B562EBCDA6A00A6ECBA /* MemoryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1845532E7DCB90004F5474 /* MemoryMonitor.swift */; };
-		0B902B572EBCDA6A00A6ECBA /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC572863527800AD3EF1 /* DiagramView.swift */; };
-		0B902B582EBCDA6A00A6ECBA /* AxesSummaryValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7A0B12AD29D6F005E75CC /* AxesSummaryValueView.swift */; };
-		0B902B592EBCDA6A00A6ECBA /* RecordingBigChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7422E8AD39B0007E730 /* RecordingBigChartView.swift */; };
-		0B902B5A2EBCDA6A00A6ECBA /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138ED2893FFA10026D0DC /* RecordingsView.swift */; };
-		0B902B5B2EBCDA6A00A6ECBA /* DiagramAxesNamesStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC362287C30FF000F0C94 /* DiagramAxesNamesStyle.swift */; };
 		0B902B5C2EBCDA6A00A6ECBA /* AttitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */; };
-		0B902B5D2EBCDA6A00A6ECBA /* PreviewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1522E8F365B00D70505 /* PreviewUtils.swift */; };
-		0B902B5E2EBCDA6A00A6ECBA /* AxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B34710C288C5491004E87FA /* AxesSummaryView.swift */; };
-		0B902B5F2EBCDA6A00A6ECBA /* MeasurementSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC552863464900AD3EF1 /* MeasurementSummaryView.swift */; };
 		0B902B602EBCDA6A00A6ECBA /* ChartEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6DD8CE2B816BED0076D93A /* ChartEntry.swift */; };
 		0B902B612EBCDA6A00A6ECBA /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4028623C1B00AD3EF1 /* Double.swift */; };
-		0B902B622EBCDA6A00A6ECBA /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CD5289C3E4A00326C6E /* DatabaseManager.swift */; };
-		0B902B632EBCDA6A00A6ECBA /* MeasurementPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B548E192876ED5000EDCDA8 /* MeasurementPreview.swift */; };
-		0B902B642EBCDA6A00A6ECBA /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6F2897EFED0040B63D /* Date.swift */; };
-		0B902B652EBCDA6A00A6ECBA /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AE2895715400251262 /* CGFloat.swift */; };
-		0B902B662EBCDA6A00A6ECBA /* RecordingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CDA289C7F0200326C6E /* RecordingsRepository.swift */; };
-		0B902B672EBCDA6A00A6ECBA /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC4B2862690800AD3EF1 /* HeaderView.swift */; };
-		0B902B682EBCDA6A00A6ECBA /* RecordingSmallChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B45FF952D8EC357009F5CDF /* RecordingSmallChartView.swift */; };
 		0B902B692EBCDA6A00A6ECBA /* Axes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8C3B2B2A99FC9600488B1E /* Axes.swift */; };
 		0B902B6A2EBCDA6A00A6ECBA /* ObservableAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFBA1E728737CC300529B50 /* ObservableAxes.swift */; };
-		0B902B6B2EBCDA6A00A6ECBA /* RecordingRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B508CD7289C413700326C6E /* RecordingRealm.swift */; };
-		0B902B6C2EBCDA6A00A6ECBA /* AnyAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */; };
 		0B902B6E2EBCDA6A00A6ECBA /* MagnitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5D2A9A1523005497F6 /* MagnitudeAxes.swift */; };
-		0B902B6F2EBCDA6A00A6ECBA /* RecordingSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBAD4AC2895564C00251262 /* RecordingSummaryView.swift */; };
-		0B902B702EBCDA6A00A6ECBA /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E6D2228724B2B003B8C5B /* Collection.swift */; };
-		0B902B712EBCDA6A00A6ECBA /* RecordingProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1845502E7DA052004F5474 /* RecordingProcessor.swift */; };
-		0B902B722EBCDA6A00A6ECBA /* RecordingChartContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7442E8AD3D10007E730 /* RecordingChartContainerView.swift */; };
-		0B902B732EBCDA6A00A6ECBA /* DiagramViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4CC364287C31AB000F0C94 /* DiagramViewStyle.swift */; };
-		0B902B742EBCDA6A00A6ECBA /* AnimatableArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B801285286DA9C000F4AA85 /* AnimatableArray.swift */; };
 		0B902B752EBCDA6A00A6ECBA /* AxeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBDC4DF288C188400CE6061 /* AxeType.swift */; };
-		0B902B762EBCDA6A00A6ECBA /* RecordingEntryRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF0917289D163300B42740 /* RecordingEntryRealm.swift */; };
 		0B902B772EBCDA6A00A6ECBA /* MeasurementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F3289401210026D0DC /* MeasurementType.swift */; };
-		0B902B782EBCDA6A00A6ECBA /* ExportModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9FB1562E8F653300D70505 /* ExportModifier.swift */; };
-		0B902B792EBCDA6A00A6ECBA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3928622B7100AD3EF1 /* SettingsView.swift */; };
-		0B902B7A2EBCDA6A00A6ECBA /* AxesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC35286227A100AD3EF1 /* AxesTableView.swift */; };
-		0B902B7B2EBCDA6A00A6ECBA /* AxesSummaryViewExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B38C322288DC56D00A4541A /* AxesSummaryViewExtended.swift */; };
-		0B902B7C2EBCDA6A00A6ECBA /* RefreshRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC3D286232A900AD3EF1 /* RefreshRateView.swift */; };
 		0B902B7D2EBCDA6A00A6ECBA /* TriangleAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05EB5F2A9A1CFB005497F6 /* TriangleAxes.swift */; };
-		0B902B7E2EBCDA6A00A6ECBA /* RecordingPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B712897FBCE0040B63D /* RecordingPreview.swift */; };
-		0B902B7F2EBCDA6A00A6ECBA /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC462862496C00AD3EF1 /* LevelView.swift */; };
 		0B902B812EBCDA6A00A6ECBA /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA63B6D2897EDD80040B63D /* DateFormatter.swift */; };
 		0B902B822EBCDA6A00A6ECBA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36DFC9289A9E85007130D9 /* Settings.swift */; };
-		0B902B832EBCDA6A00A6ECBA /* MagnitudeAxesSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBF54A92AD1F9CF0095B63F /* MagnitudeAxesSummaryView.swift */; };
-		0B902B842EBCDA6A00A6ECBA /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F1289400E70026D0DC /* Recording.swift */; };
 		0B902B852EBCDA6A00A6ECBA /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B24EC44286247AD00AD3EF1 /* String.swift */; };
-		0B902B862EBCDA6A00A6ECBA /* RecordingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */; };
 		0B96B73F2E8A91510007E730 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0B96B73E2E8A91510007E730 /* DequeModule */; };
 		0B96B7432E8AD39C0007E730 /* RecordingBigChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7422E8AD39B0007E730 /* RecordingBigChartView.swift */; };
 		0B96B7452E8AD3D20007E730 /* RecordingChartContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B96B7442E8AD3D10007E730 /* RecordingChartContainerView.swift */; };
@@ -152,7 +102,6 @@
 		0BE138F6289409820026D0DC /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE138F5289409820026D0DC /* Recorder.swift */; };
 		0BF7A0B22AD29D6F005E75CC /* AxesSummaryValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF7A0B12AD29D6F005E75CC /* AxesSummaryValueView.swift */; };
 		0BFBA1E828737CC300529B50 /* ObservableAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFBA1E728737CC300529B50 /* ObservableAxes.swift */; };
-		985B8D9BE19051B6EFF1E405 /* Pods_Accelerometer_Watch_Watch_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A39FA4AF93724D01DF0730 /* Pods_Accelerometer_Watch_Watch_App.framework */; };
 		A844F53C6B72222DA87BA782 /* Pods_Accelerometer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CB40BA633249887FD78581D /* Pods_Accelerometer.framework */; };
 		AF6328562287AF3E3894C7A5 /* Pods_Accelerometer_AccelerometerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F438B6FD5FC69485F45338B /* Pods_Accelerometer_AccelerometerUITests.framework */; };
 /* End PBXBuildFile section */
@@ -278,11 +227,8 @@
 		2E4289AB188D4F412B2A210D /* Pods-AccelerometerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccelerometerTests.release.xcconfig"; path = "Target Support Files/Pods-AccelerometerTests/Pods-AccelerometerTests.release.xcconfig"; sourceTree = "<group>"; };
 		344CA45AF8CA88499E0AC0EE /* Pods-Accelerometer-AccelerometerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer-AccelerometerUITests.release.xcconfig"; path = "Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		58D1941BEB77F79AC9EA829F /* Pods_AccelerometerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccelerometerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		897B1F1949B90394FFFB91B5 /* Pods-Accelerometer Watch Watch App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer Watch Watch App.debug.xcconfig"; path = "Target Support Files/Pods-Accelerometer Watch Watch App/Pods-Accelerometer Watch Watch App.debug.xcconfig"; sourceTree = "<group>"; };
 		8CB40BA633249887FD78581D /* Pods_Accelerometer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Accelerometer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F438B6FD5FC69485F45338B /* Pods_Accelerometer_AccelerometerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Accelerometer_AccelerometerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8A39FA4AF93724D01DF0730 /* Pods_Accelerometer_Watch_Watch_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Accelerometer_Watch_Watch_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6204E18550CAD45115A10F2 /* Pods-Accelerometer Watch Watch App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer Watch Watch App.release.xcconfig"; path = "Target Support Files/Pods-Accelerometer Watch Watch App/Pods-Accelerometer Watch Watch App.release.xcconfig"; sourceTree = "<group>"; };
 		E32915EE18B68D953705CF6F /* Pods-AccelerometerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccelerometerTests.debug.xcconfig"; path = "Target Support Files/Pods-AccelerometerTests/Pods-AccelerometerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F19B6AE7963902430EF65D74 /* Pods-Accelerometer-AccelerometerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer-AccelerometerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		FA128F40F3D3C26694904DE5 /* Pods-Accelerometer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer.release.xcconfig"; path = "Target Support Files/Pods-Accelerometer/Pods-Accelerometer.release.xcconfig"; sourceTree = "<group>"; };
@@ -291,6 +237,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0B5FA5632EBCCAFF00B55C32 /* Accelerometer Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "Accelerometer Watch App";
 			sourceTree = "<group>";
 		};
@@ -326,7 +274,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				985B8D9BE19051B6EFF1E405 /* Pods_Accelerometer_Watch_Watch_App.framework in Frameworks */,
 				0BCA44C32EBCECEC004863E3 /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -563,7 +510,6 @@
 				8CB40BA633249887FD78581D /* Pods_Accelerometer.framework */,
 				8F438B6FD5FC69485F45338B /* Pods_Accelerometer_AccelerometerUITests.framework */,
 				58D1941BEB77F79AC9EA829F /* Pods_AccelerometerTests.framework */,
-				A8A39FA4AF93724D01DF0730 /* Pods_Accelerometer_Watch_Watch_App.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -577,8 +523,6 @@
 				344CA45AF8CA88499E0AC0EE /* Pods-Accelerometer-AccelerometerUITests.release.xcconfig */,
 				E32915EE18B68D953705CF6F /* Pods-AccelerometerTests.debug.xcconfig */,
 				2E4289AB188D4F412B2A210D /* Pods-AccelerometerTests.release.xcconfig */,
-				897B1F1949B90394FFFB91B5 /* Pods-Accelerometer Watch Watch App.debug.xcconfig */,
-				B6204E18550CAD45115A10F2 /* Pods-Accelerometer Watch Watch App.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -653,11 +597,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B5FA5702EBCCB0000B55C32 /* Build configuration list for PBXNativeTarget "Accelerometer Watch Watch App" */;
 			buildPhases = (
-				161E445BC5EAFF88E2ED1754 /* [CP] Check Pods Manifest.lock */,
 				0B5FA55E2EBCCAFF00B55C32 /* Sources */,
 				0B5FA55F2EBCCAFF00B55C32 /* Frameworks */,
 				0B5FA5602EBCCAFF00B55C32 /* Resources */,
-				957ABA05E03F0B8C2793FA52 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -755,28 +697,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		161E445BC5EAFF88E2ED1754 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Accelerometer Watch Watch App-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4FD011DA0DAF8BEF3F500FA7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -797,27 +717,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		957ABA05E03F0B8C2793FA52 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer Watch Watch App/Pods-Accelerometer Watch Watch App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer Watch Watch App/Pods-Accelerometer Watch Watch App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Accelerometer Watch Watch App/Pods-Accelerometer Watch Watch App-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BB8E5B66245BEEEF9FE8F652 /* [CP] Check Pods Manifest.lock */ = {
@@ -872,13 +771,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer/Pods-Accelerometer-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer/Pods-Accelerometer-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -893,13 +788,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1006,72 +897,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B902B432EBCDA6A00A6ECBA /* TriangleDiagramShape.swift in Sources */,
-				0B902B442EBCDA6A00A6ECBA /* RecordingChartContent.swift in Sources */,
-				0B902B452EBCDA6A00A6ECBA /* BooleanAxesSummaryView.swift in Sources */,
-				0B902B462EBCDA6A00A6ECBA /* NewRecordingView.swift in Sources */,
 				0B902B472EBCDA6A00A6ECBA /* Measurer.swift in Sources */,
-				0B902B482EBCDA6A00A6ECBA /* Array.swift in Sources */,
-				0B902B492EBCDA6A00A6ECBA /* StubMeasurementsView.swift in Sources */,
 				0B902B4A2EBCDA6A00A6ECBA /* Axis.swift in Sources */,
-				0B902B4B2EBCDA6A00A6ECBA /* MeasurementsView.swift in Sources */,
-				0B902B4C2EBCDA6A00A6ECBA /* DebugSamplesView.swift in Sources */,
-				0B902B4D2EBCDA6A00A6ECBA /* AnimationsView.swift in Sources */,
-				0B902B4E2EBCDA6A00A6ECBA /* AttitudeAxesSummaryView.swift in Sources */,
 				0B902B4F2EBCDA6A00A6ECBA /* Color.swift in Sources */,
-				0B902B502EBCDA6A00A6ECBA /* Recorder.swift in Sources */,
-				0B902B512EBCDA6A00A6ECBA /* ExportDateFormatView.swift in Sources */,
-				0B902B522EBCDA6A00A6ECBA /* AlwaysNotEnoughMemoryView.swift in Sources */,
 				0B902B532EBCDA6A00A6ECBA /* BooleanAxes.swift in Sources */,
-				0B902B542EBCDA6A00A6ECBA /* View.swift in Sources */,
-				0B902B552EBCDA6A00A6ECBA /* DateComponents.swift in Sources */,
-				0B902B562EBCDA6A00A6ECBA /* MemoryMonitor.swift in Sources */,
-				0B902B572EBCDA6A00A6ECBA /* DiagramView.swift in Sources */,
-				0B902B582EBCDA6A00A6ECBA /* AxesSummaryValueView.swift in Sources */,
-				0B902B592EBCDA6A00A6ECBA /* RecordingBigChartView.swift in Sources */,
-				0B902B5A2EBCDA6A00A6ECBA /* RecordingsView.swift in Sources */,
-				0B902B5B2EBCDA6A00A6ECBA /* DiagramAxesNamesStyle.swift in Sources */,
 				0B902B5C2EBCDA6A00A6ECBA /* AttitudeAxes.swift in Sources */,
-				0B902B5D2EBCDA6A00A6ECBA /* PreviewUtils.swift in Sources */,
-				0B902B5E2EBCDA6A00A6ECBA /* AxesSummaryView.swift in Sources */,
-				0B902B5F2EBCDA6A00A6ECBA /* MeasurementSummaryView.swift in Sources */,
 				0B902B602EBCDA6A00A6ECBA /* ChartEntry.swift in Sources */,
 				0B902B612EBCDA6A00A6ECBA /* Double.swift in Sources */,
-				0B902B622EBCDA6A00A6ECBA /* DatabaseManager.swift in Sources */,
-				0B902B632EBCDA6A00A6ECBA /* MeasurementPreview.swift in Sources */,
-				0B902B642EBCDA6A00A6ECBA /* Date.swift in Sources */,
-				0B902B652EBCDA6A00A6ECBA /* CGFloat.swift in Sources */,
-				0B902B662EBCDA6A00A6ECBA /* RecordingsRepository.swift in Sources */,
-				0B902B672EBCDA6A00A6ECBA /* HeaderView.swift in Sources */,
-				0B902B682EBCDA6A00A6ECBA /* RecordingSmallChartView.swift in Sources */,
 				0B902B692EBCDA6A00A6ECBA /* Axes.swift in Sources */,
 				0B902B6A2EBCDA6A00A6ECBA /* ObservableAxes.swift in Sources */,
-				0B902B6B2EBCDA6A00A6ECBA /* RecordingRealm.swift in Sources */,
-				0B902B6C2EBCDA6A00A6ECBA /* AnyAxesSummaryView.swift in Sources */,
 				0B902B6E2EBCDA6A00A6ECBA /* MagnitudeAxes.swift in Sources */,
-				0B902B6F2EBCDA6A00A6ECBA /* RecordingSummaryView.swift in Sources */,
-				0B902B702EBCDA6A00A6ECBA /* Collection.swift in Sources */,
-				0B902B712EBCDA6A00A6ECBA /* RecordingProcessor.swift in Sources */,
-				0B902B722EBCDA6A00A6ECBA /* RecordingChartContainerView.swift in Sources */,
-				0B902B732EBCDA6A00A6ECBA /* DiagramViewStyle.swift in Sources */,
-				0B902B742EBCDA6A00A6ECBA /* AnimatableArray.swift in Sources */,
 				0B902B752EBCDA6A00A6ECBA /* AxeType.swift in Sources */,
-				0B902B762EBCDA6A00A6ECBA /* RecordingEntryRealm.swift in Sources */,
 				0B902B772EBCDA6A00A6ECBA /* MeasurementType.swift in Sources */,
-				0B902B782EBCDA6A00A6ECBA /* ExportModifier.swift in Sources */,
-				0B902B792EBCDA6A00A6ECBA /* SettingsView.swift in Sources */,
-				0B902B7A2EBCDA6A00A6ECBA /* AxesTableView.swift in Sources */,
-				0B902B7B2EBCDA6A00A6ECBA /* AxesSummaryViewExtended.swift in Sources */,
-				0B902B7C2EBCDA6A00A6ECBA /* RefreshRateView.swift in Sources */,
 				0B902B7D2EBCDA6A00A6ECBA /* TriangleAxes.swift in Sources */,
-				0B902B7E2EBCDA6A00A6ECBA /* RecordingPreview.swift in Sources */,
-				0B902B7F2EBCDA6A00A6ECBA /* LevelView.swift in Sources */,
 				0B902B812EBCDA6A00A6ECBA /* DateFormatter.swift in Sources */,
 				0B902B822EBCDA6A00A6ECBA /* Settings.swift in Sources */,
-				0B902B832EBCDA6A00A6ECBA /* MagnitudeAxesSummaryView.swift in Sources */,
-				0B902B842EBCDA6A00A6ECBA /* Recording.swift in Sources */,
 				0B902B852EBCDA6A00A6ECBA /* String.swift in Sources */,
-				0B902B862EBCDA6A00A6ECBA /* RecordingUtils.swift in Sources */,
 				0B5C81AC2EEF60BF00DDF659 /* Bool.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1369,7 +1210,6 @@
 		};
 		0B5FA56E2EBCCB0000B55C32 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 897B1F1949B90394FFFB91B5 /* Pods-Accelerometer Watch Watch App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1398,7 +1238,6 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
@@ -1409,7 +1248,6 @@
 		};
 		0B5FA56F2EBCCB0000B55C32 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B6204E18550CAD45115A10F2 /* Pods-Accelerometer Watch Watch App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -1437,7 +1275,6 @@
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
