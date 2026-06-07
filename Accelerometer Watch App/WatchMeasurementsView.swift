@@ -12,15 +12,85 @@ struct WatchMeasurementsView: View {
 
     var body: some View {
         List(MeasurementType.allShownCases, id: \.self) { type in
+            NavigationLink {
+                WatchMeasurementDetailView(type: type)
+            } label: {
+                if let observableAxes = measurer.observableAxes[type] {
+                    WatchMeasurementRow(
+                        type: type,
+                        observableAxes: observableAxes
+                    )
+                } else {
+                    WatchMeasurementPlaceholderRow(type: type)
+                }
+            }
+        }
+    }
+}
+
+private struct WatchMeasurementDetailView: View {
+    @EnvironmentObject private var measurer: Measurer
+
+    let type: MeasurementType
+
+    var body: some View {
+        Group {
             if let observableAxes = measurer.observableAxes[type] {
-                WatchMeasurementRow(
+                WatchMeasurementAxesList(
                     type: type,
                     observableAxes: observableAxes
                 )
             } else {
-                WatchMeasurementPlaceholderRow(type: type)
+                WatchMeasurementAxesPlaceholderList(type: type)
             }
         }
+        .navigationTitle(type.name.capitalizingFirstLetter())
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+private struct WatchMeasurementAxesList: View {
+    let type: MeasurementType
+    @ObservedObject var observableAxes: ObservableAxes
+
+    var body: some View {
+        List(values) { value in
+            WatchMeasurementAxisRow(value: value)
+        }
+    }
+
+    private var values: [WatchMeasurementValue] {
+        WatchMeasurementValue.axisValues(
+            for: type,
+            axes: observableAxes.axes
+        )
+    }
+}
+
+private struct WatchMeasurementAxesPlaceholderList: View {
+    let type: MeasurementType
+
+    var body: some View {
+        List(WatchMeasurementValue.placeholderAxisValues(for: type)) { value in
+            WatchMeasurementAxisRow(value: value)
+        }
+    }
+}
+
+private struct WatchMeasurementAxisRow: View {
+    let value: WatchMeasurementValue
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(value.name ?? "")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            Text(value.value)
+                .font(.title3)
+                .monospacedDigit()
+        }
+        .padding(.vertical, 2)
     }
 }
 
@@ -126,6 +196,63 @@ private struct WatchMeasurementValue: Identifiable {
     }
 
     static let placeholder = WatchMeasurementValue(value: "...")
+
+    static func axisValues(
+        for type: MeasurementType,
+        axes: any Axes
+    ) -> [WatchMeasurementValue] {
+        switch type.axesType {
+        case .triangle:
+            guard let axes = axes as? TriangleAxes else {
+                return placeholderAxisValues(for: type)
+            }
+            return TriangleAxes.sortedAxesTypes.map {
+                WatchMeasurementValue(
+                    name: $0.name,
+                    value: axes.valueLabel(of: $0) ?? placeholder.value
+                )
+            }
+
+        case .attitude:
+            guard let axes = axes as? AttitudeAxes else {
+                return placeholderAxisValues(for: type)
+            }
+            return AttitudeAxes.sortedAxesTypes.map {
+                WatchMeasurementValue(
+                    name: $0.name,
+                    value: axes.valueLabel(of: $0) ?? placeholder.value
+                )
+            }
+
+        case .bool:
+            guard let axes = axes as? BooleanAxes else {
+                return placeholderAxisValues(for: type)
+            }
+            return BooleanAxes.sortedAxesTypes.map {
+                WatchMeasurementValue(
+                    name: $0.name,
+                    value: axes.valueLabel(of: $0) ?? placeholder.value
+                )
+            }
+        }
+    }
+
+    static func placeholderAxisValues(
+        for type: MeasurementType
+    ) -> [WatchMeasurementValue] {
+        let axesTypes: [AxeType] = switch type.axesType {
+        case .triangle:
+            TriangleAxes.sortedAxesTypes
+        case .attitude:
+            AttitudeAxes.sortedAxesTypes
+        case .bool:
+            BooleanAxes.sortedAxesTypes
+        }
+
+        return axesTypes.map {
+            WatchMeasurementValue(name: $0.name, value: placeholder.value)
+        }
+    }
 }
 
 #Preview {
