@@ -86,11 +86,28 @@ private struct WatchMeasurementAxisRow: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Text(value.value)
+            WatchMeasurementValueLabel(value: value)
                 .font(.title3)
-                .monospacedDigit()
         }
         .padding(.vertical, 2)
+    }
+}
+
+private struct WatchMeasurementValueLabel: View {
+    let value: WatchMeasurementValue
+
+    var body: some View {
+        Text(value.value)
+            .monospacedDigit()
+            .padding(.horizontal, 6)
+            .padding(.vertical, 4)
+            .background(
+                value.color.animation(
+                    .linear(duration: 0.2),
+                    value: value.color
+                )
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 6))
     }
 }
 
@@ -142,8 +159,7 @@ private struct WatchMeasurementValues: View {
                             .foregroundStyle(.secondary)
                     }
 
-                    Text(value.value)
-                        .monospacedDigit()
+                    WatchMeasurementValueLabel(value: value)
                 }
             }
         }
@@ -158,16 +174,17 @@ private struct WatchMeasurementValues: View {
         if let magnitudeAxes = axes as? (any MagnitudeAxes) {
             return [
                 WatchMeasurementValue(
-                    value: magnitudeAxes.valueLabel(of: .magnitude) ?? WatchMeasurementValue.placeholder.value
+                    value: magnitudeAxes.valueLabel(of: .magnitude) ?? WatchMeasurementValue.placeholder.value,
+                    color: magnitudeAxes.intensityColor
                 )
             ]
         }
 
         if let attitudeAxes = axes as? AttitudeAxes {
             return AttitudeAxes.sortedAxesTypes.map {
-                WatchMeasurementValue(
-                    name: $0.name,
-                    value: attitudeAxes.valueLabel(of: $0) ?? WatchMeasurementValue.placeholder.value
+                WatchMeasurementValue.axisValue(
+                    type: $0,
+                    axes: attitudeAxes
                 )
             }
         }
@@ -188,11 +205,17 @@ private struct WatchMeasurementValues: View {
 private struct WatchMeasurementValue: Identifiable {
     let name: String?
     let value: String
+    let color: Color
     var id: String { name ?? "value" }
 
-    init(name: String? = nil, value: String) {
+    init(
+        name: String? = nil,
+        value: String,
+        color: Color = .intensity(0)
+    ) {
         self.name = name
         self.value = value
+        self.color = color
     }
 
     static let placeholder = WatchMeasurementValue(value: "...")
@@ -207,10 +230,7 @@ private struct WatchMeasurementValue: Identifiable {
                 return placeholderAxisValues(for: type)
             }
             return TriangleAxes.sortedAxesTypes.map {
-                WatchMeasurementValue(
-                    name: $0.name,
-                    value: axes.valueLabel(of: $0) ?? placeholder.value
-                )
+                axisValue(type: $0, axes: axes)
             }
 
         case .attitude:
@@ -218,10 +238,7 @@ private struct WatchMeasurementValue: Identifiable {
                 return placeholderAxisValues(for: type)
             }
             return AttitudeAxes.sortedAxesTypes.map {
-                WatchMeasurementValue(
-                    name: $0.name,
-                    value: axes.valueLabel(of: $0) ?? placeholder.value
-                )
+                axisValue(type: $0, axes: axes)
             }
 
         case .bool:
@@ -231,7 +248,8 @@ private struct WatchMeasurementValue: Identifiable {
             return BooleanAxes.sortedAxesTypes.map {
                 WatchMeasurementValue(
                     name: $0.name,
-                    value: axes.valueLabel(of: $0) ?? placeholder.value
+                    value: axes.valueLabel(of: $0) ?? placeholder.value,
+                    color: .intensity(axes.values[$0]?.value == true ? 1 : 0)
                 )
             }
         }
@@ -252,6 +270,31 @@ private struct WatchMeasurementValue: Identifiable {
         return axesTypes.map {
             WatchMeasurementValue(name: $0.name, value: placeholder.value)
         }
+    }
+
+    static func axisValue<AxesType: Axes>(
+        type: AxeType,
+        axes: AxesType
+    ) -> WatchMeasurementValue where AxesType.ValueType == Double {
+        WatchMeasurementValue(
+            name: type.name,
+            value: axes.valueLabel(of: type) ?? placeholder.value,
+            color: intensityColor(
+                value: axes.values[type]?.value ?? 0,
+                displayableAbsMax: axes.displayableAbsMax
+            )
+        )
+    }
+
+    private static func intensityColor(
+        value: Double,
+        displayableAbsMax: Double
+    ) -> Color {
+        guard displayableAbsMax > 0 else {
+            return .intensity(0)
+        }
+
+        return .intensity(abs(value) / displayableAbsMax)
     }
 }
 
