@@ -8,7 +8,6 @@
 import DequeModule
 import Combine
 import SwiftUI
-import AVFoundation
 
 @MainActor
 class Recorder: ObservableObject {
@@ -21,17 +20,27 @@ class Recorder: ObservableObject {
     @Published private(set) var recordingsMetadata: [Recording] = []
     @Published private(set) var activeRecording: Recording? = nil
     private var activeRecordingEntries: Deque<Recording.Entry> = []
+    private var isStoppingRecording = false
     
     @ObservedObject private var measurer: Measurer
     @ObservedObject private var settings: Settings
     
     private let repository = RecordingsRepository()
     private let memoryMonitor = MemoryMonitor()
+    private let transferReceiver = PhoneRecordingTransferReceiver()
     
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
-    
-    private var audioPlayer: AVAudioPlayer?
+    private var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
+
+    private var watchRecordingIDs: Set<String> {
+        get {
+            Set(UserDefaults.standard.stringArray(forKey: StorageKey.watchRecordingIDs) ?? [])
+        }
+        set {
+            UserDefaults.standard.set(Array(newValue), forKey: StorageKey.watchRecordingIDs)
+        }
+    }
     
     init(measurer: Measurer, settings: Settings) {
         self.measurer = measurer
@@ -43,8 +52,13 @@ class Recorder: ObservableObject {
         Task {
             await watchFreeSpace()
         }
-        
-        configureAudioSession()
+
+        transferReceiver.onRecordingReceived = { [weak self] data in
+            Task { @MainActor in
+                await self?.importTransferredRecording(data)
+            }
+        }
+        transferReceiver.activate()
     }
     
     var recordingInProgress: Bool {
@@ -54,39 +68,34 @@ class Recorder: ObservableObject {
     // MARK: - Recordings management
     
     func record(measurements types: Set<MeasurementType>) {
-        Task {
-            if !hasEnoughMemory { return }
-            
-            await MainActor.run {
-                if disableIdleTimer {
-                    UIApplication.shared.isIdleTimerDisabled = true
-                }
-                
-                guard !recordingInProgress, !types.isEmpty else { return }
-                activeRecording = Recording(
-                    entries: [],
-                    state: .inProgress,
-                    measurementTypes: types
-                )
-                activeRecordingEntries = []
-                
-                types.forEach(subscribeForChanges)
-                
-                objectWillChange.send()
-            }
-            
-            startSilentAudioLoop()
+        guard hasEnoughMemory, !recordingInProgress, !types.isEmpty else {
+            return
         }
+
+        if disableIdleTimer {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
+        beginRecordingBackgroundTask()
+
+        activeRecording = Recording(
+            entries: [],
+            state: .inProgress,
+            measurementTypes: types
+        )
+        activeRecordingEntries = []
+
+        types.forEach(subscribeForChanges)
+
+        objectWillChange.send()
     }
     
     func stopRecording() {
+        guard !isStoppingRecording, activeRecording != nil else {
+            return
+        }
+        isStoppingRecording = true
+
         Task {
-            await MainActor.run {
-                if disableIdleTimer {
-                    UIApplication.shared.isIdleTimerDisabled = false
-                }
-            }
-            
             guard var activeRecording = activeRecording else { return }
             activeRecording.state = .completed
             activeRecording.end = Date.now
@@ -114,14 +123,18 @@ class Recorder: ObservableObject {
                 subscriptions.removeAll()
                 objectWillChange.send()
             }
-            
-            stopSilentAudioLoop()
+
+            await MainActor.run {
+                finishRecordingRuntime()
+                isStoppingRecording = false
+            }
         }
     }
     
     func delete(recordingID: String) {
         Task {
             await repository.delete(recordingID: recordingID)
+            watchRecordingIDs.remove(recordingID)
             await repository.updateMetadata()
             await refreshRecordings()
         }
@@ -130,13 +143,19 @@ class Recorder: ObservableObject {
     func delete(recordingIDs: [String]) {
         Task {
             await repository.delete(recordingIDs: recordingIDs)
+            watchRecordingIDs.subtract(recordingIDs)
             await repository.updateMetadata()
             await refreshRecordings()
         }
     }
     
     func loadFullRecording(id: String) async -> Recording? {
-        return await repository.loadFullRecording(id: id)
+        guard var recording = await repository.loadFullRecording(id: id) else {
+            return nil
+        }
+
+        recording.source = source(for: id)
+        return recording
     }
     
     private func subscribeForChanges(of type: MeasurementType) {
@@ -169,8 +188,36 @@ class Recorder: ObservableObject {
         let stored = await repository.recordingsMetadata
         await MainActor.run {
             recordingsMetadata = Array(stored.values)
+                .map { recording in
+                    var recording = recording
+                    recording.source = source(for: recording.id)
+                    return recording
+                }
                 .sorted { $0.start > $1.start }
         }
+    }
+
+    private func importTransferredRecording(_ data: Data) async {
+        do {
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .millisecondsSince1970
+            let payload = try decoder.decode(
+                RecordingTransferPayload.self,
+                from: data
+            )
+            let recording = try payload.recording()
+
+            await repository.save([recording])
+            watchRecordingIDs.insert(recording.id)
+            await refreshRecordings()
+            transferReceiver.acknowledge(recordingID: recording.id)
+        } catch {
+            print("Watch recording import failed:", error)
+        }
+    }
+
+    private func source(for recordingID: String) -> Recording.Source {
+        watchRecordingIDs.contains(recordingID) ? .appleWatch : .iPhone
     }
     
     // MARK: - Memory control
@@ -210,38 +257,33 @@ class Recorder: ObservableObject {
         return hasEnoughMemory
     }
     
-    // MARK: - Audio control
+    // MARK: - Recording runtime
 
-    private func configureAudioSession() {
-        let session = AVAudioSession.sharedInstance()
-        do {
-            try session.setCategory(.playback, options: [.mixWithOthers])
-            try session.setMode(.default)
-            try session.setActive(true)
-        } catch {
-            print("Audio session setup failed:", error)
-        }
-    }
-
-    
-    private func startSilentAudioLoop() {
-        guard audioPlayer == nil else { return }
-        if let url = Bundle.main.url(forResource: "silence", withExtension: "mp3") {
-            do {
-                let player = try AVAudioPlayer(contentsOf: url)
-                player.numberOfLoops = -1
-                player.volume = 0
-                player.play()
-                audioPlayer = player
-            } catch {
-                print("Failed to start silent audio:", error)
+    private func beginRecordingBackgroundTask() {
+        endRecordingBackgroundTask()
+        backgroundTaskID = UIApplication.shared.beginBackgroundTask(
+            withName: "Finish sensor recording"
+        ) { [weak self] in
+            Task { @MainActor in
+                self?.stopRecording()
             }
         }
     }
-    
-    private func stopSilentAudioLoop() {
-        audioPlayer?.stop()
-        audioPlayer = nil
+
+    private func finishRecordingRuntime() {
+        if disableIdleTimer {
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+        endRecordingBackgroundTask()
+    }
+
+    private func endRecordingBackgroundTask() {
+        guard backgroundTaskID != .invalid else {
+            return
+        }
+
+        UIApplication.shared.endBackgroundTask(backgroundTaskID)
+        backgroundTaskID = .invalid
     }
     
     // MARK: - Debug
@@ -259,4 +301,8 @@ class Recorder: ObservableObject {
         }
     }
 #endif
+
+    private enum StorageKey {
+        static let watchRecordingIDs = "watchRecordingIDs"
+    }
 }

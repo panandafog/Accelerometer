@@ -28,7 +28,7 @@ struct WatchMeasurementsView: View {
     }
 }
 
-private struct WatchMeasurementDetailView: View {
+struct WatchMeasurementDetailView: View {
     @EnvironmentObject private var measurer: Measurer
 
     let type: MeasurementType

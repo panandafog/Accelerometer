@@ -15,6 +15,7 @@ struct Recording: Identifiable {
     
     var entries: [Entry]?
     var state: State
+    var source: Source
     
     let measurementTypes: Set<MeasurementType>
     
@@ -39,6 +40,7 @@ struct Recording: Identifiable {
         end: Date? = nil,
         entries: [Entry]? = nil,
         state: State,
+        source: Source = .iPhone,
         measurementTypes: Set<MeasurementType>
     ) {
         self.id = id
@@ -46,6 +48,7 @@ struct Recording: Identifiable {
         self.end = end
         self.entries = entries
         self.state = state
+        self.source = source
         self.measurementTypes = measurementTypes
     }
 }
@@ -55,6 +58,11 @@ extension Recording {
     enum State: String {
         case inProgress
         case completed
+    }
+
+    enum Source {
+        case iPhone
+        case appleWatch
     }
     
     struct Entry: Identifiable {

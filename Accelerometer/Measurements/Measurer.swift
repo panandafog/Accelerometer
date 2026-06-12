@@ -8,6 +8,9 @@
 import Combine
 import CoreMotion
 import SwiftUI
+#if os(watchOS)
+import WidgetKit
+#endif
 
 @MainActor
 class Measurer: ObservableObject {
@@ -30,6 +33,9 @@ class Measurer: ObservableObject {
     
     private var settingsSubscription: AnyCancellable?
     private var stubTimer: AnyCancellable?
+#if os(watchOS)
+    private var lastWidgetUpdate = Date.distantPast
+#endif
     
     init(settings: Settings) {
         self.settings = settings
@@ -347,8 +353,79 @@ class Measurer: ObservableObject {
         if var axes = observableAxes[measurementType]?.axes as? AxesType {
             axes.set(values: values)
             observableAxes[measurementType]?.axes = axes
+#if os(watchOS)
+            updateWatchWidgetStateIfNeeded()
+#endif
         }
     }
+
+#if os(watchOS)
+    private func updateWatchWidgetStateIfNeeded(now: Date = .now) {
+        guard now.timeIntervalSince(lastWidgetUpdate) >= 1 else {
+            return
+        }
+
+        lastWidgetUpdate = now
+        WatchMeasurementWidgetState.save(
+            observableAxes.compactMap { type, observableAxes in
+                widgetState(type: type, axes: observableAxes.axes, updatedAt: now)
+            }
+        )
+        WidgetCenter.shared.reloadTimelines(ofKind: WatchMeasurementWidgetState.widgetKind)
+    }
+
+    private func widgetState(
+        type: MeasurementType,
+        axes: any Axes,
+        updatedAt: Date
+    ) -> WatchMeasurementWidgetState? {
+        if let axes = axes as? TriangleAxes {
+            return WatchMeasurementWidgetState(
+                measurementType: type.rawValue,
+                name: type.name.capitalizingFirstLetter(),
+                iconName: type.iconName,
+                unit: type.unit,
+                primaryLabel: nil,
+                primaryValue: widgetValue(axes.magnitude.value),
+                axisValues: TriangleAxes.sortedAxesTypes.compactMap {
+                    guard let value = axes.values[$0]?.value else {
+                        return nil
+                    }
+                    return "\($0.name) \(widgetValue(value))"
+                },
+                intensity: min(1, abs(axes.magnitude.value) / max(axes.displayableAbsMax, 0.0001)),
+                updatedAt: updatedAt
+            )
+        }
+
+        if let axes = axes as? AttitudeAxes {
+            let primaryAxis = AxeType.roll
+            let primaryValue = axes.values[primaryAxis]?.value ?? 0
+            return WatchMeasurementWidgetState(
+                measurementType: type.rawValue,
+                name: type.name.capitalizingFirstLetter(),
+                iconName: type.iconName,
+                unit: type.unit,
+                primaryLabel: primaryAxis.name,
+                primaryValue: widgetValue(primaryValue),
+                axisValues: AttitudeAxes.sortedAxesTypes.compactMap {
+                    guard let value = axes.values[$0]?.value else {
+                        return nil
+                    }
+                    return "\($0.name) \(widgetValue(value))"
+                },
+                intensity: min(1, abs(primaryValue) / max(axes.displayableAbsMax, 0.0001)),
+                updatedAt: updatedAt
+            )
+        }
+
+        return nil
+    }
+
+    private func widgetValue(_ value: Double) -> String {
+        String(value, roundPlaces: Settings.measurementsDisplayRoundPlaces)
+    }
+#endif
     
 #if os(iOS)
     @objc func proximityDidChange(notification: NSNotification) {

@@ -11,9 +11,11 @@ import SwiftUI
 struct AccelerometerWatchApp: App {
     let settings = Settings()
     let measurer: Measurer
+    let recorder: WatchRecorder
 
     init() {
         self.measurer = Measurer(settings: settings)
+        self.recorder = WatchRecorder(measurer: measurer)
     }
 
     var body: some Scene {
@@ -21,11 +23,14 @@ struct AccelerometerWatchApp: App {
             ContentView()
                 .environmentObject(settings)
                 .environmentObject(measurer)
+                .environmentObject(recorder)
                 .onAppear {
                     measurer.startAll()
                 }
                 .onDisappear {
-                    measurer.stopAll()
+                    if !recorder.isRecording {
+                        measurer.stopAll()
+                    }
                 }
         }
     }
