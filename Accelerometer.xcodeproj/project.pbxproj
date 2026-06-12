@@ -91,6 +91,11 @@
 		0BC7C19A2AADF269004ECD9F /* AttitudeAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */; };
 		0BCA44C32EBCECEC004863E3 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 0BCA44C22EBCECEC004863E3 /* DequeModule */; };
 		0BCE8EC62864896300A0E3E0 /* TriangleDiagramShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */; };
+		0BD864D32FDC7E470042632E /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0BD864D22FDC7E470042632E /* AppIcon.icon */; };
+		0BD864D42FDC7E470042632E /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0BD864D22FDC7E470042632E /* AppIcon.icon */; };
+		0BD864D52FDC7E470042632E /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0BD864D22FDC7E470042632E /* AppIcon.icon */; };
+		0BD864D62FDC7E470042632E /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0BD864D22FDC7E470042632E /* AppIcon.icon */; };
+		0BD864D72FDC7E470042632E /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 0BD864D22FDC7E470042632E /* AppIcon.icon */; };
 		0BDB67DC2AC9AC6200FA5C09 /* RecordingUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */; };
 		0BDBDAEA2B825CAC0045A008 /* BooleanAxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */; };
 		0BDBDAEC2B825F910045A008 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDBDAEB2B825F910045A008 /* Bool.swift */; };
@@ -235,6 +240,7 @@
 		0BBF54AB2AD1FE690095B63F /* AnyAxesSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyAxesSummaryView.swift; sourceTree = "<group>"; };
 		0BC7C1992AADF269004ECD9F /* AttitudeAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttitudeAxes.swift; sourceTree = "<group>"; };
 		0BCE8EC52864896300A0E3E0 /* TriangleDiagramShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleDiagramShape.swift; sourceTree = "<group>"; };
+		0BD864D22FDC7E470042632E /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		0BDB67DB2AC9AC6200FA5C09 /* RecordingUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUtils.swift; sourceTree = "<group>"; };
 		0BDBDAE92B825CAC0045A008 /* BooleanAxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooleanAxes.swift; sourceTree = "<group>"; };
 		0BDBDAEB2B825F910045A008 /* Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
@@ -363,6 +369,7 @@
 		0B24EBFB28621BBE00AD3EF1 = {
 			isa = PBXGroup;
 			children = (
+				0BD864D22FDC7E470042632E /* AppIcon.icon */,
 				0B24EC0628621BBE00AD3EF1 /* Accelerometer */,
 				0B24EC1728621BC200AD3EF1 /* AccelerometerTests */,
 				0B5FA5632EBCCAFF00B55C32 /* Accelerometer Watch App */,
@@ -769,6 +776,7 @@
 			files = (
 				0B24EC0F28621BC200AD3EF1 /* Preview Assets.xcassets in Resources */,
 				0B24EC0C28621BC200AD3EF1 /* Assets.xcassets in Resources */,
+				0BD864D42FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +784,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD864D52FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +792,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD864D72FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,6 +800,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD864D62FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,6 +808,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD864D32FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
