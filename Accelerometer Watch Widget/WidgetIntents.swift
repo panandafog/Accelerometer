@@ -104,6 +104,19 @@ enum WidgetMeasurement: String, AppEnum, CaseIterable {
             "rad"
         }
     }
+
+    var displayableAbsMax: Double {
+        switch self {
+        case .userAcceleration:
+            0.1
+        case .acceleration, .attitude, .gravity:
+            1
+        case .rotationRate:
+            2
+        case .magneticField:
+            400
+        }
+    }
 }
 
 struct MeasurementConfigurationIntent: WidgetConfigurationIntent {

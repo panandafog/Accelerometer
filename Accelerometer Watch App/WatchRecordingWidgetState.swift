@@ -76,6 +76,12 @@ struct WatchMeasurementWidgetState: Codable, Sendable {
         defaults.set(data, forKey: StorageKey.states)
     }
 
+    static func save(_ state: WatchMeasurementWidgetState) {
+        var states = loadAll()
+        states[state.measurementType] = state
+        save(Array(states.values))
+    }
+
     private static func loadAll() -> [String: WatchMeasurementWidgetState] {
         guard let defaults = UserDefaults(suiteName: WatchRecordingWidgetState.appGroupID),
               let data = defaults.data(forKey: StorageKey.states),
@@ -91,6 +97,26 @@ struct WatchMeasurementWidgetState: Codable, Sendable {
 
     private enum StorageKey {
         static let states = "watchMeasurementWidgetStates"
+    }
+}
+
+enum WatchWidgetDeepLink {
+    static let scheme = "accelerometer-watch"
+
+    static func measurementURL(measurementType: String) -> URL? {
+        URL(string: "\(scheme)://measurement/\(measurementType)")
+    }
+
+    static func measurementType(from url: URL) -> String? {
+        guard url.scheme == scheme, url.host == "measurement" else {
+            return nil
+        }
+
+        let measurementType = url.pathComponents
+            .filter { $0 != "/" }
+            .first
+
+        return measurementType?.removingPercentEncoding
     }
 }
 

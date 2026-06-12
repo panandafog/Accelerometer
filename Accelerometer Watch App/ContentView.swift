@@ -45,12 +45,22 @@ struct ContentView: View {
                 }
             }
             .onAppear(perform: consumeWidgetAction)
+            .onOpenURL(perform: openWidgetURL)
             .onChange(of: scenePhase) { _, phase in
                 if phase == .active {
                     consumeWidgetAction()
                 }
             }
         }
+    }
+
+    private func openWidgetURL(_ url: URL) {
+        guard let rawType = WatchWidgetDeepLink.measurementType(from: url),
+              let type = MeasurementType(rawValue: rawType) else {
+            return
+        }
+
+        path = [.measurement(type)]
     }
 
     private func consumeWidgetAction() {

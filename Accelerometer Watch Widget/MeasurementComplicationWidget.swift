@@ -49,7 +49,7 @@ private struct MeasurementProvider: AppIntentTimelineProvider {
         for configuration: MeasurementConfigurationIntent,
         in context: Context
     ) async -> MeasurementEntry {
-        entry(for: configuration)
+        await entry(for: configuration)
     }
 
     func timeline(
@@ -57,18 +57,25 @@ private struct MeasurementProvider: AppIntentTimelineProvider {
         in context: Context
     ) async -> Timeline<MeasurementEntry> {
         Timeline(
-            entries: [entry(for: configuration)],
+            entries: [await entry(for: configuration)],
             policy: .after(.now.addingTimeInterval(60))
         )
     }
 
-    private func entry(for configuration: MeasurementConfigurationIntent) -> MeasurementEntry {
-        MeasurementEntry(
-            date: .now,
-            configuration: configuration,
-            state: WatchMeasurementWidgetState.load(
+    private func entry(for configuration: MeasurementConfigurationIntent) async -> MeasurementEntry {
+        let state = await WidgetMotionSampler.sample(measurement: configuration.measurement)
+            ?? WatchMeasurementWidgetState.load(
                 measurementType: configuration.measurement.rawValue
             )
+
+        if let state {
+            WatchMeasurementWidgetState.save(state)
+        }
+
+        return MeasurementEntry(
+            date: .now,
+            configuration: configuration,
+            state: state
         )
     }
 
@@ -123,10 +130,12 @@ private struct MeasurementComplicationView: View {
     }
 
     var body: some View {
-        Button(intent: OpenMeasurementIntent(measurement: measurement)) {
-            content
-        }
-        .buttonStyle(.plain)
+        content
+            .widgetURL(
+                WatchWidgetDeepLink.measurementURL(
+                    measurementType: measurement.rawValue
+                )
+            )
     }
 
     @ViewBuilder
