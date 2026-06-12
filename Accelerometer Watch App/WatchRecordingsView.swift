@@ -126,7 +126,8 @@ private struct WatchRecordingDetailView: View {
                     } label: {
                         if recorder.transferringIDs.contains(recording.id) {
                             TransferProgressLabel(
-                                progress: recorder.transferProgress[recording.id] ?? 0
+                                progress: recorder.transferProgress[recording.id],
+                                isAwaitingImport: recorder.awaitingImportIDs.contains(recording.id)
                             )
                         } else {
                             Label(
@@ -158,22 +159,31 @@ private struct WatchRecordingDetailView: View {
 }
 
 private struct TransferProgressLabel: View {
-    let progress: Double
+    let progress: Double?
+    let isAwaitingImport: Bool
 
     private var percentage: Int {
-        Int((progress * 100).rounded())
+        Int(((progress ?? 0) * 100).rounded())
     }
 
     var body: some View {
         HStack(spacing: 8) {
-            ProgressView(value: progress)
-                .progressViewStyle(.circular)
+            if let progress {
+                ProgressView(value: progress)
+                    .progressViewStyle(.circular)
+            } else {
+                ProgressView()
+                    .progressViewStyle(.circular)
+            }
 
             VStack(alignment: .leading, spacing: 1) {
-                Text("Sending")
-                Text("\(percentage)%")
-                    .font(.caption.monospacedDigit())
-                    .foregroundStyle(.secondary)
+                Text(isAwaitingImport ? "Importing on iPhone" : "Sending to iPhone")
+
+                if progress != nil {
+                    Text("\(percentage)%")
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }
@@ -229,13 +239,6 @@ private struct WatchStoredRecordingRow: View {
 
     let recording: WatchRecorder.StoredRecording
 
-    private var transferProgress: Double? {
-        guard recorder.transferringIDs.contains(recording.id) else {
-            return nil
-        }
-        return recorder.transferProgress[recording.id] ?? 0
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(recording.payload.start, style: .date)
@@ -249,13 +252,25 @@ private struct WatchStoredRecordingRow: View {
 
                 Spacer()
 
-                if let transferProgress {
-                    ProgressView(value: transferProgress)
-                        .progressViewStyle(.circular)
+                if recorder.transferringIDs.contains(recording.id) {
+                    if let progress = recorder.transferProgress[recording.id] {
+                        ProgressView(value: progress)
+                            .progressViewStyle(.circular)
 
-                    Text("\(Int((transferProgress * 100).rounded()))%")
-                        .monospacedDigit()
+                        Text("\(Int((progress * 100).rounded()))%")
+                            .monospacedDigit()
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+
+                        Image(
+                            systemName: recorder.awaitingImportIDs.contains(recording.id)
+                                ? "iphone"
+                                : "arrow.up"
+                        )
                         .foregroundStyle(.secondary)
+                    }
                 } else if recording.isTransferred {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(.green)

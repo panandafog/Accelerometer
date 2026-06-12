@@ -53,9 +53,9 @@ class Recorder: ObservableObject {
             await watchFreeSpace()
         }
 
-        transferReceiver.onRecordingReceived = { [weak self] data in
+        transferReceiver.onRecordingReceived = { [weak self] data, transferID in
             Task { @MainActor in
-                await self?.importTransferredRecording(data)
+                await self?.importTransferredRecording(data, transferID: transferID)
             }
         }
         transferReceiver.activate()
@@ -197,7 +197,7 @@ class Recorder: ObservableObject {
         }
     }
 
-    private func importTransferredRecording(_ data: Data) async {
+    private func importTransferredRecording(_ data: Data, transferID: String?) async {
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .millisecondsSince1970
@@ -208,11 +208,25 @@ class Recorder: ObservableObject {
             let recording = try payload.recording()
 
             await repository.save([recording])
+            guard await repository.loadFullRecording(id: recording.id) != nil else {
+                transferReceiver.reportImportFailure(
+                    transferID: transferID,
+                    reason: "The recording could not be saved on iPhone"
+                )
+                return
+            }
             watchRecordingIDs.insert(recording.id)
             await refreshRecordings()
-            transferReceiver.acknowledge(recordingID: recording.id)
+            transferReceiver.acknowledge(
+                recordingID: recording.id,
+                transferID: transferID
+            )
         } catch {
             print("Watch recording import failed:", error)
+            transferReceiver.reportImportFailure(
+                transferID: transferID,
+                reason: "The recording could not be imported on iPhone"
+            )
         }
     }
 

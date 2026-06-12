@@ -10,6 +10,110 @@ import Foundation
 enum TransferKey {
     static let recordingID = "recordingID"
     static let importedRecordingID = "importedRecordingID"
+    static let importedTransferID = "importedTransferID"
+    static let importedTransfers = "importedTransfers"
+    static let transferStatusRequests = "transferStatusRequests"
+    static let failedRecordingID = "failedRecordingID"
+    static let failedTransferID = "failedTransferID"
+    static let transferFailureReason = "transferFailureReason"
+    static let chunkProtocolVersion = "chunkProtocolVersion"
+    static let transferID = "transferID"
+    static let chunkIndex = "chunkIndex"
+    static let chunkCount = "chunkCount"
+    static let chunkByteCount = "chunkByteCount"
+    static let totalByteCount = "totalByteCount"
+    static let chunkHash = "chunkHash"
+    static let fileHash = "fileHash"
+}
+
+struct RecordingChunkMetadata: Sendable {
+    static let currentProtocolVersion = 1
+
+    let transferID: String
+    let recordingID: String
+    let chunkIndex: Int
+    let chunkCount: Int
+    let chunkByteCount: Int
+    let totalByteCount: Int
+    let chunkHash: String
+    let fileHash: String
+
+    init(
+        transferID: String,
+        recordingID: String,
+        chunkIndex: Int,
+        chunkCount: Int,
+        chunkByteCount: Int,
+        totalByteCount: Int,
+        chunkHash: String,
+        fileHash: String
+    ) {
+        self.transferID = transferID
+        self.recordingID = recordingID
+        self.chunkIndex = chunkIndex
+        self.chunkCount = chunkCount
+        self.chunkByteCount = chunkByteCount
+        self.totalByteCount = totalByteCount
+        self.chunkHash = chunkHash
+        self.fileHash = fileHash
+    }
+
+    init?(dictionary: [String: Any]?) {
+        guard let dictionary,
+              Self.intValue(dictionary[TransferKey.chunkProtocolVersion])
+                == Self.currentProtocolVersion,
+              let transferID = dictionary[TransferKey.transferID] as? String,
+              UUID(uuidString: transferID) != nil,
+              let recordingID = dictionary[TransferKey.recordingID] as? String,
+              !recordingID.isEmpty,
+              let chunkIndex = Self.intValue(dictionary[TransferKey.chunkIndex]),
+              let chunkCount = Self.intValue(dictionary[TransferKey.chunkCount]),
+              let chunkByteCount = Self.intValue(dictionary[TransferKey.chunkByteCount]),
+              let totalByteCount = Self.intValue(dictionary[TransferKey.totalByteCount]),
+              let chunkHash = dictionary[TransferKey.chunkHash] as? String,
+              let fileHash = dictionary[TransferKey.fileHash] as? String,
+              chunkIndex >= 0,
+              chunkIndex < chunkCount,
+              chunkCount > 0,
+              chunkByteCount >= 0,
+              totalByteCount >= chunkByteCount,
+              !chunkHash.isEmpty,
+              !fileHash.isEmpty else {
+            return nil
+        }
+
+        self.init(
+            transferID: transferID,
+            recordingID: recordingID,
+            chunkIndex: chunkIndex,
+            chunkCount: chunkCount,
+            chunkByteCount: chunkByteCount,
+            totalByteCount: totalByteCount,
+            chunkHash: chunkHash,
+            fileHash: fileHash
+        )
+    }
+
+    var dictionary: [String: Any] {
+        [
+            TransferKey.chunkProtocolVersion: Self.currentProtocolVersion,
+            TransferKey.transferID: transferID,
+            TransferKey.recordingID: recordingID,
+            TransferKey.chunkIndex: chunkIndex,
+            TransferKey.chunkCount: chunkCount,
+            TransferKey.chunkByteCount: chunkByteCount,
+            TransferKey.totalByteCount: totalByteCount,
+            TransferKey.chunkHash: chunkHash,
+            TransferKey.fileHash: fileHash
+        ]
+    }
+
+    private static func intValue(_ value: Any?) -> Int? {
+        if let value = value as? Int {
+            return value
+        }
+        return (value as? NSNumber)?.intValue
+    }
 }
 
 struct RecordingTransferPayload: Codable, Identifiable, Sendable {
