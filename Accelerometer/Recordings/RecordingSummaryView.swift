@@ -171,6 +171,7 @@ extension RecordingSummaryView {
             end: previewRecording.end,
             entries: nil,
             state: previewRecording.state,
+            source: previewRecording.source,
             measurementTypes: previewRecording.measurementTypes
         )
         

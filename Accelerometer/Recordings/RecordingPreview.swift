@@ -27,6 +27,12 @@ struct RecordingPreview: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
+            if recording.source == .appleWatch {
+                Label("Apple Watch", systemImage: "applewatch")
+                    .font(.caption)
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, 2)
+            }
             Text("Started: " + startString)
             Text("Duration: " + durationStringState)
                 .padding([.bottom], 5)

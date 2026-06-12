@@ -1,5 +1,4 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '26.0'
 
 target 'Accelerometer' do
   use_frameworks!
@@ -9,11 +8,9 @@ target 'Accelerometer' do
 
   target 'AccelerometerTests' do
     inherit! :search_paths
-    # Pods for testing
   end
 
   target 'AccelerometerUITests' do
-    # Pods for testing
   end
 
 end
