@@ -46,7 +46,7 @@ struct RecordingsView: View {
     // MARK: Selection
     
     var selectableRecordings: [Recording] {
-        lastRecordings.filter { $0.state == .completed }
+        lastRecordings.filter { $0.state != .inProgress }
     }
     
     var allSelected: Bool {

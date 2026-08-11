@@ -18,7 +18,7 @@ struct RecordingStatusWidget: Widget {
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Recording status")
-        .description("Starts a recording and shows its elapsed time.")
+        .description("Starts a recording and shows whether it is active or interrupted.")
         .supportedFamilies([
             .accessoryCircular,
             .accessoryRectangular,
@@ -32,7 +32,13 @@ private struct RecordingStatusProvider: TimelineProvider {
     func placeholder(in context: Context) -> RecordingStatusEntry {
         RecordingStatusEntry(
             date: .now,
-            state: WatchRecordingWidgetState(start: .now, measurementCount: 4)
+            state: WatchRecordingWidgetState(
+                status: .recording,
+                start: .now,
+                end: nil,
+                measurementCount: 4,
+                message: nil
+            )
         )
     }
 
@@ -65,8 +71,8 @@ private struct RecordingStatusProvider: TimelineProvider {
         return WidgetRelevance([
             WidgetRelevanceAttribute(
                 context: RelevantContext.date(
-                    from: state.start,
-                    to: state.start.addingTimeInterval(12 * 60 * 60)
+                    from: state.status == .recording ? state.start : state.end ?? state.start,
+                    to: (state.end ?? state.start).addingTimeInterval(12 * 60 * 60)
                 )
             )
         ])
@@ -90,7 +96,7 @@ private struct RecordingStatusView: View {
     var body: some View {
         if let state = entry.state {
             Button(intent: OpenRecordingIntent()) {
-                activeContent(state: state)
+                statusContent(state: state)
             }
             .buttonStyle(.plain)
         } else {
@@ -98,6 +104,15 @@ private struct RecordingStatusView: View {
                 inactiveContent
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    @ViewBuilder
+    private func statusContent(state: WatchRecordingWidgetState) -> some View {
+        if state.status == .interrupted {
+            interruptedContent(state: state)
+        } else {
+            activeContent(state: state)
         }
     }
 
@@ -157,6 +172,51 @@ private struct RecordingStatusView: View {
                         .font(.caption.monospacedDigit())
                         .foregroundStyle(.secondary)
                 }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func interruptedContent(state: WatchRecordingWidgetState) -> some View {
+        switch family {
+        case .accessoryCircular:
+            VStack(spacing: 1) {
+                Image(systemName: "exclamationmark.circle.fill")
+                    .foregroundStyle(.orange)
+                    .widgetAccentable()
+
+                Text("Stopped")
+                    .font(.caption2)
+            }
+
+        case .accessoryInline:
+            Label("Recording interrupted", systemImage: "exclamationmark.circle.fill")
+
+        case .accessoryCorner:
+            Image(systemName: "exclamationmark.circle.fill")
+                .foregroundStyle(.orange)
+                .widgetAccentable()
+                .widgetLabel("Interrupted")
+
+        default:
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.circle.fill")
+                    .font(.title3)
+                    .foregroundStyle(.orange)
+                    .widgetAccentable()
+
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("Recording interrupted")
+                        .font(.headline)
+                        .foregroundStyle(.orange)
+
+                    Text(state.message ?? "Background session ended")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+
+                Spacer(minLength: 0)
             }
         }
     }

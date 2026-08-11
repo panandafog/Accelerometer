@@ -125,6 +125,7 @@ struct RecordingTransferPayload: Codable, Identifiable, Sendable {
     let end: Date
     let measurementTypes: [String]
     let entries: [Entry]
+    let wasInterrupted: Bool?
 
     init(
         version: Int = Self.currentVersion,
@@ -132,7 +133,8 @@ struct RecordingTransferPayload: Codable, Identifiable, Sendable {
         start: Date,
         end: Date,
         measurementTypes: [String],
-        entries: [Entry]
+        entries: [Entry],
+        wasInterrupted: Bool = false
     ) {
         self.version = version
         self.id = id
@@ -140,6 +142,7 @@ struct RecordingTransferPayload: Codable, Identifiable, Sendable {
         self.end = end
         self.measurementTypes = measurementTypes
         self.entries = entries
+        self.wasInterrupted = wasInterrupted
     }
 
     struct Entry: Codable, Identifiable, Sendable {
@@ -194,7 +197,7 @@ extension RecordingTransferPayload {
             start: start,
             end: end,
             entries: decodedEntries,
-            state: .completed,
+            state: wasInterrupted == true ? .interrupted : .completed,
             source: .appleWatch,
             measurementTypes: types
         )

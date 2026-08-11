@@ -11,14 +11,20 @@ import SwiftUI
 struct RecordingChartContent: ChartContent {
     let entry: Recording.Entry
     let startDate: Date
+    let displayMode: RecordingChartDisplayMode
     
     var body: AnyChartContent {
         let axes = entry.axes
-        AnyChartContent(erasing: createLineMarks(axes: axes))
+        switch displayMode {
+        case .axes:
+            return AnyChartContent(erasing: createAxisLineMarks(axes: axes))
+        case .vector:
+            return AnyChartContent(erasing: createVectorLineMark(axes: axes))
+        }
     }
     
     @ChartContentBuilder
-    private func createLineMarks(axes: some Axes) -> some ChartContent {
+    private func createAxisLineMarks(axes: some Axes) -> some ChartContent {
         
         let axesTypes = type(of: axes).sortedAxesTypes
         
@@ -34,6 +40,52 @@ struct RecordingChartContent: ChartContent {
                 )
                 .foregroundStyle(by: .value("name", yName))
             }
+        }
+    }
+
+    @ChartContentBuilder
+    private func createVectorLineMark(axes: some Axes) -> some ChartContent {
+        if let triangleAxes = axes as? TriangleAxes {
+            let elapsed = entry.date.timeIntervalSince(startDate)
+            let yName = "vector"
+
+            LineMark(
+                x: .value("elapsed", elapsed),
+                y: .value(yName, triangleAxes.magnitude.value)
+            )
+            .foregroundStyle(by: .value("name", yName))
+        }
+    }
+}
+
+enum RecordingChartDisplayMode: Hashable {
+    case axes
+    case vector
+
+    mutating func toggle() {
+        switch self {
+        case .axes:
+            self = .vector
+        case .vector:
+            self = .axes
+        }
+    }
+
+    var toggleTitle: String {
+        switch self {
+        case .axes:
+            "Vector"
+        case .vector:
+            "Axes"
+        }
+    }
+
+    var accessibilityLabel: String {
+        switch self {
+        case .axes:
+            "Show vector chart"
+        case .vector:
+            "Show axes chart"
         }
     }
 }

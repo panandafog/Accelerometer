@@ -33,6 +33,12 @@ struct RecordingPreview: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, 2)
             }
+            if recording.state == .interrupted {
+                Label("Recording interrupted", systemImage: "exclamationmark.circle.fill")
+                    .font(.caption)
+                    .foregroundColor(.orange)
+                    .padding(.bottom, 2)
+            }
             Text("Started: " + startString)
             Text("Duration: " + durationStringState)
                 .padding([.bottom], 5)

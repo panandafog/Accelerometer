@@ -121,22 +121,25 @@ private struct WatchRecordingDetailView: View {
                 }
 
                 Section {
-                    Button {
-                        recorder.send(recordingID: recording.id)
-                    } label: {
-                        if recorder.transferringIDs.contains(recording.id) {
-                            TransferProgressLabel(
-                                progress: recorder.transferProgress[recording.id],
-                                isAwaitingImport: recorder.awaitingImportIDs.contains(recording.id)
-                            )
-                        } else {
+                    let isTransferring = recorder.transferringIDs.contains(recording.id)
+
+                    if isTransferring {
+                        TransferProgressLabel(
+                            progress: recorder.transferProgress[recording.id],
+                            isAwaitingImport: recorder.awaitingImportIDs.contains(recording.id)
+                        )
+                        .foregroundStyle(.primary)
+                        .tint(.accentColor)
+                    } else {
+                        Button {
+                            recorder.send(recordingID: recording.id)
+                        } label: {
                             Label(
                                 recording.isTransferred ? "Send again" : "Send to iPhone",
                                 systemImage: "square.and.arrow.up"
                             )
                         }
                     }
-                    .disabled(recorder.transferringIDs.contains(recording.id))
 
                     Button(role: .destructive) {
                         recorder.delete(recordingID: recording.id)
@@ -144,7 +147,7 @@ private struct WatchRecordingDetailView: View {
                     } label: {
                         Label("Delete", systemImage: "trash")
                     }
-                    .disabled(recorder.transferringIDs.contains(recording.id))
+                    .disabled(isTransferring)
                 }
             }
         }
@@ -241,6 +244,12 @@ private struct WatchStoredRecordingRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
+            if recording.payload.wasInterrupted == true {
+                Label("Recording interrupted", systemImage: "exclamationmark.circle.fill")
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+            }
+
             Text(recording.payload.start, style: .date)
             Text(recording.payload.start, style: .time)
                 .font(.caption)

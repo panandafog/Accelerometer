@@ -58,6 +58,7 @@ extension Recording {
     enum State: String {
         case inProgress
         case completed
+        case interrupted
     }
 
     enum Source {
@@ -96,5 +97,108 @@ extension Recording {
             self.date = date
             self.axes = axes
         }
+    }
+}
+
+struct RecordingGap: Identifiable, Hashable {
+    let measurementType: MeasurementType
+    let start: Date
+    let end: Date
+    let expectedInterval: TimeInterval
+
+    var id: String {
+        [
+            measurementType.rawValue,
+            String(start.timeIntervalSinceReferenceDate),
+            String(end.timeIntervalSinceReferenceDate)
+        ].joined(separator: "-")
+    }
+
+    var duration: TimeInterval {
+        max(0, end.timeIntervalSince(start))
+    }
+
+    var missingDuration: TimeInterval {
+        max(0, duration - expectedInterval)
+    }
+}
+
+extension Recording {
+
+    var detectedGaps: [RecordingGap] {
+        sortedMeasurementTypes
+            .flatMap { detectedGaps(for: $0) }
+            .sorted { lhs, rhs in
+                if lhs.start == rhs.start {
+                    return lhs.measurementType.name < rhs.measurementType.name
+                }
+                return lhs.start < rhs.start
+            }
+    }
+
+    func detectedGaps(for measurementType: MeasurementType) -> [RecordingGap] {
+        RecordingGapDetector.detect(in: entries ?? [], measurementType: measurementType)
+    }
+}
+
+private enum RecordingGapDetector {
+    private static let minimumIntervalCount = 3
+    private static let minimumMissingDuration: TimeInterval = 2
+    private static let gapMultiplier: TimeInterval = 4
+
+    static func detect(
+        in entries: [Recording.Entry],
+        measurementType: MeasurementType
+    ) -> [RecordingGap] {
+        let dates = entries
+            .filter { $0.measurementType == measurementType }
+            .map(\.date)
+            .sorted()
+
+        guard dates.count > minimumIntervalCount else { return [] }
+
+        let intervals = zip(dates.dropFirst(), dates)
+            .map { later, earlier in later.timeIntervalSince(earlier) }
+            .filter { $0 > 0 }
+
+        guard
+            intervals.count >= minimumIntervalCount,
+            let expectedInterval = median(intervals)
+        else {
+            return []
+        }
+
+        let threshold = max(
+            expectedInterval * gapMultiplier,
+            expectedInterval + minimumMissingDuration
+        )
+
+        return zip(dates.dropFirst(), dates)
+            .compactMap { later, earlier in
+                let interval = later.timeIntervalSince(earlier)
+                guard interval >= threshold else { return nil }
+                return RecordingGap(
+                    measurementType: measurementType,
+                    start: earlier,
+                    end: later,
+                    expectedInterval: expectedInterval
+                )
+            }
+    }
+
+    private static func median(_ intervals: [TimeInterval]) -> TimeInterval? {
+        guard !intervals.isEmpty else { return nil }
+
+        let sortedIntervals = intervals.sorted()
+        let middleIndex = sortedIntervals.count / 2
+
+        if sortedIntervals.count.isMultiple(of: 2) {
+            return (
+                sortedIntervals[middleIndex - 1] +
+                sortedIntervals[middleIndex]
+            ) / 2
+        }
+
+        return sortedIntervals[middleIndex]
     }
 }

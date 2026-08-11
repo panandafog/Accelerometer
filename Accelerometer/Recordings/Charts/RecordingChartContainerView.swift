@@ -14,22 +14,45 @@ struct RecordingChartContainerView: View {
     let recording: Recording
     let measurementType: MeasurementType
     let style: Style
+    let displayMode: RecordingChartDisplayMode
     
     @EnvironmentObject private var settings: Settings
     @State private var chartEntries: [Recording.Entry] = []
+    @State private var chartGaps: [RecordingGap] = []
     @State private var isLoading = true
     @State private var isPresentingExporter = false
     @State private var exportURL: URL?
     
     private let processor = RecordingProcessor()
+
+    private var effectiveDisplayMode: RecordingChartDisplayMode {
+        measurementType.supportsVectorChartRepresentation ? displayMode : .axes
+    }
     
     private var startDate: Date {
-        chartEntries.first?.date ?? Date()
+        chartEntries.first?.date ?? recording.start
     }
     
     private var totalDuration: TimeInterval {
         guard let last = chartEntries.last?.date else { return 0 }
-        return last.timeIntervalSince(startDate)
+        return max(0, last.timeIntervalSince(startDate))
+    }
+
+    private var chartGapRanges: [ChartGapRange] {
+        chartGaps.compactMap { gap in
+            let startElapsed = gap.start.timeIntervalSince(startDate)
+            let endElapsed = gap.end.timeIntervalSince(startDate)
+            let lowerBound = max(0, min(startElapsed, endElapsed))
+            let upperBound = min(totalDuration, max(startElapsed, endElapsed))
+
+            guard upperBound > lowerBound else { return nil }
+
+            return ChartGapRange(
+                id: gap.id,
+                startElapsed: lowerBound,
+                endElapsed: upperBound
+            )
+        }
     }
     
     private var chartXAxisStride: Double {
@@ -109,14 +132,47 @@ struct RecordingChartContainerView: View {
     
     @ViewBuilder
     var chart: some View {
-        Chart(chartEntries) { entry in
-            RecordingChartContent(
-                entry: entry,
-                // Can be delay between start and first entry
-                startDate: chartEntries.first?.date ?? recording.start
-            )
+        Chart {
+            ForEach(chartEntries) { entry in
+                RecordingChartContent(
+                    entry: entry,
+                    // Can be delay between start and first entry
+                    startDate: startDate,
+                    displayMode: effectiveDisplayMode
+                )
+            }
         }
         .chartXScale(domain: 0...totalDuration)
+        .chartBackground { proxy in
+            GeometryReader { geometry in
+                let plotFrame = geometry[proxy.plotAreaFrame]
+
+                ZStack(alignment: .topLeading) {
+                    ForEach(chartGapRanges) { gap in
+                        if let startX = proxy.position(forX: gap.startElapsed),
+                           let endX = proxy.position(forX: gap.endElapsed) {
+                            let lowerX = min(max(min(startX, endX), 0), plotFrame.width)
+                            let upperX = min(max(max(startX, endX), 0), plotFrame.width)
+                            let width = max(upperX - lowerX, 1)
+
+                            if upperX > lowerX {
+                                Rectangle()
+                                    .fill(Color.orange.opacity(style.gapOpacity))
+                                    .frame(
+                                        width: width,
+                                        height: plotFrame.height
+                                    )
+                                    .position(
+                                        x: plotFrame.minX + lowerX + width / 2,
+                                        y: plotFrame.midY
+                                    )
+                                    .accessibilityHidden(true)
+                            }
+                        }
+                    }
+                }
+            }
+        }
         .chartXAxis {
             let values = AxisMarkValues.stride(by: chartXAxisStride)
             AxisMarks(values: values) { value in
@@ -148,6 +204,7 @@ struct RecordingChartContainerView: View {
     
     private func loadData() async {
         isLoading = true
+        chartGaps = recording.detectedGaps(for: measurementType)
         chartEntries = await RecordingProcessor()
             .sampledEntries(
                 from: recording,
@@ -191,6 +248,21 @@ struct RecordingChartContainerView: View {
                 4
             }
         }
+
+        var gapOpacity: Double {
+            switch self {
+            case .big:
+                0.18
+            case .small:
+                0.14
+            }
+        }
+    }
+
+    private struct ChartGapRange: Identifiable {
+        let id: String
+        let startElapsed: TimeInterval
+        let endElapsed: TimeInterval
     }
 }
 
@@ -206,7 +278,8 @@ struct RecordingChartContainerView_Previews: PreviewProvider {
             RecordingChartContainerView(
                 recording: recording,
                 measurementType: type,
-                style: .small
+                style: .small,
+                displayMode: .axes
             )
             .frame(height: 200)
             .padding()
@@ -215,7 +288,8 @@ struct RecordingChartContainerView_Previews: PreviewProvider {
             RecordingChartContainerView(
                 recording: recording,
                 measurementType: type,
-                style: .big
+                style: .big,
+                displayMode: .axes
             )
             .previewDisplayName("Big")
         }

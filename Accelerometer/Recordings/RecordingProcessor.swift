@@ -40,13 +40,20 @@ actor RecordingProcessor {
     ) async -> [Recording.Entry] {
         let filtered = (recording.entries ?? [])
             .filter { $0.measurementType == type }
+            .sorted { lhs, rhs in lhs.date < rhs.date }
     
         guard filtered.count > maxCount else { return filtered }
         
         let stride = filtered.count / maxCount
-        return filtered.enumerated().compactMap { idx, entry in
+        var sampled = filtered.enumerated().compactMap { idx, entry in
             idx % stride == 0 ? entry : nil
         }
+
+        if let last = filtered.last, sampled.last?.id != last.id {
+            sampled.append(last)
+        }
+
+        return sampled
     }
     
     enum ProcessingError: Error {

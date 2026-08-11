@@ -13,6 +13,7 @@ import SwiftUI
 class Recorder: ObservableObject {
     
     private static let memoryCheckCooldownNs: UInt64 = 5_000_000_000
+    private static let checkpointIntervalNs: UInt64 = 5_000_000_000
     
     @Published var isInEditMode = false
     @Published var hasEnoughMemory = true
@@ -32,6 +33,7 @@ class Recorder: ObservableObject {
     private let disableIdleTimer = true
     private var subscriptions: [AnyCancellable] = []
     private var backgroundTaskID: UIBackgroundTaskIdentifier = .invalid
+    private var checkpointTask: Task<Void, Never>?
 
     private var watchRecordingIDs: Set<String> {
         get {
@@ -47,6 +49,7 @@ class Recorder: ObservableObject {
         self.settings = settings
         
         Task {
+            await recoverInterruptedRecordings()
             await refreshRecordings()
         }
         Task {
@@ -85,19 +88,22 @@ class Recorder: ObservableObject {
         activeRecordingEntries = []
 
         types.forEach(subscribeForChanges)
+        startCheckpointing()
 
         objectWillChange.send()
     }
     
-    func stopRecording() {
+    func stopRecording(interrupted: Bool = false) {
         guard !isStoppingRecording, activeRecording != nil else {
             return
         }
         isStoppingRecording = true
+        checkpointTask?.cancel()
+        checkpointTask = nil
 
         Task {
             guard var activeRecording = activeRecording else { return }
-            activeRecording.state = .completed
+            activeRecording.state = interrupted ? .interrupted : .completed
             activeRecording.end = Date.now
             activeRecording.entries = Array(activeRecordingEntries)
             
@@ -197,6 +203,27 @@ class Recorder: ObservableObject {
         }
     }
 
+    private func recoverInterruptedRecordings() async {
+        await repository.updateMetadata()
+        let stored = await repository.recordingsMetadata
+        var recovered: [Recording] = []
+
+        for metadata in stored.values
+        where metadata.state == .inProgress && metadata.id != activeRecording?.id {
+            guard var recording = await repository.loadFullRecording(id: metadata.id) else {
+                continue
+            }
+
+            recording.state = .interrupted
+            recording.end = recording.end ?? recording.entries?.last?.date ?? recording.start
+            recovered.append(recording)
+        }
+
+        if !recovered.isEmpty {
+            await repository.save(recovered)
+        }
+    }
+
     private func importTransferredRecording(_ data: Data, transferID: String?) async {
         do {
             let decoder = JSONDecoder()
@@ -258,7 +285,7 @@ class Recorder: ObservableObject {
 #endif
         
         if !hasEnoughMemory {
-            await MainActor.run { stopRecording() }
+            await MainActor.run { stopRecording(interrupted: true) }
         }
         
         await MainActor.run { self.hasEnoughMemory = hasEnoughMemory }
@@ -273,13 +300,38 @@ class Recorder: ObservableObject {
     
     // MARK: - Recording runtime
 
+    private func startCheckpointing() {
+        checkpointTask?.cancel()
+        checkpointTask = Task { [weak self] in
+            await self?.persistActiveCheckpoint()
+
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: Self.checkpointIntervalNs)
+                guard !Task.isCancelled else {
+                    return
+                }
+                await self?.persistActiveCheckpoint()
+            }
+        }
+    }
+
+    private func persistActiveCheckpoint() async {
+        guard !isStoppingRecording, var checkpoint = activeRecording else {
+            return
+        }
+
+        checkpoint.end = .now
+        checkpoint.entries = Array(activeRecordingEntries)
+        await repository.save([checkpoint])
+    }
+
     private func beginRecordingBackgroundTask() {
         endRecordingBackgroundTask()
         backgroundTaskID = UIApplication.shared.beginBackgroundTask(
             withName: "Finish sensor recording"
         ) { [weak self] in
             Task { @MainActor in
-                self?.stopRecording()
+                self?.stopRecording(interrupted: true)
             }
         }
     }

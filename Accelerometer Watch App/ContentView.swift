@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var recorder: WatchRecorder
+    @EnvironmentObject private var measurer: Measurer
     @Environment(\.scenePhase) private var scenePhase
     @State private var path: [WatchRoute] = []
 
@@ -47,8 +48,24 @@ struct ContentView: View {
             .onAppear(perform: consumeWidgetAction)
             .onOpenURL(perform: openWidgetURL)
             .onChange(of: scenePhase) { _, phase in
-                if phase == .active {
+                switch phase {
+                case .active:
+                    if !recorder.isRecording {
+                        measurer.restartAll()
+                    }
                     consumeWidgetAction()
+
+                case .inactive:
+                    break
+
+                case .background:
+                    if !recorder.isRecording {
+                        measurer.stopAll()
+                    }
+                    measurer.refreshWatchWidget()
+
+                @unknown default:
+                    break
                 }
             }
         }

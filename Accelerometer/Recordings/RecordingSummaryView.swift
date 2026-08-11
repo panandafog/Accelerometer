@@ -31,10 +31,19 @@ struct RecordingSummaryView: View {
     
     var body: some View {
         let recording = fullRecording ?? recordingMetadata
+        let detectedGaps = recording.detectedGaps
         
         List {
             Section("Info") {
                 RecordingPreview(recording: recording)
+            }
+            if recording.state == .interrupted || !detectedGaps.isEmpty {
+                Section("Data Quality") {
+                    RecordingIntegrityWarningView(
+                        recording: recording,
+                        gaps: detectedGaps
+                    )
+                }
             }
             Section("Measurements") {
                 if isLoading {
@@ -156,6 +165,116 @@ struct RecordingSummaryView: View {
     private func deleteRecording() {
         recorder.delete(recordingID: recordingMetadata.id)
         presentationMode.wrappedValue.dismiss()
+    }
+}
+
+private struct RecordingIntegrityWarningView: View {
+
+    let recording: Recording
+    let gaps: [RecordingGap]
+
+    private var displayedGaps: [RecordingGap] {
+        Array(
+            gaps
+                .sorted { lhs, rhs in lhs.duration > rhs.duration }
+                .prefix(3)
+        )
+    }
+
+    private var remainingGapCount: Int {
+        max(0, gaps.count - displayedGaps.count)
+    }
+
+    private var affectedMeasurementNames: String {
+        Array(Set(gaps.map(\.measurementType)))
+            .sorted { lhs, rhs in lhs.name < rhs.name }
+            .map(\.name)
+            .joined(separator: ", ")
+    }
+
+    private var longestGapDurationString: String {
+        guard let longestGap = gaps.max(by: { lhs, rhs in
+            lhs.duration < rhs.duration
+        }) else {
+            return "0:00"
+        }
+
+        return formatDuration(longestGap.duration)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if recording.state == .interrupted {
+                warningLabel(
+                    title: "Recording was interrupted",
+                    message: "The system stopped recording before it was completed. The saved data may be incomplete."
+                )
+            }
+
+            if !gaps.isEmpty {
+                warningLabel(
+                    title: "Missing samples detected",
+                    message: "\(gaps.count) gap(s) in \(affectedMeasurementNames). Longest gap: \(longestGapDurationString)."
+                )
+
+                Text("Orange bands on the charts mark time ranges where no samples were written.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+
+                VStack(alignment: .leading, spacing: 6) {
+                    ForEach(displayedGaps) { gap in
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(gap.measurementType.name.capitalizingFirstLetter())
+                                .font(.caption)
+                                .fontWeight(.semibold)
+
+                            Text("\(elapsedRangeString(for: gap)) - \(formatDuration(gap.duration)) without samples")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+
+                    if remainingGapCount > 0 {
+                        Text("+ \(remainingGapCount) more")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
+    private func warningLabel(title: String, message: String) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Label(title, systemImage: "exclamationmark.triangle.fill")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundColor(.orange)
+
+            Text(message)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+    }
+
+    private func elapsedRangeString(for gap: RecordingGap) -> String {
+        let start = gap.start.timeIntervalSince(recording.start)
+        let end = gap.end.timeIntervalSince(recording.start)
+        return "\(formatDuration(start)) to \(formatDuration(end))"
+    }
+
+    private func formatDuration(_ duration: TimeInterval) -> String {
+        let totalSeconds = max(0, Int(duration.rounded()))
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+
+        if hours > 0 {
+            return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+        }
+
+        return String(format: "%d:%02d", minutes, seconds)
     }
 }
 

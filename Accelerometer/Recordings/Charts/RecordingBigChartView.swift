@@ -10,16 +10,31 @@ import SwiftUI
 struct RecordingBigChartView: View {
     let recording: Recording
     let measurementType: MeasurementType
+
+    @State private var displayMode: RecordingChartDisplayMode = .axes
     
     var body: some View {
         RecordingChartContainerView(
             recording: recording,
             measurementType: measurementType,
-            style: .big
+            style: .big,
+            displayMode: displayMode
         )
         .padding()
         .navigationTitle(measurementType.name.capitalized)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if measurementType.supportsVectorChartRepresentation {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        displayMode.toggle()
+                    } label: {
+                        Text(displayMode.toggleTitle)
+                    }
+                    .accessibilityLabel(displayMode.accessibilityLabel)
+                }
+            }
+        }
     }
 }
 

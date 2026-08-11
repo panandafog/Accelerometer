@@ -20,7 +20,8 @@ struct RecordingSmallChartView: View {
             RecordingChartContainerView(
                 recording: recording,
                 measurementType: measurementType,
-                style: .small
+                style: .small,
+                displayMode: .axes
             )
         }
     }

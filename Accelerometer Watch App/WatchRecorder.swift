@@ -14,6 +14,8 @@ import WidgetKit
 
 @MainActor
 final class WatchRecorder: NSObject, ObservableObject {
+    private static let checkpointIntervalNs: UInt64 = 5_000_000_000
+
     @Published private(set) var activeRecording: ActiveRecording?
     @Published private(set) var recordings: [StoredRecording] = []
     @Published private(set) var transferringIDs: Set<String> = []
@@ -27,6 +29,8 @@ final class WatchRecorder: NSObject, ObservableObject {
     private var measurerSubscription: AnyCancellable?
     private var activeEntries: [RecordingTransferPayload.Entry] = []
     private var extendedRuntimeSession: WKExtendedRuntimeSession?
+    private var checkpointTask: Task<Void, Never>?
+    private let recordingStore = WatchRecordingFileStore()
     private var activeFileTransfers: [String: WCSessionFileTransfer] = [:]
     private var chunkTransferSessions: [String: WatchChunkTransferSession] = [:]
 
@@ -59,7 +63,7 @@ final class WatchRecorder: NSObject, ObservableObject {
         restoreChunkTransferSessions()
         restoreOutstandingTransfers()
         reloadRecordings()
-        updateRecordingWidget()
+        recoverInterruptedWidgetState()
     }
 
     var isRecording: Bool {
@@ -83,6 +87,7 @@ final class WatchRecorder: NSObject, ObservableObject {
             measurementCount: activeRecording.measurementTypes.count
         )
         attachMissingSubscriptions()
+        startCheckpointing()
 
         measurerSubscription = measurer.objectWillChange.sink { [weak self] _ in
             Task { @MainActor in
@@ -92,31 +97,57 @@ final class WatchRecorder: NSObject, ObservableObject {
     }
 
     func stop() {
+        finishRecording(interrupted: false)
+    }
+
+    private func finishRecording(
+        interrupted: Bool,
+        message: String? = nil,
+        invalidateRuntimeSession: Bool = true
+    ) {
         guard let activeRecording else {
             return
         }
 
-        let payload = RecordingTransferPayload(
-            id: activeRecording.id,
-            start: activeRecording.start,
-            end: Date(),
-            measurementTypes: activeRecording.measurementTypes.map(\.rawValue),
-            entries: activeEntries
+        checkpointTask?.cancel()
+        checkpointTask = nil
+        let end = Date()
+        let payload = recordingPayload(
+            for: activeRecording,
+            end: end,
+            wasInterrupted: interrupted
         )
 
-        do {
-            try persist(payload)
-        } catch {
-            lastTransferError = error.localizedDescription
-        }
-
         self.activeRecording = nil
-        stopExtendedRuntimeSession()
-        updateRecordingWidget()
+        if invalidateRuntimeSession {
+            stopExtendedRuntimeSession()
+        }
+        if interrupted {
+            updateRecordingWidget(
+                start: activeRecording.start,
+                end: end,
+                measurementCount: activeRecording.measurementTypes.count,
+                interruptionMessage: message ?? "Background session ended"
+            )
+        } else {
+            updateRecordingWidget()
+        }
         activeEntries = []
         subscriptions.removeAll()
         measurerSubscription = nil
-        reloadRecordings()
+
+        Task { [weak self] in
+            guard let self else {
+                return
+            }
+
+            do {
+                try await recordingStore.persist(payload)
+            } catch {
+                lastTransferError = error.localizedDescription
+            }
+            reloadRecordings()
+        }
     }
 
     func send(recordingID: String) {
@@ -199,18 +230,6 @@ final class WatchRecorder: NSObject, ObservableObject {
                     )
                 }
         }
-    }
-
-    private func persist(_ payload: RecordingTransferPayload) throws {
-        let data = try JSONEncoder.recordingTransfer.encode(payload)
-        try FileManager.default.createDirectory(
-            at: Self.recordingsDirectory,
-            withIntermediateDirectories: true
-        )
-        try data.write(
-            to: Self.recordingsDirectory.appendingPathComponent("\(payload.id).json"),
-            options: .atomic
-        )
     }
 
     private func reloadRecordings() {
@@ -526,12 +545,88 @@ final class WatchRecorder: NSObject, ObservableObject {
         "legacy:\(recordingID)"
     }
 
-    private func updateRecordingWidget(start: Date? = nil, measurementCount: Int = 0) {
+    private func startCheckpointing() {
+        checkpointTask?.cancel()
+        checkpointTask = Task { [weak self] in
+            await self?.persistActiveCheckpoint()
+
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: Self.checkpointIntervalNs)
+                guard !Task.isCancelled else {
+                    return
+                }
+                await self?.persistActiveCheckpoint()
+            }
+        }
+    }
+
+    private func persistActiveCheckpoint() async {
+        guard let activeRecording else {
+            return
+        }
+
+        let payload = recordingPayload(
+            for: activeRecording,
+            end: .now,
+            wasInterrupted: true
+        )
+
+        do {
+            try await recordingStore.persist(payload)
+        } catch {
+            lastTransferError = "Could not save recording checkpoint: \(error.localizedDescription)"
+        }
+    }
+
+    private func recordingPayload(
+        for recording: ActiveRecording,
+        end: Date,
+        wasInterrupted: Bool
+    ) -> RecordingTransferPayload {
+        RecordingTransferPayload(
+            id: recording.id,
+            start: recording.start,
+            end: end,
+            measurementTypes: recording.measurementTypes.map(\.rawValue),
+            entries: activeEntries,
+            wasInterrupted: wasInterrupted
+        )
+    }
+
+    private func recoverInterruptedWidgetState() {
+        guard let state = WatchRecordingWidgetState.load(),
+              state.status == .recording else {
+            return
+        }
+
+        updateRecordingWidget(
+            start: state.start,
+            end: state.end ?? .now,
+            measurementCount: state.measurementCount,
+            interruptionMessage: "App stopped unexpectedly"
+        )
+    }
+
+    private func updateRecordingWidget(
+        start: Date? = nil,
+        end: Date? = nil,
+        measurementCount: Int = 0,
+        interruptionMessage: String? = nil
+    ) {
         if let start {
-            WatchRecordingWidgetState.save(
-                start: start,
-                measurementCount: measurementCount
-            )
+            if let interruptionMessage {
+                WatchRecordingWidgetState.saveInterrupted(
+                    start: start,
+                    end: end ?? .now,
+                    measurementCount: measurementCount,
+                    message: interruptionMessage
+                )
+            } else {
+                WatchRecordingWidgetState.save(
+                    start: start,
+                    measurementCount: measurementCount
+                )
+            }
         } else {
             WatchRecordingWidgetState.clear()
         }
@@ -572,7 +667,33 @@ final class WatchRecorder: NSObject, ObservableObject {
         }
 
         if reason != .none, isRecording {
-            stop()
+            finishRecording(
+                interrupted: true,
+                message: interruptionMessage(for: reason, error: error),
+                invalidateRuntimeSession: false
+            )
+        }
+    }
+
+    private func interruptionMessage(
+        for reason: WKExtendedRuntimeSessionInvalidationReason,
+        error: Error?
+    ) -> String {
+        if error != nil {
+            return "Background session failed"
+        }
+
+        return switch reason {
+        case .expired:
+            "Background time expired"
+        case .resignedFrontmost:
+            "App lost active status"
+        case .suppressedBySystem:
+            "Stopped by watchOS"
+        case .sessionInProgress:
+            "Another background session started"
+        default:
+            "Background session ended"
         }
     }
 
@@ -723,7 +844,10 @@ extension WatchRecorder: WKExtendedRuntimeSessionDelegate {
         _ extendedRuntimeSession: WKExtendedRuntimeSession
     ) {
         Task { @MainActor [weak self] in
-            self?.stop()
+            self?.finishRecording(
+                interrupted: true,
+                message: "Background time expired"
+            )
         }
     }
 
@@ -735,6 +859,25 @@ extension WatchRecorder: WKExtendedRuntimeSessionDelegate {
         Task { @MainActor [weak self] in
             self?.handleExtendedRuntimeEnd(reason: reason, error: error)
         }
+    }
+}
+
+private actor WatchRecordingFileStore {
+    private let directory = FileManager.default.urls(
+        for: .applicationSupportDirectory,
+        in: .userDomainMask
+    )[0].appendingPathComponent("WatchRecordings", isDirectory: true)
+
+    func persist(_ payload: RecordingTransferPayload) throws {
+        let data = try JSONEncoder.recordingTransfer.encode(payload)
+        try FileManager.default.createDirectory(
+            at: directory,
+            withIntermediateDirectories: true
+        )
+        try data.write(
+            to: directory.appendingPathComponent("\(payload.id).json"),
+            options: .atomic
+        )
     }
 }
 

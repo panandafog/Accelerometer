@@ -6,11 +6,19 @@
 import Foundation
 
 struct WatchRecordingWidgetState: Sendable {
+    enum Status: String, Sendable {
+        case recording
+        case interrupted
+    }
+
     static let appGroupID = "group.com.panandafog.Accelerometer.watch"
     static let widgetKind = "WatchRecordingStatusWidget"
 
+    let status: Status
     let start: Date
+    let end: Date?
     let measurementCount: Int
+    let message: String?
 
     static func load() -> WatchRecordingWidgetState? {
         guard let defaults = UserDefaults(suiteName: appGroupID),
@@ -19,8 +27,12 @@ struct WatchRecordingWidgetState: Sendable {
         }
 
         return WatchRecordingWidgetState(
+            status: defaults.string(forKey: StorageKey.status)
+                .flatMap(Status.init(rawValue:)) ?? .recording,
             start: start,
-            measurementCount: defaults.integer(forKey: StorageKey.measurementCount)
+            end: defaults.object(forKey: StorageKey.end) as? Date,
+            measurementCount: defaults.integer(forKey: StorageKey.measurementCount),
+            message: defaults.string(forKey: StorageKey.message)
         )
     }
 
@@ -29,8 +41,28 @@ struct WatchRecordingWidgetState: Sendable {
             return
         }
 
+        defaults.set(Status.recording.rawValue, forKey: StorageKey.status)
         defaults.set(start, forKey: StorageKey.start)
         defaults.set(measurementCount, forKey: StorageKey.measurementCount)
+        defaults.removeObject(forKey: StorageKey.end)
+        defaults.removeObject(forKey: StorageKey.message)
+    }
+
+    static func saveInterrupted(
+        start: Date,
+        end: Date,
+        measurementCount: Int,
+        message: String
+    ) {
+        guard let defaults = UserDefaults(suiteName: appGroupID) else {
+            return
+        }
+
+        defaults.set(Status.interrupted.rawValue, forKey: StorageKey.status)
+        defaults.set(start, forKey: StorageKey.start)
+        defaults.set(end, forKey: StorageKey.end)
+        defaults.set(measurementCount, forKey: StorageKey.measurementCount)
+        defaults.set(message, forKey: StorageKey.message)
     }
 
     static func clear() {
@@ -38,13 +70,19 @@ struct WatchRecordingWidgetState: Sendable {
             return
         }
 
+        defaults.removeObject(forKey: StorageKey.status)
         defaults.removeObject(forKey: StorageKey.start)
+        defaults.removeObject(forKey: StorageKey.end)
         defaults.removeObject(forKey: StorageKey.measurementCount)
+        defaults.removeObject(forKey: StorageKey.message)
     }
 
     private enum StorageKey {
+        static let status = "watchRecordingWidgetStatus"
         static let start = "watchRecordingWidgetStart"
+        static let end = "watchRecordingWidgetEnd"
         static let measurementCount = "watchRecordingWidgetMeasurementCount"
+        static let message = "watchRecordingWidgetMessage"
     }
 }
 
@@ -55,9 +93,9 @@ struct WatchMeasurementWidgetState: Codable, Sendable {
     let name: String
     let iconName: String
     let unit: String
-    let primaryLabel: String?
-    let primaryValue: String
-    let axisValues: [String]
+    let maximumLabel: String?
+    let maximumValue: String
+    let axisMaximumValues: [String]
     let intensity: Double
     let updatedAt: Date
 
@@ -74,12 +112,6 @@ struct WatchMeasurementWidgetState: Codable, Sendable {
         }
 
         defaults.set(data, forKey: StorageKey.states)
-    }
-
-    static func save(_ state: WatchMeasurementWidgetState) {
-        var states = loadAll()
-        states[state.measurementType] = state
-        save(Array(states.values))
     }
 
     private static func loadAll() -> [String: WatchMeasurementWidgetState] {

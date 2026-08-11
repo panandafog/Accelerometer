@@ -34,7 +34,7 @@ class Measurer: ObservableObject {
     private var settingsSubscription: AnyCancellable?
     private var stubTimer: AnyCancellable?
 #if os(watchOS)
-    private var lastWidgetUpdate = Date.distantPast
+    private var lastWidgetStateSave = Date.distantPast
 #endif
     
     init(settings: Settings) {
@@ -78,6 +78,11 @@ class Measurer: ObservableObject {
             stopMagnetometer()
             stopProximity()
         }
+    }
+
+    func restartAll() {
+        stopAll()
+        startAll()
     }
     
     // MARK: — Real sensors
@@ -361,16 +366,31 @@ class Measurer: ObservableObject {
 
 #if os(watchOS)
     private func updateWatchWidgetStateIfNeeded(now: Date = .now) {
-        guard now.timeIntervalSince(lastWidgetUpdate) >= 1 else {
+        guard now.timeIntervalSince(lastWidgetStateSave) >= 1 else {
             return
         }
 
-        lastWidgetUpdate = now
-        WatchMeasurementWidgetState.save(
-            observableAxes.compactMap { type, observableAxes in
-                widgetState(type: type, axes: observableAxes.axes, updatedAt: now)
-            }
-        )
+        saveWatchWidgetState(now: now)
+    }
+
+    func refreshWatchWidget(now: Date = .now) {
+        saveWatchWidgetState(now: now)
+        reloadWatchWidgetTimeline()
+    }
+
+    private func saveWatchWidgetState(now: Date) {
+        let states = observableAxes.compactMap { type, observableAxes in
+            widgetState(type: type, axes: observableAxes.axes, updatedAt: now)
+        }
+        guard !states.isEmpty else {
+            return
+        }
+
+        lastWidgetStateSave = now
+        WatchMeasurementWidgetState.save(states)
+    }
+
+    private func reloadWatchWidgetTimeline() {
         WidgetCenter.shared.reloadTimelines(ofKind: WatchMeasurementWidgetState.widgetKind)
     }
 
@@ -380,46 +400,53 @@ class Measurer: ObservableObject {
         updatedAt: Date
     ) -> WatchMeasurementWidgetState? {
         if let axes = axes as? TriangleAxes {
+            let maximum = axes.magnitude.max ?? axes.magnitude.value
             return WatchMeasurementWidgetState(
                 measurementType: type.rawValue,
                 name: type.name.capitalizingFirstLetter(),
                 iconName: type.iconName,
                 unit: type.unit,
-                primaryLabel: nil,
-                primaryValue: widgetValue(axes.magnitude.value),
-                axisValues: TriangleAxes.sortedAxesTypes.compactMap {
-                    guard let value = axes.values[$0]?.value else {
+                maximumLabel: nil,
+                maximumValue: widgetValue(maximum),
+                axisMaximumValues: TriangleAxes.sortedAxesTypes.compactMap {
+                    guard let axis = axes.values[$0] else {
                         return nil
                     }
-                    return "\($0.name) \(widgetValue(value))"
+                    return "\($0.name) \(widgetValue(maximumAbsoluteValue(of: axis)))"
                 },
-                intensity: min(1, abs(axes.magnitude.value) / max(axes.displayableAbsMax, 0.0001)),
+                intensity: min(1, maximum / max(axes.displayableAbsMax, 0.0001)),
                 updatedAt: updatedAt
             )
         }
 
         if let axes = axes as? AttitudeAxes {
             let primaryAxis = AxeType.roll
-            let primaryValue = axes.values[primaryAxis]?.value ?? 0
+            let maximum = axes.values[primaryAxis].map {
+                maximumAbsoluteValue(of: $0)
+            } ?? 0
             return WatchMeasurementWidgetState(
                 measurementType: type.rawValue,
                 name: type.name.capitalizingFirstLetter(),
                 iconName: type.iconName,
                 unit: type.unit,
-                primaryLabel: primaryAxis.name,
-                primaryValue: widgetValue(primaryValue),
-                axisValues: AttitudeAxes.sortedAxesTypes.compactMap {
-                    guard let value = axes.values[$0]?.value else {
+                maximumLabel: primaryAxis.name,
+                maximumValue: widgetValue(maximum),
+                axisMaximumValues: AttitudeAxes.sortedAxesTypes.compactMap {
+                    guard let axis = axes.values[$0] else {
                         return nil
                     }
-                    return "\($0.name) \(widgetValue(value))"
+                    return "\($0.name) \(widgetValue(maximumAbsoluteValue(of: axis)))"
                 },
-                intensity: min(1, abs(primaryValue) / max(axes.displayableAbsMax, 0.0001)),
+                intensity: min(1, maximum / max(axes.displayableAbsMax, 0.0001)),
                 updatedAt: updatedAt
             )
         }
 
         return nil
+    }
+
+    private func maximumAbsoluteValue(of axis: Axis<Double>) -> Double {
+        max(abs(axis.min ?? axis.value), abs(axis.max ?? axis.value))
     }
 
     private func widgetValue(_ value: Double) -> String {

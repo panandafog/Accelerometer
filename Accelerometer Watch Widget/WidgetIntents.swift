@@ -105,23 +105,13 @@ enum WidgetMeasurement: String, AppEnum, CaseIterable {
         }
     }
 
-    var displayableAbsMax: Double {
-        switch self {
-        case .userAcceleration:
-            0.1
-        case .acceleration, .attitude, .gravity:
-            1
-        case .rotationRate:
-            2
-        case .magneticField:
-            400
-        }
-    }
 }
 
 struct MeasurementConfigurationIntent: WidgetConfigurationIntent {
-    static let title: LocalizedStringResource = "Sensor reading"
-    static let description = IntentDescription("Choose the sensor shown on the watch face.")
+    static let title: LocalizedStringResource = "Sensor maximum"
+    static let description = IntentDescription(
+        "Choose the sensor whose maximum is shown on the watch face."
+    )
 
     @Parameter(title: "Sensor", default: .acceleration)
     var measurement: WidgetMeasurement
