@@ -38,19 +38,19 @@ enum MeasurementType: String, CaseIterable, Sendable {
     var name: String {
         switch self {
         case .acceleration:
-            return "acceleration"
+            return String(localized: "measurement.acceleration.name")
         case .rotationRate:
-            return "rotation rate"
+            return String(localized: "measurement.rotation_rate.name")
         case .userAcceleration:
-            return "user acceleration"
+            return String(localized: "measurement.user_acceleration.name")
         case .magneticField:
-            return "magnetic field"
+            return String(localized: "measurement.magnetic_field.name")
         case .attitude:
-            return "attitude"
+            return String(localized: "measurement.attitude.name")
         case .gravity:
-            return "gravity"
+            return String(localized: "measurement.gravity.name")
         case .proximity:
-            return "proximity"
+            return String(localized: "measurement.proximity.name")
         }
     }
     
@@ -69,43 +69,26 @@ enum MeasurementType: String, CaseIterable, Sendable {
         case .gravity:
             return "G"
         case .proximity:
-            return "<proximity unit>"
+            return ""
         }
     }
     
     var description: String {
         switch self {
         case .acceleration:
-            return """
-The acceleration measured by the accelerometer in G's (gravitational force).
-A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
-"""
+            return String(localized: "measurement.acceleration.description")
         case .rotationRate:
-            return """
-The rotation rate as measured by the device’s gyroscope in radinans per second (rad / s).
-"""
+            return String(localized: "measurement.rotation_rate.description")
         case .userAcceleration:
-            return """
-The acceleration that the user is giving to the device.
-The acceleration measured by the accelerometer in G's (gravitational force).
-A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
-"""
+            return String(localized: "measurement.user_acceleration.description")
         case .magneticField:
-            return """
-The total magnetic field which is equal to the Earth’s geomagnetic field plus bias introduced from the device itself and its surroundings.
-The magnetic field is measured in microteslas (μT), equal to 10^−6 teslas.
-"""
+            return String(localized: "measurement.magnetic_field.description")
         case .attitude:
-            return """
-The device’s orientation relative to a known frame of reference at a point in time.
-"""
+            return String(localized: "measurement.attitude.description")
         case .gravity:
-            return """
-The gravity acceleration vector expressed in the device's reference frame.
-A G is a unit of gravitation force equal to that exerted by the earth’s gravitational field (9.81 m s−2).
-"""
+            return String(localized: "measurement.gravity.description")
         case .proximity:
-            return "<proximity description>"
+            return String(localized: "measurement.proximity.description")
         }
     }
     

@@ -79,31 +79,31 @@ struct RecordingChartContainerView: View {
         let absSeconds = abs(seconds)
         
         if absSeconds < 1 {
-            return String(format: "%.1fs", seconds)
+            return String(format: String(localized: "chart.seconds.decimal"), seconds)
         } else if absSeconds < 60 {
-            return String(format: "%.0fs", seconds)
+            return String(format: String(localized: "chart.seconds"), seconds)
         } else if absSeconds < 3600 {
             // If stride is less than a minute, display minutes:seconds
             if chartXAxisStride < 60 {
                 let minutes = Int(seconds / 60)
                 let remainingSeconds = Int(seconds.truncatingRemainder(dividingBy: 60))
-                return String(format: "%dm%02ds", minutes, remainingSeconds)
+                return String(format: String(localized: "chart.minutes_seconds"), minutes, remainingSeconds)
             } else {
                 // Otherwise only minutes
                 let minutes = seconds / 60
-                return String(format: "%.0fm", minutes)
+                return String(format: String(localized: "chart.minutes"), minutes)
             }
         } else {
             if chartXAxisStride < 3600 {
                 let hours = Int(seconds / 3600)
                 let minutes = Int((seconds.truncatingRemainder(dividingBy: 3600)) / 60)
-                return String(format: "%dh%02dm", hours, minutes)
+                return String(format: String(localized: "chart.hours_minutes"), hours, minutes)
             } else {
                 let hours = seconds / 3600
                 if hours.truncatingRemainder(dividingBy: 1) == 0 {
-                    return String(format: "%.0fh", hours)
+                    return String(format: String(localized: "chart.hours"), hours)
                 } else {
-                    return String(format: "%.1fh", hours)
+                    return String(format: String(localized: "chart.hours.decimal"), hours)
                 }
             }
         }

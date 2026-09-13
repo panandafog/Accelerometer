@@ -19,17 +19,17 @@ struct RecordingsView: View {
     
     var recordingTitle: String {
         if recorder.recordingInProgress {
-            return "Recording in progress"
+            return String(localized: "Recording in progress")
         } else {
-            return "Start new recording"
+            return String(localized: "Start new recording")
         }
     }
     
     var secondaryRecordingTitle: String? {
         if recorder.recordingInProgress {
-            return "Do not close the app"
+            return String(localized: "Do not close the app")
         } else if !recorder.hasEnoughMemory {
-            return "Not enough memory on device"
+            return String(localized: "Not enough memory on device")
         } else {
             return nil
         }
@@ -176,7 +176,7 @@ struct RecordingsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 if isEditMode {
-                    Button(allSelected ? "Deselect All" : "Select All") {
+                    Button(allSelected ? String(localized: "Deselect All") : String(localized: "Select All")) {
                         toggleSelectAll()
                     }
                     .disabled(selectableRecordings.isEmpty)

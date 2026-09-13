@@ -238,7 +238,7 @@ class Recorder: ObservableObject {
             guard await repository.loadFullRecording(id: recording.id) != nil else {
                 transferReceiver.reportImportFailure(
                     transferID: transferID,
-                    reason: "The recording could not be saved on iPhone"
+                    reason: String(localized: "The recording could not be saved on iPhone")
                 )
                 return
             }
@@ -252,7 +252,7 @@ class Recorder: ObservableObject {
             print("Watch recording import failed:", error)
             transferReceiver.reportImportFailure(
                 transferID: transferID,
-                reason: "The recording could not be imported on iPhone"
+                reason: String(localized: "The recording could not be imported on iPhone")
             )
         }
     }

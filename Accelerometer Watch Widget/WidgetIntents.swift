@@ -44,34 +44,34 @@ enum WidgetMeasurement: String, AppEnum, CaseIterable {
     var name: String {
         switch self {
         case .acceleration:
-            "Acceleration"
+            String(localized: "measurement.acceleration.name")
         case .rotationRate:
-            "Rotation rate"
+            String(localized: "measurement.rotation_rate.name")
         case .userAcceleration:
-            "User acceleration"
+            String(localized: "measurement.user_acceleration.name")
         case .magneticField:
-            "Magnetic field"
+            String(localized: "measurement.magnetic_field.name")
         case .attitude:
-            "Attitude"
+            String(localized: "measurement.attitude.name")
         case .gravity:
-            "Gravity"
+            String(localized: "measurement.gravity.name")
         }
     }
 
     var shortName: String {
         switch self {
         case .acceleration:
-            "Accel"
+            String(localized: "measurement.acceleration.short_name")
         case .rotationRate:
-            "Rotation"
+            String(localized: "measurement.rotation_rate.short_name")
         case .userAcceleration:
-            "User accel"
+            String(localized: "measurement.user_acceleration.short_name")
         case .magneticField:
-            "Magnetic"
+            String(localized: "measurement.magnetic_field.short_name")
         case .attitude:
-            "Attitude"
+            String(localized: "measurement.attitude.short_name")
         case .gravity:
-            "Gravity"
+            String(localized: "measurement.gravity.short_name")
         }
     }
 

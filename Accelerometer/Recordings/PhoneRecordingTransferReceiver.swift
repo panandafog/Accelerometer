@@ -125,7 +125,7 @@ final class PhoneRecordingTransferReceiver: NSObject, WCSessionDelegate, @unchec
                 reject(
                     recordingID: recordingID,
                     transferID: transferID,
-                    reason: "Transferred block metadata was invalid"
+                    reason: String(localized: "Transferred block metadata was invalid")
                 )
             } else {
                 onRecordingReceived?(data, nil)
@@ -184,20 +184,20 @@ final class PhoneRecordingTransferReceiver: NSObject, WCSessionDelegate, @unchec
 
         guard data.count == metadata.chunkByteCount,
               Self.hash(data) == metadata.chunkHash else {
-            reject(metadata: metadata, reason: "A transferred block was corrupted")
+            reject(metadata: metadata, reason: String(localized: "A transferred block was corrupted"))
             return
         }
 
         do {
             var manifest = try loadOrCreateManifest(metadata: metadata)
             guard manifest.matches(metadata) else {
-                reject(metadata: metadata, reason: "Transfer metadata did not match")
+                reject(metadata: metadata, reason: String(localized: "Transfer metadata did not match"))
                 return
             }
 
             let existingHash = manifest.chunkHashes[metadata.chunkIndex]
             guard existingHash == nil || existingHash == metadata.chunkHash else {
-                reject(metadata: metadata, reason: "Conflicting duplicate block")
+                reject(metadata: metadata, reason: String(localized: "Conflicting duplicate block"))
                 return
             }
 
@@ -463,7 +463,7 @@ final class PhoneRecordingTransferReceiver: NSObject, WCSessionDelegate, @unchec
                 reject(
                     recordingID: recordingID,
                     transferID: transferID,
-                    reason: "iPhone did not receive every recording block"
+                    reason: String(localized: "iPhone did not receive every recording block")
                 )
             }
         }
@@ -475,7 +475,7 @@ final class PhoneRecordingTransferReceiver: NSObject, WCSessionDelegate, @unchec
             session?.transferUserInfo([
                 TransferKey.failedRecordingID: manifest.recordingID,
                 TransferKey.failedTransferID: manifest.transferID,
-                TransferKey.transferFailureReason: "The incomplete transfer expired"
+                TransferKey.transferFailureReason: String(localized: "The incomplete transfer expired")
             ])
             try? FileManager.default.removeItem(
                 at: Self.transferDirectory(transferID: manifest.transferID)
@@ -625,11 +625,11 @@ private enum TransferAssemblyError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingChunk:
-            "A recording block is missing"
+            String(localized: "A recording block is missing")
         case .corruptedChunk:
-            "A recording block is corrupted"
+            String(localized: "A recording block is corrupted")
         case .corruptedFile:
-            "The assembled recording is corrupted"
+            String(localized: "The assembled recording is corrupted")
         }
     }
 }

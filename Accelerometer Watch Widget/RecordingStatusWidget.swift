@@ -210,7 +210,7 @@ private struct RecordingStatusView: View {
                         .font(.headline)
                         .foregroundStyle(.orange)
 
-                    Text(state.message ?? "Background session ended")
+                    Text(state.message ?? String(localized: "Background session ended"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)

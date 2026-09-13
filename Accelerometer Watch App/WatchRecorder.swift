@@ -127,7 +127,7 @@ final class WatchRecorder: NSObject, ObservableObject {
                 start: activeRecording.start,
                 end: end,
                 measurementCount: activeRecording.measurementTypes.count,
-                interruptionMessage: message ?? "Background session ended"
+                interruptionMessage: message ?? String(localized: "Background session ended")
             )
         } else {
             updateRecordingWidget()
@@ -154,12 +154,12 @@ final class WatchRecorder: NSObject, ObservableObject {
         guard let session,
               let recording = recordings.first(where: { $0.id == recordingID }),
               !transferringIDs.contains(recordingID) else {
-            lastTransferError = "Recording is unavailable"
+            lastTransferError = String(localized: "Recording is unavailable")
             return
         }
 
         guard session.isCompanionAppInstalled else {
-            lastTransferError = "Install the iPhone app first"
+            lastTransferError = String(localized: "Install the iPhone app first")
             return
         }
 
@@ -187,7 +187,7 @@ final class WatchRecorder: NSObject, ObservableObject {
             } catch {
                 self?.transferringIDs.remove(recordingID)
                 self?.transferProgress.removeValue(forKey: recordingID)
-                self?.lastTransferError = "Could not prepare recording: \(error.localizedDescription)"
+                self?.lastTransferError = String(localized: "Could not prepare recording: \(error.localizedDescription)")
             }
         }
     }
@@ -414,7 +414,7 @@ final class WatchRecorder: NSObject, ObservableObject {
                 transferringIDs.remove(metadata.recordingID)
                 transferProgress.removeValue(forKey: metadata.recordingID)
                 removeAwaitingImport(recordingID: metadata.recordingID)
-                lastTransferError = "Sending failed: \(error.localizedDescription)"
+                lastTransferError = String(localized: "Sending failed: \(error.localizedDescription)")
             }
             return
         }
@@ -469,8 +469,8 @@ final class WatchRecorder: NSObject, ObservableObject {
             transferringIDs.remove(recordingID)
             transferProgress.removeValue(forKey: recordingID)
             removeAwaitingImport(recordingID: recordingID)
-            lastTransferError = reason.map { "iPhone rejected transfer: \($0)" }
-                ?? "iPhone rejected transfer"
+            lastTransferError = reason.map { String(localized: "iPhone rejected transfer: \($0)") }
+                ?? String(localized: "iPhone rejected transfer")
         }
     }
 
@@ -574,7 +574,7 @@ final class WatchRecorder: NSObject, ObservableObject {
         do {
             try await recordingStore.persist(payload)
         } catch {
-            lastTransferError = "Could not save recording checkpoint: \(error.localizedDescription)"
+            lastTransferError = String(localized: "Could not save recording checkpoint: \(error.localizedDescription)")
         }
     }
 
@@ -603,7 +603,7 @@ final class WatchRecorder: NSObject, ObservableObject {
             start: state.start,
             end: state.end ?? .now,
             measurementCount: state.measurementCount,
-            interruptionMessage: "App stopped unexpectedly"
+            interruptionMessage: String(localized: "App stopped unexpectedly")
         )
     }
 
@@ -663,7 +663,7 @@ final class WatchRecorder: NSObject, ObservableObject {
         extendedRuntimeSession = nil
 
         if let error {
-            lastTransferError = "Background recording unavailable: \(error.localizedDescription)"
+            lastTransferError = String(localized: "Background recording unavailable: \(error.localizedDescription)")
         }
 
         if reason != .none, isRecording {
@@ -680,20 +680,20 @@ final class WatchRecorder: NSObject, ObservableObject {
         error: Error?
     ) -> String {
         if error != nil {
-            return "Background session failed"
+            return String(localized: "Background session failed")
         }
 
         return switch reason {
         case .expired:
-            "Background time expired"
+            String(localized: "Background time expired")
         case .resignedFrontmost:
-            "App lost active status"
+            String(localized: "App lost active status")
         case .suppressedBySystem:
-            "Stopped by watchOS"
+            String(localized: "Stopped by watchOS")
         case .sessionInProgress:
-            "Another background session started"
+            String(localized: "Another background session started")
         default:
-            "Background session ended"
+            String(localized: "Background session ended")
         }
     }
 
@@ -846,7 +846,7 @@ extension WatchRecorder: WKExtendedRuntimeSessionDelegate {
         Task { @MainActor [weak self] in
             self?.finishRecording(
                 interrupted: true,
-                message: "Background time expired"
+                message: String(localized: "Background time expired")
             )
         }
     }

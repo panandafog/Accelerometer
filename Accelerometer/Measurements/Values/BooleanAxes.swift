@@ -47,7 +47,9 @@ struct BooleanAxes: Axes {
         guard let value = values[type]?.value else {
             return nil
         }
-        return value ? "close" : "far"
+        return value
+            ? String(localized: "proximity.close")
+            : String(localized: "proximity.far")
     }
     
     func resetValues() { }

@@ -17,7 +17,7 @@ extension DateFormatter {
         static func csvString(from date: Date, timezone: TimeZone = defaultTimezone) -> String {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = csvStringFormat
-            dateFormatter.timeZone = defaultTimezone
+            dateFormatter.timeZone = timezone
             return dateFormatter.string(from: date)
         }
         
@@ -25,11 +25,11 @@ extension DateFormatter {
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.doesRelativeDateFormatting = true
-            dateFormatter.timeZone = defaultTimezone
+            dateFormatter.timeZone = timezone
 
             let timeFormatter = DateFormatter()
-            timeFormatter.dateFormat = "h:mm:ss a"
-            timeFormatter.timeZone = defaultTimezone
+            timeFormatter.timeStyle = .medium
+            timeFormatter.timeZone = timezone
             
             let dateString = dateFormatter.string(from: date)
             let timeString = timeFormatter.string(from: date)
@@ -38,4 +38,3 @@ extension DateFormatter {
         }
     }
 }
-

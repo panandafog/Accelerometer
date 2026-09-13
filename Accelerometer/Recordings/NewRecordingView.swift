@@ -43,7 +43,7 @@ struct NewRecordingView: View {
                 
                 HStack {
                     Spacer()
-                    Button(allSelected ? "Deselect all" : "Select all") {
+                    Button(allSelected ? String(localized: "Deselect all") : String(localized: "Select all")) {
                         setAll(!allSelected)
                     }
                     .buttonStyle(.bordered)

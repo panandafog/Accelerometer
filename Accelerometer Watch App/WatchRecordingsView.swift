@@ -18,7 +18,7 @@ struct WatchRecordingsView: View {
                 recordingsList
             }
         }
-        .navigationTitle(recorder.isRecording ? "Recording" : "Recordings")
+        .navigationTitle(recorder.isRecording ? String(localized: "Recording") : String(localized: "Recordings"))
     }
 
     private var recordingsList: some View {
@@ -135,7 +135,7 @@ private struct WatchRecordingDetailView: View {
                             recorder.send(recordingID: recording.id)
                         } label: {
                             Label(
-                                recording.isTransferred ? "Send again" : "Send to iPhone",
+                                recording.isTransferred ? String(localized: "Send again") : String(localized: "Send to iPhone"),
                                 systemImage: "square.and.arrow.up"
                             )
                         }
@@ -180,7 +180,7 @@ private struct TransferProgressLabel: View {
             }
 
             VStack(alignment: .leading, spacing: 1) {
-                Text(isAwaitingImport ? "Importing on iPhone" : "Sending to iPhone")
+                Text(isAwaitingImport ? String(localized: "Importing on iPhone") : String(localized: "Sending to iPhone"))
 
                 if progress != nil {
                     Text("\(percentage)%")
@@ -211,7 +211,7 @@ private struct WatchActiveRecordingView: View {
 
                     Spacer(minLength: 4)
 
-                    Text("\(recording.measurementTypes.count) sensors")
+                    Text("Sensors: \(recording.measurementTypes.count)")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }

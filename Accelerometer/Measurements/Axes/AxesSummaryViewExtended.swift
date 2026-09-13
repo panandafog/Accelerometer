@@ -36,7 +36,7 @@ struct AxesSummaryViewExtended: View {
                 roundPlaces: Settings.measurementsDisplayRoundPlaces
             )
         } else {
-            return "no data"
+            return String(localized: "No data")
         }
     }
     
@@ -47,7 +47,7 @@ struct AxesSummaryViewExtended: View {
                 roundPlaces: Settings.measurementsDisplayRoundPlaces
             )
         } else {
-            return "no data"
+            return String(localized: "No data")
         }
     }
     

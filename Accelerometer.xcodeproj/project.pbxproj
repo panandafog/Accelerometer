@@ -113,6 +113,9 @@
 		AA1000040000000000000001 /* PhoneRecordingTransferReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1000050000000000000001 /* PhoneRecordingTransferReceiver.swift */; };
 		AB2000010000000000000001 /* Accelerometer Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB2000030000000000000001 /* Accelerometer Watch Widget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB2000020000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2000040000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift */; };
+		AB3000010000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = AB3000000000000000000001 /* Localizable.xcstrings */; };
+		AB3000020000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = AB3000000000000000000001 /* Localizable.xcstrings */; };
+		AB3000030000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = AB3000000000000000000001 /* Localizable.xcstrings */; };
 		AF6328562287AF3E3894C7A5 /* Pods_Accelerometer_AccelerometerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F438B6FD5FC69485F45338B /* Pods_Accelerometer_AccelerometerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -262,6 +265,7 @@
 		AA1000050000000000000001 /* PhoneRecordingTransferReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRecordingTransferReceiver.swift; sourceTree = "<group>"; };
 		AB2000030000000000000001 /* Accelerometer Watch Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Accelerometer Watch Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2000040000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Accelerometer Watch App/WatchRecordingWidgetState.swift"; sourceTree = SOURCE_ROOT; };
+		AB3000000000000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 		E32915EE18B68D953705CF6F /* Pods-AccelerometerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccelerometerTests.debug.xcconfig"; path = "Target Support Files/Pods-AccelerometerTests/Pods-AccelerometerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F19B6AE7963902430EF65D74 /* Pods-Accelerometer-AccelerometerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer-AccelerometerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		FA128F40F3D3C26694904DE5 /* Pods-Accelerometer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer.release.xcconfig"; path = "Target Support Files/Pods-Accelerometer/Pods-Accelerometer.release.xcconfig"; sourceTree = "<group>"; };
@@ -369,6 +373,7 @@
 		0B24EBFB28621BBE00AD3EF1 = {
 			isa = PBXGroup;
 			children = (
+				AB3000000000000000000001 /* Localizable.xcstrings */,
 				0BD864D22FDC7E470042632E /* AppIcon.icon */,
 				0B24EC0628621BBE00AD3EF1 /* Accelerometer */,
 				0B24EC1728621BC200AD3EF1 /* AccelerometerTests */,
@@ -749,6 +754,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
 				Base,
 			);
 			mainGroup = 0B24EBFB28621BBE00AD3EF1;
@@ -774,6 +780,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3000010000000000000001 /* Localizable.xcstrings in Resources */,
 				0B24EC0F28621BC200AD3EF1 /* Preview Assets.xcassets in Resources */,
 				0B24EC0C28621BC200AD3EF1 /* Assets.xcassets in Resources */,
 				0BD864D42FDC7E470042632E /* AppIcon.icon in Resources */,
@@ -800,6 +807,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3000020000000000000001 /* Localizable.xcstrings in Resources */,
 				0BD864D62FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -808,6 +816,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3000030000000000000001 /* Localizable.xcstrings in Resources */,
 				0BD864D32FDC7E470042632E /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1201,7 +1210,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
@@ -1239,7 +1248,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;

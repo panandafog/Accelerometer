@@ -206,15 +206,15 @@ private struct RecordingIntegrityWarningView: View {
         VStack(alignment: .leading, spacing: 10) {
             if recording.state == .interrupted {
                 warningLabel(
-                    title: "Recording was interrupted",
-                    message: "The system stopped recording before it was completed. The saved data may be incomplete."
+                    title: String(localized: "Recording was interrupted"),
+                    message: String(localized: "The system stopped recording before it was completed. The saved data may be incomplete.")
                 )
             }
 
             if !gaps.isEmpty {
                 warningLabel(
-                    title: "Missing samples detected",
-                    message: "\(gaps.count) gap(s) in \(affectedMeasurementNames). Longest gap: \(longestGapDurationString)."
+                    title: String(localized: "Missing samples detected"),
+                    message: String(localized: "Missing intervals: \(gaps.count). Sensors: \(affectedMeasurementNames). Longest gap: \(longestGapDurationString).")
                 )
 
                 Text("Orange bands on the charts mark time ranges where no samples were written.")
@@ -261,7 +261,7 @@ private struct RecordingIntegrityWarningView: View {
     private func elapsedRangeString(for gap: RecordingGap) -> String {
         let start = gap.start.timeIntervalSince(recording.start)
         let end = gap.end.timeIntervalSince(recording.start)
-        return "\(formatDuration(start)) to \(formatDuration(end))"
+        return String(localized: "\(formatDuration(start)) to \(formatDuration(end))")
     }
 
     private func formatDuration(_ duration: TimeInterval) -> String {

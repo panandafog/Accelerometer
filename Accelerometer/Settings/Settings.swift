@@ -126,9 +126,9 @@ extension Settings {
         var displayableName: String {
             switch self {
             case .unix:
-                return rawValue.capitalizingFirstLetter()
+                return String(localized: "Unix time")
             case .excel:
-                return "Spreadsheet Serial Date (1900 System)"
+                return String(localized: "Spreadsheet Serial Date (1900 System)")
             case .dateFormat:
                 return DateFormatter.Recordings.csvStringFormat
             }

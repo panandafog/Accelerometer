@@ -39,8 +39,8 @@ struct RecordingPreview: View {
                     .foregroundColor(.orange)
                     .padding(.bottom, 2)
             }
-            Text("Started: " + startString)
-            Text("Duration: " + durationStringState)
+            Text("Started: \(startString)")
+            Text("Duration: \(durationStringState)")
                 .padding([.bottom], 5)
             Text("Measurements:")
             ForEach(Array(recording.sortedMeasurementTypes).sorted(by: { lhs, rhs in

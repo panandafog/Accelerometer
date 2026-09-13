@@ -103,7 +103,7 @@ private struct MeasurementComplicationView: View {
     }
 
     private var name: String {
-        entry.state?.name ?? measurement.name
+        measurement.name
     }
 
     private var iconName: String {

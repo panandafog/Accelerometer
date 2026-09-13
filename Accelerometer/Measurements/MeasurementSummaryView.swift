@@ -26,11 +26,11 @@ struct MeasurementSummaryView: View {
         let enabled = !recorder.recordingInProgress && recorder.hasEnoughMemory
         
         let text = if !recorder.hasEnoughMemory {
-            "Not enough memory"
+            String(localized: "Not enough memory")
         } else if recorder.recordingInProgress {
-            "Recording is already started"
+            String(localized: "Recording is already started")
         } else {
-            "Start recording this value"
+            String(localized: "Start recording this value")
         }
         
         return Button(
