@@ -26,6 +26,7 @@ struct MeasurementsView: View {
                 }
             }
         }
+        .accessibilityIdentifier("screen.home")
     }
 }
 

@@ -1,49 +1,28 @@
-//
-//  ObservableAxesTests.swift
-//  AccelerometerTests
-//
-//  Created by Andrey on 10.09.2023.
-//
-
 import Combine
 import XCTest
 @testable import Acc_elerometer
 
-class ObservableAxesTests: XCTestCase {
-    
-    var observableAxes: ObservableAxes<TriangleAxes>!
-    @objc dynamic var subscriptionUpdateCounter = 0
-    
-    let axesZero = TriangleAxes.zero
-    let axes1 = TriangleAxes(
-        axes: [
-            .x: .init(type_: .x, value: 1.0),
-            .y: .init(type_: .y, value: 1.0),
-            .z: .init(type_: .z, value: 1.0)
-        ],
-        displayableAbsMax: 1.0,
-        magnitude: .init(type_: .magnitude, value: 1.0)
-    )
-
-    override func setUpWithError() throws {
-        observableAxes = .init(axes: axesZero)
-    }
-
-    override func tearDownWithError() throws {
-        observableAxes = nil
-    }
-
+final class ObservableAxesTests: XCTestCase {
     func testObjectWillChange() throws {
-        let axesUpdateExpectation = expectation(that: \.subscriptionUpdateCounter, on: self, willEqual: 2)
-        let accelerationSubscription = observableAxes!.objectWillChange.sink { [weak self] _ in
-            self?.subscriptionUpdateCounter += 1
+        let observableAxes = ObservableAxes(axes: TriangleAxes.zero)
+        var updateCount = 0
+        let subscription = observableAxes.objectWillChange.sink { _ in
+            updateCount += 1
         }
-        observableAxes!.properties.set(values: [
-            .x: 0.5, .y: 0.5, .z: 0.5
-        ])
-        observableAxes!.properties.set(values: [
-            .x: 0.4, .y: 0.4, .z: 0.4
-        ])
-        wait(for: [axesUpdateExpectation], timeout: 2)
+
+        withExtendedLifetime(subscription) {
+            var axes = TriangleAxes.zero
+            axes.set(values: [.x: 0.5, .y: 0.5, .z: 0.5])
+            observableAxes.axes = axes
+            axes.set(values: [.x: 0.4, .y: 0.4, .z: 0.4])
+            observableAxes.axes = axes
+        }
+
+        XCTAssertEqual(updateCount, 2)
+        let axes = try XCTUnwrap(observableAxes.axes as? TriangleAxes)
+        XCTAssertEqual(axes.values[.x]?.value, 0.4)
+        XCTAssertEqual(axes.values[.y]?.value, 0.4)
+        XCTAssertEqual(axes.values[.z]?.value, 0.4)
+        XCTAssertEqual(axes.magnitude.value, sqrt(0.48), accuracy: 0.000001)
     }
 }

@@ -61,7 +61,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B5FA5612EBCCAFF00B55C32"
             BuildableName = "Accelerometer Watch App.app"
-            BlueprintName = "Accelerometer Watch App"
             ReferencedContainer = "container:Accelerometer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -78,7 +77,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "0B5FA5612EBCCAFF00B55C32"
             BuildableName = "Accelerometer Watch App.app"
-            BlueprintName = "Accelerometer Watch App"
             ReferencedContainer = "container:Accelerometer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

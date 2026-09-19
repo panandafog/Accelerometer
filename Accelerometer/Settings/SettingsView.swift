@@ -42,6 +42,7 @@ struct SettingsView: View {
 //                Toggle("Remove gravity", isOn: .init(get: { measurer.removeGravity }, set: { measurer.removeGravity = $0 }))
 //            }
         }
+        .accessibilityIdentifier("screen.settings")
     }
 }
 

@@ -77,7 +77,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AB20000B0000000000000001"
             BuildableName = "Accelerometer Watch Widget.appex"
-            BlueprintName = "Accelerometer Watch Widget"
             ReferencedContainer = "container:Accelerometer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -120,7 +119,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AB20000B0000000000000001"
             BuildableName = "Accelerometer Watch Widget.appex"
-            BlueprintName = "Accelerometer Watch Widget"
             ReferencedContainer = "container:Accelerometer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

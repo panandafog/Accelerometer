@@ -112,7 +112,7 @@
 		AA1000020000000000000001 /* RecordingTransferPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1000030000000000000001 /* RecordingTransferPayload.swift */; };
 		AA1000040000000000000001 /* PhoneRecordingTransferReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1000050000000000000001 /* PhoneRecordingTransferReceiver.swift */; };
 		AB2000010000000000000001 /* Accelerometer Watch Widget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AB2000030000000000000001 /* Accelerometer Watch Widget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AB2000020000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2000040000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift */; };
+		AB2000020000000000000001 /* WatchRecordingWidgetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2000040000000000000001 /* WatchRecordingWidgetState.swift */; };
 		AB3000010000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = AB3000000000000000000001 /* Localizable.xcstrings */; };
 		AB3000020000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = AB3000000000000000000001 /* Localizable.xcstrings */; };
 		AB3000030000000000000001 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = AB3000000000000000000001 /* Localizable.xcstrings */; };
@@ -264,7 +264,7 @@
 		AA1000030000000000000001 /* RecordingTransferPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTransferPayload.swift; sourceTree = "<group>"; };
 		AA1000050000000000000001 /* PhoneRecordingTransferReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRecordingTransferReceiver.swift; sourceTree = "<group>"; };
 		AB2000030000000000000001 /* Accelerometer Watch Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Accelerometer Watch Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB2000040000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Accelerometer Watch App/WatchRecordingWidgetState.swift"; sourceTree = SOURCE_ROOT; };
+		AB2000040000000000000001 /* WatchRecordingWidgetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Accelerometer Watch App/WatchRecordingWidgetState.swift"; sourceTree = SOURCE_ROOT; };
 		AB3000000000000000000001 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 		E32915EE18B68D953705CF6F /* Pods-AccelerometerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccelerometerTests.debug.xcconfig"; path = "Target Support Files/Pods-AccelerometerTests/Pods-AccelerometerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F19B6AE7963902430EF65D74 /* Pods-Accelerometer-AccelerometerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Accelerometer-AccelerometerUITests.debug.xcconfig"; path = "Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -295,6 +295,13 @@
 				AB2000110000000000000001 /* Exceptions for "Accelerometer Watch App" folder in "Accelerometer Watch App" target */,
 			);
 			path = "Accelerometer Watch App";
+			sourceTree = "<group>";
+		};
+		0BF94C733056F2230063A113 /* AccelerometerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = AccelerometerUITests;
 			sourceTree = "<group>";
 		};
 		AB2000070000000000000001 /* Accelerometer Watch Widget */ = {
@@ -354,7 +361,7 @@
 		0B02BDED2FDB062400D24B09 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				AB2000040000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift */,
+				AB2000040000000000000001 /* WatchRecordingWidgetState.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -377,6 +384,7 @@
 				0BD864D22FDC7E470042632E /* AppIcon.icon */,
 				0B24EC0628621BBE00AD3EF1 /* Accelerometer */,
 				0B24EC1728621BC200AD3EF1 /* AccelerometerTests */,
+				0BF94C733056F2230063A113 /* AccelerometerUITests */,
 				0B5FA5632EBCCAFF00B55C32 /* Accelerometer Watch App */,
 				AB2000070000000000000001 /* Accelerometer Watch Widget */,
 				0B24EC0528621BBE00AD3EF1 /* Products */,
@@ -673,6 +681,9 @@
 			dependencies = (
 				0B24EC2028621BC200AD3EF1 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				0BF94C733056F2230063A113 /* AccelerometerUITests */,
+			);
 			name = AccelerometerUITests;
 			productName = AccelerometerUITests;
 			productReference = 0B24EC1E28621BC200AD3EF1 /* AccelerometerUITests.xctest */;
@@ -898,13 +909,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer/Pods-Accelerometer-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer/Pods-Accelerometer-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -919,13 +926,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Accelerometer-AccelerometerUITests/Pods-Accelerometer-AccelerometerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1059,7 +1062,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB2000020000000000000001 /* Accelerometer Watch App/WatchRecordingWidgetState.swift in Sources */,
+				AB2000020000000000000001 /* WatchRecordingWidgetState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1210,7 +1213,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
@@ -1248,7 +1251,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"Accelerometer/Preview Content\"";
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
@@ -1289,7 +1292,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.AccelerometerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1310,7 +1313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.AccelerometerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1368,7 +1371,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = "Accelerometer Watch App/Accelerometer Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1381,7 +1384,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1406,7 +1409,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = "Accelerometer Watch App/Accelerometer Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 3HG9ZBM8AV;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1419,7 +1422,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.panandafog.Accelerometer.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
